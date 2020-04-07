@@ -37,3 +37,7 @@
     transform: translateY(0px)
   }
 }
+
+$theme-colors: ("brand": #3eb1c8 );
+
+@import "../node_modules/bootstrap/scss/bootstrap";

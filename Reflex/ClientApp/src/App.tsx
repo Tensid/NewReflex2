@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router';
-import './App.css';
+import './App.scss';
 import Cases from './Cases';
 import Configs from './Configs';
 import { FetchData } from './FetchData';
