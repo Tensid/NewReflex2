@@ -1,0 +1,46 @@
+import React from 'react';
+import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import './NavMenu.css';
+import { LoginMenu } from './features/api-authorization/LoginMenu';
+
+export function NavMenu() {
+  return (
+    <header>
+      <Navbar expand="lg" className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+        <Container>
+          <LinkContainer to="configs">
+            <Navbar.Brand>Reflex</Navbar.Brand>
+          </LinkContainer>
+          <Navbar.Toggle className="mr-2" />
+          <Navbar.Collapse className="d-sm-inline-flex flex-sm-row-reverse">
+            <ul className="navbar-nav flex-grow">
+              <LinkContainer to="/search">
+                <Nav.Link className="text-dark">Sök</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/map">
+                <Nav.Link className="text-dark">Karta</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/case">
+                <Nav.Link className="text-dark">Ärenden</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/population">
+                <Nav.Link className="text-dark">Befolkning</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/property">
+                <Nav.Link className="text-dark">Fastighet</Nav.Link>
+              </LinkContainer>
+              <NavDropdown title="Mer" id="basic-nav-dropdown">
+                <LinkContainer to="/configs">
+                  <NavDropdown.Item className="text-dark">Välj konfiguration</NavDropdown.Item>
+                </LinkContainer>
+                <NavDropdown.Divider />
+                <LoginMenu />
+              </NavDropdown>
+            </ul>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </header>
+  );
+}
