@@ -41,6 +41,11 @@ namespace Reflex
             services.AddScoped<IRepository, Repository>();
 
             services.AddAuthentication()
+                .AddWsFederation(options =>
+                {
+                    options.MetadataAddress = Configuration["WsFederation:MetadataAddress"];
+                    options.Wtrealm = Configuration["WsFederation:Wtrealm"];
+                })
                 .AddIdentityServerJwt();
 
             services.AddControllersWithViews();
