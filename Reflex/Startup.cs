@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Reflex.Data;
@@ -8,6 +9,9 @@ using Reflex.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
+using System;
+using System.Linq;
 
 namespace Reflex
 {
@@ -28,6 +32,7 @@ namespace Reflex
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
@@ -49,7 +54,7 @@ namespace Reflex
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider services)
         {
             if (env.IsDevelopment())
             {
@@ -89,6 +94,38 @@ namespace Reflex
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+            CreateUserRoles(services).Wait();
+        }
+
+        private async Task CreateUserRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            string[] roleNames = { "Admin", "User" };
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExists = await roleManager.RoleExistsAsync(roleName);
+                if (!roleExists)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var users = userManager.Users;
+            if (!users.Any())
+            {
+                ApplicationUser user = new ApplicationUser()
+                {
+                    UserName = "admin@reflex.com",
+                    Email = "admin@reflex.com",
+                    SecurityStamp = Guid.NewGuid().ToString()
+                };
+                await userManager.CreateAsync(user, "Adm1n!");
+                await userManager.AddToRoleAsync(user, "Admin");
+                var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                await userManager.ConfirmEmailAsync(user, code);
+            }
         }
     }
 }
