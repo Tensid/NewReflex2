@@ -21,7 +21,7 @@ export function NavMenu() {
               <LinkContainer to="/map">
                 <Nav.Link className="text-dark">Karta</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/case">
+              <LinkContainer to="/cases">
                 <Nav.Link className="text-dark">Ärenden</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/population">
@@ -33,6 +33,9 @@ export function NavMenu() {
               <NavDropdown title="Mer" id="basic-nav-dropdown">
                 <LinkContainer to="/configs">
                   <NavDropdown.Item className="text-dark">Välj konfiguration</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/manage-users">
+                  <NavDropdown.Item className="text-dark">Hantera användare</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Divider />
                 <LoginMenu />

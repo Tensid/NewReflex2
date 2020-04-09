@@ -31,7 +31,47 @@ export interface Config {
   csmUrl?: string;
 }
 
+export interface ReflexUser {
+  id: string;
+  userName: string;
+  roles: string[];
+  configPermissions: ConfigPermission[];
+  isEmailConfirmed: boolean;
+}
+
+export interface ConfigPermission {
+  id: string;
+  name: string;
+}
+
+export interface UpdateConfigPermissionsRequest {
+  userId: string;
+  configPermissions: ConfigPermission[];
+}
+
+export interface UpdateRolesRequest {
+  userId: string;
+  roles: string[];
+}
+
 export async function getConfigs() {
   const { data } = await axios.get<Config[]>('api/configs');
   return data;
+}
+
+export async function getUsers() {
+  const { data } = await axios.get<ReflexUser[]>('api/users');
+  return data;
+}
+
+export async function deleteUsers(ids: string[]) {
+  return await axios.delete('api/users', { data: ids });
+}
+
+export async function updateRoles(requests: UpdateRolesRequest[]) {
+  return await axios.put('api/users/roles', requests);
+}
+
+export async function updateConfigPermissions(requests: UpdateConfigPermissionsRequest[]) {
+  return await axios.put('api/users/configPermissions', requests);
 }

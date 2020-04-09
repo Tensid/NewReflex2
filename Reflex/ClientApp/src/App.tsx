@@ -6,6 +6,7 @@ import Configs from './Configs';
 import { FetchData } from './FetchData';
 import { Home } from './Home';
 import { Layout } from './Layout';
+import ManageUsers from './ManageUsers';
 import Map from './Map';
 import Population from './Population';
 import Property from './Property';
@@ -24,6 +25,7 @@ function App() {
       <Route path='/cases' render={() => <Cases />} />
       <Route path='/population' render={() => <Population />} />
       <Route path='/property' render={() => <Property />} />
+      <Route path='/manage-users' render={() => <ManageUsers />} />
       <AuthorizeRoute path='/fetch-data' component={FetchData} />
       <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
     </Layout>
