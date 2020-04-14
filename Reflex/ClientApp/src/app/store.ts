@@ -1,9 +1,11 @@
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit';
 import configReducer from '../features/configs/configsSlice';
+import searchResultReducer from '../features/search-result/searchResultSlice';
 
 export const store = configureStore({
   reducer: {
-    config: configReducer
+    config: configReducer,
+    searchResult: searchResultReducer
   },
 });
 

@@ -14,6 +14,12 @@ export enum Tab {
   Property = 'Property'
 }
 
+export interface SearchResult {
+  addressName?: string;
+  estateId?: string;
+  estateName: string;
+}
+
 export interface Config {
   id: string;
   name: string;

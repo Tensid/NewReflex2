@@ -4,7 +4,6 @@ import './App.scss';
 import Cases from './Cases';
 import Configs from './Configs';
 import { FetchData } from './FetchData';
-import { Home } from './Home';
 import { Layout } from './Layout';
 import ManageUsers from './ManageUsers';
 import Map from './Map';
@@ -18,7 +17,7 @@ import AuthorizeRoute from './features/api-authorization/AuthorizeRoute';
 function App() {
   return (
     <Layout>
-      <Route exact path='/' component={Home} />
+      <Route exact path='/' render={() => <Search />} />
       <Route path='/configs' render={() => <Configs />} />
       <Route path='/search' render={() => <Search />} />
       <Route path='/map' render={() => <Map />} />
