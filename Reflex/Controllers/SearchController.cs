@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Reflex.Data;
 
 namespace Reflex.Controllers
 {
@@ -11,45 +12,40 @@ namespace Reflex.Controllers
     public class SearchController : ControllerBase
     {
         private readonly ILogger<SearchController> _logger;
+        private readonly IRepository _repository;
 
-        public SearchController(ILogger<SearchController> logger)
+        public SearchController(ILogger<SearchController> logger, IRepository repository)
         {
             _logger = logger;
+            _repository = repository;
         }
 
         [HttpGet]
-        public IEnumerable<SearchResult> Get(string query)
+        public IEnumerable<SearchResult> Get(string query, Guid configId)
         {
-            var searchResults = new List<SearchResult>
+            var searchResults = new List<SearchResult>();
+
+            if (query != null && query.Length >= 3)
             {
-             new SearchResult
-            {
-              EstateId = "1",
-              EstateName = "RÖDA LYKTAN 2"
-            },
-             new SearchResult
-            {
-              EstateId = "2",
-              EstateName = "RÖDA LYKTAN 3"
-            },
-             new SearchResult
-            {
-              EstateId = "3",
-              EstateName = "RÖDA LYKTAN 4"
-            },
-             new SearchResult
-            {
-              EstateId = "3",
-              EstateName = "FISKAREN 5"
-            },
-              new SearchResult
-            {
-              EstateId = "4",
-              EstateName = "FISKAREN 1",
-              AddressName = "Gatan 2"
+                var fbProxy = _repository.GetFbProxy(configId);
+                searchResults = fbProxy.SearchEstates(query)
+                    .OrderBy(estate => estate.EstateName)
+                    .Select(estate => new SearchResult
+                    {
+                        EstateId = estate.EstateId,
+                        EstateName = estate.EstateName
+                    }).ToList();
+                searchResults.AddRange(fbProxy.SearchAddress(query)
+                    .OrderBy(address => address.AddressText)
+                    .Select(address => new SearchResult
+                    {
+                        EstateName = address.AddressText,
+                        EstateId = address.Estate.EstateId,
+                        AddressName = address.AddressText
+                    }));
             }
-            };
-            return searchResults.Where(x => x.EstateName.ToUpper().Contains(query ?? "", StringComparison.OrdinalIgnoreCase));
+
+            return searchResults.Take(10).ToArray();
         }
 
         public class SearchResult

@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflex", "Reflex\Reflex.csproj", "{7D0A6A85-FCB2-451D-96DB-2A7B3A32B77C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reflex", "Reflex\Reflex.csproj", "{7D0A6A85-FCB2-451D-96DB-2A7B3A32B77C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrations", "Integrations", "{E1F16F1B-2042-44FE-8689-D4F2385D34F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FB", "FB", "{4E28C022-AD9F-402C-930D-02F5F2E1EC34}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FbService", "FbService\FbService.csproj", "{D5CD451C-0D3C-4514-AB7E-94F9981807D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisaRService", "VisaRService\VisaRService.csproj", "{C589BFA5-C664-40A1-B3EC-6B08B9FC5FD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +23,22 @@ Global
 		{7D0A6A85-FCB2-451D-96DB-2A7B3A32B77C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D0A6A85-FCB2-451D-96DB-2A7B3A32B77C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D0A6A85-FCB2-451D-96DB-2A7B3A32B77C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5CD451C-0D3C-4514-AB7E-94F9981807D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5CD451C-0D3C-4514-AB7E-94F9981807D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5CD451C-0D3C-4514-AB7E-94F9981807D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5CD451C-0D3C-4514-AB7E-94F9981807D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C589BFA5-C664-40A1-B3EC-6B08B9FC5FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C589BFA5-C664-40A1-B3EC-6B08B9FC5FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C589BFA5-C664-40A1-B3EC-6B08B9FC5FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C589BFA5-C664-40A1-B3EC-6B08B9FC5FD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E28C022-AD9F-402C-930D-02F5F2E1EC34} = {E1F16F1B-2042-44FE-8689-D4F2385D34F7}
+		{D5CD451C-0D3C-4514-AB7E-94F9981807D3} = {4E28C022-AD9F-402C-930D-02F5F2E1EC34}
+		{C589BFA5-C664-40A1-B3EC-6B08B9FC5FD2} = {E1F16F1B-2042-44FE-8689-D4F2385D34F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4B3BA25-7045-4BC4-A5B9-AE6D115B3D59}
