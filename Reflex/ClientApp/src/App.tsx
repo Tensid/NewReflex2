@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router';
+import About from './About';
 import './App.scss';
 import Cases from './Cases';
 import Configs from './Configs';
@@ -25,6 +26,7 @@ function App() {
       <Route path='/population' render={() => <Population />} />
       <Route path='/property' render={() => <Property />} />
       <Route path='/manage-users' render={() => <ManageUsers />} />
+      <Route path='/about' render={() => <About />} />
       <AuthorizeRoute path='/fetch-data' component={FetchData} />
       <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
     </Layout>

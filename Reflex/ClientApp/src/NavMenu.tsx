@@ -37,6 +37,9 @@ export function NavMenu() {
                 <LinkContainer to="/manage-users">
                   <NavDropdown.Item className="text-dark">Hantera användare</NavDropdown.Item>
                 </LinkContainer>
+                <LinkContainer to="/about">
+                  <NavDropdown.Item className="text-dark">Om Reflex</NavDropdown.Item>
+                </LinkContainer>
                 <NavDropdown.Divider />
                 <LoginMenu />
               </NavDropdown>
