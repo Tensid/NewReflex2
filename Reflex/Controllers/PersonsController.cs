@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reflex.Data;
@@ -22,19 +23,19 @@ namespace Reflex.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Person> GetPersonsByRadius(string estateId, Guid configId, string distance = "0")
+        public async Task<IEnumerable<Person>> GetPersonsByRadius(string estateId, Guid configId, string distance = "0")
         {
             var persons = new List<Person>();
             if (string.IsNullOrEmpty(estateId))
                 return persons;
 
             var fbProxy = _repository.GetFbProxy(configId);
-            var pos = fbProxy.GetEstatePosition(estateId);
-            var fnrs = fbProxy.GetFnrFromPosition(pos.NorthingKoordinat, pos.EastingKoordinat, "3006", distance);
+            var pos = await fbProxy.GetEstatePosition(estateId);
+            var fnrs = await fbProxy.GetFnrsFromPosition(pos.NorthingKoordinat, pos.EastingKoordinat, "3006", distance);
             foreach (var fnr in fnrs)
             {
-                var estate = fbProxy.GetEstate(fnr);
-                var kidPersons = fbProxy.KidPersonsByFnr(fnr);
+                var estate = await fbProxy.GetEstate(fnr);
+                var kidPersons = await fbProxy.KidPersonsByFnr(fnr);
                 persons.AddRange(kidPersons.Select(p => new Person
                 {
                     Firstname = p?.Firstname ?? "NAMN SAKNAS",

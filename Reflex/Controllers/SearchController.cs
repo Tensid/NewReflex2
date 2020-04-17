@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reflex.Data;
@@ -20,22 +21,28 @@ namespace Reflex.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
-        public IEnumerable<SearchResult> Get(string query, Guid configId)
+        public async Task<IEnumerable<SearchResult>> Get(string query, Guid configId)
         {
             var searchResults = new List<SearchResult>();
 
             if (query != null && query.Length >= 3)
             {
                 var fbProxy = _repository.GetFbProxy(configId);
-                searchResults = fbProxy.SearchEstates(query)
+                var estateTask = fbProxy.SearchEstates(query);
+                var addressTask = fbProxy.SearchAddresses(query);
+
+                await Task.WhenAll(estateTask, addressTask);
+
+                var estates = await estateTask;
+                var addresses = await addressTask;
+                searchResults.AddRange(estates
                     .OrderBy(estate => estate.EstateName)
                     .Select(estate => new SearchResult
                     {
                         EstateId = estate.EstateId,
                         EstateName = estate.EstateName
-                    }).ToList();
-                searchResults.AddRange(fbProxy.SearchAddress(query)
+                    }));
+                searchResults.AddRange(addresses
                     .OrderBy(address => address.AddressText)
                     .Select(address => new SearchResult
                     {

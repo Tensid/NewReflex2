@@ -8,24 +8,28 @@ using FbService.QuickType.FastighetSearchBelagenhetsadress;
 using FbService.QuickType.FastighetSearchEnkelbeteckningSorterad;
 using FbService.QuickType.FastighetSearchFranPunkt;
 using Newtonsoft.Json;
-using RestSharp;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using VisaRService.Contracts;
 
 namespace FbService.Provider
 {
     public class FbProvider
     {
-        private static string _baseUri;
+        private readonly HttpClient _httpClient;
         private static string _userConnection;
 
         public FbProvider(ConfigItem config)
         {
-            _baseUri = config.FbServiceUrl;
+            var httpClient = new HttpClient { BaseAddress = new Uri(config.FbServiceUrl) };
+            _httpClient = httpClient;
+
             _userConnection = $"Database={config.FbServiceDatabase}&User={config.FbServiceUser}&Password={config.FbServicePassword}";
         }
 
@@ -96,58 +100,47 @@ namespace FbService.Provider
             }
         }
 
-        public Estate[] SearchEstates(string searchText)
+        public async Task<Estate[]> SearchEstates(string searchText)
         {
-            var list = new List<Estate>();
-            var client = new RestClient($"{_baseUri}/fastighet/search/enkelbeteckning/sorterad?Beteckning={searchText}&{_userConnection}");
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("Accept", "application/json");
-            IRestResponse response = client.Execute(request);
-            var fastighetSearch = JsonConvert.DeserializeObject<FastighetSearchEnkelbeteckningSorterad>(response.Content);
+            var response = await _httpClient.GetAsync($"fastighet/search/enkelbeteckning/sorterad?Beteckning={searchText}&{_userConnection}");
+            var fastighetSearch = JsonConvert.DeserializeObject<FastighetSearchEnkelbeteckningSorterad>(await response.Content.ReadAsStringAsync());
 
+            var estates = new List<Estate>();
             if (fastighetSearch != null && fastighetSearch.Data?.Length > 0)
             {
-                list.AddRange(fastighetSearch.Data.Select(f => new Estate { EstateId = f.Fnr.ToString(CultureInfo.InvariantCulture), EstateName = f.Beteckning }));
+                estates.AddRange(fastighetSearch.Data.Select(f => new Estate { EstateId = f.Fnr.ToString(CultureInfo.InvariantCulture), EstateName = f.Beteckning }));
+                estates.Sort(new EstateComparer(searchText));
             }
 
-            list.Sort(new EstateComparer(searchText));
-
-            return list.ToArray();
+            return estates.ToArray();
         }
 
-        public Address[] SearchAddress(string searchText)
+        public async Task<Address[]> SearchAddresses(string searchText)
         {
-            var client = new RestClient($"{_baseUri}/fastighet/search/belagenhetsadress/{searchText}?{_userConnection}");
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("Accept", "application/json");
-            IRestResponse response = client.Execute(request);
-            var belagenhetsadress = JsonConvert.DeserializeObject<FastighetSearchBelagenhetsadress>(response.Content);
+            var response = await _httpClient.GetAsync($"fastighet/search/belagenhetsadress/{searchText}?{_userConnection}");
+            var belagenhetsadress = JsonConvert.DeserializeObject<FastighetSearchBelagenhetsadress>(await response.Content.ReadAsStringAsync());
 
             if (belagenhetsadress == null || belagenhetsadress.Data.Length <= 0)
                 return new Address[0];
 
-            var fnr = belagenhetsadress.Data.Select(x => x.Grupp.First().Fnr).ToArray();
-            var estates = GetEstateInfo(fnr).Data;
-
             var list = (from datum in belagenhetsadress.Data
-                        join estate in estates on datum.Grupp.First().Fnr.ToString() equals estate.Fnr.ToString()
                         select new Address
                         {
                             AddressText = datum.Belagenhetsadress,
                             Estate = new Estate
                             {
-                                EstateName = estate.Beteckning,
-                                EstateId = estate.Fnr.ToString()
+                                EstateName = "",
+                                EstateId = datum.Grupp.FirstOrDefault()?.Fnr.ToString()
                             }
                         }).ToList();
 
             return list.ToArray();
         }
 
-        public Estate GetEstate(string estateId)
+        public async Task<Estate> GetEstate(string estateId)
         {
             int[] fnr = { int.Parse(estateId) };
-            var fastighetInfo = GetEstateInfo(fnr);
+            var fastighetInfo = await GetEstateInfo(fnr);
 
             var searchResult = fastighetInfo.Data.Select(f => new Estate
             {
@@ -163,28 +156,20 @@ namespace FbService.Provider
             return null;
         }
 
-        private FastighetInfoFnr GetEstateInfo(IEnumerable fnr)
+        private async Task<FastighetInfoFnr> GetEstateInfo(IEnumerable fnr)
         {
-            var client = new RestClient($"{_baseUri}/Fastighet/info/fnr?{_userConnection}");
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Accept", "application/json");
-            request.AddParameter("undefined", JsonConvert.SerializeObject(fnr), ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
-            var fastighetInfoFnr = JsonConvert.DeserializeObject<FastighetInfoFnr>(response.Content);
+            var response = await _httpClient.PostAsync($"fastighet/info/fnr?{_userConnection}",
+                new StringContent(JsonConvert.SerializeObject(fnr), Encoding.UTF8, "application/json-patch+json"));
+            var fastighetInfoFnr = JsonConvert.DeserializeObject<FastighetInfoFnr>(await response.Content.ReadAsStringAsync());
 
             return fastighetInfoFnr;
         }
 
-        internal Position GetEstatePosition(string fnr)
+        internal async Task<Position> GetEstatePosition(string fnr)
         {
-            var client = new RestClient($"{_baseUri}/Fastighet/koordinat/fnr?{_userConnection}");
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Accept", "application/json");
-            request.AddHeader("Content-Type", "application/json-patch+json");
-            request.AddParameter("undefined", $"[{fnr}]", ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
-            var fastighetKoordinatFnr = JsonConvert.DeserializeObject<FastighetKoordinatFnr>(response.Content);
+            var response = await _httpClient.PostAsync($"fastighet/koordinat/fnr?{_userConnection}",
+                new StringContent($"[{fnr}]", Encoding.UTF8, "application/json-patch+json"));
+            var fastighetKoordinatFnr = JsonConvert.DeserializeObject<FastighetKoordinatFnr>(await response.Content.ReadAsStringAsync());
 
             var position = new Position
             {
@@ -194,59 +179,42 @@ namespace FbService.Provider
             return position;
         }
 
-        internal string[] GetFnrFromPosition(string lat, string lon, string srid, string avstand, bool completelyInside = false)
+        internal async Task<IEnumerable<string>> GetFnrsFromPosition(string lat, string lon, string srid, string avstand, bool completelyInside = false)
         {
-            var client = new RestClient($"{_baseUri}/fastighet/search/franPunkt/{lat}/{lon}/{srid}/{avstand}?CompletelyInside={completelyInside}&{_userConnection}");
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("Accept", "application/json");
-            IRestResponse response = client.Execute(request);
-            var fastighetSearchFranPunkt = JsonConvert.DeserializeObject<FastighetSearchFranPunkt>(response.Content);
-            string[] fnr = fastighetSearchFranPunkt.Data.Select(x => x.Fnr).ToArray();
-            return fnr;
+            var response = await _httpClient.GetAsync(
+                $"fastighet/search/franPunkt/{lat}/{lon}/{srid}/{avstand}?CompletelyInside={completelyInside}&{_userConnection}");
+
+            var fastighetSearchFranPunkt = JsonConvert.DeserializeObject<FastighetSearchFranPunkt>(await response.Content.ReadAsStringAsync());
+            return fastighetSearchFranPunkt.Data.Select(x => x.Fnr.ToString());
         }
 
-        internal string GetGeometryFromFnr(string fnr)
+        internal async Task<string> GetGeometryFromFnr(string fnr)
         {
-            var client = new RestClient($"{_baseUri}/Fastighet/yta/fnr?{_userConnection}");
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Accept", "application/json");
-            request.AddHeader("Content-Type", "application/json-patch+json");
-            request.AddParameter("undefined", $"[{fnr}]", ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
-            return response.Content;
+            var response = await _httpClient.PostAsync($"fastighet/yta/fnr?{_userConnection}",
+                new StringContent($"[{fnr}]", Encoding.UTF8, "application/json-patch+json"));
+
+            return await response.Content.ReadAsStringAsync();
         }
 
-        internal IEnumerable<KidPerson> KidPersonsByFnr(string estateId)
+        internal async Task<IEnumerable<KidPerson>> KidPersonsByFnr(string estateId)
         {
-            var client = new RestClient($"{_baseUri}/befolkning/search/folkbokford/fastighet/fnr/{estateId}?{_userConnection}");
-            var request = new RestRequest(Method.GET);
-
-            request.AddHeader("Accept", "application/json");
-            IRestResponse response = client.Execute(request);
-            var befolkningSearch = JsonConvert.DeserializeObject<BefolkningSearchFolkbokfordFastighetFnr>(response.Content);
+            var response = await _httpClient.GetAsync($"befolkning/search/folkbokford/fastighet/fnr/{estateId}?{_userConnection}");
+            var befolkningSearch = JsonConvert.DeserializeObject<BefolkningSearchFolkbokfordFastighetFnr>(await response.Content.ReadAsStringAsync());
 
             var pids = befolkningSearch.Data.Select(x => x.Pid);
-            var kidResult = KidResult(pids);
+            var kidResult = await KidResult(pids);
             return kidResult;
         }
 
-        private IEnumerable<KidPerson> KidResult(IEnumerable<int> pids)
+        private async Task<IEnumerable<KidPerson>> KidResult(IEnumerable<int> pids)
         {
-            var client = new RestClient($"{_baseUri}/Befolkning/folkbokforing/pid?{_userConnection}");
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Accept", "application/json");
-            request.AddHeader("Content-Type", "application/json-patch+json");
-            request.AddParameter("undefined", JsonConvert.SerializeObject(pids), ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
-            var befolkningFolkbokforingPid = JsonConvert.DeserializeObject<BefolkningFolkbokforingPid>(response.Content);
+            var response = await _httpClient.PostAsync($"befolkning/folkbokforing/pid?{_userConnection}",
+                new StringContent(JsonConvert.SerializeObject(pids), Encoding.UTF8, "application/json-patch+json"));
+            var befolkningFolkbokforingPid = JsonConvert.DeserializeObject<BefolkningFolkbokforingPid>(await response.Content.ReadAsStringAsync());
 
-            var bspClient = new RestClient($"{ _baseUri }/Befolkning/senasteadress/pid?{_userConnection}");
-            var bspRequest = new RestRequest(Method.POST);
-            bspRequest.AddHeader("Accept", "application/json");
-            bspRequest.AddHeader("Content-Type", "application/json-patch+json");
-            bspRequest.AddParameter("undefined", JsonConvert.SerializeObject(pids), ParameterType.RequestBody);
-            IRestResponse bspResponse = bspClient.Execute(bspRequest);
-            var befolkningSenasteadressPid = JsonConvert.DeserializeObject<BefolkningSenasteadressPid>(bspResponse.Content);
+            var bspResponse = await _httpClient.PostAsync($"befolkning/senasteadress/pid?{_userConnection}",
+                new StringContent(JsonConvert.SerializeObject(pids), Encoding.UTF8, "application/json-patch+json"));
+            var befolkningSenasteadressPid = JsonConvert.DeserializeObject<BefolkningSenasteadressPid>(await bspResponse.Content.ReadAsStringAsync());
 
             var result = from bfpDatum in befolkningFolkbokforingPid.Data
                          join bspDatum in befolkningSenasteadressPid.Data on bfpDatum.Pid equals bspDatum.Pid

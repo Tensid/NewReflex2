@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using FbService.Contracts;
 
 namespace FbService
 {
     public interface IFbService
     {
-        Estate GetEstate(string estateId);
+        Task<Estate> GetEstate(string estateId);
 
-        Estate[] SearchEstates(string searchText);
+        Task<Estate[]> SearchEstates(string searchText);
 
-        Address[] SearchAddress(string searchText);
+        Task<Address[]> SearchAddresses(string searchText);
 
-        IEnumerable<KidPerson> KidPersonsByFnr(string estateId);
+        Task<IEnumerable<KidPerson>> KidPersonsByFnr(string estateId);
 
-        Position GetEstatePosition(string estateId);
+        Task<Position> GetEstatePosition(string estateId);
 
-        string[] GetFnrFromPosition(string lat, string lon, string srid, string avstand);
+        Task<IEnumerable<string>> GetFnrsFromPosition(string lat, string lon, string srid, string avstand);
 
-        string GetGeometryFromFnr(string fnr);
+        Task<string> GetGeometryFromFnr(string fnr);
     }
 }
