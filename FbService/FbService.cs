@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using FbService.Contracts;
 using FbService.Provider;
-using VisaRService.Contracts;
 
 namespace FbService
 {
@@ -10,7 +9,7 @@ namespace FbService
     {
         private readonly FbProvider _fb;
 
-        public FbService(ConfigItem config)
+        public FbService(VisaRService.Contracts.ConfigItem config)
         {
             _fb = new FbProvider(config);
         }

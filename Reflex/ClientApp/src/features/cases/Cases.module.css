@@ -1,0 +1,14 @@
+.blackOutline {
+    color: #000 !important;
+    border-color: #6d626245 !important;
+}
+
+.btn:hover > .caseSymbol {
+    color: white !important;
+    transition: color .15s ease-in-out;
+}
+
+/*Fix för scroll av modal i safari*/
+html {
+    -webkit-overflow-scrolling: touch;
+}

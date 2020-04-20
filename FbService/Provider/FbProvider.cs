@@ -17,6 +17,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using VisaRService.Contracts;
+using Estate = FbService.Contracts.Estate;
 
 namespace FbService.Provider
 {

@@ -2,6 +2,8 @@ import React from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { SearchResult } from './api/api';
+import { RootState } from './app/store';
+import { fetchCasesAsync } from './features/cases/casesSlice';
 import { setSearchResult } from './features/search-result/searchResultSlice';
 import Typeahead from './features/typeahead/Typeahead';
 
@@ -10,8 +12,9 @@ const Search = () => {
   const { push } = useHistory();
 
   function onSelectCallback(data: SearchResult) {
+    dispatch(fetchCasesAsync(data));
     dispatch(setSearchResult(data));
-    push('/property');
+    push('/cases');
   }
 
   return (
@@ -26,7 +29,11 @@ const Search = () => {
 
 const mapDispatch = { setSearchResult };
 
+const mapStateToProps = (state: RootState) => ({
+  searchResult: state.searchResult
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatch
 )(Search);

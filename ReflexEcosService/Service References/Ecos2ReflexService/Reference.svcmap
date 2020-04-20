@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7c309100-f648-4978-a377-59f488635a83" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/Ecos2PublicServices/ReflexService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ReflexService.xsd" MetadataType="Schema" ID="2ccd3c6c-445c-4377-8099-3bf924885c6e" SourceId="1" SourceUrl="http://localhost/Ecos2PublicServices/ReflexService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ReflexService.wsdl" MetadataType="Wsdl" ID="179f79e3-08cf-4624-88f1-93cdfba5df19" SourceId="1" SourceUrl="http://localhost/Ecos2PublicServices/ReflexService.svc?wsdl" />
+    <MetadataFile FileName="ReflexService.disco" MetadataType="Disco" ID="a18d4ab4-efc6-4588-8d31-c58720263326" SourceId="1" SourceUrl="http://localhost/Ecos2PublicServices/ReflexService.svc?disco" />
+    <MetadataFile FileName="ReflexService1.xsd" MetadataType="Schema" ID="23fcb690-ba5d-4242-8503-cc45fd7ab7d0" SourceId="1" SourceUrl="http://localhost/Ecos2PublicServices/ReflexService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ReflexService2.xsd" MetadataType="Schema" ID="9ff082b3-aa3b-44c1-9c8b-d1ea08a6a8f7" SourceId="1" SourceUrl="http://localhost/Ecos2PublicServices/ReflexService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ReflexService3.xsd" MetadataType="Schema" ID="78a70dd6-b47d-4e5a-ae80-beead6aa61cd" SourceId="1" SourceUrl="http://localhost/Ecos2PublicServices/ReflexService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

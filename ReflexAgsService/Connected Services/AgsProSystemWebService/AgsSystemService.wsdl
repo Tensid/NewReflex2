@@ -1,0 +1,2798 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://microsoft.com/webservices/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://microsoft.com/webservices/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">&lt;h3 style='color: #003063; font-family: Tahoma; font-size: 16px; font-weight: bold; background-color: #cecece; margin-top: 0px; margin-bottom: 0px; margin-left: 30px; padding-top: 1px; padding-bottom: 1px; padding-left: 15px;'&gt;&lt;img src='images/ags_pro_logo3.gif' style='width:118px;height:35px;'&gt;&amp;nbsp;&amp;nbsp;AGS Professional SystemWebService:- Introduction&lt;/h3&gt;&lt;p style='color: #003063; margin-top: 0px; margin-bottom: 0px; margin-left: 30px; padding-top: 5px; padding-bottom: 1px; padding-left: 15px;'&gt;AGS Professional SystemWebService Version 1.2.0 is a Tekis AB copyright (c) Product&lt;br&gt;AGS Professional SystemWebService is the businesslogic for AGS, it handles all metadata transactions to and from AGS&lt;br&gt;&lt;/p&gt;&lt;hr style='margin-left: 30px;'&gt;</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/webservices/">
+      <s:element name="ORACLE_Connect">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dataSource" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ORACLE_ConnectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ORACLE_ConnectResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SecurityLevelsGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SecurityLevelsGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SecurityLevelsGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentGetLinkAttributes">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentLinkId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentGetLinkAttributesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentGetLinkAttributesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentSetSecurityLevel">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newDocumentSecurityLevel" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newDocumentSecrecyInfo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentSetSecurityLevelResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentSetSecurityLevelResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GroupSetSecurityLevel">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newGroupSecurityLevel" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newGroupSecrecyInfo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GroupSetSecurityLevelResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupSetSecurityLevelResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentLinkUpdate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentLinkIdId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="p_Path" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="p_Description" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="p_Verb" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentLinkUpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentLinkUpdateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentLinkRemove">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentLinkId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentLinkRemoveResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentLinkRemoveResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentLinkCreate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ParentGroupId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="p_Path" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="p_Description" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="p_Verb" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentLinkCreateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentLinkCreateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GroupCreate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ParentGroupId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="valuePairs" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GroupCreateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupCreateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentRemove">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ParentGroupId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentRemoveResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentRemoveResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentRemoveVersion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ParentGroupId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentRemoveVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentRemoveVersionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GroupRemove">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ParentGroupId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_groupId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GroupRemoveResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupRemoveResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentMoveObjectRelation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="moveObjectTypeString" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="moveObjectId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="currentGroupId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="targetGroupId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentMoveObjectRelationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentMoveObjectRelationResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentCopyObjectRelation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="copyObjectTypeString" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="copyObjectId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="targetGroupId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentCopyObjectRelationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentCopyObjectRelationResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentThumbnailsGetFromGroupId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentThumbnailsGetFromGroupIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentThumbnailsGetFromGroupIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentThumbnailUrlsGetFromGroupId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentThumbnailUrlsGetFromGroupIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentThumbnailUrlsGetFromGroupIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentThumbnailGetFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentThumbnailGetFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentThumbnailGetFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentThumbnailUrlGetFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentThumbnailUrlGetFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentThumbnailUrlGetFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_IndexServerSearchResultGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchExpr" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchScope" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageNum" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_IndexServerSearchResultGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_IndexServerSearchResultGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchResultGetFromIndexServer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="index_SearchExpr" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="index_Category" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="index_PageNum" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchResultGetFromIndexServerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchResultGetFromIndexServerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchResultGetFromGroupId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="maxSearchDepth" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchResultGetFromGroupIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchResultGetFromGroupIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchResultGetFromDocumentId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchResultGetFromDocumentIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchResultGetFromDocumentIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GroupSetMetaDataFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValuePairs" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GroupSetMetaDataFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupSetMetaDataFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentSetMetaDataFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValuePairs" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentSetMetaDataFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentSetMetaDataFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GetVisibleStateForUsercols">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_dep" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GetVisibleStateForUsercolsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GetVisibleStateForUsercolsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GroupGetDataFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="includeUserInvisibleEditColumns" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GroupGetDataFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupGetDataFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentGetDataFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="includeUserInvisibleEditColumns" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentGetDataFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentGetDataFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_UserFunctionalityGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_UserFunctionalityGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_UserFunctionalityGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_FileInAgs">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_RequestXmlString" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_FileInAgsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_FileInAgsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GroupGetTemplate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GroupGetTemplateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupGetTemplateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentGetTemplate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentGetTemplateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentGetTemplateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_ArchiveStructureGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_ArchiveStructureGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ArchiveStructureGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_InstancesAndDepartmentsGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_InstancesAndDepartmentsGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_InstancesAndDepartmentsGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_InstanceInformationGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="m_DataSetString" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_InstanceInformationGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ags_InstanceInformationGetResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_InstancesGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_InstancesGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_InstancesGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DepartmentsGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DepartmentsGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DepartmentsGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentsGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentsGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentsGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentCreateSecurityBlurred">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_RequestXmlString" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentCreateSecurityBlurredResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentCreateSecurityBlurredResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentSetInChecked">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_RequestXmlString" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentSetInCheckedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentSetInCheckedResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentRegretOutchecked">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentRegretOutcheckedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentRegretOutcheckedResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentGetOutchecked">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentGetOutcheckedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentGetOutcheckedResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GetImage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_GetImageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GetImageResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentUrlGetFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentUrlGetFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentUrlGetFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentGetFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentGetFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentGetFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentThumbFileNameGetFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentThumbFileNameGetFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentThumbFileNameGetFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentOriginalFileNameGetFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DocumentOriginalFileNameGetFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentOriginalFileNameGetFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_UsersGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_UsersGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_UsersGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchGetColumnValues">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Select_columnName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DistinctSearch" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_WhereList" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchGetColumnValuesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchGetColumnValuesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayWhereColumnsGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DistinctSearch" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayWhereColumnsGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchWayWhereColumnsGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayGetSearchColumns">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DistinctSearch" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayGetSearchColumnsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchWayGetSearchColumnsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DelimsGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DelimsGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DelimsGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DepInformationGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_DepInformationGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DepInformationGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayGetIndexServerActiveSearchWayId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayGetIndexServerActiveSearchWayIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchWayGetIndexServerActiveSearchWayIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayGetResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchExpressions" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ExtendedColumnsExpressionList" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DistinctSearch" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageNum" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageSize" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="maxSearchDepth" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayGetResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchWayGetResultResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayGetResultFromGroupId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_GroupId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ExtendedColumnsExpressionList" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DistinctSearch" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageNum" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageSize" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="maxSearchDepth" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayGetResultFromGroupIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchWayGetResultFromGroupIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayGetVersionResultFromDocumentId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_DocumentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayGetVersionResultFromDocumentIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchWayGetVersionResultFromDocumentIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayGetPartResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchPrefix" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageNum" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageSize" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchWayGetPartResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchWayGetPartResultResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchwaysGet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Instance" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Dep" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_SearchwaysGetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_SearchwaysGetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_LogOut">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_ValidationKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_LogOutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_LogOutResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Uid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ags_Pwd" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ags_LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ags_LoginResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ORACLE_ConnectSoapIn">
+    <wsdl:part name="parameters" element="tns:ORACLE_Connect" />
+  </wsdl:message>
+  <wsdl:message name="ORACLE_ConnectSoapOut">
+    <wsdl:part name="parameters" element="tns:ORACLE_ConnectResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SecurityLevelsGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SecurityLevelsGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_SecurityLevelsGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SecurityLevelsGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentGetLinkAttributesSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentGetLinkAttributes" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentGetLinkAttributesSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentGetLinkAttributesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentSetSecurityLevelSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentSetSecurityLevel" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentSetSecurityLevelSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentSetSecurityLevelResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_GroupSetSecurityLevelSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_GroupSetSecurityLevel" />
+  </wsdl:message>
+  <wsdl:message name="ags_GroupSetSecurityLevelSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_GroupSetSecurityLevelResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentLinkUpdateSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentLinkUpdate" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentLinkUpdateSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentLinkUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentLinkRemoveSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentLinkRemove" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentLinkRemoveSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentLinkRemoveResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentLinkCreateSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentLinkCreate" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentLinkCreateSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentLinkCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_GroupCreateSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_GroupCreate" />
+  </wsdl:message>
+  <wsdl:message name="ags_GroupCreateSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_GroupCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentRemoveSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentRemove" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentRemoveSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentRemoveResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentRemoveVersionSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentRemoveVersion" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentRemoveVersionSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentRemoveVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_GroupRemoveSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_GroupRemove" />
+  </wsdl:message>
+  <wsdl:message name="ags_GroupRemoveSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_GroupRemoveResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentMoveObjectRelationSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentMoveObjectRelation" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentMoveObjectRelationSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentMoveObjectRelationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentCopyObjectRelationSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentCopyObjectRelation" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentCopyObjectRelationSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentCopyObjectRelationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentThumbnailsGetFromGroupIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentThumbnailsGetFromGroupId" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentThumbnailsGetFromGroupIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentThumbnailsGetFromGroupIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentThumbnailUrlsGetFromGroupIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentThumbnailUrlsGetFromGroupId" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentThumbnailUrlsGetFromGroupIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentThumbnailUrlsGetFromGroupIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentThumbnailGetFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentThumbnailGetFromId" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentThumbnailGetFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentThumbnailGetFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentThumbnailUrlGetFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentThumbnailUrlGetFromId" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentThumbnailUrlGetFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentThumbnailUrlGetFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_IndexServerSearchResultGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_IndexServerSearchResultGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_IndexServerSearchResultGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_IndexServerSearchResultGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchResultGetFromIndexServerSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SearchResultGetFromIndexServer" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchResultGetFromIndexServerSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SearchResultGetFromIndexServerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchResultGetFromGroupIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SearchResultGetFromGroupId" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchResultGetFromGroupIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SearchResultGetFromGroupIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchResultGetFromDocumentIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SearchResultGetFromDocumentId" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchResultGetFromDocumentIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SearchResultGetFromDocumentIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_GroupSetMetaDataFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_GroupSetMetaDataFromId" />
+  </wsdl:message>
+  <wsdl:message name="ags_GroupSetMetaDataFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_GroupSetMetaDataFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentSetMetaDataFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentSetMetaDataFromId" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentSetMetaDataFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentSetMetaDataFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_GetVisibleStateForUsercolsSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_GetVisibleStateForUsercols" />
+  </wsdl:message>
+  <wsdl:message name="ags_GetVisibleStateForUsercolsSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_GetVisibleStateForUsercolsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_GroupGetDataFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_GroupGetDataFromId" />
+  </wsdl:message>
+  <wsdl:message name="ags_GroupGetDataFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_GroupGetDataFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentGetDataFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentGetDataFromId" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentGetDataFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentGetDataFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_UserFunctionalityGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_UserFunctionalityGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_UserFunctionalityGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_UserFunctionalityGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_FileInAgsSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_FileInAgs" />
+  </wsdl:message>
+  <wsdl:message name="ags_FileInAgsSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_FileInAgsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_GroupGetTemplateSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_GroupGetTemplate" />
+  </wsdl:message>
+  <wsdl:message name="ags_GroupGetTemplateSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_GroupGetTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentGetTemplateSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentGetTemplate" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentGetTemplateSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentGetTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_ArchiveStructureGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_ArchiveStructureGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_ArchiveStructureGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_ArchiveStructureGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_InstancesAndDepartmentsGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_InstancesAndDepartmentsGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_InstancesAndDepartmentsGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_InstancesAndDepartmentsGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_InstanceInformationGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_InstanceInformationGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_InstanceInformationGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_InstanceInformationGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_InstancesGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_InstancesGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_InstancesGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_InstancesGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DepartmentsGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DepartmentsGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_DepartmentsGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DepartmentsGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentsGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentsGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentsGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentsGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentCreateSecurityBlurredSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentCreateSecurityBlurred" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentCreateSecurityBlurredSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentCreateSecurityBlurredResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentSetInCheckedSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentSetInChecked" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentSetInCheckedSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentSetInCheckedResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentRegretOutcheckedSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentRegretOutchecked" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentRegretOutcheckedSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentRegretOutcheckedResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentGetOutcheckedSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentGetOutchecked" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentGetOutcheckedSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentGetOutcheckedResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_GetImageSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_GetImage" />
+  </wsdl:message>
+  <wsdl:message name="ags_GetImageSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_GetImageResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentUrlGetFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentUrlGetFromId" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentUrlGetFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentUrlGetFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentGetFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentGetFromId" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentGetFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentGetFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentThumbFileNameGetFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentThumbFileNameGetFromId" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentThumbFileNameGetFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentThumbFileNameGetFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentOriginalFileNameGetFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DocumentOriginalFileNameGetFromId" />
+  </wsdl:message>
+  <wsdl:message name="ags_DocumentOriginalFileNameGetFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DocumentOriginalFileNameGetFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_UsersGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_UsersGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_UsersGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_UsersGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchGetColumnValuesSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SearchGetColumnValues" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchGetColumnValuesSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SearchGetColumnValuesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayWhereColumnsGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayWhereColumnsGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayWhereColumnsGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayWhereColumnsGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayGetSearchColumnsSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayGetSearchColumns" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayGetSearchColumnsSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayGetSearchColumnsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DelimsGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DelimsGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_DelimsGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DelimsGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_DepInformationGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_DepInformationGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_DepInformationGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_DepInformationGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayGetIndexServerActiveSearchWayIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayGetIndexServerActiveSearchWayId" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayGetIndexServerActiveSearchWayIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayGetIndexServerActiveSearchWayIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayGetResultSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayGetResult" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayGetResultSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayGetResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayGetResultFromGroupIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayGetResultFromGroupId" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayGetResultFromGroupIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayGetResultFromGroupIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayGetVersionResultFromDocumentIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayGetVersionResultFromDocumentId" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayGetVersionResultFromDocumentIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayGetVersionResultFromDocumentIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayGetPartResultSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayGetPartResult" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchWayGetPartResultSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SearchWayGetPartResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchwaysGetSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_SearchwaysGet" />
+  </wsdl:message>
+  <wsdl:message name="ags_SearchwaysGetSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_SearchwaysGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_LogOutSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_LogOut" />
+  </wsdl:message>
+  <wsdl:message name="ags_LogOutSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_LogOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="ags_LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:ags_Login" />
+  </wsdl:message>
+  <wsdl:message name="ags_LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:ags_LoginResponse" />
+  </wsdl:message>
+  <wsdl:portType name="AGS_x0020_Professional_x0020_SystemWebService_x0020_BusinesslogicSoap">
+    <wsdl:operation name="ORACLE_Connect">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">ORACLE AnslutningsTest </wsdl:documentation>
+      <wsdl:input message="tns:ORACLE_ConnectSoapIn" />
+      <wsdl:output message="tns:ORACLE_ConnectSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SecurityLevelsGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar befintliga säkerhetsnivåer från AGS</wsdl:documentation>
+      <wsdl:input message="tns:ags_SecurityLevelsGetSoapIn" />
+      <wsdl:output message="tns:ags_SecurityLevelsGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetLinkAttributes">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar attribut för internet-genväg</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentGetLinkAttributesSoapIn" />
+      <wsdl:output message="tns:ags_DocumentGetLinkAttributesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentSetSecurityLevel">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Uppdaterar säkerhetsnivå för dokument</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentSetSecurityLevelSoapIn" />
+      <wsdl:output message="tns:ags_DocumentSetSecurityLevelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupSetSecurityLevel">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Uppdaterar säkerhetsnivå för grupp</wsdl:documentation>
+      <wsdl:input message="tns:ags_GroupSetSecurityLevelSoapIn" />
+      <wsdl:output message="tns:ags_GroupSetSecurityLevelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentLinkUpdate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Uppdaterar en befintlig dokumentlänk</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentLinkUpdateSoapIn" />
+      <wsdl:output message="tns:ags_DocumentLinkUpdateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentLinkRemove">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Tar bort en dokumentlänk</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentLinkRemoveSoapIn" />
+      <wsdl:output message="tns:ags_DocumentLinkRemoveSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentLinkCreate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Skapa en dokumentlänk</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentLinkCreateSoapIn" />
+      <wsdl:output message="tns:ags_DocumentLinkCreateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupCreate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Skapar grupp under förälder grupp angiven</wsdl:documentation>
+      <wsdl:input message="tns:ags_GroupCreateSoapIn" />
+      <wsdl:output message="tns:ags_GroupCreateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentRemove">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Tar bort grupp med angivet gruppId</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentRemoveSoapIn" />
+      <wsdl:output message="tns:ags_DocumentRemoveSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentRemoveVersion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Tar bort dokument version</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentRemoveVersionSoapIn" />
+      <wsdl:output message="tns:ags_DocumentRemoveVersionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupRemove">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Tar bort grupp med angivet gruppId</wsdl:documentation>
+      <wsdl:input message="tns:ags_GroupRemoveSoapIn" />
+      <wsdl:output message="tns:ags_GroupRemoveSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentMoveObjectRelation">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Flytta objekt i relations hierarchin</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentMoveObjectRelationSoapIn" />
+      <wsdl:output message="tns:ags_DocumentMoveObjectRelationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentCopyObjectRelation">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Kopiera objekt i relations hierarchin</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentCopyObjectRelationSoapIn" />
+      <wsdl:output message="tns:ags_DocumentCopyObjectRelationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbnailsGetFromGroupId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar alla minyatyrbild under grupp</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentThumbnailsGetFromGroupIdSoapIn" />
+      <wsdl:output message="tns:ags_DocumentThumbnailsGetFromGroupIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbnailUrlsGetFromGroupId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar alla minyatyrbild under grupp</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentThumbnailUrlsGetFromGroupIdSoapIn" />
+      <wsdl:output message="tns:ags_DocumentThumbnailUrlsGetFromGroupIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbnailGetFromId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar minyatyrbild utifrån dokumentid</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentThumbnailGetFromIdSoapIn" />
+      <wsdl:output message="tns:ags_DocumentThumbnailGetFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbnailUrlGetFromId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar URL till miniatyrbild utifrån dokumentid</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentThumbnailUrlGetFromIdSoapIn" />
+      <wsdl:output message="tns:ags_DocumentThumbnailUrlGetFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_IndexServerSearchResultGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Utför fritext sökning via IndexServer</wsdl:documentation>
+      <wsdl:input message="tns:ags_IndexServerSearchResultGetSoapIn" />
+      <wsdl:output message="tns:ags_IndexServerSearchResultGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchResultGetFromIndexServer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Utför fritextsökning mot IndexServer</wsdl:documentation>
+      <wsdl:input message="tns:ags_SearchResultGetFromIndexServerSoapIn" />
+      <wsdl:output message="tns:ags_SearchResultGetFromIndexServerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchResultGetFromGroupId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Söker via gruppid</wsdl:documentation>
+      <wsdl:input message="tns:ags_SearchResultGetFromGroupIdSoapIn" />
+      <wsdl:output message="tns:ags_SearchResultGetFromGroupIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchResultGetFromDocumentId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Söker via dokumentid</wsdl:documentation>
+      <wsdl:input message="tns:ags_SearchResultGetFromDocumentIdSoapIn" />
+      <wsdl:output message="tns:ags_SearchResultGetFromDocumentIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupSetMetaDataFromId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Uppdaterar Metadata För Grupp Avgränsare uttryck: ]¤=¤[ , Avgränsare Enhter = Värde: [¤=¤]</wsdl:documentation>
+      <wsdl:input message="tns:ags_GroupSetMetaDataFromIdSoapIn" />
+      <wsdl:output message="tns:ags_GroupSetMetaDataFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentSetMetaDataFromId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Uppdaterar Metadata För Dokument</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentSetMetaDataFromIdSoapIn" />
+      <wsdl:output message="tns:ags_DocumentSetMetaDataFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_GetVisibleStateForUsercols">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar Synlighet för Användarkolumner för editering</wsdl:documentation>
+      <wsdl:input message="tns:ags_GetVisibleStateForUsercolsSoapIn" />
+      <wsdl:output message="tns:ags_GetVisibleStateForUsercolsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupGetDataFromId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar Grupp-data från Grupp ID</wsdl:documentation>
+      <wsdl:input message="tns:ags_GroupGetDataFromIdSoapIn" />
+      <wsdl:output message="tns:ags_GroupGetDataFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetDataFromId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar Grupp-data från Grupp ID</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentGetDataFromIdSoapIn" />
+      <wsdl:output message="tns:ags_DocumentGetDataFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_UserFunctionalityGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar AGS Användar möjligheter</wsdl:documentation>
+      <wsdl:input message="tns:ags_UserFunctionalityGetSoapIn" />
+      <wsdl:output message="tns:ags_UserFunctionalityGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_FileInAgs">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Utför arkivering i AGS</wsdl:documentation>
+      <wsdl:input message="tns:ags_FileInAgsSoapIn" />
+      <wsdl:output message="tns:ags_FileInAgsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupGetTemplate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar Mall för Grupp</wsdl:documentation>
+      <wsdl:input message="tns:ags_GroupGetTemplateSoapIn" />
+      <wsdl:output message="tns:ags_GroupGetTemplateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetTemplate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar Mall för Dokument</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentGetTemplateSoapIn" />
+      <wsdl:output message="tns:ags_DocumentGetTemplateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_ArchiveStructureGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar arkivstruktur</wsdl:documentation>
+      <wsdl:input message="tns:ags_ArchiveStructureGetSoapIn" />
+      <wsdl:output message="tns:ags_ArchiveStructureGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_InstancesAndDepartmentsGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämta AGS Instanser med tillhörande avdelningar</wsdl:documentation>
+      <wsdl:input message="tns:ags_InstancesAndDepartmentsGetSoapIn" />
+      <wsdl:output message="tns:ags_InstancesAndDepartmentsGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_InstanceInformationGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämta information om angiven AGS Instans eller information för alla funna AGS Instanser</wsdl:documentation>
+      <wsdl:input message="tns:ags_InstanceInformationGetSoapIn" />
+      <wsdl:output message="tns:ags_InstanceInformationGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_InstancesGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämta information om angiven AGS Instans eller information för alla funna AGS Instanser</wsdl:documentation>
+      <wsdl:input message="tns:ags_InstancesGetSoapIn" />
+      <wsdl:output message="tns:ags_InstancesGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DepartmentsGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämta alla AGS Arkiv under given AGS Instans eller under alla AGS Arkiv under alla funna AGS Instanser</wsdl:documentation>
+      <wsdl:input message="tns:ags_DepartmentsGetSoapIn" />
+      <wsdl:output message="tns:ags_DepartmentsGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentsGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar dokument</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentsGetSoapIn" />
+      <wsdl:output message="tns:ags_DocumentsGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentCreateSecurityBlurred">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Skapa ett säkerhetssuddat dokument</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentCreateSecurityBlurredSoapIn" />
+      <wsdl:output message="tns:ags_DocumentCreateSecurityBlurredSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentSetInChecked">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar dokument från givet Dokument ID</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentSetInCheckedSoapIn" />
+      <wsdl:output message="tns:ags_DocumentSetInCheckedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentRegretOutchecked">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Ångrar utcheckning av dokument från givet Dokument ID</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentRegretOutcheckedSoapIn" />
+      <wsdl:output message="tns:ags_DocumentRegretOutcheckedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetOutchecked">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar dokument från givet Dokument ID</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentGetOutcheckedSoapIn" />
+      <wsdl:output message="tns:ags_DocumentGetOutcheckedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_GetImage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar Image Från Webservice</wsdl:documentation>
+      <wsdl:input message="tns:ags_GetImageSoapIn" />
+      <wsdl:output message="tns:ags_GetImageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentUrlGetFromId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar dokument från givet Dokument ID</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentUrlGetFromIdSoapIn" />
+      <wsdl:output message="tns:ags_DocumentUrlGetFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetFromId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar dokument från givet Dokument ID</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentGetFromIdSoapIn" />
+      <wsdl:output message="tns:ags_DocumentGetFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbFileNameGetFromId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar mimiatyr original filnamne för dokument från givet Dokument ID</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentThumbFileNameGetFromIdSoapIn" />
+      <wsdl:output message="tns:ags_DocumentThumbFileNameGetFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentOriginalFileNameGetFromId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar originalfilnam för dokument från givet Dokument ID</wsdl:documentation>
+      <wsdl:input message="tns:ags_DocumentOriginalFileNameGetFromIdSoapIn" />
+      <wsdl:output message="tns:ags_DocumentOriginalFileNameGetFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_UsersGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Test För XML Retur - Hämta registrerade användare i AGS</wsdl:documentation>
+      <wsdl:input message="tns:ags_UsersGetSoapIn" />
+      <wsdl:output message="tns:ags_UsersGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchGetColumnValues">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar data från specifika kolumner direkt</wsdl:documentation>
+      <wsdl:input message="tns:ags_SearchGetColumnValuesSoapIn" />
+      <wsdl:output message="tns:ags_SearchGetColumnValuesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayWhereColumnsGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar ifyllnadskolumner för sökning på fördefinierat söksätt</wsdl:documentation>
+      <wsdl:input message="tns:ags_SearchWayWhereColumnsGetSoapIn" />
+      <wsdl:output message="tns:ags_SearchWayWhereColumnsGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetSearchColumns">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar visningskolumner för söksätt</wsdl:documentation>
+      <wsdl:input message="tns:ags_SearchWayGetSearchColumnsSoapIn" />
+      <wsdl:output message="tns:ags_SearchWayGetSearchColumnsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DelimsGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Fetchs delim expression for listvalues</wsdl:documentation>
+      <wsdl:input message="tns:ags_DelimsGetSoapIn" />
+      <wsdl:output message="tns:ags_DelimsGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_DepInformationGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämta information om arkiv</wsdl:documentation>
+      <wsdl:input message="tns:ags_DepInformationGetSoapIn" />
+      <wsdl:output message="tns:ags_DepInformationGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetIndexServerActiveSearchWayId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämtar definierat söksätt för IndexServer</wsdl:documentation>
+      <wsdl:input message="tns:ags_SearchWayGetIndexServerActiveSearchWayIdSoapIn" />
+      <wsdl:output message="tns:ags_SearchWayGetIndexServerActiveSearchWayIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetResult">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Utför sökning på grupper utifrån ett fördefinierat söksätt</wsdl:documentation>
+      <wsdl:input message="tns:ags_SearchWayGetResultSoapIn" />
+      <wsdl:output message="tns:ags_SearchWayGetResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetResultFromGroupId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Utför sökning på specifik grupp från givet grupp utifrån ett fördefinierat söksätt</wsdl:documentation>
+      <wsdl:input message="tns:ags_SearchWayGetResultFromGroupIdSoapIn" />
+      <wsdl:output message="tns:ags_SearchWayGetResultFromGroupIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetVersionResultFromDocumentId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Utför sökning på versioner för dokument utifrån ett fördefinierat söksätt</wsdl:documentation>
+      <wsdl:input message="tns:ags_SearchWayGetVersionResultFromDocumentIdSoapIn" />
+      <wsdl:output message="tns:ags_SearchWayGetVersionResultFromDocumentIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetPartResult">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Utför sökning på grupper YOUTUBE Style</wsdl:documentation>
+      <wsdl:input message="tns:ags_SearchWayGetPartResultSoapIn" />
+      <wsdl:output message="tns:ags_SearchWayGetPartResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchwaysGet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Hämta alla söksätt under funnen AGS Instans/AGS Arkiv</wsdl:documentation>
+      <wsdl:input message="tns:ags_SearchwaysGetSoapIn" />
+      <wsdl:output message="tns:ags_SearchwaysGetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_LogOut">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Loggar ut från AGS</wsdl:documentation>
+      <wsdl:input message="tns:ags_LogOutSoapIn" />
+      <wsdl:output message="tns:ags_LogOutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ags_Login">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Loggar in mot AGS för att kunna använda tjänster</wsdl:documentation>
+      <wsdl:input message="tns:ags_LoginSoapIn" />
+      <wsdl:output message="tns:ags_LoginSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AGS_x0020_Professional_x0020_SystemWebService_x0020_BusinesslogicSoap" type="tns:AGS_x0020_Professional_x0020_SystemWebService_x0020_BusinesslogicSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ORACLE_Connect">
+      <soap:operation soapAction="http://microsoft.com/webservices/ORACLE_Connect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SecurityLevelsGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SecurityLevelsGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetLinkAttributes">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentGetLinkAttributes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentSetSecurityLevel">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentSetSecurityLevel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupSetSecurityLevel">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_GroupSetSecurityLevel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentLinkUpdate">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentLinkUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentLinkRemove">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentLinkRemove" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentLinkCreate">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentLinkCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupCreate">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_GroupCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentRemove">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentRemove" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentRemoveVersion">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentRemoveVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupRemove">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_GroupRemove" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentMoveObjectRelation">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentMoveObjectRelation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentCopyObjectRelation">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentCopyObjectRelation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbnailsGetFromGroupId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentThumbnailsGetFromGroupId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbnailUrlsGetFromGroupId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentThumbnailUrlsGetFromGroupId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbnailGetFromId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentThumbnailGetFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbnailUrlGetFromId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentThumbnailUrlGetFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_IndexServerSearchResultGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_IndexServerSearchResultGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchResultGetFromIndexServer">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SearchResultGetFromIndexServer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchResultGetFromGroupId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SearchResultGetFromGroupId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchResultGetFromDocumentId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SearchResultGetFromDocumentId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupSetMetaDataFromId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_GroupSetMetaDataFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentSetMetaDataFromId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentSetMetaDataFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GetVisibleStateForUsercols">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_GetVisibleStateForUsercols" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupGetDataFromId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_GroupGetDataFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetDataFromId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentGetDataFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_UserFunctionalityGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_UserFunctionalityGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_FileInAgs">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_FileInAgs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupGetTemplate">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_GroupGetTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetTemplate">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentGetTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_ArchiveStructureGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_ArchiveStructureGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_InstancesAndDepartmentsGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_InstancesAndDepartmentsGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_InstanceInformationGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_InstanceInformationGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_InstancesGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_InstancesGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DepartmentsGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DepartmentsGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentsGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentsGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentCreateSecurityBlurred">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentCreateSecurityBlurred" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentSetInChecked">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentSetInChecked" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentRegretOutchecked">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentRegretOutchecked" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetOutchecked">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentGetOutchecked" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GetImage">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_GetImage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentUrlGetFromId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentUrlGetFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetFromId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentGetFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbFileNameGetFromId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentThumbFileNameGetFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentOriginalFileNameGetFromId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DocumentOriginalFileNameGetFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_UsersGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_UsersGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchGetColumnValues">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SearchGetColumnValues" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayWhereColumnsGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SearchWayWhereColumnsGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetSearchColumns">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SearchWayGetSearchColumns" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DelimsGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DelimsGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DepInformationGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_DepInformationGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetIndexServerActiveSearchWayId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SearchWayGetIndexServerActiveSearchWayId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetResult">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SearchWayGetResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetResultFromGroupId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SearchWayGetResultFromGroupId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetVersionResultFromDocumentId">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SearchWayGetVersionResultFromDocumentId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetPartResult">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SearchWayGetPartResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchwaysGet">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_SearchwaysGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_LogOut">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_LogOut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_Login">
+      <soap:operation soapAction="http://microsoft.com/webservices/ags_Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AGS_x0020_Professional_x0020_SystemWebService_x0020_BusinesslogicSoap12" type="tns:AGS_x0020_Professional_x0020_SystemWebService_x0020_BusinesslogicSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ORACLE_Connect">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ORACLE_Connect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SecurityLevelsGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SecurityLevelsGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetLinkAttributes">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentGetLinkAttributes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentSetSecurityLevel">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentSetSecurityLevel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupSetSecurityLevel">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_GroupSetSecurityLevel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentLinkUpdate">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentLinkUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentLinkRemove">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentLinkRemove" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentLinkCreate">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentLinkCreate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupCreate">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_GroupCreate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentRemove">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentRemove" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentRemoveVersion">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentRemoveVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupRemove">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_GroupRemove" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentMoveObjectRelation">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentMoveObjectRelation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentCopyObjectRelation">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentCopyObjectRelation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbnailsGetFromGroupId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentThumbnailsGetFromGroupId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbnailUrlsGetFromGroupId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentThumbnailUrlsGetFromGroupId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbnailGetFromId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentThumbnailGetFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbnailUrlGetFromId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentThumbnailUrlGetFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_IndexServerSearchResultGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_IndexServerSearchResultGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchResultGetFromIndexServer">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SearchResultGetFromIndexServer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchResultGetFromGroupId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SearchResultGetFromGroupId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchResultGetFromDocumentId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SearchResultGetFromDocumentId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupSetMetaDataFromId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_GroupSetMetaDataFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentSetMetaDataFromId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentSetMetaDataFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GetVisibleStateForUsercols">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_GetVisibleStateForUsercols" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupGetDataFromId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_GroupGetDataFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetDataFromId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentGetDataFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_UserFunctionalityGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_UserFunctionalityGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_FileInAgs">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_FileInAgs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GroupGetTemplate">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_GroupGetTemplate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetTemplate">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentGetTemplate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_ArchiveStructureGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_ArchiveStructureGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_InstancesAndDepartmentsGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_InstancesAndDepartmentsGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_InstanceInformationGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_InstanceInformationGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_InstancesGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_InstancesGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DepartmentsGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DepartmentsGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentsGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentsGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentCreateSecurityBlurred">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentCreateSecurityBlurred" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentSetInChecked">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentSetInChecked" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentRegretOutchecked">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentRegretOutchecked" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetOutchecked">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentGetOutchecked" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_GetImage">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_GetImage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentUrlGetFromId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentUrlGetFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentGetFromId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentGetFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentThumbFileNameGetFromId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentThumbFileNameGetFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DocumentOriginalFileNameGetFromId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DocumentOriginalFileNameGetFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_UsersGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_UsersGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchGetColumnValues">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SearchGetColumnValues" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayWhereColumnsGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SearchWayWhereColumnsGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetSearchColumns">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SearchWayGetSearchColumns" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DelimsGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DelimsGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_DepInformationGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_DepInformationGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetIndexServerActiveSearchWayId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SearchWayGetIndexServerActiveSearchWayId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetResult">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SearchWayGetResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetResultFromGroupId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SearchWayGetResultFromGroupId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetVersionResultFromDocumentId">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SearchWayGetVersionResultFromDocumentId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchWayGetPartResult">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SearchWayGetPartResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_SearchwaysGet">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_SearchwaysGet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_LogOut">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_LogOut" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ags_Login">
+      <soap12:operation soapAction="http://microsoft.com/webservices/ags_Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AGS_x0020_Professional_x0020_SystemWebService_x0020_Businesslogic">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">&lt;h3 style='color: #003063; font-family: Tahoma; font-size: 16px; font-weight: bold; background-color: #cecece; margin-top: 0px; margin-bottom: 0px; margin-left: 30px; padding-top: 1px; padding-bottom: 1px; padding-left: 15px;'&gt;&lt;img src='images/ags_pro_logo3.gif' style='width:118px;height:35px;'&gt;&amp;nbsp;&amp;nbsp;AGS Professional SystemWebService:- Introduction&lt;/h3&gt;&lt;p style='color: #003063; margin-top: 0px; margin-bottom: 0px; margin-left: 30px; padding-top: 5px; padding-bottom: 1px; padding-left: 15px;'&gt;AGS Professional SystemWebService Version 1.2.0 is a Tekis AB copyright (c) Product&lt;br&gt;AGS Professional SystemWebService is the businesslogic for AGS, it handles all metadata transactions to and from AGS&lt;br&gt;&lt;/p&gt;&lt;hr style='margin-left: 30px;'&gt;</wsdl:documentation>
+    <wsdl:port name="AGS_x0020_Professional_x0020_SystemWebService_x0020_BusinesslogicSoap" binding="tns:AGS_x0020_Professional_x0020_SystemWebService_x0020_BusinesslogicSoap">
+      <soap:address location="http://utv-sup01-s.utv.tekis.local/AGS/AgsSystemService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AGS_x0020_Professional_x0020_SystemWebService_x0020_BusinesslogicSoap12" binding="tns:AGS_x0020_Professional_x0020_SystemWebService_x0020_BusinesslogicSoap12">
+      <soap12:address location="http://utv-sup01-s.utv.tekis.local/AGS/AgsSystemService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

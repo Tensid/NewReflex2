@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+let configId: string;
+
+export function setConfigId(id: string) {
+  configId = id;
+}
+
 export enum CaseSource {
   AGS = 'AGS',
   ByggR = 'ByggR',
@@ -12,6 +18,25 @@ export enum Tab {
   Cases = 'Cases',
   Population = 'Population',
   Property = 'Property'
+}
+
+export interface Case {
+  caseId: string;
+  dnr: string;
+  title: string;
+  caseSource: CaseSource;
+  date: string;
+  unavailableDueToSecrecy: boolean;
+  status: string;
+  arendegrupp: string;
+  arendetyp: string;
+  arendeslag: string;
+  fastighetsbeteckning: string;
+  kommun: string;
+  beskrivning: string;
+  handlaggareEfternamn: string;
+  handlaggareFornamn: string;
+  handlaggareSignatur: string;
 }
 
 export interface SearchResult {
@@ -58,6 +83,15 @@ export interface UpdateConfigPermissionsRequest {
 export interface UpdateRolesRequest {
   userId: string;
   roles: string[];
+}
+
+export async function getCases(estateId: string) {
+  let url = `api/cases/${estateId}`;
+  if (configId) {
+    url = `${url}?configId=${configId}`;
+  }
+  const { data } = await axios.get<Case[]>(url);
+  return data;
 }
 
 export async function getConfigs() {
