@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reflex.Data;
@@ -22,7 +23,7 @@ namespace Reflex.Controllers
         }
 
         [HttpGet("{estateId}/{estateName?}")]
-        public IEnumerable<Case> Get(string estateId, string estateName, Guid configId)
+        public async Task<IEnumerable<Case>> Get(string estateId, string estateName, Guid configId)
         {
             var cases = new List<Case>();
             var caseSources = _repository.GetConfig(configId)?.CaseSources;
@@ -38,11 +39,11 @@ namespace Reflex.Controllers
                 {
                     if (source == CaseSource.AGS)
                     {
-                        caseResult.AddRange(proxy.GetCasesByEstate(string.IsNullOrWhiteSpace(estateId) ? estateName : estateId));
+                        caseResult.AddRange(await proxy.GetCasesByEstate(string.IsNullOrWhiteSpace(estateId) ? estateName : estateId));
                     }
                     else
                     {
-                        caseResult.AddRange(proxy.GetCasesByEstate(estateId));
+                        caseResult.AddRange(await proxy.GetCasesByEstate(estateId));
                     }
 
                     cases.AddRange(caseResult);

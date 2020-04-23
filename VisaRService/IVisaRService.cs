@@ -1,14 +1,15 @@
-﻿using VisaRService.Contracts;
+﻿using System.Threading.Tasks;
+using VisaRService.Contracts;
 
 namespace VisaRService
 {
     public interface IVisaRService
     {
-        Case[] GetCasesByEstate(string estateId);
-        string GetPreviewByCase(string caseId);
-        CasePerson[] GetPersonsByCase(string caseId);
-        Occurence[] GetOccurencesByCase(string caseId);
-        ArchivedDocument[] GetArchivedDocumentsByCase(string caseId);
-        Estate[] GetEstatesByCase(string caseId);
+        Task<Case[]> GetCasesByEstate(string estateId);
+        Task<string> GetPreviewByCase(string caseId);
+        Task<CasePerson[]> GetPersonsByCase(string caseId);
+        Task<Occurence[]> GetOccurencesByCase(string caseId);
+        Task<ArchivedDocument[]> GetArchivedDocumentsByCase(string caseId);
+        Task<Estate[]> GetEstatesByCase(string caseId);
     }
 }

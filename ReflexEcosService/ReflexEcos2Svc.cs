@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using ReflexEcos2Service.Ecos2ReflexService;
 using VisaRService;
 using VisaRService.Contracts;
@@ -44,11 +45,11 @@ namespace ReflexEcos2Service
             return client;
         }
 
-        public Case[] GetCasesByEstate(string estateId)
+        public async Task<Case[]> GetCasesByEstate(string estateId)
         {
             var fnr = int.Parse(estateId);
             var client = GetClient();
-            var result = client.GetEstateCases(fnr);
+            var result = await client.GetEstateCasesAsync(fnr);
             return result.AsParallel().Select(c => new Case
             {
                 CaseSource = "Ecos",
@@ -59,10 +60,10 @@ namespace ReflexEcos2Service
             }).ToArray();
         }
 
-        public Occurence[] GetOccurencesByCase(string caseId)
+        public async Task<Occurence[]> GetOccurencesByCase(string caseId)
         {
             var client = GetClient();
-            var result = client.GetCaseOccurences(Guid.Parse(caseId));
+            var result = await client.GetCaseOccurencesAsync(Guid.Parse(caseId));
             return result.Select(o => new Occurence
             {
                 Title = o.OccurenceTitle,
@@ -76,25 +77,10 @@ namespace ReflexEcos2Service
             }).ToArray();
         }
 
-        public string GetPreviewByCase(string caseId)
-        {
-            return null;
-        }
-
-        public CasePerson[] GetPersonsByCase(string caseId)
-        {
-            return new CasePerson[0];
-        }
-
-        public ArchivedDocument[] GetArchivedDocumentsByCase(string caseId)
-        {
-            return new ArchivedDocument[0];
-        }
-
-        public PhysicalDocument GetDocument(string documentId)
+        public async Task<PhysicalDocument> GetDocument(string documentId)
         {
             var client = GetClient();
-            var file = client.GetDocumentFile(Guid.Parse(documentId));
+            var file = await client.GetDocumentFileAsync(Guid.Parse(documentId));
 
             return new PhysicalDocument
             {
@@ -103,9 +89,24 @@ namespace ReflexEcos2Service
             };
         }
 
-        public Estate[] GetEstatesByCase(string caseId)
+        public Task<string> GetPreviewByCase(string caseId)
         {
-            return new Estate[] { };
+            return null;
+        }
+
+        public Task<CasePerson[]> GetPersonsByCase(string caseId)
+        {
+            return null;
+        }
+
+        public Task<ArchivedDocument[]> GetArchivedDocumentsByCase(string caseId)
+        {
+            return null;
+        }
+
+        public Task<Estate[]> GetEstatesByCase(string caseId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

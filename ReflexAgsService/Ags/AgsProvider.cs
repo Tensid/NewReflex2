@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Xml;
 using VisaRService.Contracts;
 using Estate = VisaRService.Contracts.Estate;
@@ -68,10 +69,10 @@ namespace ReflexAgsService.Ags
             return matches.Cast<Match>().Select(x => x.Groups[1].Value).Distinct().ToArray();
         }
 
-        public Case[] GetCasesByEstate(string estateId, string displayPattern, string dateColumn, string instanceId, string departmentId, string searchWay)
+        public async Task<Case[]> GetCasesByEstate(string estateId, string displayPattern, string dateColumn, string instanceId, string departmentId, string searchWay)
         {
             var svc = GetClient();
-            var searchResultXml = svc.Client.ags_SearchWayGetResult(svc.ValidationKey, instanceId, departmentId, searchWay, estateId, "GROUP", "", "False", "1", "0", "1");
+            var searchResultXml = (await svc.Client.ags_SearchWayGetResultAsync(svc.ValidationKey, instanceId, departmentId, searchWay, estateId, "GROUP", "", "False", "1", "0", "1")).Body.ags_SearchWayGetResultResult;
 
             var displayColumns = GetPatternColumns(displayPattern);
 
@@ -87,7 +88,7 @@ namespace ReflexAgsService.Ags
 
             var title = new Dictionary<string, string>();
             var groupId = groups.ChildNodes.Cast<XmlNode>().FirstOrDefault()?.Attributes?["AGS_GROUPID"].Value;
-            var groupData = svc.Client.ags_GroupGetDataFromId(svc.ValidationKey, instanceId, departmentId, groupId, "true");
+            var groupData = (await svc.Client.ags_GroupGetDataFromIdAsync(svc.ValidationKey, instanceId, departmentId, groupId, "true")).Body.ags_GroupGetDataFromIdResult;
             var searchResultDocGroupData = new XmlDocument();
             searchResultDocGroupData.LoadXml(groupData);
             var agsGroupAliasAndColumnName = searchResultDocGroupData.GetElementsByTagName("ags_GroupAliasAndColumnName");
@@ -100,7 +101,7 @@ namespace ReflexAgsService.Ags
             var searchResult = groups.ChildNodes.Cast<XmlNode>().Select(groupNode => new Case
             {
                 CaseSource = "AGS",
-                Date = String.IsNullOrEmpty(dateColumn) ? DateTime.Today : DateTime.Parse(groupNode.Attributes.Cast<XmlAttribute>().SingleOrDefault(attr => attr.Name == dateColumn)?.Value ?? DateTime.Today.ToShortDateString()),
+                Date = string.IsNullOrEmpty(dateColumn) ? DateTime.Today : DateTime.Parse(groupNode.Attributes.Cast<XmlAttribute>().SingleOrDefault(attr => attr.Name == dateColumn)?.Value ?? DateTime.Today.ToShortDateString()),
                 CaseId = groupNode.Attributes["AGS_GROUPID"].Value,
                 Dnr = groupNode.Attributes["AGS_GROUPID"].Value,
                 Title = string.Format(display, displayColumns.Select(dp => title[dp] ?? "-").ToArray())
@@ -109,10 +110,10 @@ namespace ReflexAgsService.Ags
             return searchResult;
         }
 
-        public ArchivedDocument[] GetDocumentsByCase(string caseId, string displayPattern, string instanceId, string departmentId, string searchWay)
+        public async Task<ArchivedDocument[]> GetDocumentsByCase(string caseId, string displayPattern, string instanceId, string departmentId, string searchWay)
         {
             var svc = GetClient();
-            var searchResultMetadata = svc.Client.ags_SearchWayGetResultFromGroupId(svc.ValidationKey, instanceId, departmentId, searchWay, caseId, "DOC", "", "False", "0", "0", "0");
+            var searchResultMetadata = (await svc.Client.ags_SearchWayGetResultFromGroupIdAsync(svc.ValidationKey, instanceId, departmentId, searchWay, caseId, "DOC", "", "False", "0", "0", "0")).Body.ags_SearchWayGetResultFromGroupIdResult;
 
             var displayColumns = GetPatternColumns(displayPattern);
 
@@ -127,7 +128,7 @@ namespace ReflexAgsService.Ags
 
             var documentNodes = documentsDoc.GetElementsByTagName("ags_Documents")[0];
 
-            var ret = documentNodes.ChildNodes.Cast<XmlNode>().Select(docNode => new ArchivedDocument
+            return documentNodes.ChildNodes.Cast<XmlNode>().Select(docNode => new ArchivedDocument
             {
                 PhysicalDocumentId = docNode.Attributes["AGS_DOCUMENTID"].Value,
                 Title = string.Format(display,
@@ -137,14 +138,12 @@ namespace ReflexAgsService.Ags
                                     .FirstOrDefault(attr => attr.Name == dp)?
                                     .Value ?? "-").ToArray())
             }).ToArray();
-
-            return ret;
         }
 
-        public PhysicalDocument GetPhysicalDocument(string documentId, string instanceId, string departmentId)
+        public async Task<PhysicalDocument> GetPhysicalDocument(string documentId, string instanceId, string departmentId)
         {
             var svc = GetClient();
-            var physicalDocumentRet = svc.Client.ags_DocumentGetFromId(svc.ValidationKey, instanceId, departmentId, documentId);
+            var physicalDocumentRet = (await svc.Client.ags_DocumentGetFromIdAsync(svc.ValidationKey, instanceId, departmentId, documentId)).Body.ags_DocumentGetFromIdResult;
             var physicalDocumentDoc = new XmlDocument();
             physicalDocumentDoc.LoadXml(physicalDocumentRet);
             var fileName = physicalDocumentDoc.GetElementsByTagName("ags_DocumentName")[0].InnerText;
@@ -160,10 +159,10 @@ namespace ReflexAgsService.Ags
             };
         }
 
-        public Estate[] GetEstatesByCase(string groupid, string instanceId, string departmentId)
+        public async Task<Estate[]> GetEstatesByCase(string groupid, string instanceId, string departmentId)
         {
             var svc = GetClient();
-            var groupData = svc.Client.ags_GroupGetDataFromId(svc.ValidationKey, instanceId, departmentId, groupid, "true");
+            var groupData = (await svc.Client.ags_GroupGetDataFromIdAsync(svc.ValidationKey, instanceId, departmentId, groupid, "true")).Body.ags_GroupGetDataFromIdResult;
             var searchResultDocGroupData = new XmlDocument();
             searchResultDocGroupData.LoadXml(groupData);
             var agsGroupAliasAndColumnName = searchResultDocGroupData.GetElementsByTagName("ags_GroupAliasAndColumnName");

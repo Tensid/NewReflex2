@@ -1,4 +1,6 @@
 ﻿using ReflexAgsService.Ags;
+using System;
+using System.Threading.Tasks;
 using VisaRService;
 using VisaRService.Contracts;
 
@@ -18,39 +20,39 @@ namespace ReflexAgsService
             return new AgsProvider(_config);
         }
 
-        public Case[] GetCasesByEstate(string estateId)
+        public async Task<Case[]> GetCasesByEstate(string estateId)
         {
-            return GetProvider(_config.AgsConfig).GetCasesByEstate(estateId, _config.AgsConfig.CasePattern, _config.AgsConfig.DateField, _config.AgsConfig.Instance, _config.AgsConfig.Department, _config.AgsConfig.SearchWay);
+            return await GetProvider(_config.AgsConfig).GetCasesByEstate(estateId, _config.AgsConfig.CasePattern, _config.AgsConfig.DateField, _config.AgsConfig.Instance, _config.AgsConfig.Department, _config.AgsConfig.SearchWay);
         }
 
-        public string GetPreviewByCase(string caseId)
+        public Task<string> GetPreviewByCase(string caseId)
         {
             return null;
         }
 
-        public CasePerson[] GetPersonsByCase(string caseId)
-        {
-            return new CasePerson[0];
-        }
-
-        public Occurence[] GetOccurencesByCase(string caseId)
+        public Task<CasePerson[]> GetPersonsByCase(string caseId)
         {
             return null;
         }
 
-        public ArchivedDocument[] GetArchivedDocumentsByCase(string caseId)
+        public Task<Occurence[]> GetOccurencesByCase(string caseId)
         {
-            return GetProvider(_config.AgsConfig).GetDocumentsByCase(caseId, _config.AgsConfig.DocumentPattern, _config.AgsConfig.Instance, _config.AgsConfig.Department, _config.AgsConfig.SearchWay);
+            return null;
         }
 
-        public PhysicalDocument GetPhysicalDocument(string documentId)
+        public async Task<ArchivedDocument[]> GetArchivedDocumentsByCase(string caseId)
         {
-            return GetProvider(_config.AgsConfig).GetPhysicalDocument(documentId, _config.AgsConfig.Instance, _config.AgsConfig.Department);
+            return await GetProvider(_config.AgsConfig).GetDocumentsByCase(caseId, _config.AgsConfig.DocumentPattern, _config.AgsConfig.Instance, _config.AgsConfig.Department, _config.AgsConfig.SearchWay);
         }
 
-        public Estate[] GetEstatesByCase(string caseId)
+        public async Task<PhysicalDocument> GetPhysicalDocument(string documentId)
         {
-            return GetProvider(_config.AgsConfig).GetEstatesByCase(caseId, _config.AgsConfig.Instance, _config.AgsConfig.Department);
+            return await GetProvider(_config.AgsConfig).GetPhysicalDocument(documentId, _config.AgsConfig.Instance, _config.AgsConfig.Department);
+        }
+
+        public async Task<Estate[]> GetEstatesByCase(string caseId)
+        {
+            return await GetProvider(_config.AgsConfig).GetEstatesByCase(caseId, _config.AgsConfig.Instance, _config.AgsConfig.Department);
         }
     }
 }

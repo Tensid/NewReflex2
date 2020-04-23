@@ -31,16 +31,16 @@ namespace ReflexByggrService
             return client;
         }
 
-        public ArchivedDocument[] GetArchivedDocumentsByCase(string caseId)
+        public Task<ArchivedDocument[]> GetArchivedDocumentsByCase(string caseId)
         {
             throw new NotImplementedException();
         }
 
-        public Case[] GetCasesByEstate(string estateId)
+        public async Task<Case[]> GetCasesByEstate(string estateId)
         {
             var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
-            var arenden = client.GetRelateradeArendenByFastighetAsync(Convert.ToInt32(estateId), null, null, null, StatusFilter.None).Result.GetRelateradeArendenByFastighetResult;
-            client.CloseAsync();
+            var arenden = (await client.GetRelateradeArendenByFastighetAsync(Convert.ToInt32(estateId), null, null, null, StatusFilter.None)).GetRelateradeArendenByFastighetResult;
+            await client.CloseAsync();
 
             var hideByComment = !string.IsNullOrWhiteSpace(_config.ByggrConfig.HideDocumentsWithCommentMatching);
 
@@ -70,13 +70,13 @@ namespace ReflexByggrService
             return cases;
         }
 
-        public Estate[] GetEstatesByCase(string caseId)
+        public async Task<Estate[]> GetEstatesByCase(string caseId)
         {
             ExportArendenClient client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
             ArrayOfArendeFastighetArendeFastighet[] fastighetLista;
             try
             {
-                fastighetLista = client.GetArendeAsync(caseId).Result.fastighetLista;
+                fastighetLista = (await client.GetArendeAsync(caseId)).fastighetLista;
             }
 
             catch (Exception)
@@ -103,17 +103,17 @@ namespace ReflexByggrService
             return rdoc;
         }
 
-        public Occurence[] GetOccurencesByCase(string caseId)
+        public Task<Occurence[]> GetOccurencesByCase(string caseId)
         {
             throw new NotImplementedException();
         }
 
-        public CasePerson[] GetPersonsByCase(string caseId)
+        public Task<CasePerson[]> GetPersonsByCase(string caseId)
         {
             throw new NotImplementedException();
         }
 
-        public string GetPreviewByCase(string caseId)
+        public Task<string> GetPreviewByCase(string caseId)
         {
             throw new NotImplementedException();
         }
