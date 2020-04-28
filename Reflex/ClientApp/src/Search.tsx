@@ -1,13 +1,14 @@
 import React from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { SearchResult } from './api/api';
 import { RootState } from './app/store';
+import Autocomplete from './features/autocomplete/Autocomplete';
 import { fetchCasesAsync } from './features/cases/casesSlice';
 import { setSearchResult } from './features/search-result/searchResultSlice';
-import Typeahead from './features/typeahead/Typeahead';
 
 const Search = () => {
+  const searchResult = useSelector((state: RootState) => state.searchResult);
   const dispatch = useDispatch();
   const { push } = useHistory();
 
@@ -19,21 +20,10 @@ const Search = () => {
 
   return (
     <>
-      <div className="row">
-        <label className="col col-form-label col-form-label-sm font-weight-bold">Sök fastighet eller adress:</label>
-      </div>
-      <Typeahead onSelectCallback={onSelectCallback}></Typeahead>
+      <label className="mb-1 col-form-label col-form-label-sm font-weight-bold">Sök fastighet eller adress:</label>
+      <Autocomplete onSelectCallback={onSelectCallback} searchResult={searchResult} />
     </>
   );
 };
 
-const mapDispatch = { setSearchResult };
-
-const mapStateToProps = (state: RootState) => ({
-  searchResult: state.searchResult
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatch
-)(Search);
+export default Search;

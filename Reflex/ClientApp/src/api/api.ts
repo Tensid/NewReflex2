@@ -39,10 +39,16 @@ export interface Case {
   handlaggareSignatur: string;
 }
 
+export type Type = 'Adress' | 'Fastighet';
+
 export interface SearchResult {
+  value?: string;
   addressName?: string;
   estateId?: string;
+  displayName: string;
   estateName: string;
+  source?: CaseSource | 'FB';
+  type?: Type;
 }
 
 export interface Config {
@@ -83,6 +89,15 @@ export interface UpdateConfigPermissionsRequest {
 export interface UpdateRolesRequest {
   userId: string;
   roles: string[];
+}
+
+export async function search(query: string) {
+  let url = `api/search?query=${query}`;
+  if (configId) {
+    url = `${url}&configId=${configId}`;
+  }
+  const { data } = await axios.get<SearchResult[]>(url);
+  return data;
 }
 
 export async function getCases(estateId: string) {

@@ -36,9 +36,9 @@ const casesSlice = createSlice({
 
 export const fetchCasesAsync = (data: SearchResult): AppThunk => async dispatch => {
   try {
-    if (data?.estateId) {
+    if (data?.value) {
       dispatch(getCasesStart());
-      const cases = await getCases(data.estateId);
+      const cases = await getCases(data.value);
       dispatch(getCasesSuccess(cases));
     }
   }

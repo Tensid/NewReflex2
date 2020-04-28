@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SearchResult } from '../../api/api';
 
 const initialState: SearchResult = {
-  estateName: ''
+  estateName: '',
+  displayName: ''
 };
 
 const searchSlice = createSlice({

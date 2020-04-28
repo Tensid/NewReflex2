@@ -39,16 +39,21 @@ namespace Reflex.Controllers
                     .OrderBy(estate => estate.EstateName)
                     .Select(estate => new SearchResult
                     {
-                        EstateId = estate.EstateId,
-                        EstateName = estate.EstateName
+                        DisplayName = estate.EstateName,
+                        Value = estate.EstateId,
+                        EstateName = estate.EstateName,
+                        Source = "FB",
+                        Type = "Fastighet"
                     }));
                 searchResults.AddRange(addresses
                     .OrderBy(address => address.AddressText)
                     .Select(address => new SearchResult
                     {
-                        EstateName = address.AddressText,
-                        EstateId = address.Estate.EstateId,
-                        AddressName = address.AddressText
+                        DisplayName = address.AddressText,
+                        Value = address.Estate.EstateId,
+                        AddressName = address.AddressText,
+                        Source = "FB",
+                        Type = "Adress"
                     }));
             }
 
@@ -57,9 +62,12 @@ namespace Reflex.Controllers
 
         public class SearchResult
         {
-            public string EstateId { get; set; }
             public string EstateName { get; set; }
             public string AddressName { get; set; }
+            public string DisplayName { get; set; }
+            public string Source { get; set; }
+            public string Type { get; set; }
+            public string Value { get; set; }
         }
     }
 }
