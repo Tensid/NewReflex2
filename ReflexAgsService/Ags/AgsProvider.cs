@@ -1,5 +1,4 @@
 ﻿using AgsProSystemWebService;
-using FbService.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using VisaRService.Contracts;
-using Estate = VisaRService.Contracts.Estate;
 
 namespace ReflexAgsService.Ags
 {
@@ -159,25 +157,30 @@ namespace ReflexAgsService.Ags
             };
         }
 
-        public async Task<Estate[]> GetEstatesByCase(string groupid, string instanceId, string departmentId)
+        public async Task<Case> GetCase(string groupid, string instanceId, string departmentId)
         {
             var svc = GetClient();
-            var groupData = (await svc.Client.ags_GroupGetDataFromIdAsync(svc.ValidationKey, instanceId, departmentId, groupid, "true")).Body.ags_GroupGetDataFromIdResult;
-            var searchResultDocGroupData = new XmlDocument();
-            searchResultDocGroupData.LoadXml(groupData);
-            var agsGroupAliasAndColumnName = searchResultDocGroupData.GetElementsByTagName("ags_GroupAliasAndColumnName");
-            var estateName = agsGroupAliasAndColumnName[8]?.Attributes?["COLUMN_VALUE"]?.Value.Trim();
-
-            var estate = new FbProvider(_config).SearchEstates(estateName).Result;
-
-            if (estate == null)
-                return new Estate[] { };
-
-            return estate.Select(e => new Estate
+            try
             {
-                EstateId = e.EstateId,
-                EstateName = e.EstateName
-            }).ToArray();
+                var groupData = (await svc.Client.ags_GroupGetDataFromIdAsync(svc.ValidationKey, instanceId, departmentId, groupid, "true")).Body.ags_GroupGetDataFromIdResult;
+                var searchResultDocGroupData = new XmlDocument();
+                searchResultDocGroupData.LoadXml(groupData);
+                var agsGroupAliasAndColumnName = searchResultDocGroupData.GetElementsByTagName("ags_GroupAliasAndColumnName");
+                var estateName = agsGroupAliasAndColumnName[8]?.Attributes?["COLUMN_VALUE"]?.Value.Trim();
+
+                if (!string.IsNullOrEmpty(estateName))
+                {
+                    return (await GetCasesByEstate(estateName, _config.AgsConfig.DocumentPattern, _config.AgsConfig.DateField, instanceId,
+                               departmentId, _config.AgsConfig.SearchWay)).First() ?? null;
+                }
+
+                return null;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

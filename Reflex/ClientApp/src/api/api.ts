@@ -39,7 +39,7 @@ export interface Case {
   handlaggareSignatur: string;
 }
 
-export type Type = 'Adress' | 'Fastighet';
+export type Type = 'Adress' | 'Fastighet' | 'Ärende';
 
 export interface SearchResult {
   value?: string;
@@ -104,6 +104,15 @@ export async function getCases(estateId: string) {
   let url = `api/cases/${estateId}`;
   if (configId) {
     url = `${url}?configId=${configId}`;
+  }
+  const { data } = await axios.get<Case[]>(url);
+  return data;
+}
+
+export async function getCase(id: string, caseSource: CaseSource) {
+  let url = `api/cases?id=${id}&caseSource=${caseSource}`;
+  if (configId) {
+    url = `${url}&configId=${configId}`;
   }
   const { data } = await axios.get<Case[]>(url);
   return data;

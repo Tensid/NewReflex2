@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Case, getCases, SearchResult } from '../../api/api';
+import { Case, CaseSource, getCase, getCases, SearchResult } from '../../api/api';
 import { AppThunk } from '../../app/store';
 
 interface CasesState {
@@ -38,7 +38,11 @@ export const fetchCasesAsync = (data: SearchResult): AppThunk => async dispatch 
   try {
     if (data?.value) {
       dispatch(getCasesStart());
-      const cases = await getCases(data.value);
+      let cases: Case[];
+      if (data.type === 'Fastighet' || data.type === 'Adress')
+        cases = await getCases(data.value);
+      else
+        cases = await getCase(data.value, data.source as CaseSource);
       dispatch(getCasesSuccess(cases));
     }
   }

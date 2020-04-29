@@ -56,5 +56,12 @@ namespace Reflex.Controllers
 
             return cases;
         }
+
+        [HttpGet]
+        public async Task<IEnumerable<Case>> GetCase(string id, Guid configId, CaseSource caseSource)
+        {
+            var proxy = _repository.GetProxy(caseSource, configId);
+            return new List<Case> { await proxy.GetCase(id) };
+        }
     }
 }

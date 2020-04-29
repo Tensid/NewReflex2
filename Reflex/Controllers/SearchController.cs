@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reflex.Data;
+using Reflex.Models;
 
 namespace Reflex.Controllers
 {
@@ -28,10 +29,20 @@ namespace Reflex.Controllers
             if (query != null && query.Length >= 3)
             {
                 var fbProxy = _repository.GetFbProxy(configId);
+                var byggrProxy = _repository.GetProxy(CaseSource.ByggR, configId);
+
                 var estateTask = fbProxy.SearchEstates(query);
                 var addressTask = fbProxy.SearchAddresses(query);
+                var byggrTask = byggrProxy.GetCase(query);
 
-                await Task.WhenAll(estateTask, addressTask);
+                try
+                {
+                    await Task.WhenAll(estateTask, addressTask, byggrTask);
+                }
+                catch
+                {
+                    // ignored
+                }
 
                 var estates = await estateTask;
                 var addresses = await addressTask;
@@ -55,6 +66,33 @@ namespace Reflex.Controllers
                         Source = "FB",
                         Type = "Adress"
                     }));
+
+                if (!byggrTask.IsFaulted)
+                {
+                    var awaitedByggr = await byggrTask;
+                    if (awaitedByggr != null)
+                        searchResults.Add(new SearchResult
+                        {
+                            DisplayName = awaitedByggr.CaseId,
+                            Value = awaitedByggr.CaseId,
+                            Source = "ByggR",
+                            Type = "Ärende"
+                        });
+                }
+            }
+            if (query != null && query.Length >= 1 && int.TryParse(query, out _))
+            {
+                var agsProxy = _repository.GetProxy(CaseSource.AGS, configId);
+                var agsTask = agsProxy.GetCase(query);
+                var awaitedAgs = await agsTask;
+                if (awaitedAgs != null)
+                    searchResults.Add(new SearchResult
+                    {
+                        DisplayName = awaitedAgs.CaseId,
+                        Value = awaitedAgs.CaseId,
+                        Source = "AGS",
+                        Type = "Ärende"
+                    });
             }
 
             return searchResults.Take(10).ToArray();

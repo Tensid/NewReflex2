@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FbService\FbService.csproj" />
     <ProjectReference Include="..\VisaRService\VisaRService.csproj" />
   </ItemGroup>
 

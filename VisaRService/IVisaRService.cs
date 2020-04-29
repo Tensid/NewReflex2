@@ -10,6 +10,6 @@ namespace VisaRService
         Task<CasePerson[]> GetPersonsByCase(string caseId);
         Task<Occurence[]> GetOccurencesByCase(string caseId);
         Task<ArchivedDocument[]> GetArchivedDocumentsByCase(string caseId);
-        Task<Estate[]> GetEstatesByCase(string caseId);
+        Task<Case> GetCase(string caseId);
     }
 }

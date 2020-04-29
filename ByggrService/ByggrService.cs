@@ -70,21 +70,28 @@ namespace ReflexByggrService
             return cases;
         }
 
-        public async Task<Estate[]> GetEstatesByCase(string caseId)
+        public async Task<Case> GetCase(string id)
         {
-            ExportArendenClient client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
-            ArrayOfArendeFastighetArendeFastighet[] fastighetLista;
+            var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
             try
             {
-                fastighetLista = (await client.GetArendeAsync(caseId)).fastighetLista;
-            }
+                var arende = await client.GetArendeAsync(id);
+                await client.CloseAsync();
 
+                return new Case
+                {
+                    Beskrivning = arende?.beskrivning,
+                    CaseId = arende?.dnr,
+                    Dnr = arende?.dnr,
+                    Title = arende?.beskrivning,
+                    Fastighetsbeteckning = string.Join(", ", arende.fastighetLista.Select(x => x.fastighetsbeteckning)),
+                    CaseSource = "ByggR"
+                };
+            }
             catch (Exception)
             {
-                return new Estate[] { };
+                return null;
             }
-
-            return fastighetLista.Select(e => new Estate { EstateId = e.fnr.ToString(), EstateName = e.fastighetsbeteckning }).ToArray();
         }
 
         public async Task<PhysicalDocument> GetDocument(string id)

@@ -104,7 +104,7 @@ namespace ReflexEcos2Service
             return null;
         }
 
-        public Task<Estate[]> GetEstatesByCase(string caseId)
+        public Task<Case> GetCase(string caseId)
         {
             throw new NotImplementedException();
         }
