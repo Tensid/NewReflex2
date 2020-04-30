@@ -25,6 +25,7 @@ namespace Reflex.Controllers
         public async Task<IEnumerable<SearchResult>> Get(string query, Guid configId)
         {
             var searchResults = new List<SearchResult>();
+            var config = _repository.GetConfig(configId);
 
             if (query != null && query.Length >= 3)
             {
@@ -33,11 +34,11 @@ namespace Reflex.Controllers
 
                 var estateTask = fbProxy.SearchEstates(query);
                 var addressTask = fbProxy.SearchAddresses(query);
-                var byggrTask = byggrProxy.GetCase(query);
+                var byggrTask = (config?.CaseSources?.Contains(CaseSource.ByggR) ?? false) ? byggrProxy.GetCase(query) : null;
 
                 try
                 {
-                    await Task.WhenAll(estateTask, addressTask, byggrTask);
+                    await Task.WhenAll(new Task[] { estateTask, addressTask, byggrTask }.Where(x => x != null));
                 }
                 catch
                 {
@@ -67,7 +68,7 @@ namespace Reflex.Controllers
                         Type = "Adress"
                     }));
 
-                if (!byggrTask.IsFaulted)
+                if (byggrTask?.IsCompletedSuccessfully ?? false)
                 {
                     var awaitedByggr = await byggrTask;
                     if (awaitedByggr != null)
@@ -80,7 +81,7 @@ namespace Reflex.Controllers
                         });
                 }
             }
-            if (query != null && query.Length >= 1 && int.TryParse(query, out _))
+            if (query != null && query.Length >= 1 && int.TryParse(query, out _) && (config?.CaseSources?.Contains(CaseSource.AGS) ?? false))
             {
                 var agsProxy = _repository.GetProxy(CaseSource.AGS, configId);
                 var agsTask = agsProxy.GetCase(query);

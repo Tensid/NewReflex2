@@ -1,5 +1,4 @@
 ﻿using ReflexAgsService.Ags;
-using System;
 using System.Threading.Tasks;
 using VisaRService;
 using VisaRService.Contracts;
@@ -25,7 +24,7 @@ namespace ReflexAgsService
             return await GetProvider().GetCasesByEstate(estateId, _config.AgsConfig.CasePattern, _config.AgsConfig.DateField, _config.AgsConfig.Instance, _config.AgsConfig.Department, _config.AgsConfig.SearchWay);
         }
 
-        public Task<string> GetPreviewByCase(string caseId)
+        public Task<Preview> GetPreviewByCase(string caseId)
         {
             return null;
         }

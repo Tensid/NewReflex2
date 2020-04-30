@@ -89,7 +89,7 @@ namespace ReflexEcos2Service
             };
         }
 
-        public Task<string> GetPreviewByCase(string caseId)
+        public Task<Preview> GetPreviewByCase(string caseId)
         {
             return null;
         }

@@ -1,0 +1,20 @@
+.horizontalRule {
+    width: 100%;
+}
+
+    .horizontalRule:last-child {
+        visibility: hidden;
+    }
+
+.breakWord {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.breakAll {
+    word-break: break-all
+}
+
+.preWrap{
+   white-space: pre-wrap;
+}

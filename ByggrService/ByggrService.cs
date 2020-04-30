@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using ArendeExportWS;
 using VisaRService;
 using VisaRService.Contracts;
+using Document = VisaRService.Contracts.Document;
 
 namespace ReflexByggrService
 {
@@ -94,6 +96,119 @@ namespace ReflexByggrService
             }
         }
 
+        public async Task<Occurence[]> GetOccurencesByCase(string caseId)
+        {
+            var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
+            var arende = client.GetArendeAsync(caseId).Result;
+            await client.CloseAsync();
+
+            var hideByComment = !string.IsNullOrWhiteSpace(_config.ByggrConfig.HideDocumentsWithCommentMatching);
+            var arbetsmaterial = new[] { "Arbetsmtrl", "Arbetsmaterial" };
+
+            return arende.handelseLista
+                .Where(handelse => _config.ByggrConfig.OccurenceTypes == null || !_config.ByggrConfig.OccurenceTypes.Any() || _config.ByggrConfig.OccurenceTypes.Contains(handelse.handelsetyp))
+                .Where(handelse => !handelse.makulerad)
+                .Where(handelse => _config.ByggrConfig.WorkingMaterial || (!handelse.handlingLista?.Any(handling => arbetsmaterial.Any(s => handling.status.Contains(s))) ?? false))
+                .Select(handelse => new Occurence
+                {
+                    Documents = handelse.sekretess ? new Document[0] : handelse.handlingLista
+                        .Where(handling => (!_config.ByggrConfig?.DocumentTypes?.Any() ?? true) ||
+                            (_config.ByggrConfig?.DocumentTypes?.Contains(handling.typ) ?? true))
+                        .Where(handling => _config.ByggrConfig.WorkingMaterial || arbetsmaterial.Any(s => !handling.status.Contains(s)))
+                        .Select(handling => new Document
+                        {
+                            DocLinkId = (handling.docId == null ||
+                                         (hideByComment &&
+                                         (handelse.anteckning?.Contains(_config.ByggrConfig.HideDocumentsWithCommentMatching) ?? false))
+                                ? "-1"
+                                : handling.docId).ToString(CultureInfo.InvariantCulture),
+                            Title = handling.docName ?? "Dokument (namn saknas)"
+                        })
+                        .ToArray(),
+                    Arrival = handelse.startDatum,
+                    Title = handelse.rubrik,
+                    IsSecret = handelse.sekretess
+                }).ToArray();
+        }
+
+        public async Task<CasePerson[]> GetPersonsByCase(string caseId)
+        {
+            var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
+            var arende = client.GetArendeAsync(caseId).Result;
+            await client.CloseAsync();
+
+            var arenden = arende.intressentLista
+                .Where(p => p.rollLista == null || _config.ByggrConfig.PersonRoles == null || !_config.ByggrConfig.PersonRoles.Any() || p.rollLista.Any(roll => _config.ByggrConfig.PersonRoles.Contains(roll)))
+                .Select(p => new CasePerson
+                {
+                    FullName = p.namn,
+                    Communication = p.intressentKommunikationLista?.Select(x => x.beskrivning).ToArray(),
+                    Roles = p.rollLista,
+                    Adress = p.adress,
+                    Ort = p.ort,
+                    PostNr = p.postNr
+                }).ToArray();
+            return arenden;
+        }
+
+        public async Task<Preview> GetPreviewByCase(string caseId)
+        {
+            _config.ByggrConfig.WorkingMaterial = true;
+            var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
+            var arende = await client.GetArendeAsync(caseId);
+
+            var hideByComment = !string.IsNullOrWhiteSpace(_config.ByggrConfig.HideDocumentsWithCommentMatching);
+            var arbetsmaterial = new[] { "Arbetsmtrl", "Arbetsmaterial" };
+            var preview = new Preview
+            {
+                Arendegrupp = arende.arendegrupp,
+                Arendeslag = arende.arendeslag,
+                Arendetyp = arende.arendetyp,
+                Status = arende.status.ToString(),
+                HandlaggareEfternamn = arende.handlaggare.efternamn,
+                HandlaggareFornamn = arende.handlaggare.fornamn,
+                HandlaggareSignatur = arende.handlaggare.signatur,
+                CaseId = arende.arendeId.ToString(),
+                Dnr = arende.dnr,
+                Fastighetsbeteckning = string.Join(", ", arende.fastighetLista.Select(x => x.fastighetsbeteckning)),
+                Persons = arende.intressentLista
+                        .Where(p => p.rollLista == null || _config.ByggrConfig.PersonRoles == null || !_config.ByggrConfig.PersonRoles.Any() || p.rollLista.Any(roll => _config.ByggrConfig.PersonRoles.Contains(roll)))
+                        .Select(p => new CasePerson
+                        {
+                            FullName = p.namn,
+                            Communication = p.intressentKommunikationLista?.Select(x => x.beskrivning).ToArray(),
+                            Roles = p.rollLista,
+                            Adress = p.adress,
+                            Ort = p.ort,
+                            PostNr = p.postNr
+                        }).ToArray(),
+                Handelser = arende.handelseLista
+                        .Where(handelse => _config.ByggrConfig.OccurenceTypes == null || !_config.ByggrConfig.OccurenceTypes.Any() || _config.ByggrConfig.OccurenceTypes.Contains(handelse.handelsetyp))
+                        .Where(handelse => !handelse.makulerad)
+                        .Where(handelse => _config.ByggrConfig.WorkingMaterial || (!handelse.handlingLista?.All(handling => arbetsmaterial.Any(s => !handling.status.Contains(s))) ?? false))
+                        .Select(handelse => new Handelse
+                        {
+                            Documents = handelse.sekretess ? new Document[0] : handelse.handlingLista
+                                .Where(handling => !(_config.ByggrConfig?.DocumentTypes?.Any() ?? false) || _config.ByggrConfig.DocumentTypes.Contains(handling.typ))
+                                .Where(handling => _config.ByggrConfig.WorkingMaterial || arbetsmaterial.Any(s => !handling.status.Contains(s)))
+                                .Select(handling => new Document
+                                {
+                                    DocLinkId = (handling.docId == null || (hideByComment && (handelse.anteckning?.Contains(_config.ByggrConfig.HideDocumentsWithCommentMatching) ?? false)) ? "-1" : handling.docId).ToString(CultureInfo.InvariantCulture),
+                                    Title = handling.docName ?? "Dokument (namn saknas)"
+                                }).ToArray(),
+                            Arrival = handelse.startDatum,
+                            Title = handelse.rubrik,
+                            IsSecret = handelse.sekretess,
+                            Anteckning = handelse.anteckning,
+                            BeslutNr = handelse.beslut?.beslutNr,
+                            BeslutsText = handelse.beslut?.beslutstext,
+                            Handelsetyp = handelse.handelsetyp
+                        }).ToArray()
+            };
+
+            return preview;
+        }
+
         public async Task<PhysicalDocument> GetDocument(string id)
         {
             var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
@@ -108,21 +223,6 @@ namespace ReflexByggrService
             };
 
             return rdoc;
-        }
-
-        public Task<Occurence[]> GetOccurencesByCase(string caseId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<CasePerson[]> GetPersonsByCase(string caseId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetPreviewByCase(string caseId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

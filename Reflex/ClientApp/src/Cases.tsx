@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Case, CaseSource, SearchResult } from './api/api';
 import { RootState } from './app/store';
 import CaseList from './features/cases/CaseList';
+import CaseModal from './features/cases/CaseModal';
 
 interface CasesProps {
   cases: Case[];
@@ -16,6 +17,9 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
   const [showByggr, setShowByggr] = useState(true);
   const [showEcos, setShowEcos] = useState(true);
   const [filteredCases, setFilteredCases] = useState<Case[]>(cases);
+  const [show, setShow] = useState(false);
+  const toggleShow = () => setShow(!show);
+  const [modalData, setModalData] = useState([]);
 
   useEffect(() => {
     setFilteredCases(cases.filter(x =>
@@ -39,8 +43,10 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
       </>}
       <div className="mt-2">
         {loading ? 'Hämtar ärenden...' :
-          (filteredCases && filteredCases.length > 0) && <CaseList cases={filteredCases} />}
+          (filteredCases && filteredCases.length > 0) && <CaseList cases={filteredCases} setModalData={setModalData} toggleShow={toggleShow} />}
       </div>
+      {/*@ts-ignore*/}
+      {show && <CaseModal show={show} {...modalData} toggleShow={toggleShow} />}
     </>
   );
 };

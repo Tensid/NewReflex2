@@ -39,6 +39,54 @@ export interface Case {
   handlaggareSignatur: string;
 }
 
+export interface Occurence {
+  title: string;
+  arrival: string;
+  documents: Document[];
+  isSecret: boolean;
+}
+
+export interface Handelse extends Occurence {
+  anteckning: string;
+  beslutsText: string;
+  beslutNr: string;
+  handelsetyp: string;
+}
+
+export interface Preview {
+  caseId: string;
+  dnr: string;
+  persons: CasePerson[];
+  handelser: Handelse[];
+  status: string;
+  arendegrupp: string;
+  arendetyp: string;
+  arendeslag: string;
+  fastighetsbeteckning: string;
+  handlaggareEfternamn: string;
+  handlaggareFornamn: string;
+  handlaggareSignatur: string;
+}
+
+export interface Document {
+  docLinkId: string;
+  title: string;
+}
+
+export interface CasePerson {
+  fullName: string;
+  roles: string[];
+  communication: string[];
+  adress: string;
+  ort: string;
+  postNr: string;
+}
+
+export interface ArchivedDocument {
+  title: string;
+  physicalDocumentId: string;
+}
+
 export type Type = 'Adress' | 'Fastighet' | 'Ärende';
 
 export interface SearchResult {
@@ -120,6 +168,42 @@ export async function getCase(id: string, caseSource: CaseSource) {
 
 export async function getConfigs() {
   const { data } = await axios.get<Config[]>('api/configs');
+  return data;
+}
+
+export async function getOccurences(caseId: string, caseSource: CaseSource) {
+  let url = `api/cases/${caseId}/occurences?caseSource=${caseSource}`;
+  if (configId) {
+    url = `${url}&configId=${configId}`;
+  }
+  const { data } = await axios.get<Occurence[]>(url);
+  return data;
+}
+
+export async function getPreview(caseId: string, caseSource: CaseSource) {
+  let url = `api/cases/${caseId}/preview?caseSource=${caseSource}`;
+  if (configId) {
+    url = `${url}&configId=${configId}`;
+  }
+  const { data } = await axios.get<Preview>(url);
+  return data;
+}
+
+export async function getCasePersons(caseId: string, caseSource: CaseSource) {
+  let url = `api/cases/${caseId}/persons?caseSource=${caseSource}`;
+  if (configId) {
+    url = `${url}&configId=${configId}`;
+  }
+  const { data } = await axios.get<CasePerson[]>(url);
+  return data;
+}
+
+export async function getArchivedDocuments(caseId: string, caseSource: CaseSource) {
+  let url = `api/cases/${caseId}/archivedDocuments?caseSource=${caseSource}`;
+  if (configId) {
+    url = `${url}?configId=${configId}`;
+  }
+  const { data } = await axios.get<ArchivedDocument[]>(url);
   return data;
 }
 
