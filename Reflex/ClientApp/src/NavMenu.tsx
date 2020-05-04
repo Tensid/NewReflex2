@@ -3,6 +3,7 @@ import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
 import { LoginMenu } from './features/api-authorization/LoginMenu';
+import Spinner from './features/spinner/Spinner';
 
 export function NavMenu() {
   return (
@@ -12,6 +13,7 @@ export function NavMenu() {
           <LinkContainer to="configs">
             <Navbar.Brand>Reflex</Navbar.Brand>
           </LinkContainer>
+          <Spinner />
           <Navbar.Toggle className="mr-2" />
           <Navbar.Collapse className="d-sm-inline-flex flex-sm-row-reverse">
             <ul className="navbar-nav flex-grow">

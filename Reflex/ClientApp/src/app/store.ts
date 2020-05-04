@@ -3,6 +3,7 @@ import { setConfigId } from '../api/api';
 import casesReducer from '../features/cases/casesSlice';
 import configReducer from '../features/configs/configsSlice';
 import searchResultReducer from '../features/search-result/searchResultSlice';
+import spinnerReducer from '../features/spinner/spinnerSlice';
 
 const setConfigIdMiddleWare: Middleware = store => next => action => {
   if (action.type === 'config/setConfig') {
@@ -17,7 +18,8 @@ export const store = configureStore({
   reducer: {
     cases: casesReducer,
     config: configReducer,
-    searchResult: searchResultReducer
+    searchResult: searchResultReducer,
+    spinner: spinnerReducer
   },
 });
 
