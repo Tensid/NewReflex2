@@ -31,7 +31,11 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
   return (
     <>
       <h5>
-        {searchResult.estateName ? `Ärenden för ${searchResult.estateName}` : 'Ingen fastighet vald'}
+        {{
+          'Ärende': <div>Visar ärende {searchResult.displayName}</div>,
+          'Fastighet': <div>Ärenden för: {searchResult.displayName}</div>,
+          'Adress': <div>Ärenden för: {searchResult.displayName}</div>
+        }[searchResult.type!] || <div>Inget objekt valt</div>}
       </h5>
       {cases?.length > 0 && <>
         <BootstrapSwitchButton onlabel="Ecos" offlabel="Ecos" width={77} onstyle="success" style="mr-2" checked={showEcos}
