@@ -4,6 +4,7 @@ import casesReducer from '../features/cases/casesSlice';
 import configReducer from '../features/configs/configsSlice';
 import searchResultReducer from '../features/search-result/searchResultSlice';
 import spinnerReducer from '../features/spinner/spinnerSlice';
+import userSettingsReducer from '../features/user-settings/userSettingsSlice';
 
 const setConfigIdMiddleWare: Middleware = store => next => action => {
   if (action.type === 'config/setConfig') {
@@ -19,7 +20,8 @@ export const store = configureStore({
     cases: casesReducer,
     config: configReducer,
     searchResult: searchResultReducer,
-    spinner: spinnerReducer
+    spinner: spinnerReducer,
+    userSettings: userSettingsReducer
   },
 });
 

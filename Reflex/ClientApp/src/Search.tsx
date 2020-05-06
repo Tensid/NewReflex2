@@ -8,6 +8,7 @@ import { fetchCasesAsync } from './features/cases/casesSlice';
 import { setSearchResult } from './features/search-result/searchResultSlice';
 
 const Search = () => {
+  const defaultTab = useSelector((state: RootState) => state.userSettings.defaultTab);
   const searchResult = useSelector((state: RootState) => state.searchResult);
   const dispatch = useDispatch();
   const { push } = useHistory();
@@ -15,7 +16,7 @@ const Search = () => {
   function onSelectCallback(data: SearchResult) {
     dispatch(fetchCasesAsync(data));
     dispatch(setSearchResult(data));
-    push('/cases');
+    push('/' + defaultTab.toLowerCase());
   }
 
   return (

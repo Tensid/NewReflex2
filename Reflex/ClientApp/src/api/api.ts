@@ -1,4 +1,5 @@
 import axios from 'axios';
+import authService from '../features/api-authorization/AuthorizeService';
 
 let configId: string;
 
@@ -139,6 +140,10 @@ export interface UpdateRolesRequest {
   roles: string[];
 }
 
+export interface UserSettings {
+  defaultTab: Tab;
+}
+
 export async function search(query: string) {
   let url = `api/search?query=${query}`;
   if (configId) {
@@ -204,6 +209,25 @@ export async function getArchivedDocuments(caseId: string, caseSource: CaseSourc
     url = `${url}?configId=${configId}`;
   }
   const { data } = await axios.get<ArchivedDocument[]>(url);
+  return data;
+}
+
+export async function getUserSettings() {
+  const url = `api/userSettings`;
+  const token = await authService.getAccessToken();
+  const { data } = await axios.get<UserSettings>(url, {
+    headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+  });
+  return data;
+}
+
+export async function updateUserSettings(userSettings: UserSettings) {
+  const url = `api/userSettings`;
+  const token = await authService.getAccessToken();
+
+  const { data } = await axios.put<UserSettings>(url, userSettings, {
+    headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+  });
   return data;
 }
 

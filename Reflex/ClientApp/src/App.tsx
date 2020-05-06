@@ -4,7 +4,6 @@ import About from './About';
 import './App.scss';
 import Cases from './Cases';
 import Configs from './Configs';
-import { FetchData } from './FetchData';
 import { Layout } from './Layout';
 import ManageUsers from './ManageUsers';
 import Map from './Map';
@@ -13,7 +12,6 @@ import Property from './Property';
 import Search from './Search';
 import { ApplicationPaths } from './features/api-authorization/ApiAuthorizationConstants';
 import ApiAuthorizationRoutes from './features/api-authorization/ApiAuthorizationRoutes';
-import AuthorizeRoute from './features/api-authorization/AuthorizeRoute';
 
 function App() {
   return (
@@ -27,7 +25,6 @@ function App() {
       <Route path='/property' render={() => <Property />} />
       <Route path='/manage-users' render={() => <ManageUsers />} />
       <Route path='/about' render={() => <About />} />
-      <AuthorizeRoute path='/fetch-data' component={FetchData} />
       <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
     </Layout>
   );

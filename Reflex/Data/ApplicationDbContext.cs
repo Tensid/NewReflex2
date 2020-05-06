@@ -62,6 +62,10 @@ namespace Reflex.Data
                 .HasConversion(
                     v => Encrypt(v),
                     v => Decrypt(v));
+            modelBuilder.Entity<ApplicationUser>().Property(p => p.DefaultTab)
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, null),
+                    v => JsonSerializer.Deserialize<Tab>(v, null));
         }
 
         public DbSet<Config> Configs { get; set; }
