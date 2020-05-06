@@ -14,13 +14,23 @@ import './dataTables.bootstrap4.css';
 import './responsive.bootstrap4.css';
 
 const DataTable = (props) => {
+  const linkButtons = props.linkButtons.map(x => {
+    return {
+      text: x.displayName,
+      className: `${x.url ? '' : 'disabled'}`,
+      action: () => window.open(x.url),
+      init: (dt, node) => {
+        $(node).attr('href', x.url);
+      }
+    };
+  });
 
   useEffect(() => {
-    let table = $('#table').DataTable({
+    const table = $('#table').DataTable({
       ajax: {
-        url: './api/persons',
+        url: props.url,
         data: (d) => {
-          d.estateId = props.searchResult.estateId;
+          d.estateId = props.searchResult.value;
           d.distance = $('#radius_input').val();
         },
         dataSrc: (data) => {
@@ -28,15 +38,7 @@ const DataTable = (props) => {
           return data;
         }
       },
-      columns: [
-        { 'data': 'firstname' },
-        { 'data': 'familyname' },
-        { 'data': 'sex' },
-        { 'data': 'age' },
-        { 'data': 'address' },
-        { 'data': 'postalArea' },
-        { 'data': 'estateName' }
-      ],
+      columns: props.columns,
       dom: 'Bfrtip',
       order: [[1, 'asc']],
       columnDefs: [
@@ -85,24 +87,7 @@ const DataTable = (props) => {
           extend: 'collection',
           className: 'rounded',
           text: 'Rapporter',
-          buttons: [
-            {
-              text: 'Boenderapport',
-              className: `${props?.config?.fbWebbBoendeUrl ? '' : 'disabled'}`,
-              action: () => window.open(props?.config?.fbWebbBoendeUrl),
-              init: (dt, node) => {
-                $(node).attr('href', props?.config?.fbWebbBoendeUrl);
-              }
-            },
-            {
-              text: 'Lägenhetsrapport',
-              className: `${props?.config?.fbWebbLagenhetUrl ? '' : 'disabled'}`,
-              action: () => window.open(props?.config?.fbWebbLagenhetUrl),
-              init: (dt, node) => {
-                $(node).attr('href', props?.config?.fbWebbLagenhetUrl);
-              }
-            }
-          ]
+          buttons: linkButtons
         }
       ],
       paging: true,
@@ -154,7 +139,7 @@ const DataTable = (props) => {
     $('#get_button').click(() => {
       table.ajax.reload();
     });
-  });
+  }, [linkButtons]);
 
   return (
     <div>
@@ -170,13 +155,7 @@ const DataTable = (props) => {
       <table id="table" className="table table-hover table-sm table-striped " style={{ 'width': '100%', 'bordeCollapse': 'collapse!important' }}>
         <thead>
           <tr>
-            <td>Förnamn</td>
-            <td>Efternamn</td>
-            <td>Kön</td>
-            <td>Ålder</td>
-            <td>Adress</td>
-            <td>Postort</td>
-            <td>Fastighet</td>
+            {props.headers.map((td) => <td key={td}>{td}</td>)}
           </tr>
         </thead>
       </table>

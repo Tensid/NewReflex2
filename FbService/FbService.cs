@@ -48,5 +48,10 @@ namespace FbService
         {
             return _fb.GetGeometryFromFnr(fnr);
         }
+
+        public Task<IEnumerable<Task<Owner>>> GetOwners(IEnumerable<string> fnrs)
+        {
+            return _fb.GetOwners(fnrs);
+        }
     }
 }

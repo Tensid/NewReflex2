@@ -19,5 +19,7 @@ namespace FbService
         Task<IEnumerable<string>> GetFnrsFromPosition(string lat, string lon, string srid, string avstand);
 
         Task<string> GetGeometryFromFnr(string fnr);
+
+        Task<IEnumerable<Task<Owner>>> GetOwners(IEnumerable<string> fnrs);
     }
 }

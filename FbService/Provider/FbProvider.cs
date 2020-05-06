@@ -1,4 +1,7 @@
 ﻿using FbService.Contracts;
+using FbService.QuickType.AgareAdressPersonorganisationsnummer;
+using FbService.QuickType.AgareInskrivenPersonorganisationsnummer;
+using FbService.QuickType.AgareSearchLagfarenagareFastighetFnr;
 using FbService.QuickType.BefolkningFolkbokforingPid;
 using FbService.QuickType.BefolkningSearchFolkbokfordFastighetFnr;
 using FbService.QuickType.BefolkningSenasteadressPid;
@@ -233,6 +236,50 @@ namespace FbService.Provider
                          };
 
             return result;
+        }
+
+        internal async Task<IEnumerable<Task<Owner>>> GetOwners(IEnumerable<string> fnrs)
+        {
+            var response = await _httpClient.PostAsync($"agare/search/lagfarenAgare/fastighet/fnr?{_userConnection}",
+                new StringContent(JsonConvert.SerializeObject(fnrs), Encoding.UTF8, "application/json"));
+            var agareSearchLagfarenagareFastighetFnr = JsonConvert.DeserializeObject<AgareSearchLagfarenagareFastighetFnr>(await response.Content.ReadAsStringAsync());
+            var ids = agareSearchLagfarenagareFastighetFnr.Data.SelectMany(x => x.Grupp.Select(y => y.Identitetsnummer));
+            var owners = await OwnersResult(ids);
+            return owners;
+        }
+
+        private async Task<IEnumerable<Task<Owner>>> OwnersResult(IEnumerable<string> ids)
+        {
+            var response = await _httpClient.PostAsync($"agare/inskriven/personOrganisationsNummer?{_userConnection}",
+                new StringContent(JsonConvert.SerializeObject(ids), Encoding.UTF8, "application/json"));
+
+            var agareInskrivenPersonorganisationsnummer = JsonConvert.DeserializeObject<AgareInskrivenPersonorganisationsnummer>(await response.Content.ReadAsStringAsync());
+
+            var owners = agareInskrivenPersonorganisationsnummer.Data.AsParallel().Select(async x =>
+            {
+                var fastighetResult = (await GetEstateInfo(new[] { x.Fnr })).Data.FirstOrDefault();
+                response = await _httpClient.PostAsync($"agare/adress/personOrganisationsNummer?{_userConnection}",
+                    new StringContent(JsonConvert.SerializeObject(new[] { x.Identitetsnummer }), Encoding.UTF8, "application/json"));
+
+                var agareAdressPersonorganisationsnummer = JsonConvert.DeserializeObject<AgareAdressPersonorganisationsnummer>(await response.Content.ReadAsStringAsync()).Data?.FirstOrDefault();
+
+                return new Owner
+                {
+                    UuIdEstate = x.UuidFastighet.ToString(),
+                    Fnr = x.Fnr.ToString(),
+                    EstateName = fastighetResult?.Beteckning,
+                    Status = fastighetResult?.Status,
+                    CountyCode = fastighetResult?.KommunKod.Substring(0, 2),
+                    MunicipalityCode = fastighetResult?.KommunKod.Substring(2, 2),
+                    Municipality = fastighetResult?.Kommun,
+                    Share = x.AndelTaljare + "/" + x.AndelNamnare,
+                    Name = x.InskrivetFornamn + x.InskrivetEfternamn,
+                    StreetAddress = agareAdressPersonorganisationsnummer?.Utdelningsadress2,
+                    PostalCode = agareAdressPersonorganisationsnummer?.Postnummer,
+                    PostalArea = agareAdressPersonorganisationsnummer?.Postort
+                };
+            });
+            return owners;
         }
     }
 }
