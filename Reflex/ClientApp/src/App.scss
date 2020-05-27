@@ -41,3 +41,12 @@
 $theme-colors: ("brand": #3eb1c8 );
 
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+html, body, #root {
+    height: 100%;
+}
+
+body, #root {
+    display: flex;
+    flex-direction: column;
+}

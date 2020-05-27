@@ -24,7 +24,7 @@ const Map = () => {
   }, []);
 
   return (
-    <div id="map" ref={mapContainer} style={{ height: '720px' }} />
+    <div id="map" ref={mapContainer} style={{ flex: '1 0 auto' }} />
   );
 };
 

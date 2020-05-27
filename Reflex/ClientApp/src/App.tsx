@@ -15,18 +15,20 @@ import ApiAuthorizationRoutes from './features/api-authorization/ApiAuthorizatio
 
 function App() {
   return (
-    <Layout>
-      <Route exact path='/' render={() => <Search />} />
-      <Route path='/configs' render={() => <Configs />} />
-      <Route path='/search' render={() => <Search />} />
+    <>
+      <Layout>
+        <Route exact path='/' render={() => <Search />} />
+        <Route path='/configs' render={() => <Configs />} />
+        <Route path='/search' render={() => <Search />} />
+        <Route path='/cases' render={() => <Cases />} />
+        <Route path='/population' render={() => <Population />} />
+        <Route path='/property' render={() => <Property />} />
+        <Route path='/manage-users' render={() => <ManageUsers />} />
+        <Route path='/about' render={() => <About />} />
+        <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+      </Layout>
       <Route path='/map' render={() => <Map />} />
-      <Route path='/cases' render={() => <Cases />} />
-      <Route path='/population' render={() => <Population />} />
-      <Route path='/property' render={() => <Property />} />
-      <Route path='/manage-users' render={() => <ManageUsers />} />
-      <Route path='/about' render={() => <About />} />
-      <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-    </Layout>
+    </>
   );
 }
 
