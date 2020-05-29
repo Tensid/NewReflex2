@@ -1,0 +1,6 @@
+{
+  "localProxyUrl": "https://reflex-test.sokigo.com/localproxy/?url=",
+  "url": "https://map01.sokigohosting.com/wms/service/wmts",
+  "viewCenter": [ 482078, 7005765 ],
+  "projection": "EPSG:3006"
+}

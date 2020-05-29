@@ -176,7 +176,36 @@ export async function getConfigs() {
   return data;
 }
 
-export async function getOccurences(caseId: string, caseSource: CaseSource) {
+export async function getFnrFromPosition(lat: string, lon: string, srid: number, distance: number) {
+  const url = `api/map/fnr?lat=${lat}&lon=${lon}&srid=${srid}&distance=${distance}`;
+  const { data } = await axios.get<string>(url);
+  return data;
+}
+
+export async function getGeometryFromFnr(fnr: number) {
+  const url = `api/map/geometry?fnr=${fnr}`;
+  const { data } = await axios.get(url);
+  return data;
+}
+
+export async function getEstateName(fnr: number) {
+  const url = `api/map/estateName?fnr=${fnr}`;
+  const { data } = await axios.get<string>(url);
+  return data;
+}
+
+export async function getEstatePosition(fnr: number) {
+  const url = `api/map/estatePosition?fnr=${fnr}`;
+  const { data } = await axios.get(url);
+  return data;
+}
+
+export async function getMapSettings() {
+  const { data } = await axios.get('api/mapSettings');
+  return data;
+}
+
+export async function getOccurences(caseId: string, caseSource: string) {
   let url = `api/cases/${caseId}/occurences?caseSource=${caseSource}`;
   if (configId) {
     url = `${url}&configId=${configId}`;

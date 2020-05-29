@@ -2,6 +2,7 @@ import { Action, Middleware, ThunkAction, configureStore } from '@reduxjs/toolki
 import { setConfigId } from '../api/api';
 import casesReducer from '../features/cases/casesSlice';
 import configReducer from '../features/configs/configsSlice';
+import mapSettingsReducer from '../features/map/mapSettingsSlice';
 import searchResultReducer from '../features/search-result/searchResultSlice';
 import spinnerReducer from '../features/spinner/spinnerSlice';
 import userSettingsReducer from '../features/user-settings/userSettingsSlice';
@@ -19,6 +20,7 @@ export const store = configureStore({
   reducer: {
     cases: casesReducer,
     config: configReducer,
+    mapSettings: mapSettingsReducer,
     searchResult: searchResultReducer,
     spinner: spinnerReducer,
     userSettings: userSettingsReducer
