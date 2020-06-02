@@ -6,43 +6,43 @@
 //
 //    var belagenhetsadress = Belagenhetsadress.FromJson(jsonString);
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace FbService.QuickType.FastighetSearchBelagenhetsadress
 {
     public class FastighetSearchBelagenhetsadress
     {
-        [JsonProperty("statusKod")]
+        [JsonPropertyName("statusKod")]
         public long StatusKod { get; set; }
 
-        [JsonProperty("statusMeddelande")]
+        [JsonPropertyName("statusMeddelande")]
         public string StatusMeddelande { get; set; }
 
-        [JsonProperty("fel")]
+        [JsonPropertyName("fel")]
         public string[] Fel { get; set; }
 
-        [JsonProperty("data")]
+        [JsonPropertyName("data")]
         public Datum[] Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("belagenhetsadress")]
+        [JsonPropertyName("belagenhetsadress")]
         public string Belagenhetsadress { get; set; }
 
-        [JsonProperty("grupp")]
+        [JsonPropertyName("grupp")]
         public Grupp[] Grupp { get; set; }
     }
 
     public class Grupp
     {
-        [JsonProperty("fnr")]
+        [JsonPropertyName("fnr")]
         public int Fnr { get; set; }
 
-        [JsonProperty("cfdFnr")]
+        [JsonPropertyName("cfdFnr")]
         public string CfdFnr { get; set; }
 
-        [JsonProperty("uuid")]
+        [JsonPropertyName("uuid")]
         public string Uuid { get; set; }
     }
 }

@@ -6,79 +6,79 @@
 //
 //    var befolkningSenasteadressPid = BefolkningSenasteadressPid.FromJson(jsonString);
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace FbService.QuickType.BefolkningSenasteadressPid
 {
     public class BefolkningSenasteadressPid
     {
-        [JsonProperty("statusKod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusKod")]
         public long? StatusKod { get; set; }
 
-        [JsonProperty("statusMeddelande", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusMeddelande")]
         public string StatusMeddelande { get; set; }
 
-        [JsonProperty("fel", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fel")]
         public string[] Fel { get; set; }
 
-        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("data")]
         public Datum[] Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("pid", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("pid")]
         public int Pid { get; set; }
 
-        [JsonProperty("grupp", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("grupp")]
         public Grupp[] Grupp { get; set; }
     }
 
     public class Grupp
     {
-        [JsonProperty("pid", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("pid")]
         public long? Pid { get; set; }
 
-        [JsonProperty("adresstyp", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("adresstyp")]
         public string Adresstyp { get; set; }
 
-        [JsonProperty("lopnummer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("lopnummer")]
         public long? Lopnummer { get; set; }
 
-        [JsonProperty("franDatum", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("franDatum")]
         public string FranDatum { get; set; }
 
-        [JsonProperty("gallerTillDatum", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("gallerTillDatum")]
         public string GallerTillDatum { get; set; }
 
-        [JsonProperty("coAdress", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("coAdress")]
         public string CoAdress { get; set; }
 
-        [JsonProperty("utdelningsadress1", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("utdelningsadress1")]
         public string Utdelningsadress1 { get; set; }
 
-        [JsonProperty("utdelningsadress2", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("utdelningsadress2")]
         public string Utdelningsadress2 { get; set; }
 
-        [JsonProperty("utdelningsadress3", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("utdelningsadress3")]
         public string Utdelningsadress3 { get; set; }
 
-        [JsonProperty("postnummer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("postnummer")]
         public string Postnummer { get; set; }
 
-        [JsonProperty("postort", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("postort")]
         public string Postort { get; set; }
 
-        [JsonProperty("land", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("land")]
         public string Land { get; set; }
 
-        [JsonProperty("adressplatsId", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("adressplatsId")]
         public long? AdressplatsId { get; set; }
 
-        [JsonProperty("lagenhetId", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("lagenhetId")]
         public long? LagenhetId { get; set; }
 
-        [JsonProperty("distriktskod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("distriktskod")]
         public string Distriktskod { get; set; }
     }
 }

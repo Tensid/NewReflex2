@@ -1,28 +1,28 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace FbService.QuickType.BefolkningSearchFranPunkt
 {
     public class BefolkningSearchFranPunkt
     {
-        [JsonProperty("statusKod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusKod")]
         public long? StatusKod { get; set; }
 
-        [JsonProperty("statusMeddelande", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusMeddelande")]
         public string StatusMeddelande { get; set; }
 
-        [JsonProperty("fel")]
+        [JsonPropertyName("fel")]
         public object Fel { get; set; }
 
-        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("data")]
         public Datum[] Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("pid", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("pid")]
         public int Pid { get; set; }
 
-        [JsonProperty("personnummer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("personnummer")]
         public string Personnummer { get; set; }
     }
 }

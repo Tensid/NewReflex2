@@ -1,5 +1,5 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace FbService.QuickType.AgareSearchLagfarenagareFastighetFnr
 {
@@ -14,34 +14,34 @@ namespace FbService.QuickType.AgareSearchLagfarenagareFastighetFnr
     /// </summary>
     public class AgareSearchLagfarenagareFastighetFnr
     {
-        [JsonProperty("statusKod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusKod")]
         public long? StatusKod { get; set; }
 
-        [JsonProperty("statusMeddelande", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusMeddelande")]
         public string StatusMeddelande { get; set; }
 
-        [JsonProperty("fel")]
+        [JsonPropertyName("fel")]
         public object Fel { get; set; }
 
-        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("data")]
         public Datum[] Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("fnr", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fnr")]
         public long? Fnr { get; set; }
 
-        [JsonProperty("grupp", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("grupp")]
         public Grupp[] Grupp { get; set; }
     }
 
     public class Grupp
     {
-        [JsonProperty("identitetsnummer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("identitetsnummer")]
         public string Identitetsnummer { get; set; }
 
-        [JsonProperty("uuid", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("uuid")]
         public Guid? Uuid { get; set; }
     }
 }

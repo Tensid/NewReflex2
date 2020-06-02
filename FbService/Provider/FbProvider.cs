@@ -5,12 +5,11 @@ using FbService.QuickType.AgareSearchLagfarenagareFastighetFnr;
 using FbService.QuickType.BefolkningFolkbokforingPid;
 using FbService.QuickType.BefolkningSearchFolkbokfordFastighetFnr;
 using FbService.QuickType.BefolkningSenasteadressPid;
-using FbService.QuickType.FastighetInfo;
+using FbService.QuickType.FastighetInfoFnr;
 using FbService.QuickType.FastighetKoordinatFnr;
 using FbService.QuickType.FastighetSearchBelagenhetsadress;
 using FbService.QuickType.FastighetSearchEnkelbeteckningSorterad;
 using FbService.QuickType.FastighetSearchFranPunkt;
-using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,6 +17,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using VisaRService.Contracts;
 using Estate = FbService.Contracts.Estate;
@@ -107,7 +107,7 @@ namespace FbService.Provider
         public async Task<Estate[]> SearchEstates(string searchText)
         {
             var response = await _httpClient.GetAsync($"fastighet/search/enkelbeteckning/sorterad?Beteckning={searchText}&{_userConnection}");
-            var fastighetSearch = JsonConvert.DeserializeObject<FastighetSearchEnkelbeteckningSorterad>(await response.Content.ReadAsStringAsync());
+            var fastighetSearch = JsonSerializer.Deserialize<FastighetSearchEnkelbeteckningSorterad>(await response.Content.ReadAsStringAsync());
 
             var estates = new List<Estate>();
             if (fastighetSearch != null && fastighetSearch.Data?.Length > 0)
@@ -122,7 +122,7 @@ namespace FbService.Provider
         public async Task<Address[]> SearchAddresses(string searchText)
         {
             var response = await _httpClient.GetAsync($"fastighet/search/belagenhetsadress/{searchText}?{_userConnection}");
-            var belagenhetsadress = JsonConvert.DeserializeObject<FastighetSearchBelagenhetsadress>(await response.Content.ReadAsStringAsync());
+            var belagenhetsadress = JsonSerializer.Deserialize<FastighetSearchBelagenhetsadress>(await response.Content.ReadAsStringAsync());
 
             if (belagenhetsadress == null || belagenhetsadress.Data.Length <= 0)
                 return new Address[0];
@@ -163,24 +163,22 @@ namespace FbService.Provider
         private async Task<FastighetInfoFnr> GetEstateInfo(IEnumerable fnr)
         {
             var response = await _httpClient.PostAsync($"fastighet/info/fnr?{_userConnection}",
-                new StringContent(JsonConvert.SerializeObject(fnr), Encoding.UTF8, "application/json-patch+json"));
-            var fastighetInfoFnr = JsonConvert.DeserializeObject<FastighetInfoFnr>(await response.Content.ReadAsStringAsync());
+                new StringContent(JsonSerializer.Serialize(fnr), Encoding.UTF8, "application/json-patch+json"));
 
-            return fastighetInfoFnr;
+            return JsonSerializer.Deserialize<FastighetInfoFnr>(await response.Content.ReadAsStringAsync());
         }
 
         internal async Task<Position> GetEstatePosition(string fnr)
         {
             var response = await _httpClient.PostAsync($"fastighet/koordinat/fnr?{_userConnection}",
                 new StringContent($"[{fnr}]", Encoding.UTF8, "application/json-patch+json"));
-            var fastighetKoordinatFnr = JsonConvert.DeserializeObject<FastighetKoordinatFnr>(await response.Content.ReadAsStringAsync());
+            var fastighetKoordinatFnr = JsonSerializer.Deserialize<FastighetKoordinatFnr>(await response.Content.ReadAsStringAsync());
 
-            var position = new Position
+            return new Position
             {
                 NorthingKoordinat = fastighetKoordinatFnr?.Data.First().Grupp.First().Sweref99TmNorthingKoordinat.ToString(),
                 EastingKoordinat = fastighetKoordinatFnr?.Data.First().Grupp.First().Sweref99TmEastingKoordinat.ToString()
             };
-            return position;
         }
 
         internal async Task<IEnumerable<string>> GetFnrsFromPosition(string lat, string lon, string srid, string avstand, bool completelyInside = false)
@@ -188,7 +186,7 @@ namespace FbService.Provider
             var response = await _httpClient.GetAsync(
                 $"fastighet/search/franPunkt/{lat}/{lon}/{srid}/{avstand}?CompletelyInside={completelyInside}&{_userConnection}");
 
-            var fastighetSearchFranPunkt = JsonConvert.DeserializeObject<FastighetSearchFranPunkt>(await response.Content.ReadAsStringAsync());
+            var fastighetSearchFranPunkt = JsonSerializer.Deserialize<FastighetSearchFranPunkt>(await response.Content.ReadAsStringAsync());
             return fastighetSearchFranPunkt.Data.Select(x => x.Fnr.ToString());
         }
 
@@ -203,7 +201,7 @@ namespace FbService.Provider
         internal async Task<IEnumerable<KidPerson>> KidPersonsByFnr(string estateId)
         {
             var response = await _httpClient.GetAsync($"befolkning/search/folkbokford/fastighet/fnr/{estateId}?{_userConnection}");
-            var befolkningSearch = JsonConvert.DeserializeObject<BefolkningSearchFolkbokfordFastighetFnr>(await response.Content.ReadAsStringAsync());
+            var befolkningSearch = JsonSerializer.Deserialize<BefolkningSearchFolkbokfordFastighetFnr>(await response.Content.ReadAsStringAsync());
 
             var pids = befolkningSearch.Data.Select(x => x.Pid);
             var kidResult = await KidResult(pids);
@@ -213,12 +211,12 @@ namespace FbService.Provider
         private async Task<IEnumerable<KidPerson>> KidResult(IEnumerable<int> pids)
         {
             var response = await _httpClient.PostAsync($"befolkning/folkbokforing/pid?{_userConnection}",
-                new StringContent(JsonConvert.SerializeObject(pids), Encoding.UTF8, "application/json-patch+json"));
-            var befolkningFolkbokforingPid = JsonConvert.DeserializeObject<BefolkningFolkbokforingPid>(await response.Content.ReadAsStringAsync());
+                new StringContent(JsonSerializer.Serialize(pids), Encoding.UTF8, "application/json-patch+json"));
+            var befolkningFolkbokforingPid = JsonSerializer.Deserialize<BefolkningFolkbokforingPid>(await response.Content.ReadAsStringAsync());
 
             var bspResponse = await _httpClient.PostAsync($"befolkning/senasteadress/pid?{_userConnection}",
-                new StringContent(JsonConvert.SerializeObject(pids), Encoding.UTF8, "application/json-patch+json"));
-            var befolkningSenasteadressPid = JsonConvert.DeserializeObject<BefolkningSenasteadressPid>(await bspResponse.Content.ReadAsStringAsync());
+                new StringContent(JsonSerializer.Serialize(pids), Encoding.UTF8, "application/json-patch+json"));
+            var befolkningSenasteadressPid = JsonSerializer.Deserialize<BefolkningSenasteadressPid>(await bspResponse.Content.ReadAsStringAsync());
 
             var result = from bfpDatum in befolkningFolkbokforingPid.Data
                          join bspDatum in befolkningSenasteadressPid.Data on bfpDatum.Pid equals bspDatum.Pid
@@ -241,8 +239,8 @@ namespace FbService.Provider
         internal async Task<IEnumerable<Task<Owner>>> GetOwners(IEnumerable<string> fnrs)
         {
             var response = await _httpClient.PostAsync($"agare/search/lagfarenAgare/fastighet/fnr?{_userConnection}",
-                new StringContent(JsonConvert.SerializeObject(fnrs), Encoding.UTF8, "application/json"));
-            var agareSearchLagfarenagareFastighetFnr = JsonConvert.DeserializeObject<AgareSearchLagfarenagareFastighetFnr>(await response.Content.ReadAsStringAsync());
+                new StringContent(JsonSerializer.Serialize(fnrs), Encoding.UTF8, "application/json"));
+            var agareSearchLagfarenagareFastighetFnr = JsonSerializer.Deserialize<AgareSearchLagfarenagareFastighetFnr>(await response.Content.ReadAsStringAsync());
             var ids = agareSearchLagfarenagareFastighetFnr.Data.SelectMany(x => x.Grupp.Select(y => y.Identitetsnummer));
             var owners = await OwnersResult(ids);
             return owners;
@@ -251,17 +249,18 @@ namespace FbService.Provider
         private async Task<IEnumerable<Task<Owner>>> OwnersResult(IEnumerable<string> ids)
         {
             var response = await _httpClient.PostAsync($"agare/inskriven/personOrganisationsNummer?{_userConnection}",
-                new StringContent(JsonConvert.SerializeObject(ids), Encoding.UTF8, "application/json"));
+                new StringContent(JsonSerializer.Serialize(ids), Encoding.UTF8, "application/json"));
 
-            var agareInskrivenPersonorganisationsnummer = JsonConvert.DeserializeObject<AgareInskrivenPersonorganisationsnummer>(await response.Content.ReadAsStringAsync());
+            var agareInskrivenPersonorganisationsnummer = JsonSerializer.Deserialize<AgareInskrivenPersonorganisationsnummer>(await response.Content.ReadAsStringAsync());
 
             var owners = agareInskrivenPersonorganisationsnummer.Data.AsParallel().Select(async x =>
             {
                 var fastighetResult = (await GetEstateInfo(new[] { x.Fnr })).Data.FirstOrDefault();
-                response = await _httpClient.PostAsync($"agare/adress/personOrganisationsNummer?{_userConnection}",
-                    new StringContent(JsonConvert.SerializeObject(new[] { x.Identitetsnummer }), Encoding.UTF8, "application/json"));
 
-                var agareAdressPersonorganisationsnummer = JsonConvert.DeserializeObject<AgareAdressPersonorganisationsnummer>(await response.Content.ReadAsStringAsync()).Data?.FirstOrDefault();
+                response = await _httpClient.PostAsync($"agare/adress/personOrganisationsNummer?{_userConnection}",
+                    new StringContent(JsonSerializer.Serialize(new[] { x.Identitetsnummer }), Encoding.UTF8, "application/json"));
+
+                var agareAdressPersonorganisationsnummer = JsonSerializer.Deserialize<AgareAdressPersonorganisationsnummer>(await response.Content.ReadAsStringAsync()).Data?.FirstOrDefault();
 
                 return new Owner
                 {

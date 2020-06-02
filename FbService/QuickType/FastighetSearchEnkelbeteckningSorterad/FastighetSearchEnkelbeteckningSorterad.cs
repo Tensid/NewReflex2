@@ -6,40 +6,40 @@
 //
 //    var fastighetSearch = FastighetSearch.FromJson(jsonString);
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace FbService.QuickType.FastighetSearchEnkelbeteckningSorterad
 {
     public class FastighetSearchEnkelbeteckningSorterad
     {
-        [JsonProperty("statusKod")]
+        [JsonPropertyName("statusKod")]
         public long StatusKod { get; set; }
 
-        [JsonProperty("statusMeddelande")]
+        [JsonPropertyName("statusMeddelande")]
         public string StatusMeddelande { get; set; }
 
-        [JsonProperty("fel")]
+        [JsonPropertyName("fel")]
         public string[] Fel { get; set; }
 
-        [JsonProperty("data")]
+        [JsonPropertyName("data")]
         public Datum[] Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("beteckning")]
+        [JsonPropertyName("beteckning")]
         public string Beteckning { get; set; }
 
-        [JsonProperty("kommun")]
+        [JsonPropertyName("kommun")]
         public string Kommun { get; set; }
 
-        [JsonProperty("fnr")]
+        [JsonPropertyName("fnr")]
         public long Fnr { get; set; }
 
-        [JsonProperty("cfdFnr")]
+        [JsonPropertyName("cfdFnr")]
         public string CfdFnr { get; set; }
 
-        [JsonProperty("uuid")]
+        [JsonPropertyName("uuid")]
         public string Uuid { get; set; }
     }
 }

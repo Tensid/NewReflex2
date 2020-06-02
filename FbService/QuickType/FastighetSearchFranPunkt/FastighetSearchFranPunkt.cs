@@ -6,34 +6,34 @@
 //
 //    var fastighetSearchFranPunkt = FastighetSearchFranPunkt.FromJson(jsonString);
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace FbService.QuickType.FastighetSearchFranPunkt
 {
     public class FastighetSearchFranPunkt
     {
-        [JsonProperty("statusKod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusKod")]
         public long? StatusKod { get; set; }
 
-        [JsonProperty("statusMeddelande", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusMeddelande")]
         public string StatusMeddelande { get; set; }
 
-        [JsonProperty("fel", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fel")]
         public string[] Fel { get; set; }
 
-        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("data")]
         public Datum[] Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("fnr", NullValueHandling = NullValueHandling.Ignore)]
-        public string Fnr { get; set; }
+        [JsonPropertyName("fnr")]
+        public int Fnr { get; set; }
 
-        [JsonProperty("cfdFnr", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("cfdFnr")]
         public string CfdFnr { get; set; }
 
-        [JsonProperty("uuid", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("uuid")]
         public string Uuid { get; set; }
     }
 }

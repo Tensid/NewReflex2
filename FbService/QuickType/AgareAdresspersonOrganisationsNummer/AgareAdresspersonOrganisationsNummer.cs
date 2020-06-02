@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace FbService.QuickType.AgareAdressPersonorganisationsnummer
 {
@@ -13,49 +13,49 @@ namespace FbService.QuickType.AgareAdressPersonorganisationsnummer
     /// </summary>
     public class AgareAdressPersonorganisationsnummer
     {
-        [JsonProperty("statusKod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusKod")]
         public long? StatusKod { get; set; }
 
-        [JsonProperty("statusMeddelande", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusMeddelande")]
         public string StatusMeddelande { get; set; }
 
-        [JsonProperty("fel")]
+        [JsonPropertyName("fel")]
         public object Fel { get; set; }
 
-        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("data")]
         public Datum[] Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("identitetsnummer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("identitetsnummer")]
         public string Identitetsnummer { get; set; }
 
-        [JsonProperty("adresstyp", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("adresstyp")]
         public string Adresstyp { get; set; }
 
-        [JsonProperty("coAdress")]
+        [JsonPropertyName("coAdress")]
         public object CoAdress { get; set; }
 
-        [JsonProperty("utdelningsadress1")]
+        [JsonPropertyName("utdelningsadress1")]
         public object Utdelningsadress1 { get; set; }
 
-        [JsonProperty("utdelningsadress2", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("utdelningsadress2")]
         public string Utdelningsadress2 { get; set; }
 
-        [JsonProperty("utdelningsadress3")]
+        [JsonPropertyName("utdelningsadress3")]
         public object Utdelningsadress3 { get; set; }
 
-        [JsonProperty("utdelningsadress4")]
+        [JsonPropertyName("utdelningsadress4")]
         public object Utdelningsadress4 { get; set; }
 
-        [JsonProperty("postnummer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("postnummer")]
         public string Postnummer { get; set; }
 
-        [JsonProperty("postort", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("postort")]
         public string Postort { get; set; }
 
-        [JsonProperty("land")]
+        [JsonPropertyName("land")]
         public object Land { get; set; }
     }
 }

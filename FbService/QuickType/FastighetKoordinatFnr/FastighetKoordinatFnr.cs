@@ -6,64 +6,64 @@
 //
 //    var fastighetKoordinatFnr = FastighetKoordinatFnr.FromJson(jsonString);
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace FbService.QuickType.FastighetKoordinatFnr
 {
     public class FastighetKoordinatFnr
     {
-        [JsonProperty("statusKod", NullValueHandling = NullValueHandling.Ignore)]
-        public long? StatusKod { get; set; }
+        [JsonPropertyName("statusKod")]
+        public double? StatusKod { get; set; }
 
-        [JsonProperty("statusMeddelande", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusMeddelande")]
         public string StatusMeddelande { get; set; }
 
-        [JsonProperty("fel", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fel")]
         public string[] Fel { get; set; }
 
-        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("data")]
         public Datum[] Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("fnr", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fnr")]
         public int Fnr { get; set; }
 
-        [JsonProperty("grupp", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("grupp")]
         public Grupp[] Grupp { get; set; }
     }
 
     public class Grupp
     {
-        [JsonProperty("koordinatUuid", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("koordinatUuid")]
         public string KoordinatUuid { get; set; }
 
-        [JsonProperty("omrade", NullValueHandling = NullValueHandling.Ignore)]
-        public long? Omrade { get; set; }
+        [JsonPropertyName("omrade")]
+        public double? Omrade { get; set; }
 
-        [JsonProperty("sweref99TMNorthingKoordinat", NullValueHandling = NullValueHandling.Ignore)]
-        public long? Sweref99TmNorthingKoordinat { get; set; }
+        [JsonPropertyName("sweref99TMNorthingKoordinat")]
+        public double? Sweref99TmNorthingKoordinat { get; set; }
 
-        [JsonProperty("sweref99TMEastingKoordinat", NullValueHandling = NullValueHandling.Ignore)]
-        public long? Sweref99TmEastingKoordinat { get; set; }
+        [JsonPropertyName("sweref99TMEastingKoordinat")]
+        public double? Sweref99TmEastingKoordinat { get; set; }
 
-        [JsonProperty("lokalNorthingKoordinat", NullValueHandling = NullValueHandling.Ignore)]
-        public long? LokalNorthingKoordinat { get; set; }
+        [JsonPropertyName("lokalNorthingKoordinat")]
+        public double? LokalNorthingKoordinat { get; set; }
 
-        [JsonProperty("lokalEastingKoordinat", NullValueHandling = NullValueHandling.Ignore)]
-        public long? LokalEastingKoordinat { get; set; }
+        [JsonPropertyName("lokalEastingKoordinat")]
+        public double? LokalEastingKoordinat { get; set; }
 
-        [JsonProperty("lokaltKoordinatsystemKod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("lokaltKoordinatsystemKod")]
         public string LokaltKoordinatsystemKod { get; set; }
 
-        [JsonProperty("lokaltKoordinatsystem", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("lokaltKoordinatsystem")]
         public string LokaltKoordinatsystem { get; set; }
 
-        [JsonProperty("rt90NorthingKoordinat", NullValueHandling = NullValueHandling.Ignore)]
-        public long? Rt90NorthingKoordinat { get; set; }
+        [JsonPropertyName("rt90NorthingKoordinat")]
+        public double? Rt90NorthingKoordinat { get; set; }
 
-        [JsonProperty("rt90EastingKoordinat", NullValueHandling = NullValueHandling.Ignore)]
-        public long? Rt90EastingKoordinat { get; set; }
+        [JsonPropertyName("rt90EastingKoordinat")]
+        public double? Rt90EastingKoordinat { get; set; }
     }
 }

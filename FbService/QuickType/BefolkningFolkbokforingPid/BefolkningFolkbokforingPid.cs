@@ -6,88 +6,88 @@
 //
 //    var befolkningFolkbokforingPid = BefolkningFolkbokforingPid.FromJson(jsonString);
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace FbService.QuickType.BefolkningFolkbokforingPid
 {
     public class BefolkningFolkbokforingPid
     {
-        [JsonProperty("statusKod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusKod")]
         public long? StatusKod { get; set; }
 
-        [JsonProperty("statusMeddelande", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusMeddelande")]
         public string StatusMeddelande { get; set; }
 
-        [JsonProperty("fel", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fel")]
         public string[] Fel { get; set; }
 
-        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("data")]
         public Datum[] Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("pid", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("pid")]
         public int Pid { get; set; }
 
-        [JsonProperty("identitetsnummer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("identitetsnummer")]
         public string Identitetsnummer { get; set; }
 
-        [JsonProperty("identitetsnummertyp", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("identitetsnummertyp")]
         public string Identitetsnummertyp { get; set; }
 
-        [JsonProperty("kon", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("kon")]
         public string Kon { get; set; }
 
-        [JsonProperty("civilstandskod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("civilstandskod")]
         public string Civilstandskod { get; set; }
 
-        [JsonProperty("civilstandsdatum", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("civilstandsdatum")]
         public string Civilstandsdatum { get; set; }
 
-        [JsonProperty("folkbokforingsdatum", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("folkbokforingsdatum")]
         public string Folkbokforingsdatum { get; set; }
 
-        [JsonProperty("avregistreringskod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("avregistreringskod")]
         public string Avregistreringskod { get; set; }
 
-        [JsonProperty("avregistreringsdatum", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("avregistreringsdatum")]
         public string Avregistreringsdatum { get; set; }
 
-        [JsonProperty("efternamn", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("efternamn")]
         public string Efternamn { get; set; }
 
-        [JsonProperty("mellannamn", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("mellannamn")]
         public string Mellannamn { get; set; }
 
-        [JsonProperty("fornamn", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fornamn")]
         public string Fornamn { get; set; }
 
-        [JsonProperty("tilltalsnamn", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("tilltalsnamn")]
         public string Tilltalsnamn { get; set; }
 
-        [JsonProperty("fonetisktNamn", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fonetisktNamn")]
         public string FonetisktNamn { get; set; }
 
-        [JsonProperty("kommunkod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("kommunkod")]
         public string Kommunkod { get; set; }
 
-        [JsonProperty("fodelselan", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fodelselan")]
         public string Fodelselan { get; set; }
 
-        [JsonProperty("fodelsehemort", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fodelsehemort")]
         public string Fodelsehemort { get; set; }
 
-        [JsonProperty("utlandskFodelseort", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("utlandskFodelseort")]
         public string UtlandskFodelseort { get; set; }
 
-        [JsonProperty("fodelseland", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fodelseland")]
         public string Fodelseland { get; set; }
 
-        [JsonProperty("invandringsdatum", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("invandringsdatum")]
         public string Invandringsdatum { get; set; }
 
-        [JsonProperty("fnr", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fnr")]
         public long? Fnr { get; set; }
     }
 }

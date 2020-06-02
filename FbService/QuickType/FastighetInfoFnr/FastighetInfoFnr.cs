@@ -6,118 +6,118 @@
 //
 //    var fastighetInfo = FastighetInfo.FromJson(jsonString);
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
-namespace FbService.QuickType.FastighetInfo
+namespace FbService.QuickType.FastighetInfoFnr
 {
     public class FastighetInfoFnr
     {
-        [JsonProperty("statusKod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusKod")]
         public long? StatusKod { get; set; }
 
-        [JsonProperty("statusMeddelande", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusMeddelande")]
         public string StatusMeddelande { get; set; }
 
-        [JsonProperty("fel", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fel")]
         public string[] Fel { get; set; }
 
-        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("data")]
         public Datum[] Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("status")]
         public string Status { get; set; }
 
-        [JsonProperty("kommunKod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("kommunKod")]
         public string KommunKod { get; set; }
 
-        [JsonProperty("kommun", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("kommun")]
         public string Kommun { get; set; }
 
-        [JsonProperty("beteckning", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("beteckning")]
         public string Beteckning { get; set; }
 
-        [JsonProperty("trakt", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("trakt")]
         public string Trakt { get; set; }
 
-        [JsonProperty("beteckningsnummer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("beteckningsnummer")]
         public string Beteckningsnummer { get; set; }
 
-        [JsonProperty("block", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("block")]
         public string Block { get; set; }
 
-        [JsonProperty("tecken", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("tecken")]
         public string Tecken { get; set; }
 
-        [JsonProperty("enhet", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("enhet")]
         public long? Enhet { get; set; }
 
-        [JsonProperty("ofullstandigRattighetsredovisning", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("ofullstandigRattighetsredovisning")]
         public bool? OfullstandigRattighetsredovisning { get; set; }
 
-        [JsonProperty("outreddaAndelarISamfalligheter", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("outreddaAndelarISamfalligheter")]
         public bool? OutreddaAndelarISamfalligheter { get; set; }
 
-        [JsonProperty("forvarvstillstandOmarrendering", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("forvarvstillstandOmarrendering")]
         public bool? ForvarvstillstandOmarrendering { get; set; }
 
-        [JsonProperty("kronohemman", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("kronohemman")]
         public bool? Kronohemman { get; set; }
 
-        [JsonProperty("delagareOfullstandigtRedovisade", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("delagareOfullstandigtRedovisade")]
         public bool? DelagareOfullstandigtRedovisade { get; set; }
 
-        [JsonProperty("felIFR", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("felIFR")]
         public bool? FelIfr { get; set; }
 
-        [JsonProperty("underAjourforingIFR", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("underAjourforingIFR")]
         public bool? UnderAjourforingIfr { get; set; }
 
-        [JsonProperty("senasteAjourforingIFR", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("senasteAjourforingIFR")]
         public string SenasteAjourforingIfr { get; set; }
 
-        [JsonProperty("utanforBevakningskrets", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("utanforBevakningskrets")]
         public bool? UtanforBevakningskrets { get; set; }
 
-        [JsonProperty("preliminarTypkod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("preliminarTypkod")]
         public string PreliminarTypkod { get; set; }
 
-        [JsonProperty("har3DOmrade", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("har3DOmrade")]
         public bool? Har3DOmrade { get; set; }
 
-        [JsonProperty("ar3DUrholkad", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("ar3DUrholkad")]
         public bool? Ar3DUrholkad { get; set; }
 
-        [JsonProperty("andelAvserUtforandeOchDrift", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("andelAvserUtforandeOchDrift")]
         public bool? AndelAvserUtforandeOchDrift { get; set; }
 
-        [JsonProperty("samfallighetFarAndraAndel", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("samfallighetFarAndraAndel")]
         public bool? SamfallighetFarAndraAndel { get; set; }
 
-        [JsonProperty("andelAvserEndastDrift", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("andelAvserEndastDrift")]
         public bool? AndelAvserEndastDrift { get; set; }
 
-        [JsonProperty("summaAndelstal", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("summaAndelstal")]
         public string SummaAndelstal { get; set; }
 
-        [JsonProperty("arAgarlagenhet", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("arAgarlagenhet")]
         public bool? ArAgarlagenhet { get; set; }
 
-        [JsonProperty("arUrholkadAvAgarlagenhet", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("arUrholkadAvAgarlagenhet")]
         public bool? ArUrholkadAvAgarlagenhet { get; set; }
 
-        [JsonProperty("forvarvstillstandGlesbygd", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("forvarvstillstandGlesbygd")]
         public bool? ForvarvstillstandGlesbygd { get; set; }
 
-        [JsonProperty("fnr", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fnr")]
         public long? Fnr { get; set; }
 
-        [JsonProperty("cfdFnr", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("cfdFnr")]
         public string CfdFnr { get; set; }
 
-        [JsonProperty("uuid", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("uuid")]
         public string Uuid { get; set; }
     }
 }

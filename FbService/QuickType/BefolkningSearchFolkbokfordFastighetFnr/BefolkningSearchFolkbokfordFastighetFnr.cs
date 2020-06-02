@@ -6,31 +6,31 @@
 //
 //    var befolkningSearch = BefolkningSearch.FromJson(jsonString);
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace FbService.QuickType.BefolkningSearchFolkbokfordFastighetFnr
 {
     public class BefolkningSearchFolkbokfordFastighetFnr
     {
-        [JsonProperty("statusKod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusKod")]
         public long? StatusKod { get; set; }
 
-        [JsonProperty("statusMeddelande", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusMeddelande")]
         public string StatusMeddelande { get; set; }
 
-        [JsonProperty("fel", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fel")]
         public string[] Fel { get; set; }
 
-        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("data")]
         public Datum[] Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("pid")]
+        [JsonPropertyName("pid")]
         public int Pid { get; set; }
 
-        [JsonProperty("personnummer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("personnummer")]
         public string Personnummer { get; set; }
     }
 }

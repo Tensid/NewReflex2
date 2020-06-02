@@ -1,5 +1,5 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace FbService.QuickType.AgareInskrivenPersonorganisationsnummer
 {
@@ -14,70 +14,70 @@ namespace FbService.QuickType.AgareInskrivenPersonorganisationsnummer
     /// </summary>
     public class AgareInskrivenPersonorganisationsnummer
     {
-        [JsonProperty("statusKod", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusKod")]
         public long? StatusKod { get; set; }
 
-        [JsonProperty("statusMeddelande", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("statusMeddelande")]
         public string StatusMeddelande { get; set; }
 
-        [JsonProperty("fel")]
+        [JsonPropertyName("fel")]
         public object Fel { get; set; }
 
-        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("data")]
         public Datum[] Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("fnr", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fnr")]
         public long? Fnr { get; set; }
 
-        [JsonProperty("uuidFastighet", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("uuidFastighet")]
         public Guid? UuidFastighet { get; set; }
 
-        [JsonProperty("typAvAganderatt", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("typAvAganderatt")]
         public string TypAvAganderatt { get; set; }
 
-        [JsonProperty("uuidAganderatt", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("uuidAganderatt")]
         public Guid? UuidAganderatt { get; set; }
 
-        [JsonProperty("akt", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("akt")]
         public string Akt { get; set; }
 
-        [JsonProperty("identitetsnummer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("identitetsnummer")]
         public string Identitetsnummer { get; set; }
 
-        [JsonProperty("uuidInskrivenPerson", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("uuidInskrivenPerson")]
         public Guid? UuidInskrivenPerson { get; set; }
 
-        [JsonProperty("inskrivetEfternamn", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("inskrivetEfternamn")]
         public string InskrivetEfternamn { get; set; }
 
-        [JsonProperty("inskrivetFornamn", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("inskrivetFornamn")]
         public string InskrivetFornamn { get; set; }
 
-        [JsonProperty("gallandeEfternamn", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("gallandeEfternamn")]
         public string GallandeEfternamn { get; set; }
 
-        [JsonProperty("gallandeMellannamn")]
+        [JsonPropertyName("gallandeMellannamn")]
         public object GallandeMellannamn { get; set; }
 
-        [JsonProperty("gallandeFornamn", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("gallandeFornamn")]
         public string GallandeFornamn { get; set; }
 
-        [JsonProperty("inskrivetOrganisationsnamn")]
+        [JsonPropertyName("inskrivetOrganisationsnamn")]
         public object InskrivetOrganisationsnamn { get; set; }
 
-        [JsonProperty("gallandeOrganisationsnamn")]
+        [JsonPropertyName("gallandeOrganisationsnamn")]
         public object GallandeOrganisationsnamn { get; set; }
 
-        [JsonProperty("juridiskForm", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("juridiskForm")]
         public string JuridiskForm { get; set; }
 
-        [JsonProperty("andelTaljare", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("andelTaljare")]
         public long? AndelTaljare { get; set; }
 
-        [JsonProperty("andelNamnare", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("andelNamnare")]
         public long? AndelNamnare { get; set; }
     }
 }
