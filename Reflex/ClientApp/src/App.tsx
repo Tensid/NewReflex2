@@ -5,6 +5,7 @@ import './App.scss';
 import Cases from './Cases';
 import Configs from './Configs';
 import { Layout } from './Layout';
+import ManageConfigs from './ManageConfigs';
 import ManageUsers from './ManageUsers';
 import Map from './Map';
 import Population from './Population';
@@ -24,6 +25,7 @@ function App() {
         <Route path='/population' render={() => <Population />} />
         <Route path='/property' render={() => <Property />} />
         <Route path='/manage-users' render={() => <ManageUsers />} />
+        <Route path='/manage-configs' render={() => <ManageConfigs />} />
         <Route path='/about' render={() => <About />} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>

@@ -40,6 +40,9 @@ export function NavMenu() {
                   <LinkContainer to="/configs">
                     <NavDropdown.Item className="text-dark">Välj konfiguration</NavDropdown.Item>
                   </LinkContainer>
+                  <LinkContainer to="/manage-configs">
+                    <NavDropdown.Item className="text-dark">Hantera konfigurationer</NavDropdown.Item>
+                  </LinkContainer>
                   <LinkContainer to="/manage-users">
                     <NavDropdown.Item className="text-dark">Hantera användare</NavDropdown.Item>
                   </LinkContainer>

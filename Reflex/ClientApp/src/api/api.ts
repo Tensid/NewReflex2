@@ -108,6 +108,9 @@ export interface Config {
   visible: boolean;
   tabs: Tab[];
   caseSources: CaseSource[];
+  agsConfigs?: AgsConfig[];
+  byggrConfigs?: ByggrConfig[];
+  ecosConfigs?: EcosConfig[];
   fbWebbBoendeUrl?: string;
   fbWebbLagenhetUrl?: string;
   fbWebbFastighetUrl?: string;
@@ -144,6 +147,44 @@ export interface UserSettings {
   defaultTab: Tab;
 }
 
+export interface AgsConfig {
+  id: string;
+  configId: string;
+  username: string;
+  password: string;
+  instance: string;
+  department: string;
+  searchWay: string;
+  casePattern: string;
+  documentPattern: string;
+  dateField: string;
+  estateNameSearch: boolean;
+  serviceUrl: string;
+}
+
+export interface ByggrConfig {
+  id: string;
+  configId: string;
+  documentTypes: string[];
+  occurenceTypes: string[];
+  personRoles: string[];
+  tabs: string[];
+  workingMaterial: boolean;
+  hideCasesWithSecretOccurences: boolean;
+  hideDocumentsWithCommentMatching: string;
+  onlyCasesWithoutMainDecision: boolean;
+  minCaseStartDate: string | null;
+  serviceUrl: string;
+}
+
+export interface EcosConfig {
+  id: string;
+  configId: string;
+  serviceUrl: string;
+  username: string;
+  password: string;
+}
+
 export async function search(query: string) {
   let url = `api/search?query=${query}`;
   if (configId) {
@@ -173,6 +214,81 @@ export async function getCase(id: string, caseSource: CaseSource) {
 
 export async function getConfigs() {
   const { data } = await axios.get<Config[]>('api/configs');
+  return data;
+}
+
+export async function getFullConfigs() {
+  const { data } = await axios.get<Config[]>('api/configs/full');
+  return data;
+}
+
+export async function deleteConfig(id: string) {
+  const url = `api/configs/${id}`;
+  const { data } = await axios.delete(url);
+  return data;
+}
+
+export async function createConfig(config: Config) {
+  const { data } = await axios.post('api/configs', config);
+  return data;
+}
+
+export async function updateConfig(config: Config) {
+  const { data } = await axios.put('api/configs', config);
+  return data;
+}
+
+export async function getConfig(id: string) {
+  const url = `api/configs/${id}`;
+  const { data } = await axios.get<Config>(url);
+  return data;
+}
+
+export async function getAgsConfigs() {
+  const { data } = await axios.get<AgsConfig[]>('api/ags');
+  return data;
+}
+
+export async function getByggrConfigs() {
+  const { data } = await axios.get<ByggrConfig[]>('api/byggr');
+  return data;
+}
+
+export async function getEcosConfigs() {
+  const { data } = await axios.get<EcosConfig[]>('api/ecos');
+  return data;
+}
+
+export async function updateAgsConfig(agsConfig: AgsConfig) {
+  const { data } = await axios.put('api/ags', agsConfig);
+  return data;
+}
+
+export async function updateByggrConfig(byggrConfig: ByggrConfig) {
+  const { data } = await axios.put('api/byggr', byggrConfig);
+  return data;
+}
+
+export async function updateEcosConfig(ecosConfig: EcosConfig) {
+  const { data } = await axios.put('api/ecos', ecosConfig);
+  return data;
+}
+
+export async function getAgsConfig(id: string) {
+  const url = `api/ags/${id}`;
+  const { data } = await axios.get<AgsConfig>(url);
+  return data;
+}
+
+export async function getByggrConfig(id: string) {
+  const url = `api/byggr/${id}`;
+  const { data } = await axios.get<ByggrConfig>(url);
+  return data;
+}
+
+export async function getEcosConfig(id: string) {
+  const url = `api/ecos/${id}`;
+  const { data } = await axios.get<EcosConfig>(url);
   return data;
 }
 
