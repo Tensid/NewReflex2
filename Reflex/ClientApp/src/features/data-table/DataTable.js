@@ -12,8 +12,10 @@ import 'datatables.net-responsive-bs4';
 import './buttons.bootstrap4.css';
 import './dataTables.bootstrap4.css';
 import './responsive.bootstrap4.css';
+import { increase, decrease } from '../spinner/spinnerSlice';
 
 const DataTable = (props) => {
+  let isFetching;
   const linkButtons = props.linkButtons.map(x => {
     return {
       text: x.displayName,
@@ -30,12 +32,23 @@ const DataTable = (props) => {
       ajax: {
         url: props.url,
         data: (d) => {
+          if (!isFetching) {
+            props.increase();
+            isFetching = true;
+          }
+
           d.estateId = props.searchResult.value;
           d.distance = $('#radius_input').val();
         },
         dataSrc: (data) => {
+          isFetching = false;
           props.setCount(data.length);
+          props.decrease();
           return data;
+        },
+        error: () => {
+          isFetching = false;
+          props.decrease();
         }
       },
       columns: props.columns,
@@ -163,6 +176,8 @@ const DataTable = (props) => {
   );
 };
 
+const mapDispatch = { increase, decrease };
+
 const mapStateToProps = (state, ownProps) => ({
   searchResult: state.searchResult,
   setCount: ownProps.setCount
@@ -170,5 +185,5 @@ const mapStateToProps = (state, ownProps) => ({
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatch
 )(DataTable);

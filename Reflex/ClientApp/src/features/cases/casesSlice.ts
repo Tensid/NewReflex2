@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Case, CaseSource, getCase, getCases, SearchResult } from '../../api/api';
 import { AppThunk } from '../../app/store';
-import { setLoading } from '../spinner/spinnerSlice';
+import { decrease, increase } from '../spinner/spinnerSlice';
 
 interface CasesState {
   value: Case[];
@@ -38,7 +38,7 @@ const casesSlice = createSlice({
 export const fetchCasesAsync = (data: SearchResult): AppThunk => async dispatch => {
   try {
     if (data?.value) {
-      dispatch(setLoading(true));
+      dispatch(increase());
       dispatch(getCasesStart());
       let cases: Case[];
       if (data.type === 'Fastighet' || data.type === 'Adress')
@@ -46,13 +46,13 @@ export const fetchCasesAsync = (data: SearchResult): AppThunk => async dispatch 
       else
         cases = await getCase(data.value, data.source as CaseSource);
       dispatch(getCasesSuccess(cases));
-      dispatch(setLoading(false));
+      dispatch(decrease());
     }
   }
   catch (err) {
     dispatch(getCasesFailed(err.toString()));
     console.log(err.toString());
-    dispatch(setLoading(false));
+    dispatch(decrease());
   }
 };
 

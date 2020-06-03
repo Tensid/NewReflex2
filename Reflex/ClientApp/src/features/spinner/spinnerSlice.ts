@@ -1,25 +1,29 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface SpinnerState {
-  loading: boolean;
+  pendingActions: number;
 }
 
 const initialState: SpinnerState = {
-  loading: false
+  pendingActions: 0
 };
 
 const spinnerSlice = createSlice({
   name: 'spinner',
   initialState,
   reducers: {
-    setLoading(state, action: PayloadAction<boolean>) {
-      state.loading = action.payload;
+    increase(state) {
+      ++state.pendingActions;
+    },
+    decrease(state) {
+      --state.pendingActions;
     }
   }
 });
 
 export const {
-  setLoading
+  increase,
+  decrease
 } = spinnerSlice.actions;
 
 export default spinnerSlice.reducer;

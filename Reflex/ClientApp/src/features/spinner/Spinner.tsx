@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 
 const Spinner = () => {
-  const loading = useSelector((state: RootState) => state.spinner.loading);
+  const pendingActions = useSelector((state: RootState) => state.spinner.pendingActions);
   return (
-    <div className={`spinner-grow text-brand ${loading ? '' : 'd-none'}`} role="status">
+    <div className={`spinner-grow text-brand ${pendingActions > 0 ? '' : 'd-none'}`} role="status">
       <span className="sr-only">Loading...</span>
     </div>
   );
