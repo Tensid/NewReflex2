@@ -176,8 +176,8 @@ namespace FbService.Provider
 
             return new Position
             {
-                NorthingKoordinat = fastighetKoordinatFnr?.Data.First().Grupp.First().Sweref99TmNorthingKoordinat.ToString(),
-                EastingKoordinat = fastighetKoordinatFnr?.Data.First().Grupp.First().Sweref99TmEastingKoordinat.ToString()
+                NorthingKoordinat = fastighetKoordinatFnr?.Data.First().Grupp.First().Sweref99TmNorthingKoordinat.ToString(CultureInfo.InvariantCulture),
+                EastingKoordinat = fastighetKoordinatFnr?.Data.First().Grupp.First().Sweref99TmEastingKoordinat.ToString(CultureInfo.InvariantCulture)
             };
         }
 

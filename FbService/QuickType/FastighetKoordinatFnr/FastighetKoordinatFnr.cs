@@ -43,10 +43,10 @@ namespace FbService.QuickType.FastighetKoordinatFnr
         public double? Omrade { get; set; }
 
         [JsonPropertyName("sweref99TMNorthingKoordinat")]
-        public double? Sweref99TmNorthingKoordinat { get; set; }
+        public double Sweref99TmNorthingKoordinat { get; set; }
 
         [JsonPropertyName("sweref99TMEastingKoordinat")]
-        public double? Sweref99TmEastingKoordinat { get; set; }
+        public double Sweref99TmEastingKoordinat { get; set; }
 
         [JsonPropertyName("lokalNorthingKoordinat")]
         public double? LokalNorthingKoordinat { get; set; }
