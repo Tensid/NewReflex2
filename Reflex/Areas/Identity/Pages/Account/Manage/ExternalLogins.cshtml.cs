@@ -96,14 +96,14 @@ namespace Reflex.Areas.Identity.Pages.Account.Manage
             var result = await _userManager.AddLoginAsync(user, info);
             if (!result.Succeeded)
             {
-                StatusMessage = "The external login was not added. External logins can only be associated with one account.";
+                StatusMessage = "Den externa inloggningen lades inte till. Externa inloggningar kan bara kopplas till ett konto.";
                 return RedirectToPage();
             }
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            StatusMessage = "The external login was added.";
+            StatusMessage = "Den externa inloggningen har lagts till.";
             return RedirectToPage();
         }
     }

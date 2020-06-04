@@ -22,7 +22,7 @@ namespace Reflex.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
+        [Display(Name = "Användarnamn")]
         public string Username { get; set; }
 
         [TempData]
@@ -34,7 +34,7 @@ namespace Reflex.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Telefonnummer")]
             public string PhoneNumber { get; set; }
         }
 
@@ -89,7 +89,7 @@ namespace Reflex.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Din profil har blivit uppdaterad";
             return RedirectToPage();
         }
     }

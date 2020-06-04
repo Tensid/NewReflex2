@@ -38,7 +38,7 @@ namespace Reflex.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                return NotFound($"Unable to load user with email '{email}'.");
+                return NotFound($"Det går inte att ladda användaren med e-post {email}");
             }
 
             Email = email;

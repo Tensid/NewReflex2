@@ -45,13 +45,15 @@ namespace Reflex.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "E-postadress")]
             public string Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Lösenord")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Kom ihåg mig")]
             public bool RememberMe { get; set; }
         }
 
@@ -97,7 +99,7 @@ namespace Reflex.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Ogiltigt inloggningsförsök.");
                     return Page();
                 }
             }
