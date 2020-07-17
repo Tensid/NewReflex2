@@ -1,6 +1,6 @@
 import React from 'react';
 import { Accordion, Card } from 'react-bootstrap';
-import { CaseSource, Occurence } from '../../api/api';
+import { CaseSource, Occurence, getDocument } from '../../api/api';
 
 function occurenceText(occurence: Occurence) {
   let occurenceText = '';
@@ -44,9 +44,9 @@ const OccurenceContent = ({ occurences, caseSource }: { occurences: Occurence[],
                             {doc?.docLinkId === '-1' ?
                               <>{doc.title}</>
                               :
-                              <a href={`cases/document?docId=${doc.docLinkId}&caseSource=${caseSource}`}>
+                              <span className="px-0" onClick={() => getDocument(doc.docLinkId, caseSource)}>
                                 {doc.title}
-                              </a>
+                              </span>
                             }
                           </li>
                         );

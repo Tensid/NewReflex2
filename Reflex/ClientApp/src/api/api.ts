@@ -1,6 +1,21 @@
 import axios from 'axios';
 import authService from '../features/api-authorization/AuthorizeService';
 
+const instance = axios.create({
+  baseURL: 'api'
+});
+
+instance.interceptors.request.use(
+  async (config) => {
+    const token = await authService.getAccessToken();
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 let configId: string;
 
 export function setConfigId(id: string) {
@@ -186,209 +201,249 @@ export interface EcosConfig {
 }
 
 export async function search(query: string) {
-  let url = `api/search?query=${query}`;
+  let url = `search?query=${query}`;
   if (configId) {
     url = `${url}&configId=${configId}`;
   }
-  const { data } = await axios.get<SearchResult[]>(url);
+  const { data } = await instance.get<SearchResult[]>(url);
+  return data;
+}
+
+export async function getPersons(estateId: string, distance: number | string) {
+  let url = `persons?estateId=${estateId}&distance=${distance}`;
+  if (configId) {
+    url = `${url}&configId=${configId}`;
+  }
+  const { data } = await instance.get(url);
+  return data;
+}
+
+export async function getOwners(estateId: string, distance: number | string) {
+  let url = `owners?estateId=${estateId}&distance=${distance}`;
+  if (configId) {
+    url = `${url}&configId=${configId}`;
+  }
+  const { data } = await instance.get(url);
   return data;
 }
 
 export async function getCases(estateId: string) {
-  let url = `api/cases/${estateId}`;
+  let url = `cases/${estateId}`;
   if (configId) {
     url = `${url}?configId=${configId}`;
   }
-  const { data } = await axios.get<Case[]>(url);
+  const { data } = await instance.get<Case[]>(url);
   return data;
 }
 
 export async function getCase(id: string, caseSource: CaseSource) {
-  let url = `api/cases?id=${id}&caseSource=${caseSource}`;
+  let url = `cases?id=${id}&caseSource=${caseSource}`;
   if (configId) {
     url = `${url}&configId=${configId}`;
   }
-  const { data } = await axios.get<Case[]>(url);
+  const { data } = await instance.get<Case[]>(url);
   return data;
 }
 
 export async function getConfigs() {
-  const { data } = await axios.get<Config[]>('api/configs');
+  const { data } = await instance.get<Config[]>('configs');
   return data;
 }
 
 export async function getFullConfigs() {
-  const { data } = await axios.get<Config[]>('api/configs/full');
+  const { data } = await instance.get<Config[]>('configs/full');
   return data;
 }
 
 export async function deleteConfig(id: string) {
-  const url = `api/configs/${id}`;
-  const { data } = await axios.delete(url);
+  const url = `configs/${id}`;
+  const { data } = await instance.delete(url);
   return data;
 }
 
 export async function createConfig(config: Config) {
-  const { data } = await axios.post('api/configs', config);
+  const { data } = await instance.post('configs', config);
   return data;
 }
 
 export async function updateConfig(config: Config) {
-  const { data } = await axios.put('api/configs', config);
+  const { data } = await instance.put('configs', config);
   return data;
 }
 
 export async function getConfig(id: string) {
-  const url = `api/configs/${id}`;
-  const { data } = await axios.get<Config>(url);
+  const url = `configs/${id}`;
+  const { data } = await instance.get<Config>(url);
   return data;
 }
 
 export async function getAgsConfigs() {
-  const { data } = await axios.get<AgsConfig[]>('api/ags');
+  const { data } = await instance.get<AgsConfig[]>('ags');
   return data;
 }
 
 export async function getByggrConfigs() {
-  const { data } = await axios.get<ByggrConfig[]>('api/byggr');
+  const { data } = await instance.get<ByggrConfig[]>('byggr');
   return data;
 }
 
 export async function getEcosConfigs() {
-  const { data } = await axios.get<EcosConfig[]>('api/ecos');
+  const { data } = await instance.get<EcosConfig[]>('ecos');
   return data;
 }
 
 export async function updateAgsConfig(agsConfig: AgsConfig) {
-  const { data } = await axios.put('api/ags', agsConfig);
+  const { data } = await instance.put('ags', agsConfig);
   return data;
 }
 
 export async function updateByggrConfig(byggrConfig: ByggrConfig) {
-  const { data } = await axios.put('api/byggr', byggrConfig);
+  const { data } = await instance.put('byggr', byggrConfig);
   return data;
 }
 
 export async function updateEcosConfig(ecosConfig: EcosConfig) {
-  const { data } = await axios.put('api/ecos', ecosConfig);
+  const { data } = await instance.put('ecos', ecosConfig);
   return data;
 }
 
 export async function getAgsConfig(id: string) {
-  const url = `api/ags/${id}`;
-  const { data } = await axios.get<AgsConfig>(url);
+  const url = `ags/${id}`;
+  const { data } = await instance.get<AgsConfig>(url);
   return data;
 }
 
 export async function getByggrConfig(id: string) {
-  const url = `api/byggr/${id}`;
-  const { data } = await axios.get<ByggrConfig>(url);
+  const url = `byggr/${id}`;
+  const { data } = await instance.get<ByggrConfig>(url);
   return data;
 }
 
 export async function getEcosConfig(id: string) {
-  const url = `api/ecos/${id}`;
-  const { data } = await axios.get<EcosConfig>(url);
+  const url = `ecos/${id}`;
+  const { data } = await instance.get<EcosConfig>(url);
   return data;
 }
 
 export async function getFnrFromPosition(lat: string, lon: string, srid: number, distance: number) {
-  const url = `api/map/fnr?lat=${lat}&lon=${lon}&srid=${srid}&distance=${distance}`;
-  const { data } = await axios.get<string>(url);
+  const url = `map/fnr?lat=${lat}&lon=${lon}&srid=${srid}&distance=${distance}`;
+  const { data } = await instance.get<string>(url);
   return data;
 }
 
 export async function getGeometryFromFnr(fnr: number) {
-  const url = `api/map/geometry?fnr=${fnr}`;
-  const { data } = await axios.get(url);
+  const url = `map/geometry?fnr=${fnr}`;
+  const { data } = await instance.get(url);
   return data;
 }
 
 export async function getEstateName(fnr: number) {
-  const url = `api/map/estateName?fnr=${fnr}`;
-  const { data } = await axios.get<string>(url);
+  const url = `map/estateName?fnr=${fnr}`;
+  const { data } = await instance.get<string>(url);
   return data;
 }
 
 export async function getEstatePosition(fnr: number) {
-  const url = `api/map/estatePosition?fnr=${fnr}`;
-  const { data } = await axios.get(url);
+  const url = `map/estatePosition?fnr=${fnr}`;
+  const { data } = await instance.get(url);
   return data;
 }
 
 export async function getMapSettings() {
-  const { data } = await axios.get('api/mapSettings');
+  const { data } = await instance.get('mapSettings');
   return data;
 }
 
 export async function getOccurences(caseId: string, caseSource: string) {
-  let url = `api/cases/${caseId}/occurences?caseSource=${caseSource}`;
+  let url = `cases/${caseId}/occurences?caseSource=${caseSource}`;
   if (configId) {
     url = `${url}&configId=${configId}`;
   }
-  const { data } = await axios.get<Occurence[]>(url);
+  const { data } = await instance.get<Occurence[]>(url);
   return data;
 }
 
 export async function getPreview(caseId: string, caseSource: CaseSource) {
-  let url = `api/cases/${caseId}/preview?caseSource=${caseSource}`;
+  let url = `cases/${caseId}/preview?caseSource=${caseSource}`;
   if (configId) {
     url = `${url}&configId=${configId}`;
   }
-  const { data } = await axios.get<Preview>(url);
+  const { data } = await instance.get<Preview>(url);
   return data;
 }
 
 export async function getCasePersons(caseId: string, caseSource: CaseSource) {
-  let url = `api/cases/${caseId}/persons?caseSource=${caseSource}`;
+  let url = `cases/${caseId}/persons?caseSource=${caseSource}`;
   if (configId) {
     url = `${url}&configId=${configId}`;
   }
-  const { data } = await axios.get<CasePerson[]>(url);
+  const { data } = await instance.get<CasePerson[]>(url);
   return data;
 }
 
 export async function getArchivedDocuments(caseId: string, caseSource: CaseSource) {
-  let url = `api/cases/${caseId}/archivedDocuments?caseSource=${caseSource}`;
+  let url = `cases/${caseId}/archivedDocuments?caseSource=${caseSource}`;
   if (configId) {
     url = `${url}?configId=${configId}`;
   }
-  const { data } = await axios.get<ArchivedDocument[]>(url);
+  const { data } = await instance.get<ArchivedDocument[]>(url);
   return data;
 }
 
 export async function getUserSettings() {
-  const url = `api/userSettings`;
-  const token = await authService.getAccessToken();
-  const { data } = await axios.get<UserSettings>(url, {
-    headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-  });
+  const { data } = await instance.get<UserSettings>('userSettings');
   return data;
 }
 
 export async function updateUserSettings(userSettings: UserSettings) {
-  const url = `api/userSettings`;
-  const token = await authService.getAccessToken();
-
-  const { data } = await axios.put<UserSettings>(url, userSettings, {
-    headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-  });
+  const { data } = await instance.put<UserSettings>('userSettings', userSettings);
   return data;
 }
 
 export async function getUsers() {
-  const { data } = await axios.get<ReflexUser[]>('api/users');
+  const { data } = await instance.get<ReflexUser[]>('users');
   return data;
 }
 
 export async function deleteUsers(ids: string[]) {
-  return await axios.delete('api/users', { data: ids });
+  return await instance.delete('users', { data: ids });
+}
+
+export async function getDocument(docLinkId: string, caseSource: any) {
+  const response = await instance.get(`cases/document?docId=${docLinkId}&caseSource=${caseSource}&configId=${configId}`, { responseType: 'blob' });
+
+  if (!response.data)
+    return;
+  const url = URL.createObjectURL(response.data);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = getFilenameFromHeaders(response.headers) || 'file';
+  a.click();
+  // Discard the object data
+  URL.revokeObjectURL(url);
+}
+
+function getFilenameFromHeaders(headers: any) {
+  // The content-disposition header should include a suggested filename for the file
+  const contentDisposition = headers['content-disposition'];
+  if (!contentDisposition) {
+    return null;
+  }
+  var filename = '';
+  if (contentDisposition.indexOf('attachment') !== -1) {
+    var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+    var matches = filenameRegex.exec(contentDisposition);
+    if (matches != null && matches[1]) {
+      filename = matches[1].replace(/['"]/g, '');
+    }
+  }
+  return filename;
 }
 
 export async function updateRoles(requests: UpdateRolesRequest[]) {
-  return await axios.put('api/users/roles', requests);
+  return await instance.put('users/roles', requests);
 }
 
 export async function updateConfigPermissions(requests: UpdateConfigPermissionsRequest[]) {
-  return await axios.put('api/users/configPermissions', requests);
+  return await instance.put('users/configPermissions', requests);
 }

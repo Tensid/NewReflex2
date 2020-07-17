@@ -13,20 +13,21 @@ import Property from './Property';
 import Search from './Search';
 import { ApplicationPaths } from './features/api-authorization/ApiAuthorizationConstants';
 import ApiAuthorizationRoutes from './features/api-authorization/ApiAuthorizationRoutes';
+import AuthorizeRoute from './features/api-authorization/AuthorizeRoute';
 
 function App() {
   return (
     <>
       <Layout>
-        <Route exact path='/' render={() => <Search />} />
-        <Route path='/configs' render={() => <Configs />} />
-        <Route path='/search' render={() => <Search />} />
-        <Route path='/cases' render={() => <Cases />} />
-        <Route path='/population' render={() => <Population />} />
-        <Route path='/property' render={() => <Property />} />
-        <Route path='/manage-users' render={() => <ManageUsers />} />
-        <Route path='/manage-configs' render={() => <ManageConfigs />} />
-        <Route path='/about' render={() => <About />} />
+        <AuthorizeRoute exact path='/' component={() => <Search />} />
+        <AuthorizeRoute path='/configs' component={() => <Configs />} />
+        <AuthorizeRoute path='/search' component={() => <Search />} />
+        <AuthorizeRoute path='/cases' component={() => <Cases />} />
+        <AuthorizeRoute path='/population' component={() => <Population />} />
+        <AuthorizeRoute path='/property' component={() => <Property />} />
+        <AuthorizeRoute path='/manage-users' component={() => <ManageUsers />} />
+        <AuthorizeRoute path='/manage-configs' component={() => <ManageConfigs />} />
+        <AuthorizeRoute path='/about' component={() => <About />} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>
       <Route path='/map' render={() => <Map />} />

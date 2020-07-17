@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Config, SearchResult } from './api/api';
+import { Config, SearchResult, getPersons } from './api/api';
 import { RootState } from './app/store';
 import DataTable from './features/data-table/DataTable';
 
@@ -35,8 +35,6 @@ const headers = [
   'Fastighet'
 ];
 
-const url = './api/persons';
-
 interface PopulationProps {
   config: Config;
   searchResult: SearchResult;
@@ -63,7 +61,7 @@ const Population = ({ config, searchResult }: PopulationProps) => {
   return (
     <>
       <h4>{(isValid) ? `Boende: ${count} personer på ` + searchResult.displayName : 'Ingen fastighet vald'}</h4>
-      {(isValid && linkButtons.length > 0) && <DataTable setCount={setCount} headers={headers} columns={columns} url={url} linkButtons={linkButtons} />}
+      {(isValid && linkButtons.length > 0) && <DataTable setCount={setCount} headers={headers} columns={columns} linkButtons={linkButtons} getTableData={getPersons} />}
     </>
   );
 };

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reflex.Data;
@@ -13,6 +14,7 @@ using VisaRService.Contracts;
 
 namespace Reflex.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CasesController : ControllerBase

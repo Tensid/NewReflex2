@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Config, SearchResult } from './api/api';
+import { Config, SearchResult, getOwners } from './api/api';
 import { RootState } from './app/store';
 import DataTable from './features/data-table/DataTable';
 
@@ -42,8 +42,6 @@ const headers = [
   'POSTORT'
 ];
 
-const url = './api/owners';
-
 interface PropertyProps {
   config: Config;
   searchResult: SearchResult;
@@ -78,7 +76,7 @@ const Property = ({ config, searchResult }: PropertyProps) => {
   return (
     <>
       <h4>{(isValid) ? `Ägare: ${count} för ${searchResult.displayName}` : 'Ingen fastighet vald'}</h4>
-      {(isValid && linkButtons.length > 0) && <DataTable setCount={setCount} headers={headers} columns={columns} url={url} linkButtons={linkButtons} />}
+      {(isValid && linkButtons.length > 0) && <DataTable setCount={setCount} headers={headers} columns={columns} linkButtons={linkButtons} getTableData={getOwners} />}
     </>
   );
 };

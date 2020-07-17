@@ -2,11 +2,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FbService.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Reflex.Data;
 
 namespace Reflex.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class MapController : Controller

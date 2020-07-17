@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Reflex.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class MapSettingsController : ControllerBase

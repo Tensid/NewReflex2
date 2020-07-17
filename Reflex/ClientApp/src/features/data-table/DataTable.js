@@ -15,7 +15,6 @@ import './responsive.bootstrap4.css';
 import { increase, decrease } from '../spinner/spinnerSlice';
 
 const DataTable = (props) => {
-  let isFetching;
   const linkButtons = props.linkButtons.map(x => {
     return {
       text: x.displayName,
@@ -29,27 +28,23 @@ const DataTable = (props) => {
 
   useEffect(() => {
     const table = $('#table').DataTable({
-      ajax: {
-        url: props.url,
-        data: (d) => {
-          if (!isFetching) {
+      ajax: (d, callback, settings) => {
+        (async () => {
+          try {
             props.increase();
-            isFetching = true;
+            const estateId = props.searchResult.value;
+            const distance = $('#radius_input').val();
+            const data = await props.getTableData(estateId, distance);
+            props.setCount(data.length);
+            callback({ data });
           }
-
-          d.estateId = props.searchResult.value;
-          d.distance = $('#radius_input').val();
-        },
-        dataSrc: (data) => {
-          isFetching = false;
-          props.setCount(data.length);
-          props.decrease();
-          return data;
-        },
-        error: () => {
-          isFetching = false;
-          props.decrease();
-        }
+          catch (e) {
+            console.log(e.toString());
+          }
+          finally {
+            props.decrease();
+          }
+        })();
       },
       columns: props.columns,
       dom: 'Bfrtip',
