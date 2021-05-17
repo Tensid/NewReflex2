@@ -1,4 +1,4 @@
-import React, { createRef, useEffect } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ContextMenu from 'ol-contextmenu';
@@ -24,18 +24,38 @@ import styles from './map.module.css';
 import Measure from './measure';
 import './ol-contextmenu.css';
 
+const CaseAlert = ({ estateName, show, showEstateCases, toggleAlert }) => {
+  if (show)
+    return (
+      <div class="mx-auto alert alert-info alert-dismissible alert-overlay">
+        {estateName}
+        {' '}
+        <a href="cases" onClick={e => {
+          e.preventDefault();
+          showEstateCases();
+        }}>
+          Visa ärenden
+        </a>
+        <span class="close" onClick={toggleAlert} aria-label="close">&times;</span>
+      </div>
+    );
+  return null;
+};
+
 const Map = ({ fnr, estateName, fbWebbFastighetUrl = "", fbWebbBoendeUrl = "", csmUrl = "", setSearchResult, mapSettings }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const mapContainer = createRef();
+  const [alert, setAlert] = useState({ fnr, estateName, show: false });
+  const toggleAlert = () => setAlert({ ...alert, show: !alert.show });
 
-  function showEstateCases(fnr) {
+  function showEstateCases(fnr, estateName) {
     const searchResult = {
       value: fnr,
       estateId: fnr,
       source: 'FB',
       type: 'Fastighet',
-      displayName: estateName
+      displayName: estateName || ""
     };
     setSearchResult(searchResult);
     dispatch(fetchCasesAsync(searchResult));
@@ -171,6 +191,7 @@ const Map = ({ fnr, estateName, fbWebbFastighetUrl = "", fbWebbBoendeUrl = "", c
             getEstatePosition(fnr)
           ]);
           drawEstate(geometryContent, true);
+          setAlert({ fnr, estateName, show: true });
         })();
       }
       else {
@@ -270,6 +291,7 @@ const Map = ({ fnr, estateName, fbWebbFastighetUrl = "", fbWebbBoendeUrl = "", c
           getEstatePosition(fnr)
         ]);
         drawEstate(geometryContent);
+        setAlert({ fnr, estateName, show: true });
       })();
     });
 
@@ -367,7 +389,11 @@ const Map = ({ fnr, estateName, fbWebbFastighetUrl = "", fbWebbBoendeUrl = "", c
     return () => { geolocation.setTracking(false); document.removeEventListener('keydown', handleKeydown); };
   }, []);
   return (
-    <div id="map" ref={mapContainer} className={styles.content} />
+    <div id="map" ref={mapContainer} className={styles.content}>
+      <div className={styles.alertOverlay}>
+        <CaseAlert {...alert} showEstateCases={() => showEstateCases(alert.fnr, alert.estateName)} toggleAlert={toggleAlert} />
+      </div>
+    </div>
   );
 };
 
