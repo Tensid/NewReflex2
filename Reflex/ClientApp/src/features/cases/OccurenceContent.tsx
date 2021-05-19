@@ -1,6 +1,7 @@
 import React from 'react';
 import { Accordion, Card } from 'react-bootstrap';
 import { CaseSource, Occurence, getDocument } from '../../api/api';
+import { TabState } from './CaseModal';
 
 function occurenceText(occurence: Occurence) {
   let occurenceText = '';
@@ -19,15 +20,21 @@ function occurenceText(occurence: Occurence) {
   return occurenceText;
 }
 
-const OccurenceContent = ({ occurences, caseSource }: { occurences: Occurence[], caseSource: CaseSource }) => {
+interface OccurenceContentProps {
+  occurenceState: TabState<Occurence[]>;
+  caseSource: CaseSource;
+}
+
+const OccurenceContent = ({ occurenceState, caseSource }: OccurenceContentProps) => {
+  if (occurenceState.error)
+    return <>Kunde inte hämta händelser kopplade till ärendet.</>;
+  if (occurenceState.loading)
+    return <>Laddar händelser...</>;
   return (
     <div className="row">
       <div className="col">
-        <div className="py-2">
-          <h5>Händelser</h5>
-        </div>
         <Accordion>
-          {occurences?.map((occurence, i) =>
+          {occurenceState.value?.map((occurence, i) =>
             <div className="card" key={i}>
               <Accordion.Toggle as={Card.Header} className="p-1" eventKey={i.toString()} >
                 <h5 className="mb-0">

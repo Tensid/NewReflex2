@@ -12,6 +12,13 @@ interface CasesProps {
   loading: boolean;
 }
 
+export interface ModalData {
+  dnr: string;
+  caseId: string;
+  caseSource: CaseSource;
+  title: string;
+}
+
 const Cases = ({ cases, searchResult, loading }: CasesProps) => {
   const [showAgs, setShowAgs] = useState(true);
   const [showByggr, setShowByggr] = useState(true);
@@ -19,7 +26,7 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
   const [filteredCases, setFilteredCases] = useState<Case[]>(cases);
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
-  const [modalData, setModalData] = useState([]);
+  const [modalData, setModalData] = useState<ModalData>();
 
   useEffect(() => {
     setFilteredCases(cases.filter(x =>
@@ -47,10 +54,9 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
       </>}
       <div className="mt-2">
         {loading ? 'Hämtar ärenden...' :
-          (filteredCases && filteredCases.length > 0) && <CaseList cases={filteredCases} setModalData={setModalData} toggleShow={toggleShow} />}
+          (filteredCases && filteredCases.length > 0) && <CaseList setModalData={setModalData} cases={filteredCases} toggleShow={toggleShow} />}
       </div>
-      {/*@ts-ignore*/}
-      {show && <CaseModal show={show} {...modalData} toggleShow={toggleShow} />}
+      {(show && modalData) && <CaseModal show={show} modalData={modalData} toggleShow={toggleShow} />}
     </>
   );
 };

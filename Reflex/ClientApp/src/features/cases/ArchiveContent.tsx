@@ -1,12 +1,20 @@
 import React from 'react';
 import { ArchivedDocument, CaseSource } from '../../api/api';
+import { TabState } from './CaseModal';
 
 interface ArchiveContentProps {
-  archivedDocuments: ArchivedDocument[];
+  archiveState: TabState<ArchivedDocument[]>;
   caseSource: CaseSource;
 }
 
-const ArchiveContent = ({ archivedDocuments, caseSource }: ArchiveContentProps) => {
+const ArchiveContent = ({ archiveState, caseSource }: ArchiveContentProps) => {
+  if (archiveState.error)
+    return <>Kunde inte hämta arkiverade handlingar.</>;
+  if (archiveState.loading)
+    return <>Laddar arkiverade handlingar...</>;
+  if (!archiveState?.value)
+    return null;
+  const archivedDocuments = archiveState.value;
   return (
     <div className="container">
       <div className="row">

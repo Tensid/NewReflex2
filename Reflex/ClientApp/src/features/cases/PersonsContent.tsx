@@ -1,7 +1,19 @@
 import React from 'react';
 import { CasePerson } from '../../api/api';
+import { TabState } from './CaseModal';
 
-const PersonsContent = ({ persons }: { persons: CasePerson[] }) => {
+interface PersonsContentProps {
+  personsState: TabState<CasePerson[]>;
+}
+
+const PersonsContent = ({ personsState }: PersonsContentProps) => {
+  if (personsState.error)
+    return <>Kunde inte hämta intressenter kopplade till ärendet.</>;
+  if (personsState.loading)
+    return <>Laddar intressenter...</>;
+  if (!personsState?.value)
+    return null;
+  const persons = personsState.value;
   return (
     <div className="container">
       <div className="row">

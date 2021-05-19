@@ -1,20 +1,34 @@
 import React, { Fragment } from 'react';
-import { Preview as PreviewProps } from '../../api/api';
+import { Preview } from '../../api/api';
+import { TabState } from './CaseModal';
 import styles from './Preview.module.css';
 
-const PreviewContent = ({
-  handelser,
-  persons,
-  fastighetsbeteckning,
-  arendegrupp,
-  arendetyp,
-  arendeslag,
-  dnr,
-  status,
-  handlaggareFornamn,
-  handlaggareEfternamn,
-  handlaggareSignatur
-}: PreviewProps) => {
+interface PreviewContentProps {
+  previewState: TabState<Preview>;
+}
+
+const PreviewContent = ({ previewState }: PreviewContentProps) => {
+  if (previewState.error)
+    return <>Kunde inte hämta förhandsgranskning för ärendet.</>;
+  if (previewState.loading)
+    return <>Laddar händelser...</>;
+  if (!previewState?.value)
+    return null;
+  const
+    {
+      handelser,
+      persons,
+      fastighetsbeteckning,
+      arendegrupp,
+      arendetyp,
+      arendeslag,
+      dnr,
+      status,
+      handlaggareFornamn,
+      handlaggareEfternamn,
+      handlaggareSignatur
+    } = previewState.value;
+
   return (
     <>
       <div className="row">

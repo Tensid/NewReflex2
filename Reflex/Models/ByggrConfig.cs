@@ -9,7 +9,7 @@ namespace Reflex.Models
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum CaseTab
     {
-        Preview, Occurences, Persons
+        Preview, Occurences, Persons, Archive
     }
 
     public class ByggrConfig
