@@ -100,6 +100,7 @@ namespace ReflexByggrService
         {
             var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
             var arende = client.GetArendeAsync(caseId).Result;
+            var handlingTyper = client.GetHandlingTyperAsync(StatusFilter.None).Result;
             await client.CloseAsync();
 
             var hideByComment = !string.IsNullOrWhiteSpace(_config.ByggrConfig.HideDocumentsWithCommentMatching);
@@ -121,7 +122,7 @@ namespace ReflexByggrService
                                          (handelse.anteckning?.Contains(_config.ByggrConfig.HideDocumentsWithCommentMatching) ?? false))
                                 ? "-1"
                                 : handling.docId).ToString(CultureInfo.InvariantCulture),
-                            Title = handling.docName ?? "Dokument (namn saknas)"
+                            Title = handlingTyper.FirstOrDefault(x => x.Typ == handling.typ)?.Beskrivning ?? handling.docName ?? "Dokument (namn saknas)"
                         })
                         .ToArray(),
                     Arrival = handelse.startDatum,
