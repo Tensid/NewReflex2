@@ -103,18 +103,17 @@ namespace ReflexByggrService
             await client.CloseAsync();
 
             var hideByComment = !string.IsNullOrWhiteSpace(_config.ByggrConfig.HideDocumentsWithCommentMatching);
-            var arbetsmaterial = new[] { "Arbetsmtrl", "Arbetsmaterial" };
 
             return arende.handelseLista
                 .Where(handelse => _config.ByggrConfig.OccurenceTypes == null || !_config.ByggrConfig.OccurenceTypes.Any() || _config.ByggrConfig.OccurenceTypes.Contains(handelse.handelsetyp))
                 .Where(handelse => !handelse.makulerad)
-                .Where(handelse => _config.ByggrConfig.WorkingMaterial || (!handelse.handlingLista?.Any(handling => arbetsmaterial.Any(s => handling.status.Contains(s))) ?? false))
+                .Where(handelse => _config.ByggrConfig.WorkingMaterial || handelse.arbetsmaterial == false)
                 .Select(handelse => new Occurence
                 {
                     Documents = handelse.sekretess ? new Document[0] : handelse.handlingLista
                         .Where(handling => (!_config.ByggrConfig?.DocumentTypes?.Any() ?? true) ||
                             (_config.ByggrConfig?.DocumentTypes?.Contains(handling.typ) ?? true))
-                        .Where(handling => _config.ByggrConfig.WorkingMaterial || arbetsmaterial.Any(s => !handling.status.Contains(s)))
+                        .Where(handling => (_config.ByggrConfig?.WorkingMaterial ?? false) || !ContainsWorkingMaterial(handling.status))
                         .Select(handling => new Document
                         {
                             DocLinkId = (handling.docId == null ||
@@ -129,6 +128,12 @@ namespace ReflexByggrService
                     Title = handelse.rubrik,
                     IsSecret = handelse.sekretess
                 }).ToArray();
+        }
+
+        private static bool ContainsWorkingMaterial(string str)
+        {
+            var arbetsmaterial = new[] { "Arbetsmtrl", "Arbetsmaterial" };
+            return arbetsmaterial.Any(a => str?.Contains(a) ?? false);
         }
 
         public async Task<CasePerson[]> GetPersonsByCase(string caseId)
@@ -153,12 +158,10 @@ namespace ReflexByggrService
 
         public async Task<Preview> GetPreviewByCase(string caseId)
         {
-            _config.ByggrConfig.WorkingMaterial = true;
             var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
             var arende = await client.GetArendeAsync(caseId);
 
             var hideByComment = !string.IsNullOrWhiteSpace(_config.ByggrConfig.HideDocumentsWithCommentMatching);
-            var arbetsmaterial = new[] { "Arbetsmtrl", "Arbetsmaterial" };
             var preview = new Preview
             {
                 Arendegrupp = arende.arendegrupp,
@@ -185,12 +188,12 @@ namespace ReflexByggrService
                 Handelser = arende.handelseLista
                         .Where(handelse => _config.ByggrConfig.OccurenceTypes == null || !_config.ByggrConfig.OccurenceTypes.Any() || _config.ByggrConfig.OccurenceTypes.Contains(handelse.handelsetyp))
                         .Where(handelse => !handelse.makulerad)
-                        .Where(handelse => _config.ByggrConfig.WorkingMaterial || (!handelse.handlingLista?.All(handling => arbetsmaterial.Any(s => !handling.status.Contains(s))) ?? false))
+                        .Where(handelse => _config.ByggrConfig.WorkingMaterial || handelse.arbetsmaterial == false)
                         .Select(handelse => new Handelse
                         {
                             Documents = handelse.sekretess ? new Document[0] : handelse.handlingLista
                                 .Where(handling => !(_config.ByggrConfig?.DocumentTypes?.Any() ?? false) || _config.ByggrConfig.DocumentTypes.Contains(handling.typ))
-                                .Where(handling => _config.ByggrConfig.WorkingMaterial || arbetsmaterial.Any(s => !handling.status.Contains(s)))
+                                .Where(handling => _config.ByggrConfig.WorkingMaterial || !ContainsWorkingMaterial(handling.status))
                                 .Select(handling => new Document
                                 {
                                     DocLinkId = (handling.docId == null || (hideByComment && (handelse.anteckning?.Contains(_config.ByggrConfig.HideDocumentsWithCommentMatching) ?? false)) ? "-1" : handling.docId).ToString(CultureInfo.InvariantCulture),
@@ -202,7 +205,8 @@ namespace ReflexByggrService
                             Anteckning = handelse.anteckning,
                             BeslutNr = handelse.beslut?.beslutNr,
                             BeslutsText = handelse.beslut?.beslutstext,
-                            Handelsetyp = handelse.handelsetyp
+                            Handelsetyp = handelse.handelsetyp,
+                            IsWorkingMaterial = handelse.arbetsmaterial
                         }).ToArray()
             };
 

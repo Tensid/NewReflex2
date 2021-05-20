@@ -537,6 +537,8 @@ namespace ArendeExportWS
         
         private handelseIntressent[] intressentListaField;
         
+        private bool arbetsmaterialField;
+        
         private int handelseIdField;
         
         /// <remarks/>
@@ -734,6 +736,20 @@ namespace ArendeExportWS
             set
             {
                 this.intressentListaField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public bool arbetsmaterial
+        {
+            get
+            {
+                return this.arbetsmaterialField;
+            }
+            set
+            {
+                this.arbetsmaterialField = value;
             }
         }
         
@@ -2300,6 +2316,8 @@ namespace ArendeExportWS
         
         private handelseIntressent[] intressentListaField;
         
+        private bool arbetsmaterialField;
+        
         private int handelseIdField;
         
         /// <remarks/>
@@ -2497,6 +2515,20 @@ namespace ArendeExportWS
             set
             {
                 this.intressentListaField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public bool arbetsmaterial
+        {
+            get
+            {
+                return this.arbetsmaterialField;
+            }
+            set
+            {
+                this.arbetsmaterialField = value;
             }
         }
         
