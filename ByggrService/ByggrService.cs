@@ -41,13 +41,14 @@ namespace ReflexByggrService
         public async Task<Case[]> GetCasesByEstate(string estateId)
         {
             var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
-            var arenden = (await client.GetRelateradeArendenByFastighetAsync(Convert.ToInt32(estateId), null, null, null, StatusFilter.None)).GetRelateradeArendenByFastighetResult;
+            var arenden = client.GetRelateradeArendenByFastighetAsync(Convert.ToInt32(estateId), null, null, null,
+                _config.ByggrConfig.OnlyCasesWithoutMainDecision ? StatusFilter.Aktiv : StatusFilter.None).Result.GetRelateradeArendenByFastighetResult;
             await client.CloseAsync();
 
             var hideByComment = !string.IsNullOrWhiteSpace(_config.ByggrConfig.HideDocumentsWithCommentMatching);
 
             var cases = arenden
-                .Where(x => _config.ByggrConfig.OnlyCasesWithoutMainDecision == false || !x.handelseLista.Any(h => h.beslut?.arHuvudbeslut ?? false))
+                .Where(x => _config.ByggrConfig.OnlyCasesWithoutMainDecision == false || x.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true))
                 .Where(x => _config.ByggrConfig.MinCaseStartDate == null || x.ankomstDatum > _config.ByggrConfig.MinCaseStartDate)
                 .Select(arende => new Case
                 {
