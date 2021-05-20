@@ -47,7 +47,7 @@ namespace ReflexByggrService
             var hideByComment = !string.IsNullOrWhiteSpace(_config.ByggrConfig.HideDocumentsWithCommentMatching);
 
             var cases = arenden
-                .Where(x => _config.ByggrConfig.OnlyCasesWithoutMainDecision == false || !x.handelseLista.Any(h => h.beslut.arHuvudbeslut))
+                .Where(x => _config.ByggrConfig.OnlyCasesWithoutMainDecision == false || !x.handelseLista.Any(h => h.beslut?.arHuvudbeslut ?? false))
                 .Where(x => _config.ByggrConfig.MinCaseStartDate == null || x.ankomstDatum > _config.ByggrConfig.MinCaseStartDate)
                 .Select(arende => new Case
                 {
