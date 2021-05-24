@@ -49,7 +49,7 @@ const Map = ({ fnr, estateName, fbWebbFastighetUrl = "", fbWebbBoendeUrl = "", c
   const [alert, setAlert] = useState({ fnr, estateName, show: false });
   const toggleAlert = () => setAlert({ ...alert, show: !alert.show });
 
-  function showEstateCases(fnr, estateName) {
+  function searchEstateCases(fnr) {
     const searchResult = {
       value: fnr,
       estateId: fnr,
@@ -59,6 +59,9 @@ const Map = ({ fnr, estateName, fbWebbFastighetUrl = "", fbWebbBoendeUrl = "", c
     };
     setSearchResult(searchResult);
     dispatch(fetchCasesAsync(searchResult));
+  }
+
+  function showEstateCases() {
     history.push('/cases');
   }
 
@@ -228,7 +231,7 @@ const Map = ({ fnr, estateName, fbWebbFastighetUrl = "", fbWebbBoendeUrl = "", c
           ,
           {
             text: 'Visa ärenden',
-            callback: () => showEstateCases(fnr, estateName)
+            callback: () => showEstateCases()
           },
           '-'
           ,
@@ -291,6 +294,7 @@ const Map = ({ fnr, estateName, fbWebbFastighetUrl = "", fbWebbBoendeUrl = "", c
           getEstatePosition(fnr)
         ]);
         drawEstate(geometryContent);
+        searchEstateCases(fnr);
         setAlert({ fnr, estateName, show: true });
       })();
     });
@@ -391,7 +395,7 @@ const Map = ({ fnr, estateName, fbWebbFastighetUrl = "", fbWebbBoendeUrl = "", c
   return (
     <div id="map" ref={mapContainer} className={styles.content}>
       <div className={styles.alertOverlay}>
-        <CaseAlert {...alert} showEstateCases={() => showEstateCases(alert.fnr, alert.estateName)} toggleAlert={toggleAlert} />
+        <CaseAlert {...alert} showEstateCases={showEstateCases} toggleAlert={toggleAlert} />
       </div>
     </div>
   );
