@@ -128,7 +128,8 @@ namespace ReflexByggrService
                         .ToArray(),
                     Arrival = handelse.startDatum,
                     Title = handelse.rubrik,
-                    IsSecret = handelse.sekretess
+                    IsSecret = handelse.sekretess,
+                    IsWorkingMaterial = handelse.arbetsmaterial
                 }).ToArray();
         }
 

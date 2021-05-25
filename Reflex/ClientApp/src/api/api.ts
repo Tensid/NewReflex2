@@ -60,6 +60,7 @@ export interface Occurence {
   arrival: string;
   documents: Document[];
   isSecret: boolean;
+  isWorkingMaterial: boolean;
 }
 
 export interface Handelse extends Occurence {

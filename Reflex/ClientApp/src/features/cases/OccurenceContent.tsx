@@ -15,6 +15,9 @@ function occurenceText(occurence: Occurence) {
           availableDocuments++;
       });
       occurenceText = ` (${occurence.documents.length} ${occurence.documents.length === 1 ? 'handling' : 'handlingar'} varav ${availableDocuments} ${availableDocuments === 1 ? 'tillgänglig' : 'tillgängliga'})`;
+      if (occurence.isWorkingMaterial) {
+        occurenceText += ' (Arbetsmaterial)';
+      }
     }
   }
   return occurenceText;

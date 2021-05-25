@@ -12,9 +12,10 @@ interface CaseItemProps {
   toggleShow: () => void;
   setModalData: (modalData: ModalData) => void;
   caseId: string;
+  status: string;
 }
 
-const CaseItem = ({ dnr, title, caseSource, toggleShow, setModalData, caseId }: CaseItemProps) => {
+const CaseItem = ({ dnr, title, caseSource, toggleShow, setModalData, caseId, status }: CaseItemProps) => {
   let color = 'secondary';
   let symbol: IconDefinition;
   if (caseSource === CaseSource.Ecos) {
@@ -40,7 +41,7 @@ const CaseItem = ({ dnr, title, caseSource, toggleShow, setModalData, caseId }: 
       <div className="col-lg-12">
         <button className={`btn btn-outline-${color} btn-block text-left mb-1 ${styles.blackOutline} ${styles.btn}`} onClick={() => handleClick()}>
           <span className={`${styles.caseSymbol} pr-2 text-${color}`}><FontAwesomeIcon icon={symbol!} /></span>
-          {dnr}: {title}
+          {dnr}: {title}{status ? ` (${status})` : ''}
         </button>
       </div>
     </div>
