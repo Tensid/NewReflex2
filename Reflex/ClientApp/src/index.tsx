@@ -8,9 +8,11 @@ import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
+const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href') ?? undefined;
+
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename={baseUrl}>
       <App />
     </BrowserRouter>
   </Provider>,
