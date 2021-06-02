@@ -14,7 +14,6 @@ namespace Reflex.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Map { get; set; }
-        public bool Visible { get; set; }
         public virtual ICollection<Tab> Tabs { get; set; }
         public virtual ICollection<CaseSource> CaseSources { get; set; }
         public virtual ICollection<AgsConfig> AgsConfigs { get; set; }
@@ -31,5 +30,6 @@ namespace Reflex.Models
         public string FbServiceUser { get; set; }
         public string FbServicePassword { get; set; }
         public string CsmUrl { get; set; }
+        public virtual ICollection<ApplicationUser> ApplicationUserDefaultConfig { get; set; }
     }
 }

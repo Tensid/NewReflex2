@@ -10,13 +10,16 @@ import { setSearchResult } from './features/search-result/searchResultSlice';
 const Search = () => {
   const defaultTab = useSelector((state: RootState) => state.userSettings.defaultTab);
   const searchResult = useSelector((state: RootState) => state.searchResult);
+  const tabs = useSelector((state: RootState) => state.config?.tabs);
   const dispatch = useDispatch();
   const { push } = useHistory();
 
   function onSelectCallback(data: SearchResult) {
     dispatch(fetchCasesAsync(data));
     dispatch(setSearchResult(data));
-    push('/' + defaultTab.toLowerCase());
+
+    if (tabs?.includes(defaultTab))
+      push('/' + defaultTab.toLowerCase());
   }
 
   return (

@@ -12,7 +12,8 @@ const userSettingsSlice = createSlice({
   reducers: {
     setUserSettings: (state, action: PayloadAction<UserSettings>) => {
       state.defaultTab = action.payload.defaultTab;
-    },
+      state.defaultConfigId = action.payload.defaultConfigId;
+    }
   }
 });
 

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { CaseSource, createConfig, deleteConfig, getFullConfigs, Tab, updateConfig } from '../../api/api';
-import CheckboxInput from './CheckboxInput';
 import PasswordInput from './PasswordInput';
 import SelectInput from './SelectInput';
 import TextInput from './TextInput';
@@ -60,8 +59,6 @@ const ConfigForm = ({ formData, hideActiveForm, edit, setConfigs }: any) => {
             <TextInput name="name" label="Namn" required register={register} />
             <TextInput name="description" label="Beskrivning" register={register} />
             <TextInput name="map" label="Karta" register={register} />
-            <CheckboxInput name="default" label="Ange som standard" register={register} />
-            <CheckboxInput name="visible" label="Synlig" register={register} />
             <SelectInput control={control} name="tabs" label="Flikar" isMulti register={register} options={tabOptions} />
             <SelectInput control={control} name="caseSources" label="Ärendekällor" isMulti register={register} options={caseSourceOptions} />
             <TextInput name="fbWebbBoendeUrl" label="FB Webb Befolkningsrapport URL" register={register} />

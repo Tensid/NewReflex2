@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -25,7 +26,7 @@ namespace Reflex.Controllers
             var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await _userManager.FindByIdAsync(id);
 
-            return new UserSettings { DefaultTab = user.DefaultTab };
+            return new UserSettings { DefaultConfigId = user?.DefaultConfigId ?? null, DefaultTab = user?.DefaultTab ?? Tab.Cases };
         }
 
         [HttpPut]
@@ -34,6 +35,7 @@ namespace Reflex.Controllers
             var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await _userManager.FindByIdAsync(id);
             user.DefaultTab = userSettings.DefaultTab;
+            user.DefaultConfigId = userSettings.DefaultConfigId;
             await _userManager.UpdateAsync(user);
 
             return userSettings;
@@ -42,6 +44,7 @@ namespace Reflex.Controllers
         public class UserSettings
         {
             public Tab DefaultTab { get; set; }
+            public Guid? DefaultConfigId { get; set; }
         }
     }
 }

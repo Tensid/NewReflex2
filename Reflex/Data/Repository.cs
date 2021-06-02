@@ -207,7 +207,7 @@ namespace Reflex.Data
 
         public IVisaRService GetProxy(CaseSource caseSource, Guid configId)
         {
-            var config = Guid.Empty != configId ? GetConfigItemByid(configId) : GetConfigItemByid(GetDefaultConfig().Id);
+            var config = GetConfigItemByid(configId);
 
             return caseSource switch
             {
@@ -220,22 +220,8 @@ namespace Reflex.Data
 
         public IFbService GetFbProxy(Guid configId)
         {
-            var config = Guid.Empty != configId ? GetConfigItemByid(configId) : GetConfigItemByid(GetDefaultConfig().Id);
+            var config = GetConfigItemByid(configId);
             return new FbService.FbService(config);
-        }
-
-        private Config GetDefaultConfig()
-        {
-            try
-            {
-                var defaultConfig = _context.DefaultConfig.FirstOrDefault();
-                return _context.Configs.Find(defaultConfig.ConfigId);
-            }
-            catch
-            {
-                _logger.LogWarning("Misslyckades att hämta defaultConfig.");
-                return null;
-            }
         }
     }
 }

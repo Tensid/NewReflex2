@@ -72,7 +72,6 @@ namespace Reflex.Data
         public DbSet<AgsConfig> AgsConfigs { get; set; }
         public DbSet<ByggrConfig> ByggrConfigs { get; set; }
         public DbSet<EcosConfig> EcosConfigs { get; set; }
-        public DbSet<DefaultConfig> DefaultConfig { get; set; }
 
         public string Encrypt(string plainText)
         {

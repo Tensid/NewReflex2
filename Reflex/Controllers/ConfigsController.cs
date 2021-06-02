@@ -44,8 +44,7 @@ namespace Reflex.Controllers
                 Id = x.Id,
                 Map = x.Map,
                 Name = x.Name,
-                Tabs = x.Tabs,
-                Visible = x.Visible
+                Tabs = x.Tabs
             });
         }
 

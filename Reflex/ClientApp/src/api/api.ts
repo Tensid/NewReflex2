@@ -121,7 +121,6 @@ export interface Config {
   name: string;
   description: string;
   map: string;
-  visible: boolean;
   tabs: Tab[];
   caseSources: CaseSource[];
   agsConfigs?: AgsConfig[];
@@ -161,6 +160,7 @@ export interface UpdateRolesRequest {
 
 export interface UserSettings {
   defaultTab: Tab;
+  defaultConfigId?: string | null;
 }
 
 export interface AgsConfig {
