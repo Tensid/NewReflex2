@@ -42,7 +42,7 @@ namespace ReflexByggrService
         {
             var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
             var arenden = client.GetRelateradeArendenByFastighetAsync(Convert.ToInt32(estateId), null, null, null,
-                _config.ByggrConfig.OnlyCasesWithoutMainDecision ? StatusFilter.Aktiv : StatusFilter.None).Result.GetRelateradeArendenByFastighetResult;
+                _config.ByggrConfig.OnlyActiveCases ? StatusFilter.Aktiv : StatusFilter.None).Result.GetRelateradeArendenByFastighetResult;
             await client.CloseAsync();
 
             var hideByComment = !string.IsNullOrWhiteSpace(_config.ByggrConfig.HideDocumentsWithCommentMatching);
@@ -67,7 +67,8 @@ namespace ReflexByggrService
                     Title = arende.beskrivning,
                     CaseSource = "ByggR",
                     Date = arende.ankomstDatum,
-                    UnavailableDueToSecrecy = _config.ByggrConfig.HideCasesWithSecretOccurences && arende.handelseLista.Any(x => x.sekretess)
+                    UnavailableDueToSecrecy = _config.ByggrConfig.HideCasesWithSecretOccurences && arende.handelseLista.Any(x => x.sekretess),
+                    CaseWithoutMainDecision = arende.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true)
                 }).ToArray();
 
             return cases;

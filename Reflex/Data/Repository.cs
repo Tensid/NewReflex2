@@ -182,6 +182,7 @@ namespace Reflex.Data
                         {
                             DocumentTypes = byggrConfig.DocumentTypes,
                             OccurenceTypes = byggrConfig.OccurenceTypes,
+                            OnlyActiveCases = byggrConfig.OnlyActiveCases,
                             PersonRoles = byggrConfig.PersonRoles,
                             WorkingMaterial = byggrConfig.WorkingMaterial,
                             HideCasesWithSecretOccurences = byggrConfig.HideCasesWithSecretOccurences,

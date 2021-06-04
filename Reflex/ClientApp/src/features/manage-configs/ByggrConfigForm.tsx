@@ -48,7 +48,8 @@ const ByggrConfigForm = ({ formData, hideActiveForm }: any) => {
             <CheckboxInput name="workingMaterial" label="Visa arbetsmaterial" register={register} />
             <CheckboxInput name="hideCasesWithSecretOccurences" label="Dölj ärenden med sekretess" register={register} />
             <TextInput name="hideDocumentsWithCommentMatching" label="Dölj handlingar med kommentar" register={register} />
-            <CheckboxInput name="onlyCasesWithoutMainDecision" label="Endast aktiva (utan huvudbeslut)" register={register} />
+            <CheckboxInput name="onlyActiveCases" label="Endast aktiva ärenden" register={register} />
+            <CheckboxInput name="onlyCasesWithoutMainDecision" label="Endast ärenden utan huvudbeslut" register={register} />
             <DateInput name="minCaseStartDate" label="Tidigaste startdatum (ÅÅÅÅ-MM-DD)" register={register} />
             <TextInput name="serviceUrl" label="Service URL" register={register} />
             <button className="btn btn-primary" type="submit">Spara</button>

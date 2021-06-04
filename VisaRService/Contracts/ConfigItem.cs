@@ -38,6 +38,7 @@ namespace VisaRService.Contracts
         public bool HideCasesWithSecretOccurences;
         public string HideDocumentsWithCommentMatching;
         public bool OnlyCasesWithoutMainDecision;
+        public bool OnlyActiveCases;
         public DateTime? MinCaseStartDate;
         public string ConnectionString;
         public string ServiceUrl;

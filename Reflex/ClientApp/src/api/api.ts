@@ -53,6 +53,7 @@ export interface Case {
   handlaggareEfternamn: string;
   handlaggareFornamn: string;
   handlaggareSignatur: string;
+  caseWithoutMainDecision: boolean;
 }
 
 export interface Occurence {
@@ -189,6 +190,7 @@ export interface ByggrConfig {
   hideCasesWithSecretOccurences: boolean;
   hideDocumentsWithCommentMatching: string;
   onlyCasesWithoutMainDecision: boolean;
+  onlyActiveCases: boolean;
   minCaseStartDate: string | null;
   serviceUrl: string;
 }

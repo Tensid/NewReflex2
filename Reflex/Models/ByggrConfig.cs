@@ -27,6 +27,7 @@ namespace Reflex.Models
         public bool HideCasesWithSecretOccurences { get; set; }
         public string HideDocumentsWithCommentMatching { get; set; }
         public bool OnlyCasesWithoutMainDecision { get; set; }
+        public bool OnlyActiveCases { get; set; }
         public DateTime? MinCaseStartDate { get; set; }
         public string ServiceUrl { get; set; }
     }
