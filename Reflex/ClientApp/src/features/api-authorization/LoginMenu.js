@@ -47,7 +47,7 @@ export class LoginMenu extends Component {
   authenticatedView(userName, profilePath, logoutPath) {
     return (<Fragment>
       <LinkContainer to={profilePath}>
-        <NavDropdown.Item className="text-dark">Min profil</NavDropdown.Item>
+        <NavDropdown.Item className="text-dark">Kontoinställningar</NavDropdown.Item>
       </LinkContainer>
       <LinkContainer to={logoutPath}>
         <NavDropdown.Item className="text-dark">Logga ut</NavDropdown.Item>

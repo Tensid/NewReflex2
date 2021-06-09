@@ -36,7 +36,7 @@ export function NavMenu() {
                   <Nav.Link className="text-dark">Fastighet</Nav.Link>
                 </LinkContainer>
                 <NavDropdown title="Mer" id="basic-nav-dropdown">
-                  <NavDropdown.Item onClick={() => setShow(true)} className="text-dark">Inställningar</NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => setShow(true)} className="text-dark">Personliga inställningar</NavDropdown.Item>
                   <LinkContainer to="/configs">
                     <NavDropdown.Item className="text-dark">Välj konfiguration</NavDropdown.Item>
                   </LinkContainer>

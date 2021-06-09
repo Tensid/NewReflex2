@@ -69,7 +69,7 @@ const UserSettingsModal = ({ setShow }: UserSettingsModalProps) => {
   return (
     <Modal show onHide={() => setShow(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>Inställningar</Modal.Title>
+        <Modal.Title>Personliga inställningar</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="row pt-2">
