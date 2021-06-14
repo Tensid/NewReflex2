@@ -254,6 +254,11 @@ export async function getCase(caseId: string, caseSource: CaseSource, caseSource
   return data;
 }
 
+export async function getContact() {
+  const { data } = await instance.get('contactSettings');
+  return data;
+}
+
 export async function getConfigs() {
   const { data } = await instance.get<Config[]>('configs');
   return data;
@@ -431,6 +436,11 @@ export async function updateUserSettings(userSettings: UserSettings) {
 
 export async function getUsers() {
   const { data } = await instance.get<ReflexUser[]>('users');
+  return data;
+}
+
+export async function getCurrentUser() {
+  const { data } = await instance.get<ReflexUser>('users/me');
   return data;
 }
 

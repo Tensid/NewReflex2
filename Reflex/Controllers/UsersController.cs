@@ -28,6 +28,38 @@ namespace Reflex.Controllers
             _repository = repository;
         }
 
+        [HttpGet("me")]
+        public async Task<ReflexUser> GetUser()
+        {
+            var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var applicationUser = await _userManager.FindByIdAsync(id);
+
+            var roles = await _userManager.GetRolesAsync(applicationUser);
+
+            var configPermissions = _userManager.GetClaimsAsync(applicationUser).Result.Where(x => x.Type == "config")
+                .Select(x => new ConfigPermission
+                {
+                    Name = _repository.GetConfig(Guid.Parse(x.Value)).Name,
+                    Id = x.Value
+                }).OrderBy(x => x.Name);
+
+            var claims = _userManager.GetClaimsAsync(applicationUser).Result.Where(x => x.Type == "config")
+                .Select(x => new ConfigPermission
+                {
+                    Name = _repository.GetConfig(Guid.Parse(x.Value)).Name,
+                    Id = x.Value
+                }).OrderBy(x => x.Name);
+
+            return new ReflexUser
+            {
+                Id = applicationUser.Id,
+                UserName = applicationUser.UserName,
+                Roles = roles,
+                ConfigPermissions = configPermissions,
+                IsEmailConfirmed = applicationUser.EmailConfirmed
+            };
+        }
+
         [HttpGet]
         public async Task<IEnumerable<ReflexUser>> Get()
         {
