@@ -141,12 +141,16 @@ namespace Reflex.Areas.Identity.Pages.Account
                             values: new { area = "Identity", userId = userId, code = code },
                             protocol: Request.Scheme);
 
-                        await _emailSender.SendEmailAsync(Input.Email, "Bekräfta din e-post",
-                            $"Bekräfta ditt konto genom att <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> klicka här</a>.");
+                        if (_userManager.GetUsersInRoleAsync("Admin").Result.Any())
+                            await _userManager.AddToRoleAsync(user, "User");
+                        else
+                            await _userManager.AddToRoleAsync(user, "Admin");
 
                         // If account confirmation is required, we need to show the link if we don't have a real email sender
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         {
+                            await _emailSender.SendEmailAsync(Input.Email, "Bekräfta din e-post",
+                            $"Bekräfta ditt konto genom att <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> klicka här</a>.");
                             return RedirectToPage("./RegisterConfirmation", new { Email = Input.Email });
                         }
 

@@ -89,9 +89,6 @@ namespace Reflex.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Bekräfta din e-post",
-                        $"Bekräfta ditt konto genom att <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> klicka här</a>.");
-
                     if (_userManager.GetUsersInRoleAsync("Admin").Result.Any())
                         await _userManager.AddToRoleAsync(user, "User");
                     else
@@ -99,6 +96,8 @@ namespace Reflex.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
+                        await _emailSender.SendEmailAsync(Input.Email, "Bekräfta din e-post",
+                        $"Bekräfta ditt konto genom att <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> klicka här</a>.");
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else
