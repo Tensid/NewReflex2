@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Reflex.Models
+namespace Reflex.Data.Models
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum CaseSource

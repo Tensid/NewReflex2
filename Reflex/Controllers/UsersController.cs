@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Reflex.Data;
-using Reflex.Models;
+using Reflex.Data.Models;
+using Reflex.Services;
 
 namespace Reflex.Controllers
 {

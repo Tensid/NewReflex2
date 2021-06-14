@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Reflex.Models;
+using Reflex.Data.Models;
 
 namespace Reflex.Areas.Identity.Pages.Account
 {

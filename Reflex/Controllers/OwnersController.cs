@@ -6,7 +6,6 @@ using FbService.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Reflex.Data;
 
 namespace Reflex.Controllers
 {
@@ -16,22 +15,21 @@ namespace Reflex.Controllers
     public class OwnersController : ControllerBase
     {
         private readonly ILogger<OwnersController> _logger;
-        private readonly IRepository _repository;
+        private readonly FbService.IFbService _fbService;
 
-        public OwnersController(ILogger<OwnersController> logger, IRepository repository)
+        public OwnersController(ILogger<OwnersController> logger, FbService.IFbService fbService)
         {
             _logger = logger;
-            _repository = repository;
+            _fbService = fbService;
         }
 
         [HttpGet]
         public async Task<IEnumerable<Owner>> Get(string estateId, string distance, Guid configId)
         {
-            var fbProxy = _repository.GetFbProxy(configId);
-            var pos = await fbProxy.GetEstatePosition(estateId);
-            var fnrs = await fbProxy.GetFnrsFromPosition(pos.NorthingKoordinat, pos.EastingKoordinat, "3006", distance);
+            var pos = await _fbService.GetEstatePosition(estateId);
+            var fnrs = await _fbService.GetFnrsFromPosition(pos.NorthingKoordinat, pos.EastingKoordinat, "3006", distance);
 
-            var owners = await fbProxy.GetOwners(fnrs);
+            var owners = await _fbService.GetOwners(fnrs);
             return owners.Select(owner =>
             {
                 var o = owner.Result;

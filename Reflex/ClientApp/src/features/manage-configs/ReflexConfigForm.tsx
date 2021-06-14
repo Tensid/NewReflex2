@@ -1,15 +1,8 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { CaseSource, createConfig, deleteConfig, getFullConfigs, Tab, updateConfig } from '../../api/api';
-import PasswordInput from './PasswordInput';
-import SelectInput from './SelectInput';
-import TextInput from './TextInput';
-
-const caseSourceOptions = [
-  { value: CaseSource.AGS, label: CaseSource.AGS },
-  { value: CaseSource.ByggR, label: CaseSource.ByggR },
-  { value: CaseSource.Ecos, label: CaseSource.Ecos }
-];
+import { createConfig, deleteConfig, Tab, updateConfig } from '../../api/api';
+import SelectInput from '../common/forms/SelectInput';
+import TextInput from '../common/forms/TextInput';
 
 const tabOptions = [
   { value: Tab.Map, label: 'Karta' },
@@ -18,13 +11,13 @@ const tabOptions = [
   { value: Tab.Property, label: 'Fastighet' }
 ];
 
-const ConfigForm = ({ formData, hideActiveForm, edit, setConfigs }: any) => {
+const ConfigForm = ({ edit, formData, caseSourceOptions, fetchAll, hideActiveForm }: any) => {
   const { register, handleSubmit, control, reset } =
     useForm({
       defaultValues: {
         ...formData,
         tabs: formData?.tabs?.map((x: any) => ({ value: x, label: tabOptions.find((t: any) => t.value === x)!.label })),
-        caseSources: formData?.caseSources?.map((x: any) => ({ value: x, label: x })) || []
+        caseSources: formData?.caseSources || []
       }
     });
 
@@ -32,12 +25,11 @@ const ConfigForm = ({ formData, hideActiveForm, edit, setConfigs }: any) => {
     reset({
       ...formData,
       tabs: formData?.tabs?.map((x: any) => ({ value: x, label: tabOptions.find((t: any) => t.value === x)!.label })),
-      caseSources: formData?.caseSources?.map((x: any) => ({ value: x, label: x })) || []
+      caseSources: formData?.caseSources || []
     });
   }, [formData, reset]);
 
   const onSubmit = async (data: any) => {
-    data.caseSources = data?.caseSources?.map((x: any) => x.value);
     data.tabs = data?.tabs?.map((x: any) => x.value);
 
     if (edit) {
@@ -46,7 +38,7 @@ const ConfigForm = ({ formData, hideActiveForm, edit, setConfigs }: any) => {
     }
     else
       await createConfig(data);
-    setConfigs(await getFullConfigs());
+    fetchAll();
     hideActiveForm();
   };
 
@@ -61,17 +53,6 @@ const ConfigForm = ({ formData, hideActiveForm, edit, setConfigs }: any) => {
             <TextInput name="map" label="Karta" register={register} />
             <SelectInput control={control} name="tabs" label="Flikar" isMulti register={register} options={tabOptions} />
             <SelectInput control={control} name="caseSources" label="Ärendekällor" isMulti register={register} options={caseSourceOptions} />
-            <TextInput name="fbWebbBoendeUrl" label="FB Webb Befolkningsrapport URL" register={register} />
-            <TextInput name="fbWebbLagenhetUrl" label="FB Webb Lägenhetsrapport URL" register={register} />
-            <TextInput name="fbWebbFastighetUrl" label="FB Webb Fastighetsrapport URL" register={register} />
-            <TextInput name="fbWebbFastighetUsrUrl" label="FB Webb Fastighetsrapport med val URL" register={register} />
-            <TextInput name="fbWebbByggnadUrl" label="FB Webb Byggnadsrapport URL" register={register} />
-            <TextInput name="fbWebbByggnadUsrUrl" label="FB Webb Byggnadsrapport med val URL" register={register} />
-            <TextInput name="fbServiceUrl" label="FB Service URL" register={register} />
-            <TextInput name="fbServiceDatabase" label="FB Databasnamn" register={register} />
-            <TextInput name="fbServiceUser" label="Användarnamn" register={register} />
-            <PasswordInput name="fbServicePassword" label="FB Lösenord" register={register} />
-            <TextInput name="csmUrl" label="CSM URL" register={register} />
             <button className="btn btn-primary" type="submit">Spara</button>
             {edit &&
               <button
@@ -79,7 +60,7 @@ const ConfigForm = ({ formData, hideActiveForm, edit, setConfigs }: any) => {
                 onClick={async (e) => {
                   e.preventDefault();
                   await deleteConfig(formData.id);
-                  setConfigs(await getFullConfigs());
+                  fetchAll();
                   hideActiveForm();
                 }}
               >

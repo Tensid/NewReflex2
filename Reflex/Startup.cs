@@ -5,14 +5,21 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
-using Reflex.Data;
-using Reflex.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using Reflex.Services;
+using FbService;
+using FbService.Provider;
+using Reflex.Data.Models;
+using Reflex.Data;
+using Reflex.SettingsService;
+using ReflexAgsService;
+using ReflexByggrService;
+using ReflexEcos2Service;
 
 namespace Reflex
 {
@@ -40,6 +47,15 @@ namespace Reflex
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddScoped<IRepository, Repository>();
+            services.AddScoped<ISystemSettingsService, SystemSettingsService>();
+            services.AddScoped<IProxyService, ProxyService>();
+            services.AddScoped<AgsServiceFactory, AgsServiceFactory>();
+            services.AddScoped<ByggrServiceFactory, ByggrServiceFactory>();
+            services.AddScoped<EcosServiceFactory, EcosServiceFactory>();
+            services.AddScoped<IFbProvider, FbProvider>();
+            services.AddScoped<IFbService, FbService.FbService>();
+
+            services.AddHttpClient<IFbProvider, FbProvider>();
 
             services.AddAuthentication()
                 .AddWsFederation(options =>

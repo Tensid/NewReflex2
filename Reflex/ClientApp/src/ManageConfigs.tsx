@@ -1,26 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Nav, NavDropdown, Row, Tab } from 'react-bootstrap';
-import { Config, getAgsConfig, getByggrConfig, getConfig, getEcosConfig, getFullConfigs } from './api/api';
+import { CaseSourceOption, Config, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getEcosConfig, getEcosConfigs, getFormData } from './api/api';
 import AgsConfigForm from './features/manage-configs/AgsConfigForm';
 import ByggrConfigForm from './features/manage-configs/ByggrConfigForm';
 import EcosConfigForm from './features/manage-configs/EcosConfigForm';
 import ReflexConfigForm from './features/manage-configs/ReflexConfigForm';
 
 const ManageConfigs = () => {
+  const [agsConfigs, setAgsConfigs] = useState<any[]>([]);
+  const [byggrConfigs, setByggrConfigs] = useState<any[]>([]);
+  const [ecosConfigs, setEcosConfigs] = useState<any[]>([]);
+  const [reflexConfigs, setReflexConfigs] = useState<Config[]>([]);
   const [agsFormData, setAgsFormData] = useState<any>();
   const [byggrFormData, setByggrFormData] = useState<any>();
   const [ecosFormData, setEcosFormData] = useState<any>();
   const [reflexFormData, setReflexFormData] = useState<any>();
   const [activeForm, setActiveForm] = useState<string>();
   const [activeKey, setActiveKey] = useState<string>();
-  const [configs, setConfigs] = useState<Config[]>([]);
+  const [caseSourceOptions, setCaseSourceOptions] = useState<CaseSourceOption[]>([]);
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     (async () => {
-      setConfigs(await getFullConfigs());
+      setAgsConfigs(await getAgsConfigs());
+      setByggrConfigs(await getByggrConfigs());
+      setEcosConfigs(await getEcosConfigs());
+      setReflexConfigs(await getConfigs());
+      setCaseSourceOptions(await getCaseSourceOptions());
     })();
   }, []);
+
+  async function fetchAll() {
+    setAgsConfigs(await getAgsConfigs());
+    setByggrConfigs(await getByggrConfigs());
+    setEcosConfigs(await getEcosConfigs());
+    setReflexConfigs(await getConfigs());
+    setCaseSourceOptions(await getCaseSourceOptions());
+  }
 
   function hideActiveForm() {
     setActiveForm('');
@@ -35,46 +51,78 @@ const ManageConfigs = () => {
           <Row>
             <Col sm={3}>
               <Nav variant="pills" className="flex-column" activeKey={activeKey}>
-                {configs.map((cfg) =>
-                  <NavDropdown key={cfg.id} title={cfg.name} id="nav-dropdown">
-                    {cfg.ecosConfigs && cfg.ecosConfigs?.map((x) =>
-                      <NavDropdown.Item key={x.id} eventKey={x.id} onClick={async () => {
-                        setActiveKey(x.id);
-                        setEcosFormData(await getEcosConfig(x.id));
-                        setActiveForm('Ecos');
-                      }}>
-                        Ecos
-                      </NavDropdown.Item>)}
-                    {cfg.byggrConfigs && cfg.byggrConfigs?.map((x) =>
-                      <NavDropdown.Item key={x.id} eventKey={x.id} onClick={async () => {
-                        setActiveKey(x.id);
-                        setByggrFormData(await getByggrConfig(x.id));
-                        setActiveForm('ByggR');
-
-                      }}>
-                        ByggR
-                      </NavDropdown.Item>)}
-                    {cfg.agsConfigs && cfg.agsConfigs?.map((x) =>
-                      <NavDropdown.Item key={x.id} eventKey={x.id} onClick={async () => {
-                        setActiveKey(x.id);
-                        setAgsFormData(await getAgsConfig(x.id));
-                        setActiveForm('AGS');
-                      }}>
-                        AGS
-                      </NavDropdown.Item>)}
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item key={cfg.id + ".1"} eventKey={cfg.id + ".1"} onClick={async () => {
-                      setActiveKey(cfg.id + ".1");
+                <NavDropdown key="Reflex" title="Reflex" id="nav-dropdown">
+                  {reflexConfigs?.map((cfg) =>
+                    <NavDropdown.Item key={cfg.id} eventKey={cfg.id} onClick={async () => {
+                      setActiveKey(cfg.id);
                       setEdit(true);
-                      setReflexFormData(await getConfig(cfg.id));
+                      setReflexFormData(await getFormData(cfg.id));
                       setActiveForm('Reflex');
-                    }}>Redigera konfiguration</NavDropdown.Item>
-                    <NavDropdown.Item key={cfg.id + ".2"} eventKey={cfg.id + ".2"} onClick={async () => {
-                      setActiveKey('');
+                    }}>
+                      {cfg?.name}
+                    </NavDropdown.Item>)}
+                  {reflexConfigs.length > 0 && <NavDropdown.Divider />}
+                  <NavDropdown.Item key="Reflex_new" eventKey="Reflex_new" onClick={() => {
+                    setActiveKey('Reflex_new');
+                    setEdit(false);
+                    setReflexFormData({});
+                    setActiveForm('Reflex');
+                  }}>Skapa konfiguration</NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown key="ByggR" title="ByggR" id="nav-dropdown">
+                  {byggrConfigs?.map((cfg) =>
+                    <NavDropdown.Item key={cfg.id} eventKey={cfg.id} onClick={async () => {
+                      setActiveKey(cfg.id);
                       setEdit(true);
-                      hideActiveForm();
-                    }}>Välj konfiguration</NavDropdown.Item>
-                  </NavDropdown>)}
+                      setActiveForm('ByggR');
+                      setByggrFormData(await getByggrConfig(cfg.id));
+                    }}>
+                      {cfg?.name}
+                    </NavDropdown.Item>)}
+                  {byggrConfigs.length > 0 && <NavDropdown.Divider />}
+                  <NavDropdown.Item key="ByggR_new" eventKey="ByggR_new" onClick={() => {
+                    setActiveKey('ByggR_new');
+                    setEdit(false);
+                    setByggrFormData({});
+                    setActiveForm('ByggR');
+                  }}>Skapa konfiguration</NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown key="AGS" title="AGS" id="nav-dropdown">
+                  {agsConfigs?.map((cfg) =>
+                    <NavDropdown.Item key={cfg.id} eventKey={cfg.id} onClick={async () => {
+                      setActiveKey(cfg.id);
+                      setEdit(true);
+                      setActiveForm('AGS');
+                      setAgsFormData(await getAgsConfig(cfg.id));
+                    }}>
+                      {cfg?.name}
+                    </NavDropdown.Item>)}
+                  {agsConfigs.length > 0 && <NavDropdown.Divider />}
+                  <NavDropdown.Item key="AGS_new" eventKey="AGS_new" onClick={() => {
+                    setActiveKey('AGS_new');
+                    setEdit(false);
+                    setAgsFormData({});
+                    setActiveForm('AGS');
+                  }}>Skapa konfiguration</NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown key="Ecos" title="Ecos" id="nav-dropdown">
+                  {ecosConfigs?.map((cfg) =>
+                    <NavDropdown.Item key={cfg.id} eventKey={cfg.id} onClick={async () => {
+                      setActiveKey(cfg.id);
+                      setEdit(true);
+                      setActiveForm('Ecos');
+                      setEcosFormData(await getEcosConfig(cfg.id));
+                    }}>
+                      {cfg?.name}
+                    </NavDropdown.Item>)}
+                  {ecosConfigs.length > 0 && <NavDropdown.Divider />}
+                  <NavDropdown.Item key="Ecos_new" eventKey="Ecos_new" onClick={() => {
+                    setActiveKey('Ecos_new');
+                    setEdit(false);
+                    setEcosFormData({});
+                    setActiveForm('Ecos');
+                  }}>Skapa konfiguration</NavDropdown.Item>
+                </NavDropdown>
               </Nav>
             </Col>
           </Row>
@@ -83,10 +131,10 @@ const ManageConfigs = () => {
           <a href="api/documents/Reflex Manual.pdf">Öppna manual</a> för konfigurationshantering.</div>
       </div>
       <div className="col-6 col-form-label col-form-label-sm">
-        {activeForm === 'Reflex' && <ReflexConfigForm edit={edit} formData={reflexFormData} hideActiveForm={hideActiveForm} setConfigs={setConfigs} />}
-        {activeForm === 'AGS' && <AgsConfigForm formData={agsFormData} hideActiveForm={hideActiveForm} />}
-        {activeForm === 'ByggR' && <ByggrConfigForm formData={byggrFormData} hideActiveForm={hideActiveForm} />}
-        {activeForm === 'Ecos' && <EcosConfigForm formData={ecosFormData} hideActiveForm={hideActiveForm} />}
+        {activeForm === 'Reflex' && <ReflexConfigForm edit={edit} formData={reflexFormData} caseSourceOptions={caseSourceOptions} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
+        {activeForm === 'AGS' && <AgsConfigForm edit={edit} formData={agsFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
+        {activeForm === 'ByggR' && <ByggrConfigForm edit={edit} formData={byggrFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
+        {activeForm === 'Ecos' && <EcosConfigForm edit={edit} formData={ecosFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
       </div>
     </div>
   );

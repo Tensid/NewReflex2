@@ -53,6 +53,7 @@ export interface Case {
   handlaggareEfternamn: string;
   handlaggareFornamn: string;
   handlaggareSignatur: string;
+  caseSourceId: string;
   caseWithoutMainDecision: boolean;
 }
 
@@ -115,6 +116,7 @@ export interface SearchResult {
   estateName: string;
   source?: CaseSource | 'FB';
   type?: Type;
+  caseSourceId?: string;
 }
 
 export interface Config {
@@ -123,17 +125,6 @@ export interface Config {
   description: string;
   map: string;
   tabs: Tab[];
-  caseSources: CaseSource[];
-  agsConfigs?: AgsConfig[];
-  byggrConfigs?: ByggrConfig[];
-  ecosConfigs?: EcosConfig[];
-  fbWebbBoendeUrl?: string;
-  fbWebbLagenhetUrl?: string;
-  fbWebbFastighetUrl?: string;
-  fbWebbFastighetUsrUrl?: string;
-  fbWebbByggnadUrl?: string;
-  fbWebbByggnadUsrUrl?: string;
-  csmUrl?: string;
 }
 
 export interface ReflexUser {
@@ -203,6 +194,21 @@ export interface EcosConfig {
   password: string;
 }
 
+export interface ConfigFormData {
+  id: string;
+  name: string;
+  description: string;
+  map: string;
+  tabs: Tab[];
+  caseSources: CaseSourceOption[];
+}
+
+export interface CaseSourceOption {
+  value: string;
+  label: string;
+  caseSource: CaseSource;
+}
+
 export async function search(query: string) {
   let url = `search?query=${query}`;
   if (configId) {
@@ -239,10 +245,10 @@ export async function getCases(estateId: string) {
   return data;
 }
 
-export async function getCase(id: string, caseSource: CaseSource) {
-  let url = `cases?id=${id}&caseSource=${caseSource}`;
-  if (configId) {
-    url = `${url}&configId=${configId}`;
+export async function getCase(caseId: string, caseSource: CaseSource, caseSourceId: string | undefined) {
+  let url = `cases?caseId=${caseId}&caseSource=${caseSource}`;
+  if (caseSourceId) {
+    url = `${url}&caseSourceId=${caseSourceId}`;
   }
   const { data } = await instance.get<Case[]>(url);
   return data;
@@ -253,8 +259,8 @@ export async function getConfigs() {
   return data;
 }
 
-export async function getFullConfigs() {
-  const { data } = await instance.get<Config[]>('configs/full');
+export async function getCaseSourceOptions() {
+  const { data } = await instance.get<CaseSourceOption[]>('configs/caseSourceOptions');
   return data;
 }
 
@@ -264,19 +270,19 @@ export async function deleteConfig(id: string) {
   return data;
 }
 
-export async function createConfig(config: Config) {
+export async function createConfig(config: ConfigFormData) {
   const { data } = await instance.post('configs', config);
   return data;
 }
 
-export async function updateConfig(config: Config) {
+export async function updateConfig(config: ConfigFormData) {
   const { data } = await instance.put('configs', config);
   return data;
 }
 
-export async function getConfig(id: string) {
-  const url = `configs/${id}`;
-  const { data } = await instance.get<Config>(url);
+export async function getFormData(id: string) {
+  const url = `configs/formData/${id}`;
+  const { data } = await instance.get<ConfigFormData>(url);
   return data;
 }
 
@@ -295,6 +301,38 @@ export async function getEcosConfigs() {
   return data;
 }
 
+export async function deleteAgsConfig(id: string) {
+  const url = `ags/${id}`;
+  const { data } = await instance.delete(url);
+  return data;
+}
+
+export async function deleteByggrConfig(id: string) {
+  const url = `byggr/${id}`;
+  const { data } = await instance.delete(url);
+  return data;
+}
+
+export async function deleteEcosConfig(id: string) {
+  const url = `ecos/${id}`;
+  const { data } = await instance.delete(url);
+  return data;
+}
+
+export async function createAgsConfig(agsConfig: AgsConfig) {
+  const { data } = await instance.post('ags', agsConfig);
+  return data;
+}
+
+export async function createByggrConfig(byggrConfig: ByggrConfig) {
+  const { data } = await instance.post('byggr', byggrConfig);
+  return data;
+}
+
+export async function createEcosConfig(ecosConfig: EcosConfig) {
+  const { data } = await instance.post('ecos', ecosConfig);
+  return data;
+}
 export async function updateAgsConfig(agsConfig: AgsConfig) {
   const { data } = await instance.put('ags', agsConfig);
   return data;
@@ -357,38 +395,26 @@ export async function getMapSettings() {
   return data;
 }
 
-export async function getOccurences(caseId: string, caseSource: string) {
-  let url = `cases/${caseId}/occurences?caseSource=${caseSource}`;
-  if (configId) {
-    url = `${url}&configId=${configId}`;
-  }
+export async function getOccurences(caseId: string, source: string, caseSourceId: string) {
+  const url = `cases/${caseId}/${source}/occurences?caseSourceId=${caseSourceId}`;
   const { data } = await instance.get<Occurence[]>(url);
   return data;
 }
 
-export async function getPreview(caseId: string, caseSource: CaseSource) {
-  let url = `cases/${caseId}/preview?caseSource=${caseSource}`;
-  if (configId) {
-    url = `${url}&configId=${configId}`;
-  }
+export async function getPreview(caseId: string, source: string, caseSourceId: string) {
+  const url = `cases/${caseId}/${source}/preview?caseSourceId=${caseSourceId}`;
   const { data } = await instance.get<Preview>(url);
   return data;
 }
 
-export async function getCasePersons(caseId: string, caseSource: CaseSource) {
-  let url = `cases/${caseId}/persons?caseSource=${caseSource}`;
-  if (configId) {
-    url = `${url}&configId=${configId}`;
-  }
+export async function getCasePersons(caseId: string, source: string, caseSourceId: string) {
+  const url = `cases/${caseId}/${source}/persons?caseSourceId=${caseSourceId}`;
   const { data } = await instance.get<CasePerson[]>(url);
   return data;
 }
 
-export async function getArchivedDocuments(caseId: string, caseSource: CaseSource) {
-  let url = `cases/${caseId}/archivedDocuments?caseSource=${caseSource}`;
-  if (configId) {
-    url = `${url}?configId=${configId}`;
-  }
+export async function getArchivedDocuments(caseId: string, source: string, caseSourceId: string) {
+  const url = `cases/${caseId}/${source}/archivedDocuments?caseSourceId=${caseSourceId}`;
   const { data } = await instance.get<ArchivedDocument[]>(url);
   return data;
 }
@@ -412,8 +438,8 @@ export async function deleteUsers(ids: string[]) {
   return await instance.delete('users', { data: ids });
 }
 
-export async function getDocument(docLinkId: string, caseSource: any) {
-  const response = await instance.get(`cases/document?docId=${docLinkId}&caseSource=${caseSource}&configId=${configId}`, { responseType: 'blob' });
+export async function getDocument(docLinkId: string, caseSource: any, caseSourceId: string) {
+  const response = await instance.get(`cases/document?docId=${docLinkId}&caseSource=${caseSource}&caseSourceId=${caseSourceId}`, { responseType: 'blob' });
 
   if (!response.data)
     return;

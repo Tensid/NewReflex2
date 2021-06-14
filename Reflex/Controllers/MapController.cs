@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using FbService.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Reflex.Data;
 
 namespace Reflex.Controllers
 {
@@ -13,42 +11,40 @@ namespace Reflex.Controllers
     [Route("api/[controller]")]
     public class MapController : Controller
     {
-        private readonly IRepository _repository;
+        private readonly FbService.IFbService _fbService;
 
-        public MapController(IRepository repository)
+        public MapController(FbService.IFbService fbService)
         {
-            _repository = repository;
+            _fbService = fbService;
         }
 
         [HttpGet("fnr")]
-        public async Task<string> GetFnrFromPosition(string lat, string lon, string srid, string distance, Guid configId)
+        public async Task<string> GetFnrFromPosition(string lat, string lon, string srid, string distance)
         {
-            var proxy = _repository.GetFbProxy(configId);
-            var result = await proxy.GetFnrsFromPosition(lat, lon, srid, distance);
+            var result = await _fbService.GetFnrsFromPosition(lat, lon, srid, distance);
             return result.FirstOrDefault();
         }
 
         [HttpGet("geometry")]
-        public Task<string> GetGeometryFromFnr(string fnr, Guid configId)
+        public Task<string> GetGeometryFromFnr(string fnr)
         {
-            return _repository.GetFbProxy(configId).GetGeometryFromFnr(fnr);
+            return _fbService.GetGeometryFromFnr(fnr);
         }
 
         [HttpGet("estateName")]
-        public async Task<string> GetEstateName(string fnr, Guid configId)
+        public async Task<string> GetEstateName(string fnr)
         {
-            var proxy = _repository.GetFbProxy(configId);
-            var result = (await proxy.GetEstate(fnr))?.EstateName ?? "Kunde inte hämta fastighet";
+            var result = (await _fbService.GetEstate(fnr))?.EstateName ?? "Kunde inte hämta fastighet";
             return result;
         }
 
         [HttpGet("estatePosition")]
-        public Task<Position> GetEstatePosition(string fnr, Guid configId)
+        public Task<Position> GetEstatePosition(string fnr)
         {
             if (string.IsNullOrEmpty(fnr))
                 return null;
 
-            return _repository.GetFbProxy(configId).GetEstatePosition(fnr);
+            return _fbService.GetEstatePosition(fnr);
         }
     }
 }

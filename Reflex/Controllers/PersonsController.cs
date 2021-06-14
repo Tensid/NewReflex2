@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Reflex.Data;
 
 namespace Reflex.Controllers
 {
@@ -16,12 +15,12 @@ namespace Reflex.Controllers
     public class PersonsController : ControllerBase
     {
         private readonly ILogger<PersonsController> _logger;
-        private readonly IRepository _repository;
+        private readonly FbService.IFbService _fbService;
 
-        public PersonsController(ILogger<PersonsController> logger, IRepository repository)
+        public PersonsController(ILogger<PersonsController> logger, FbService.IFbService fbService)
         {
             _logger = logger;
-            _repository = repository;
+            _fbService = fbService;
         }
 
         [HttpGet]
@@ -31,13 +30,12 @@ namespace Reflex.Controllers
             if (string.IsNullOrEmpty(estateId))
                 return persons;
 
-            var fbProxy = _repository.GetFbProxy(configId);
-            var pos = await fbProxy.GetEstatePosition(estateId);
-            var fnrs = await fbProxy.GetFnrsFromPosition(pos.NorthingKoordinat, pos.EastingKoordinat, "3006", distance);
+            var pos = await _fbService.GetEstatePosition(estateId);
+            var fnrs = await _fbService.GetFnrsFromPosition(pos.NorthingKoordinat, pos.EastingKoordinat, "3006", distance);
             foreach (var fnr in fnrs)
             {
-                var estate = await fbProxy.GetEstate(fnr);
-                var kidPersons = await fbProxy.KidPersonsByFnr(fnr);
+                var estate = await _fbService.GetEstate(fnr);
+                var kidPersons = await _fbService.KidPersonsByFnr(fnr);
                 persons.AddRange(kidPersons.Select(p => new Person
                 {
                     Firstname = p?.Firstname ?? "NAMN SAKNAS",

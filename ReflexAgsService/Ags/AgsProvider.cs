@@ -1,4 +1,5 @@
 ﻿using AgsProSystemWebService;
+using Reflex.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +16,12 @@ namespace ReflexAgsService.Ags
         private readonly string _url;
         private readonly string _username;
         private readonly string _password;
-        private readonly ConfigItem _config;
 
-        public AgsProvider(ConfigItem config)
+        public AgsProvider(AgsSettings agsSettings, string username, string password)
         {
-            _url = config.AgsConfig.ServiceUrl;
-            _username = config.AgsConfig.Username;
-            _password = config.AgsConfig.Password;
-            _config = config;
+            _url = agsSettings.ServiceUrl;
+            _username = username;
+            _password = password;
         }
 
         private AgsClient GetClient()
@@ -157,7 +156,7 @@ namespace ReflexAgsService.Ags
             };
         }
 
-        public async Task<Case> GetCase(string groupid, string instanceId, string departmentId)
+        public async Task<Case> GetCase(string groupid, string instanceId, string departmentId, string documentPattern, string dateField, string searchWay)
         {
             var svc = GetClient();
             try
@@ -170,8 +169,8 @@ namespace ReflexAgsService.Ags
 
                 if (!string.IsNullOrEmpty(estateName))
                 {
-                    return (await GetCasesByEstate(estateName, _config.AgsConfig.DocumentPattern, _config.AgsConfig.DateField, instanceId,
-                               departmentId, _config.AgsConfig.SearchWay)).First() ?? null;
+                    return (await GetCasesByEstate(estateName, documentPattern, dateField, instanceId,
+                               departmentId, searchWay)).First() ?? null;
                 }
 
                 return null;

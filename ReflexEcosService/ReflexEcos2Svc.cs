@@ -2,23 +2,40 @@
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
+using Reflex.Data;
+using Reflex.Data.Models;
 using ReflexEcos2Service.Ecos2ReflexService;
 using VisaRService;
 using VisaRService.Contracts;
 
 namespace ReflexEcos2Service
 {
-    public class ReflexEcos2Svc : IVisaRService
+    public class EcosServiceFactory
     {
-        private readonly string _url;
-        private readonly ConfigItem _config;
+        private readonly EcosSettings _settings;
+        private readonly ApplicationDbContext _context;
 
-        public ReflexEcos2Svc(ConfigItem config)
+        public EcosServiceFactory(ApplicationDbContext context)
         {
-            _url = config.EcosConfig.ServiceUrl;
-            _config = config;
+            _settings = context.EcosSettings.FirstOrDefault();
+            _context = context;
         }
 
+        public ReflexEcosSvc Create(Guid id)
+        {
+            var ecosConfig = _context.EcosConfigs.FirstOrDefault(x => x.Id == id);
+            return new ReflexEcosSvc(_settings);
+        }
+    }
+
+    public class ReflexEcosSvc : IVisaRService
+    {
+        private readonly EcosSettings _settings;
+
+        public ReflexEcosSvc(EcosSettings settings)
+        {
+            _settings = settings;
+        }
         private ReflexServiceClient GetClient()
         {
             var binding = new BasicHttpBinding
@@ -28,19 +45,19 @@ namespace ReflexEcos2Service
                 Security =
                 {
                     Mode =
-                        _url.StartsWith("https:")
+                        _settings.ServiceUrl.StartsWith("https:")
                             ? BasicHttpSecurityMode.Transport
                             : BasicHttpSecurityMode.TransportCredentialOnly,
                     Transport = {ClientCredentialType = HttpClientCredentialType.Ntlm}
                 }
             };
-            var client = new ReflexServiceClient(binding, new EndpointAddress(_url));
-            if (string.IsNullOrEmpty(_config.EcosConfig.Username) || string.IsNullOrEmpty(_config.EcosConfig.Password))
+            var client = new ReflexServiceClient(binding, new EndpointAddress(_settings.ServiceUrl));
+            if (string.IsNullOrEmpty(_settings.Username) || string.IsNullOrEmpty(_settings.Password))
             {
                 return client;
             }
-            client.ClientCredentials.Windows.ClientCredential.UserName = _config.EcosConfig.Username;
-            client.ClientCredentials.Windows.ClientCredential.Password = _config.EcosConfig.Password;
+            client.ClientCredentials.Windows.ClientCredential.UserName =_settings.Username;
+            client.ClientCredentials.Windows.ClientCredential.Password = _settings.Password;
 
             return client;
         }

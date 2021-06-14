@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Reflex.Data;
-using Reflex.Models;
 
 [assembly: HostingStartup(typeof(Reflex.Areas.Identity.IdentityHostingStartup))]
 namespace Reflex.Areas.Identity

@@ -13,9 +13,10 @@ interface CaseItemProps {
   setModalData: (modalData: ModalData) => void;
   caseId: string;
   status: string;
+  caseSourceId: string;
 }
 
-const CaseItem = ({ dnr, title, caseSource, toggleShow, setModalData, caseId, status }: CaseItemProps) => {
+const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, caseId, caseSourceId }: CaseItemProps) => {
   let color = 'secondary';
   let symbol: IconDefinition;
   if (caseSource === CaseSource.Ecos) {
@@ -32,7 +33,7 @@ const CaseItem = ({ dnr, title, caseSource, toggleShow, setModalData, caseId, st
   }
 
   function handleClick() {
-    setModalData({ dnr, caseId, caseSource, title });
+    setModalData({ dnr, caseId, caseSource, title, caseSourceId });
     toggleShow();
   }
 

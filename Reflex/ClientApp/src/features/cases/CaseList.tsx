@@ -20,6 +20,7 @@ const CaseList = ({ cases, toggleShow, setModalData }: CaseListProps) => {
         toggleShow={toggleShow}
         setModalData={setModalData}
         status={case_.status}
+        caseSourceId={case_.caseSourceId}
       />)}
     </>
   );

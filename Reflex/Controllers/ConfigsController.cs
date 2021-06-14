@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Reflex.Data;
-using Reflex.Models;
+using Reflex.Data.Models;
+using Reflex.Services;
 
 namespace Reflex.Controllers
 {
@@ -32,15 +32,7 @@ namespace Reflex.Controllers
         {
             return _repository.GetConfigs().Select(x => new Config
             {
-                CaseSources = x.CaseSources,
-                CsmUrl = x.CsmUrl,
                 Description = x.Description,
-                FbWebbBoendeUrl = x.FbWebbBoendeUrl,
-                FbWebbLagenhetUrl = x.FbWebbLagenhetUrl,
-                FbWebbByggnadUrl = x.FbWebbByggnadUrl,
-                FbWebbByggnadUsrUrl = x.FbWebbByggnadUsrUrl,
-                FbWebbFastighetUrl = x.FbWebbFastighetUrl,
-                FbWebbFastighetUsrUrl = x.FbWebbFastighetUsrUrl,
                 Id = x.Id,
                 Map = x.Map,
                 Name = x.Name,
@@ -48,112 +40,173 @@ namespace Reflex.Controllers
             });
         }
 
-        [HttpGet("full")]
-        public IEnumerable<Config> GetFullConfigs()
+        [HttpGet("formData/{id}")]
+        public ConfigFormData GetForm(Guid id)
         {
-            return _repository.GetConfigs().Select(x => x).ToList();
-        }
+            var formData = _context.Configs.Where(x => x.Id == id).Include(x => x.AgsConfigs).Include(x => x.ByggrConfigs).Include(x => x.EcosConfigs).ToList().Select(x =>
+            {
+                var caseSources = x.AgsConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.AGS }).ToList();
+                caseSources.AddRange(x.ByggrConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.ByggR }));
+                caseSources.AddRange(x.EcosConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.Ecos }));
 
-        [HttpGet("{id}")]
-        public Config GetConfig(Guid id)
-        {
-            return _repository.GetConfig(id);
+                return new ConfigFormData
+                {
+                    CaseSources = caseSources,
+                    Description = x.Description,
+                    Id = x.Id,
+                    Map = x.Map,
+                    Name = x.Name,
+                    Tabs = x.Tabs
+                };
+            }).FirstOrDefault();
+            return formData;
         }
 
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public void DeleteConfig(Guid id)
         {
             _repository.DeleteConfig(id);
         }
 
-        [HttpPost]
-        public void Post(Config config)
+        [HttpGet("caseSourceOptions")]
+        public IEnumerable<CaseSourceOption> GetCaseSourceOptions()
         {
-            config.Id = Guid.NewGuid();
-            _repository.CreateConfig(config);
+            var caseSourceOptions = _context.AgsConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.AGS }).ToList();
+            caseSourceOptions.AddRange(_context.ByggrConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.ByggR }));
+            caseSourceOptions.AddRange(_context.EcosConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.Ecos }));
+
+            return caseSourceOptions.ToList();
         }
 
         [HttpPut]
-        public async Task Put(Config config)
+        public void UpdateConfig(ConfigFormData formData)
         {
-            var caseSourceItems = (CaseSource[])Enum.GetValues(typeof(CaseSource));
-            var caseSources = config.CaseSources ?? (new CaseSource[] { });
-            var subconfigsToDelete = config.CaseSources != null ? caseSourceItems.Except(caseSources) : caseSourceItems;
-
-            foreach (var caseSource in caseSources)
+            _context.Configs.Update(new Config
             {
-                if (caseSource == CaseSource.AGS)
+                Id = formData.Id,
+                Name = formData.Name,
+                Description = formData.Description,
+                Map = formData.Map,
+                Tabs = formData.Tabs.ToList()
+            });
+            _context.SaveChanges();
+
+            var config = _context.Configs.Include(p => p.AgsConfigs)
+                .Include(p => p.ByggrConfigs).Include(p => p.EcosConfigs)
+                .Single(p => p.Id == formData.Id);
+            config.AgsConfigs.Clear();
+            config.ByggrConfigs.Clear();
+            config.EcosConfigs.Clear();
+
+            foreach (var option in formData.CaseSources ?? Enumerable.Empty<CaseSourceOption>())
+            {
+                if (option.CaseSource == CaseSource.AGS)
                 {
-                    var agsConfig = await _context.AgsConfigs.SingleOrDefaultAsync(m => m.ConfigId == config.Id);
-                    if (agsConfig == null)
-                    {
-                        await _repository.CreateAgs(new AgsConfig()
-                        {
-                            Id = Guid.NewGuid(),
-                            ConfigId = config.Id,
-                        });
-                        await _context.SaveChangesAsync();
-                    }
+                    var cfg = _context.Configs
+                        .Include(p => p.AgsConfigs)
+                        .Single(p => p.Id == formData.Id);
+
+                    var agsConfig = _context.AgsConfigs
+                        .Single(p => p.Id == option.Value);
+
+                    cfg.AgsConfigs.Add(agsConfig);
                 }
-                if (caseSource == CaseSource.ByggR)
+                if (option.CaseSource == CaseSource.ByggR)
                 {
-                    var byggrConfig = await _context.ByggrConfigs.SingleOrDefaultAsync(m => m.ConfigId == config.Id);
-                    if (byggrConfig == null)
-                    {
-                        await _repository.CreateByggr(new ByggrConfig()
-                        {
-                            Id = Guid.NewGuid(),
-                            ConfigId = config.Id,
-                        });
-                        await _context.SaveChangesAsync();
-                    }
+                    var cfg = _context.Configs
+                        .Include(p => p.ByggrConfigs)
+                        .Single(p => p.Id == formData.Id);
+
+                    var byggrConfig = _context.ByggrConfigs
+                        .Single(p => p.Id == option.Value);
+
+                    cfg.ByggrConfigs.Add(byggrConfig);
                 }
-                if (caseSource == CaseSource.Ecos)
+                if (option.CaseSource == CaseSource.Ecos)
                 {
-                    var ecosConfig = await _context.EcosConfigs.SingleOrDefaultAsync(m => m.ConfigId == config.Id);
-                    if (ecosConfig == null)
-                    {
-                        await _repository.CreateEcos(new EcosConfig()
-                        {
-                            Id = Guid.NewGuid(),
-                            ConfigId = config.Id,
-                        });
-                        await _context.SaveChangesAsync();
-                    }
+                    var cfg = _context.Configs
+                        .Include(p => p.EcosConfigs)
+                        .Single(p => p.Id == formData.Id);
+
+                    var ecosConfig = _context.EcosConfigs
+                        .Single(p => p.Id == option.Value);
+
+                    cfg.EcosConfigs.Add(ecosConfig);
                 }
             }
-            foreach (var caseSource in subconfigsToDelete)
-            {
-                if (caseSource == CaseSource.AGS)
-                {
-                    var agsConfig = await _context.AgsConfigs.SingleOrDefaultAsync(m => m.ConfigId == config.Id);
-                    if (agsConfig != null)
-                    {
-                        _context.AgsConfigs.Remove(agsConfig);
-                        await _context.SaveChangesAsync();
-                    }
-                }
-                if (caseSource == CaseSource.ByggR)
-                {
-                    var byggrConfig = await _context.ByggrConfigs.SingleOrDefaultAsync(m => m.ConfigId == config.Id);
-                    if (byggrConfig != null)
-                    {
-                        _context.ByggrConfigs.Remove(byggrConfig);
-                        await _context.SaveChangesAsync();
-                    }
-                }
-                if (caseSource == CaseSource.Ecos)
-                {
-                    var ecosConfig = await _context.EcosConfigs.SingleOrDefaultAsync(m => m.ConfigId == config.Id);
-                    if (ecosConfig != null)
-                    {
-                        _context.EcosConfigs.Remove(ecosConfig);
-                        await _context.SaveChangesAsync();
-                    }
-                }
-            }
-
-            _repository.UpdateConfig(config);
+            _context.SaveChanges();
         }
+
+        [HttpPost]
+        public void CreateConfig(ConfigFormData formData)
+        {
+            var id = Guid.NewGuid();
+            _context.Configs.Add(new Config
+            {
+                Id = id,
+                Name = formData.Name,
+                Description = formData.Description,
+                Map = formData.Map,
+                Tabs = formData.Tabs.ToList()
+            });
+            _context.SaveChanges();
+
+            foreach (var option in formData.CaseSources)
+            {
+                if (option.CaseSource == CaseSource.AGS)
+                {
+                    var cfg = _context.Configs
+                        .Include(p => p.AgsConfigs)
+                        .Single(p => p.Id == id);
+
+                    var agsConfig = _context.AgsConfigs
+                        .Single(p => p.Id == option.Value);
+
+                    cfg.AgsConfigs.Add(agsConfig);
+                    _context.SaveChanges();
+                }
+                if (option.CaseSource == CaseSource.ByggR)
+                {
+                    var cfg = _context.Configs
+                        .Include(p => p.ByggrConfigs)
+                        .Single(p => p.Id == id);
+
+                    var byggrConfig = _context.ByggrConfigs
+                        .Single(p => p.Id == option.Value);
+
+                    cfg.ByggrConfigs.Add(byggrConfig);
+                    _context.SaveChanges();
+                }
+                if (option.CaseSource == CaseSource.Ecos)
+                {
+                    var cfg = _context.Configs
+                        .Include(p => p.EcosConfigs)
+                        .Single(p => p.Id == id);
+
+                    var ecosConfig = _context.EcosConfigs
+                        .Single(p => p.Id == option.Value);
+
+                    cfg.EcosConfigs.Add(ecosConfig);
+                    _context.SaveChanges();
+                }
+            }
+        }
+    }
+
+    public class ConfigFormData
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Map { get; set; }
+        public virtual IEnumerable<Tab> Tabs { get; set; }
+        public virtual IEnumerable<CaseSourceOption> CaseSources { get; set; }
+    }
+
+    public class CaseSourceOption
+    {
+        public Guid Value { get; set; }
+        public string Label { get; set; }
+        public CaseSource CaseSource { get; set; }
     }
 }

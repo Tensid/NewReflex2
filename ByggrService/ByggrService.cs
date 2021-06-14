@@ -5,28 +5,51 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 using ArendeExportWS;
+using Reflex.Data;
+using Reflex.Data.Models;
 using VisaRService;
 using VisaRService.Contracts;
 using Document = VisaRService.Contracts.Document;
 
 namespace ReflexByggrService
 {
-    public class ByggrService : IVisaRService
+    public class ByggrServiceFactory
     {
-        private readonly ConfigItem _config;
-        public ByggrService(ConfigItem config)
+        private readonly ByggrSettings _settings;
+        private readonly ApplicationDbContext _context;
+
+        public ByggrServiceFactory(ApplicationDbContext context)
         {
-            _config = config;
+            _settings = context.ByggrSettings.FirstOrDefault();
+            _context = context;
         }
 
-        private static ExportArendenClient GetExportArendenClient(string serviceUrl)
+        public ByggrService Create(Guid id)
+        {
+            var byggrConfig = _context.ByggrConfigs.FirstOrDefault(x => x.Id == id);
+            return new ByggrService(_settings, byggrConfig);
+        }
+    }
+
+    public class ByggrService : IVisaRService
+    {
+        private readonly ByggrSettings _settings;
+        private readonly ByggrConfig _config;
+
+        public ByggrService(ByggrSettings settings, ByggrConfig byggrConfig)
+        {
+            _settings = settings;
+            _config = byggrConfig;
+        }
+
+        private ExportArendenClient GetExportArendenClient()
         {
             Binding binding = new BasicHttpBinding
             {
                 MaxReceivedMessageSize = int.MaxValue
             };
 
-            var uri = serviceUrl;
+            var uri = _settings.ServiceUrl;
             var address = new EndpointAddress(uri);
             var client = new ExportArendenClient(binding, address);
 
@@ -40,16 +63,16 @@ namespace ReflexByggrService
 
         public async Task<Case[]> GetCasesByEstate(string estateId)
         {
-            var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
+            var client = GetExportArendenClient();
             var arenden = client.GetRelateradeArendenByFastighetAsync(Convert.ToInt32(estateId), null, null, null,
-                _config.ByggrConfig.OnlyActiveCases ? StatusFilter.Aktiv : StatusFilter.None).Result.GetRelateradeArendenByFastighetResult;
+                _config.OnlyActiveCases ? StatusFilter.Aktiv : StatusFilter.None).Result.GetRelateradeArendenByFastighetResult;
             await client.CloseAsync();
 
-            var hideByComment = !string.IsNullOrWhiteSpace(_config.ByggrConfig.HideDocumentsWithCommentMatching);
+            var hideByComment = !string.IsNullOrWhiteSpace(_config.HideDocumentsWithCommentMatching);
 
             var cases = arenden
-                .Where(x => _config.ByggrConfig.OnlyCasesWithoutMainDecision == false || x.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true))
-                .Where(x => _config.ByggrConfig.MinCaseStartDate == null || x.ankomstDatum > _config.ByggrConfig.MinCaseStartDate)
+                .Where(x => _config.OnlyCasesWithoutMainDecision == false || x.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true))
+                .Where(x => _config.MinCaseStartDate == null || x.ankomstDatum > _config.MinCaseStartDate)
                 .Select(arende => new Case
                 {
                     Arendegrupp = arende.arendegrupp,
@@ -66,8 +89,9 @@ namespace ReflexByggrService
                     Dnr = arende.dnr,
                     Title = arende.beskrivning,
                     CaseSource = "ByggR",
+                    CaseSourceId = _config.Id,
                     Date = arende.ankomstDatum,
-                    UnavailableDueToSecrecy = _config.ByggrConfig.HideCasesWithSecretOccurences && arende.handelseLista.Any(x => x.sekretess),
+                    UnavailableDueToSecrecy = _config.HideCasesWithSecretOccurences && arende.handelseLista.Any(x => x.sekretess),
                     CaseWithoutMainDecision = arende.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true)
                 }).ToArray();
 
@@ -76,7 +100,7 @@ namespace ReflexByggrService
 
         public async Task<Case> GetCase(string id)
         {
-            var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
+            var client = GetExportArendenClient();
             try
             {
                 var arende = await client.GetArendeAsync(id);
@@ -89,7 +113,8 @@ namespace ReflexByggrService
                     Dnr = arende?.dnr,
                     Title = arende?.beskrivning,
                     Fastighetsbeteckning = string.Join(", ", arende.fastighetLista.Select(x => x.fastighetsbeteckning)),
-                    CaseSource = "ByggR"
+                    CaseSource = "ByggR",
+                    CaseSourceId = _config.Id
                 };
             }
             catch (Exception)
@@ -100,28 +125,28 @@ namespace ReflexByggrService
 
         public async Task<Occurence[]> GetOccurencesByCase(string caseId)
         {
-            var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
+            var client = GetExportArendenClient();
             var arende = client.GetArendeAsync(caseId).Result;
             var handlingTyper = client.GetHandlingTyperAsync(StatusFilter.None).Result;
             await client.CloseAsync();
 
-            var hideByComment = !string.IsNullOrWhiteSpace(_config.ByggrConfig.HideDocumentsWithCommentMatching);
+            var hideByComment = !string.IsNullOrWhiteSpace(_config.HideDocumentsWithCommentMatching);
 
             return arende.handelseLista
-                .Where(handelse => _config.ByggrConfig.OccurenceTypes == null || !_config.ByggrConfig.OccurenceTypes.Any() || _config.ByggrConfig.OccurenceTypes.Contains(handelse.handelsetyp))
+                .Where(handelse => _config.OccurenceTypes?.Any() != true || _config.OccurenceTypes.Contains(handelse.handelsetyp))
                 .Where(handelse => !handelse.makulerad)
-                .Where(handelse => _config.ByggrConfig.WorkingMaterial || handelse.arbetsmaterial == false)
+                .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
                 .Select(handelse => new Occurence
                 {
                     Documents = handelse.sekretess ? new Document[0] : handelse.handlingLista
-                        .Where(handling => (!_config.ByggrConfig?.DocumentTypes?.Any() ?? true) ||
-                            (_config.ByggrConfig?.DocumentTypes?.Contains(handling.typ) ?? true))
-                        .Where(handling => (_config.ByggrConfig?.WorkingMaterial ?? false) || !ContainsWorkingMaterial(handling.status))
+                        .Where(handling => (!_config?.DocumentTypes?.Any() ?? true) ||
+                            (_config?.DocumentTypes?.Contains(handling.typ) ?? true))
+                        .Where(handling => (_config?.WorkingMaterial ?? false) || !ContainsWorkingMaterial(handling.status))
                         .Select(handling => new Document
                         {
                             DocLinkId = (handling.docId == null ||
                                          (hideByComment &&
-                                         (handelse.anteckning?.Contains(_config.ByggrConfig.HideDocumentsWithCommentMatching) ?? false))
+                                         (handelse.anteckning?.Contains(_config.HideDocumentsWithCommentMatching) ?? false))
                                 ? "-1"
                                 : handling.docId).ToString(CultureInfo.InvariantCulture),
                             Title = handlingTyper.FirstOrDefault(x => x.Typ == handling.typ)?.Beskrivning ?? handling.docName ?? "Dokument (namn saknas)"
@@ -142,12 +167,12 @@ namespace ReflexByggrService
 
         public async Task<CasePerson[]> GetPersonsByCase(string caseId)
         {
-            var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
+            var client = GetExportArendenClient();
             var arende = client.GetArendeAsync(caseId).Result;
             await client.CloseAsync();
 
             var arenden = arende.intressentLista
-                .Where(p => p.rollLista == null || _config.ByggrConfig.PersonRoles == null || !_config.ByggrConfig.PersonRoles.Any() || p.rollLista.Any(roll => _config.ByggrConfig.PersonRoles.Contains(roll)))
+                .Where(p => _config.PersonRoles?.Any() != true || p.rollLista == null || p.rollLista.Any(roll => _config.PersonRoles.Contains(roll)))
                 .Select(p => new CasePerson
                 {
                     FullName = p.namn,
@@ -162,10 +187,10 @@ namespace ReflexByggrService
 
         public async Task<Preview> GetPreviewByCase(string caseId)
         {
-            var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
+            var client = GetExportArendenClient();
             var arende = await client.GetArendeAsync(caseId);
 
-            var hideByComment = !string.IsNullOrWhiteSpace(_config.ByggrConfig.HideDocumentsWithCommentMatching);
+            var hideByComment = !string.IsNullOrWhiteSpace(_config.HideDocumentsWithCommentMatching);
             var preview = new Preview
             {
                 Arendegrupp = arende.arendegrupp,
@@ -179,7 +204,7 @@ namespace ReflexByggrService
                 Dnr = arende.dnr,
                 Fastighetsbeteckning = string.Join(", ", arende.fastighetLista.Select(x => x.fastighetsbeteckning)),
                 Persons = arende.intressentLista
-                        .Where(p => p.rollLista == null || _config.ByggrConfig.PersonRoles == null || !_config.ByggrConfig.PersonRoles.Any() || p.rollLista.Any(roll => _config.ByggrConfig.PersonRoles.Contains(roll)))
+                        .Where(p => _config.PersonRoles?.Any() != true || p.rollLista == null || p.rollLista.Any(roll => _config.PersonRoles.Contains(roll)))
                         .Select(p => new CasePerson
                         {
                             FullName = p.namn,
@@ -190,17 +215,17 @@ namespace ReflexByggrService
                             PostNr = p.postNr
                         }).ToArray(),
                 Handelser = arende.handelseLista
-                        .Where(handelse => _config.ByggrConfig.OccurenceTypes == null || !_config.ByggrConfig.OccurenceTypes.Any() || _config.ByggrConfig.OccurenceTypes.Contains(handelse.handelsetyp))
+                        .Where(handelse => _config.OccurenceTypes?.Any() != true || _config.OccurenceTypes.Contains(handelse.handelsetyp))
                         .Where(handelse => !handelse.makulerad)
-                        .Where(handelse => _config.ByggrConfig.WorkingMaterial || handelse.arbetsmaterial == false)
+                        .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
                         .Select(handelse => new Handelse
                         {
                             Documents = handelse.sekretess ? new Document[0] : handelse.handlingLista
-                                .Where(handling => !(_config.ByggrConfig?.DocumentTypes?.Any() ?? false) || _config.ByggrConfig.DocumentTypes.Contains(handling.typ))
-                                .Where(handling => _config.ByggrConfig.WorkingMaterial || !ContainsWorkingMaterial(handling.status))
+                                .Where(handling => !(_config?.DocumentTypes?.Any() ?? false) || _config.DocumentTypes.Contains(handling.typ))
+                                .Where(handling => _config.WorkingMaterial || !ContainsWorkingMaterial(handling.status))
                                 .Select(handling => new Document
                                 {
-                                    DocLinkId = (handling.docId == null || (hideByComment && (handelse.anteckning?.Contains(_config.ByggrConfig.HideDocumentsWithCommentMatching) ?? false)) ? "-1" : handling.docId).ToString(CultureInfo.InvariantCulture),
+                                    DocLinkId = (handling.docId == null || (hideByComment && (handelse.anteckning?.Contains(_config.HideDocumentsWithCommentMatching) ?? false)) ? "-1" : handling.docId).ToString(CultureInfo.InvariantCulture),
                                     Title = handling.docName ?? "Dokument (namn saknas)"
                                 }).ToArray(),
                             Arrival = handelse.startDatum,
@@ -219,7 +244,7 @@ namespace ReflexByggrService
 
         public async Task<PhysicalDocument> GetDocument(string id)
         {
-            var client = GetExportArendenClient(_config.ByggrConfig.ServiceUrl);
+            var client = GetExportArendenClient();
             var doc = await client.GetDocumentAsync(id);
 
             var rdoc = new PhysicalDocument

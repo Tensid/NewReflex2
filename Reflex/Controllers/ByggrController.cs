@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Reflex.Data;
-using Reflex.Models;
+using Reflex.Data.Models;
+using Reflex.Services;
 
 namespace Reflex.Controllers
 {
@@ -15,10 +16,12 @@ namespace Reflex.Controllers
     public class ByggrController : ControllerBase
     {
         private readonly ApplicationDbContext _applicationDbContext;
+        private readonly IRepository _repository;
 
-        public ByggrController(ApplicationDbContext applicationDbContext)
+        public ByggrController(ApplicationDbContext applicationDbContext, IRepository repository)
         {
             _applicationDbContext = applicationDbContext;
+            _repository = repository;
         }
 
         [HttpGet]
@@ -36,14 +39,21 @@ namespace Reflex.Controllers
         [HttpPost]
         public async Task Post(ByggrConfig byggrConfig)
         {
-            await _applicationDbContext.ByggrConfigs.AddAsync(byggrConfig);
-            await _applicationDbContext.SaveChangesAsync();
+            await _repository.CreateByggr(byggrConfig);
         }
 
         [HttpPut]
         public async Task Put(ByggrConfig byggrConfig)
         {
             _applicationDbContext.ByggrConfigs.Update(byggrConfig);
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task Delete(Guid id)
+        {
+            var config = _applicationDbContext.ByggrConfigs.FirstOrDefault(x => x.Id == id);
+            _applicationDbContext.ByggrConfigs.Remove(config);
             await _applicationDbContext.SaveChangesAsync();
         }
     }

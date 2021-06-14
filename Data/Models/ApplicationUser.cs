@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Reflex.Models
+namespace Reflex.Data.Models
 {
     public class ApplicationUser : IdentityUser
     {

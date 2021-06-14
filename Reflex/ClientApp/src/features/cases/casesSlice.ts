@@ -44,7 +44,7 @@ export const fetchCasesAsync = (data: SearchResult): AppThunk => async dispatch 
       if (data.type === 'Fastighet' || data.type === 'Adress')
         cases = await getCases(data.value);
       else
-        cases = await getCase(data.value, data.source as CaseSource);
+        cases = await getCase(data.value, data.source as CaseSource, data?.caseSourceId);
       dispatch(getCasesSuccess(cases));
       dispatch(decrease());
     }

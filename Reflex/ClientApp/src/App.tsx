@@ -7,6 +7,7 @@ import Cases from './Cases';
 import Configs from './Configs';
 import { Layout } from './Layout';
 import ManageConfigs from './ManageConfigs';
+import ManageSystemSettings from './ManageSystemSettings';
 import ManageUsers from './ManageUsers';
 import Map from './Map';
 import Population from './Population';
@@ -73,6 +74,7 @@ function App() {
         <AuthorizeRoute path='/property' component={() => config ? <Property /> : <Configs />} />
         <AuthorizeRoute path='/manage-users' component={() => <ManageUsers />} />
         <AuthorizeRoute path='/manage-configs' component={() => <ManageConfigs />} />
+        <AuthorizeRoute path='/system-settings' component={() => <ManageSystemSettings />} />
         <AuthorizeRoute path='/about' component={() => <About />} />
         {!config && <AuthorizeRoute path='/map' component={() => <Configs />} />}
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />

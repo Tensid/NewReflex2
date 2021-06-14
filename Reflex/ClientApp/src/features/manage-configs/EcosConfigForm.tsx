@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { updateEcosConfig } from '../../api/api';
-import PasswordInput from './PasswordInput';
-import TextInput from './TextInput';
+import { createEcosConfig, deleteEcosConfig, updateEcosConfig } from '../../api/api';
+import TextInput from '../common/forms/TextInput';
 
-const EcosConfigForm = ({ formData, hideActiveForm }: any) => {
+const EcosConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: any) => {
   const { register, handleSubmit, reset } =
     useForm({
       defaultValues: { formData }
@@ -15,9 +14,16 @@ const EcosConfigForm = ({ formData, hideActiveForm }: any) => {
   }, [formData, reset]);
 
   const onSubmit = async (data: any) => {
-    data.id = formData.id;
-    data.configId = formData.configId;
-    await updateEcosConfig(data);
+    if (edit) {
+      data.id = formData.id;
+      await updateEcosConfig(data);
+    }
+    else {
+      data.id = undefined;
+      await createEcosConfig(data);
+    }
+
+    fetchAll();
     hideActiveForm();
   };
 
@@ -27,10 +33,21 @@ const EcosConfigForm = ({ formData, hideActiveForm }: any) => {
       <div className="row">
         <div className="col">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <TextInput defaultValue={formData?.serviceUrl} name="serviceUrl" label="Service URL" required register={register} />
-            <TextInput defaultValue={formData?.username} name="username" label="Användarnamn" register={register} />
-            <PasswordInput defaultValue={formData?.password} name="password" label="Lösenord" register={register} />
+            <TextInput name="name" label="Namn" required register={register} />
             <button className="btn btn-primary" type="submit">Spara</button>
+            {edit &&
+              <button
+                className="btn btn-primary ml-2"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  await deleteEcosConfig(formData.id);
+                  fetchAll();
+                  hideActiveForm();
+                }}
+              >
+                Ta bort
+              </button>
+            }
           </form>
         </div>
       </div>

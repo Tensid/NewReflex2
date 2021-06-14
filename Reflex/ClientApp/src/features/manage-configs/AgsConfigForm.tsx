@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { updateAgsConfig } from '../../api/api';
-import CheckboxInput from './CheckboxInput';
-import PasswordInput from './PasswordInput';
-import TextInput from './TextInput';
+import { createAgsConfig, deleteAgsConfig, updateAgsConfig } from '../../api/api';
+import CheckboxInput from '../common/forms/CheckboxInput';
+import PasswordInput from '../common/forms/PasswordInput';
+import TextInput from '../common/forms/TextInput';
 
-const AgsConfigForm = ({ formData, hideActiveForm }: any) => {
+const AgsConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: any) => {
   const { register, handleSubmit, reset } =
     useForm({
       defaultValues: { formData }
@@ -16,9 +16,16 @@ const AgsConfigForm = ({ formData, hideActiveForm }: any) => {
   }, [formData, reset]);
 
   const onSubmit = async (data: any) => {
-    data.id = formData.id;
-    data.configId = formData.configId;
-    await updateAgsConfig(data);
+    if (edit) {
+      data.id = formData.id;
+      await updateAgsConfig(data);
+    }
+    else {
+      data.id = undefined;
+      await createAgsConfig(data);
+    }
+
+    fetchAll();
     hideActiveForm();
   };
 
@@ -28,6 +35,7 @@ const AgsConfigForm = ({ formData, hideActiveForm }: any) => {
       <div className="row">
         <div className="col">
           <form onSubmit={handleSubmit(onSubmit)}>
+            <TextInput name="name" label="Namn" required register={register} />
             <TextInput name="username" label="Användarnamn" register={register} />
             <PasswordInput name="password" label="Lösenord" register={register} />
             <TextInput name="instance" label="Instans" register={register} />
@@ -37,8 +45,20 @@ const AgsConfigForm = ({ formData, hideActiveForm }: any) => {
             <TextInput name="documentPattern" label="Mall för handlingstext" register={register} />
             <TextInput name="dateField" label="Datumfält" register={register} />
             <CheckboxInput name="estateNameSearch" label="Sökning på fastighetsbeteckning" register={register} />
-            <TextInput defaultValue={formData?.serviceUrl} name="ServiceUrl" label="Service URL" register={register} />
             <button className="btn btn-primary" type="submit">Spara</button>
+            {edit &&
+              <button
+                className="btn btn-primary ml-2"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  await deleteAgsConfig(formData.id);
+                  fetchAll();
+                  hideActiveForm();
+                }}
+              >
+                Ta bort
+              </button>
+            }
           </form>
         </div>
       </div>

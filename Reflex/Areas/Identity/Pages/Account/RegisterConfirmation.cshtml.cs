@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Reflex.Models;
+using Reflex.Data.Models;
 
 namespace Reflex.Areas.Identity.Pages.Account
 {

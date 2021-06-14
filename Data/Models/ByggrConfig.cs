@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace Reflex.Models
+namespace Reflex.Data.Models
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum CaseTab
@@ -17,8 +17,9 @@ namespace Reflex.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid Id { get; set; }
-        [Required]
-        public Guid ConfigId { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Config> Configs { get; set; }
+        public string Name { get; set; }
         public string[] DocumentTypes { get; set; }
         public string[] OccurenceTypes { get; set; }
         public string[] PersonRoles { get; set; }
@@ -29,6 +30,5 @@ namespace Reflex.Models
         public bool OnlyCasesWithoutMainDecision { get; set; }
         public bool OnlyActiveCases { get; set; }
         public DateTime? MinCaseStartDate { get; set; }
-        public string ServiceUrl { get; set; }
     }
 }

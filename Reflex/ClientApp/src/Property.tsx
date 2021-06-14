@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { Config, SearchResult, getOwners } from './api/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { getOwners } from './api/api';
 import { RootState } from './app/store';
 import DataTable from './features/data-table/DataTable';
+import { fetchSystemSettings } from './features/system-settings/systemSettingsSlice';
 
 interface LinkButton {
   displayName: string;
@@ -42,36 +43,39 @@ const headers = [
   'POSTORT'
 ];
 
-interface PropertyProps {
-  config: Config;
-  searchResult: SearchResult;
-}
-
-const Property = ({ config, searchResult }: PropertyProps) => {
+const Property = () => {
   const [count, setCount] = useState(0);
   const [linkButtons, setLinkButtons] = useState<LinkButton[]>([]);
+  const fbWebbSettings = useSelector((state: RootState) => state.systemSettings.fbWebbSettings);
+  const searchResult = useSelector((state: RootState) => state.searchResult);
   const isValid = searchResult.value && (searchResult.type === 'Fastighet' || searchResult.type === 'Adress');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!fbWebbSettings)
+      dispatch(fetchSystemSettings());
+  }, [fbWebbSettings]);
 
   useEffect(() => {
     setLinkButtons([
       {
         displayName: 'Fastighetsrapport',
-        url: config?.fbWebbFastighetUrl ? config.fbWebbFastighetUrl + searchResult.value : ""
+        url: fbWebbSettings?.fbWebbFastighetUrl ? fbWebbSettings.fbWebbFastighetUrl + searchResult.value : ''
       },
       {
         displayName: 'Fastighetsrapport med val',
-        url: config?.fbWebbFastighetUsrUrl ? config.fbWebbFastighetUsrUrl + searchResult.value : ""
+        url: fbWebbSettings?.fbWebbFastighetUsrUrl ? fbWebbSettings.fbWebbFastighetUsrUrl + searchResult.value : ''
       },
       {
         displayName: 'Byggnadsrapport',
-        url: config?.fbWebbByggnadUrl ? config.fbWebbByggnadUrl + searchResult.value : ""
+        url: fbWebbSettings?.fbWebbByggnadUrl ? fbWebbSettings.fbWebbByggnadUrl + searchResult.value : ''
       },
       {
         displayName: 'Byggnadsrapport med val',
-        url: config?.fbWebbByggnadUsrUrl ? config.fbWebbByggnadUsrUrl + searchResult.value : ""
+        url: fbWebbSettings?.fbWebbByggnadUsrUrl ? fbWebbSettings.fbWebbByggnadUsrUrl + searchResult.value : ''
       }
     ]);
-  }, [config, searchResult.value]);
+  }, [fbWebbSettings, searchResult.value]);
 
   return (
     <>
@@ -81,12 +85,4 @@ const Property = ({ config, searchResult }: PropertyProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState, _ownProps: any) => ({
-  searchResult: state.searchResult,
-  config: state.config
-});
-
-export default connect(
-  mapStateToProps,
-  null
-)(Property);
+export default Property;

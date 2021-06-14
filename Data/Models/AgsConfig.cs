@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Reflex.Models
+namespace Reflex.Data.Models
 {
     public class AgsConfig
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid Id { get; set; }
-        public Guid ConfigId { get; set; }
+        public virtual ICollection<Config> Configs { get; set; }
+        public string Name { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Instance { get; set; }
@@ -19,6 +21,5 @@ namespace Reflex.Models
         public string DocumentPattern { get; set; }
         public string DateField { get; set; }
         public bool EstateNameSearch { get; set; }
-        public string ServiceUrl { get; set; }
     }
 }

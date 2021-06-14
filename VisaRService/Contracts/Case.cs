@@ -20,6 +20,7 @@ namespace VisaRService.Contracts
         public string HandlaggareEfternamn { get; set; }
         public string HandlaggareFornamn { get; set; }
         public string HandlaggareSignatur { get; set; }
+        public Guid CaseSourceId { get; set; }
         public bool? CaseWithoutMainDecision { get; set; }
     }
 }

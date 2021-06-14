@@ -5,6 +5,7 @@ import configReducer from '../features/configs/configsSlice';
 import mapSettingsReducer from '../features/map/mapSettingsSlice';
 import searchResultReducer from '../features/search-result/searchResultSlice';
 import spinnerReducer from '../features/spinner/spinnerSlice';
+import systemSettingsReducer from '../features/system-settings/systemSettingsSlice';
 import userSettingsReducer from '../features/user-settings/userSettingsSlice';
 
 const setConfigIdMiddleWare: Middleware = store => next => action => {
@@ -23,6 +24,7 @@ export const store = configureStore({
     mapSettings: mapSettingsReducer,
     searchResult: searchResultReducer,
     spinner: spinnerReducer,
+    systemSettings: systemSettingsReducer,
     userSettings: userSettingsReducer
   },
 });

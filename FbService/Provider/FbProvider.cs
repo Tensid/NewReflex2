@@ -10,6 +10,7 @@ using FbService.QuickType.FastighetKoordinatFnr;
 using FbService.QuickType.FastighetSearchBelagenhetsadress;
 using FbService.QuickType.FastighetSearchEnkelbeteckningSorterad;
 using FbService.QuickType.FastighetSearchFranPunkt;
+using Reflex.SettingsService;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,22 +20,23 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using VisaRService.Contracts;
 using Estate = FbService.Contracts.Estate;
 
 namespace FbService.Provider
 {
-    public class FbProvider
+    public class FbProvider : IFbProvider
     {
         private readonly HttpClient _httpClient;
         private static string _userConnection;
 
-        public FbProvider(ConfigItem config)
+        public FbProvider(ISystemSettingsService systemSettingsService, HttpClient httpClient)
         {
-            var httpClient = new HttpClient { BaseAddress = new Uri(config.FbServiceUrl) };
+            var settings = systemSettingsService.GetFbSettings();
             _httpClient = httpClient;
-
-            _userConnection = $"Database={config.FbServiceDatabase}&User={config.FbServiceUser}&Password={config.FbServicePassword}";
+            if (settings == null)
+                return;
+            _httpClient.BaseAddress = new Uri(settings.FbServiceUrl);
+            _userConnection = $"Database={settings.FbServiceDatabase}&User={settings.FbServiceUser}&Password={settings.FbServicePassword}";
         }
 
         private class EstateComparer : IComparer<Estate>
@@ -168,7 +170,7 @@ namespace FbService.Provider
             return JsonSerializer.Deserialize<FastighetInfoFnr>(await response.Content.ReadAsStringAsync());
         }
 
-        internal async Task<Position> GetEstatePosition(string fnr)
+        public async Task<Position> GetEstatePosition(string fnr)
         {
             var response = await _httpClient.PostAsync($"fastighet/koordinat/fnr?{_userConnection}",
                 new StringContent($"[{fnr}]", Encoding.UTF8, "application/json-patch+json"));
@@ -181,7 +183,7 @@ namespace FbService.Provider
             };
         }
 
-        internal async Task<IEnumerable<string>> GetFnrsFromPosition(string lat, string lon, string srid, string avstand, bool completelyInside = false)
+        public async Task<IEnumerable<string>> GetFnrsFromPosition(string lat, string lon, string srid, string avstand, bool completelyInside = false)
         {
             var response = await _httpClient.GetAsync(
                 $"fastighet/search/franPunkt/{lat}/{lon}/{srid}/{avstand}?CompletelyInside={completelyInside}&{_userConnection}");
@@ -190,7 +192,7 @@ namespace FbService.Provider
             return fastighetSearchFranPunkt.Data.Select(x => x.Fnr.ToString());
         }
 
-        internal async Task<string> GetGeometryFromFnr(string fnr)
+        public async Task<string> GetGeometryFromFnr(string fnr)
         {
             var response = await _httpClient.PostAsync($"fastighet/yta/fnr?{_userConnection}",
                 new StringContent($"[{fnr}]", Encoding.UTF8, "application/json-patch+json"));
@@ -198,7 +200,7 @@ namespace FbService.Provider
             return await response.Content.ReadAsStringAsync();
         }
 
-        internal async Task<IEnumerable<KidPerson>> KidPersonsByFnr(string estateId)
+        public async Task<IEnumerable<KidPerson>> KidPersonsByFnr(string estateId)
         {
             var response = await _httpClient.GetAsync($"befolkning/search/folkbokford/fastighet/fnr/{estateId}?{_userConnection}");
             var befolkningSearch = JsonSerializer.Deserialize<BefolkningSearchFolkbokfordFastighetFnr>(await response.Content.ReadAsStringAsync());
@@ -236,7 +238,7 @@ namespace FbService.Provider
             return result;
         }
 
-        internal async Task<IEnumerable<Task<Owner>>> GetOwners(IEnumerable<string> fnrs)
+        public async Task<IEnumerable<Task<Owner>>> GetOwners(IEnumerable<string> fnrs)
         {
             var response = await _httpClient.PostAsync($"agare/search/lagfarenAgare/fastighet/fnr?{_userConnection}",
                 new StringContent(JsonSerializer.Serialize(fnrs), Encoding.UTF8, "application/json"));

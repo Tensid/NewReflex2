@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Reflex.Data;
-using Reflex.Models;
+using Reflex.Data.Models;
+using Reflex.Services;
 
 namespace Reflex.Controllers
 {
@@ -16,31 +18,38 @@ namespace Reflex.Controllers
     public class SearchController : ControllerBase
     {
         private readonly ILogger<SearchController> _logger;
-        private readonly IRepository _repository;
+        private readonly IProxyService _proxyService;
+        private readonly ApplicationDbContext _context;
+        private readonly FbService.IFbService _fbService;
 
-        public SearchController(ILogger<SearchController> logger, IRepository repository)
+        public SearchController(ILogger<SearchController> logger, IProxyService proxyService, ApplicationDbContext context, FbService.IFbService fbService)
         {
             _logger = logger;
-            _repository = repository;
+            _proxyService = proxyService;
+            _context = context;
+            _fbService = fbService;
         }
 
         public async Task<IEnumerable<SearchResult>> Get(string query, Guid configId)
         {
             var searchResults = new List<SearchResult>();
-            var config = _repository.GetConfig(configId);
 
             if (query != null && query.Length >= 3)
             {
-                var fbProxy = _repository.GetFbProxy(configId);
-                var byggrProxy = _repository.GetProxy(CaseSource.ByggR, configId);
+                var config = _context.Configs.Include(x => x.ByggrConfigs).First(x => x.Id == configId);
+                var byggrTasks = new List<Task<VisaRService.Contracts.Case>>();
 
-                var estateTask = fbProxy.SearchEstates(query);
-                var addressTask = fbProxy.SearchAddresses(query);
-                var byggrTask = (config?.CaseSources?.Contains(CaseSource.ByggR) ?? false) ? byggrProxy.GetCase(query) : null;
+                var estateTask = _fbService.SearchEstates(query);
+                var addressTask = _fbService.SearchAddresses(query);
 
                 try
                 {
-                    await Task.WhenAll(new Task[] { estateTask, addressTask, byggrTask }.Where(x => x != null));
+                    foreach (var byggrConfig in config.ByggrConfigs)
+                    {
+                        var byggrProxy = _proxyService.GetProxy(CaseSource.ByggR, byggrConfig.Id);
+                        byggrTasks.Add(byggrProxy.GetCase(query));
+                    }
+                    await Task.WhenAll(estateTask, addressTask);
                 }
                 catch
                 {
@@ -70,32 +79,53 @@ namespace Reflex.Controllers
                         Type = "Adress"
                     }));
 
-                if (byggrTask?.IsCompletedSuccessfully ?? false)
+                var byggrCases = (await Task.WhenAll(byggrTasks.Where(task => task.Status == TaskStatus.RanToCompletion)).ConfigureAwait(false))
+                    .Where(x => x != null);
+                foreach (var byggrCase in byggrCases)
                 {
-                    var awaitedByggr = await byggrTask;
-                    if (awaitedByggr != null)
-                        searchResults.Add(new SearchResult
-                        {
-                            DisplayName = awaitedByggr.CaseId,
-                            Value = awaitedByggr.CaseId,
-                            Source = "ByggR",
-                            Type = "Ärende"
-                        });
-                }
-            }
-            if (query != null && query.Length >= 1 && int.TryParse(query, out _) && (config?.CaseSources?.Contains(CaseSource.AGS) ?? false))
-            {
-                var agsProxy = _repository.GetProxy(CaseSource.AGS, configId);
-                var agsTask = agsProxy.GetCase(query);
-                var awaitedAgs = await agsTask;
-                if (awaitedAgs != null)
                     searchResults.Add(new SearchResult
                     {
-                        DisplayName = awaitedAgs.CaseId,
-                        Value = awaitedAgs.CaseId,
-                        Source = "AGS",
-                        Type = "Ärende"
+                        DisplayName = byggrCase.CaseId,
+                        Value = byggrCase.CaseId,
+                        Source = "ByggR",
+                        Type = "Ärende",
+                        CaseSourceId = byggrCase.CaseSourceId
                     });
+                }
+            }
+
+            if (query != null && query.Length >= 1 && int.TryParse(query, out _))
+            {
+                var config = _context.Configs.Include(x => x.AgsConfigs).First(x => x.Id == configId);
+                var agsTasks = new List<Task<VisaRService.Contracts.Case>>();
+
+                try
+                {
+                    foreach (var agsConfig in config.AgsConfigs)
+                    {
+                        var agsProxy = _proxyService.GetProxy(CaseSource.AGS, agsConfig.Id);
+                        agsTasks.Add(agsProxy.GetCase(query));
+                    }
+                    await Task.WhenAll(agsTasks);
+                }
+                catch
+                {
+                    // ignored
+                }
+
+                var agsCases = (await Task.WhenAll(agsTasks.Where(task => task.Status == TaskStatus.RanToCompletion)).ConfigureAwait(false))
+                    .Where(x => x != null);
+                foreach (var agsCase in agsCases)
+                {
+                    searchResults.Add(new SearchResult
+                    {
+                        DisplayName = agsCase.CaseId,
+                        Value = agsCase.CaseId,
+                        Source = "AGS",
+                        Type = "Ärende",
+                        CaseSourceId = agsCase.CaseSourceId
+                    });
+                }
             }
 
             return searchResults.Take(10).ToArray();
@@ -109,6 +139,7 @@ namespace Reflex.Controllers
             public string Source { get; set; }
             public string Type { get; set; }
             public string Value { get; set; }
+            public Guid CaseSourceId { get; set; }
         }
     }
 }

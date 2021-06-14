@@ -26,9 +26,10 @@ function occurenceText(occurence: Occurence) {
 interface OccurenceContentProps {
   occurenceState: TabState<Occurence[]>;
   caseSource: CaseSource;
+  caseSourceId: string;
 }
 
-const OccurenceContent = ({ occurenceState, caseSource }: OccurenceContentProps) => {
+const OccurenceContent = ({ occurenceState, caseSource, caseSourceId }: OccurenceContentProps) => {
   if (occurenceState.error)
     return <>Kunde inte hämta händelser kopplade till ärendet.</>;
   if (occurenceState.loading)
@@ -54,7 +55,7 @@ const OccurenceContent = ({ occurenceState, caseSource }: OccurenceContentProps)
                             {doc?.docLinkId === '-1' ?
                               <>{doc.title}</>
                               :
-                              <span className="px-0" onClick={() => getDocument(doc.docLinkId, caseSource)}>
+                              <span className="btn btn-link px-0" role="button" onClick={() => getDocument(doc.docLinkId, caseSource, caseSourceId)}>
                                 {doc.title}
                               </span>
                             }

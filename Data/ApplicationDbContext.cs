@@ -1,5 +1,4 @@
-﻿using Reflex.Models;
-using IdentityServer4.EntityFramework.Options;
+﻿using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -9,6 +8,10 @@ using System.Text;
 using System.Security.Cryptography;
 using System.IO;
 using System;
+using Reflex.Data.Models;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Reflex.Data
 {
@@ -25,40 +28,39 @@ namespace Reflex.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var stringArrayConverter = new ValueConverter<string[], string>(
+                v => JsonSerializer.Serialize(v, null),
+                v => JsonSerializer.Deserialize<string[]>(v, null));
+
+            var stringArrayComparer = new ValueComparer<string[]>(
+                (c1, c2) => c1.SequenceEqual(c2),
+                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                c => c.ToArray());
+
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Config>().Property(p => p.CaseSources)
-                .HasConversion(
-                    v => JsonSerializer.Serialize(v, null),
-                    v => JsonSerializer.Deserialize<List<CaseSource>>(v, null));
             modelBuilder.Entity<Config>().Property(p => p.Tabs)
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, null),
-                    v => JsonSerializer.Deserialize<List<Tab>>(v, null));
+                    v => JsonSerializer.Deserialize<List<Tab>>(v, null),
+                    new ValueComparer<ICollection<Tab>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                        c => c));
             modelBuilder.Entity<ByggrConfig>().Property(p => p.Tabs)
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, null),
-                    v => JsonSerializer.Deserialize<List<CaseTab>>(v, null));
+                    v => JsonSerializer.Deserialize<List<CaseTab>>(v, null),
+                    new ValueComparer<ICollection<CaseTab>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                        c => c));
             modelBuilder.Entity<ByggrConfig>().Property(p => p.DocumentTypes)
-                .HasConversion(
-                    v => JsonSerializer.Serialize(v, null),
-                    v => JsonSerializer.Deserialize<string[]>(v, null));
+                .HasConversion(stringArrayConverter, stringArrayComparer);
             modelBuilder.Entity<ByggrConfig>().Property(p => p.OccurenceTypes)
-                .HasConversion(
-                    v => JsonSerializer.Serialize(v, null),
-                    v => JsonSerializer.Deserialize<string[]>(v, null));
+                .HasConversion(stringArrayConverter, stringArrayComparer);
             modelBuilder.Entity<ByggrConfig>().Property(p => p.PersonRoles)
-                .HasConversion(
-                    v => JsonSerializer.Serialize(v, null),
-                    v => JsonSerializer.Deserialize<string[]>(v, null));
-            modelBuilder.Entity<Config>().Property(p => p.FbServicePassword)
-                .HasConversion(
-                    v => Encrypt(v),
-                    v => Decrypt(v));
+                .HasConversion(stringArrayConverter, stringArrayComparer);
             modelBuilder.Entity<AgsConfig>().Property(p => p.Password)
-                .HasConversion(
-                    v => Encrypt(v),
-                    v => Decrypt(v));
-            modelBuilder.Entity<EcosConfig>().Property(p => p.Password)
                 .HasConversion(
                     v => Encrypt(v),
                     v => Decrypt(v));
@@ -66,12 +68,24 @@ namespace Reflex.Data
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, null),
                     v => JsonSerializer.Deserialize<Tab>(v, null));
+            modelBuilder.Entity<EcosSettings>().Property(p => p.Password)
+                .HasConversion(
+                    v => Encrypt(v),
+                    v => Decrypt(v));
+            modelBuilder.Entity<FbSettings>().Property(p => p.FbServicePassword)
+                .HasConversion(
+                    v => Encrypt(v),
+                    v => Decrypt(v));
         }
 
         public DbSet<Config> Configs { get; set; }
         public DbSet<AgsConfig> AgsConfigs { get; set; }
         public DbSet<ByggrConfig> ByggrConfigs { get; set; }
         public DbSet<EcosConfig> EcosConfigs { get; set; }
+        public DbSet<AgsSettings> AgsSettings { get; set; }
+        public DbSet<ByggrSettings> ByggrSettings { get; set; }
+        public DbSet<EcosSettings> EcosSettings { get; set; }
+        public DbSet<FbSettings> FbSettings { get; set; }
 
         public string Encrypt(string plainText)
         {

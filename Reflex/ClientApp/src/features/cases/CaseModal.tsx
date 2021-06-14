@@ -36,16 +36,16 @@ mappedCaseTabs.set('Persons', 'Intressenter');
 mappedCaseTabs.set('Archive', 'Arkiverade handlingar');
 
 function fetchTabData(setTabState: (tabState: TabState<any>) => void, tabData: any, fetchFunction: () => any) {
-  try {
-    (async () => {
-      setTabState({ ...tabData, loading: true });
+  (async () => {
+    try {
+      setTabState({ value: undefined, loading: true, error: undefined });
       const result = await fetchFunction();
       setTabState({ value: result, loading: false, error: undefined });
-    })();
-  }
-  catch (e) {
-    setTabState({ value: undefined, loading: false, error: e.code });
-  }
+    }
+    catch (e) {
+      setTabState({ value: undefined, loading: false, error: e });
+    }
+  })();
 }
 
 const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
@@ -53,7 +53,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
   const [occurencesData, setOccurences] = useState<TabState<Occurence[]>>({ ...initTabState, tab: 'Occurences' });
   const [personsData, setPersons] = useState<TabState<CasePerson[]>>({ ...initTabState, tab: 'Persons' });
   const [archivedDocumentsData, setArchivedDocuments] = useState<TabState<ArchivedDocument[]>>({ ...initTabState, tab: 'Archive' });
-  const { caseSource, dnr, caseId, title } = modalData;
+  const { caseSource, dnr, caseId, title, caseSourceId } = modalData;
 
   const availableTabs = availableCaseDetailsTabs.get(caseSource)!;
 
@@ -61,13 +61,13 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
     const id = caseSource === 'ByggR' ? dnr : caseId;
     availableTabs.forEach((tab) => {
       if (tab === 'Preview')
-        fetchTabData(setPreview, previewData, () => getPreview(id, caseSource));
+        fetchTabData(setPreview, previewData, () => getPreview(id, caseSource, caseSourceId));
       if (tab === 'Occurences')
-        fetchTabData(setOccurences, occurencesData, () => getOccurences(id, caseSource));
+        fetchTabData(setOccurences, occurencesData, () => getOccurences(id, caseSource, caseSourceId));
       if (tab === 'Persons')
-        fetchTabData(setPersons, personsData, () => getCasePersons(id, caseSource));
+        fetchTabData(setPersons, personsData, () => getCasePersons(id, caseSource, caseSourceId));
       if (tab === 'Archive')
-        fetchTabData(setArchivedDocuments, archivedDocumentsData, () => getArchivedDocuments(id, caseSource));
+        fetchTabData(setArchivedDocuments, archivedDocumentsData, () => getArchivedDocuments(id, caseSource, caseSourceId));
     });
   }, [dnr, caseSource]);
 
@@ -85,7 +85,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
               </h3>
               {{
                 'Preview': <PreviewContent previewState={previewData} />,
-                'Occurences': <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} />,
+                'Occurences': <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} caseSourceId={caseSourceId} />,
                 'Persons': <PersonsContent personsState={personsData} />,
                 'Archive': <Archive archiveState={archivedDocumentsData} caseSource={caseSource} />
               }[availableTabs![0]]}
@@ -101,7 +101,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
                   if (availableTabs[i] === 'Occurences')
                     return (
                       <Tab eventKey={tab} title="Händelser">
-                        <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} />
+                        <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} caseSourceId={caseSourceId} />
                       </Tab>);
                   if (availableTabs[i] === 'Persons')
                     return (

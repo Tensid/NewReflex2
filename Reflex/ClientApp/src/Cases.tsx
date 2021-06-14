@@ -20,6 +20,7 @@ export interface ModalData {
   caseId: string;
   caseSource: CaseSource;
   title: string;
+  caseSourceId: string;
 }
 
 type SortBy = 'TITLE_ASC' | 'TITLE_DESC' | 'DATE_ASC' | 'DATE_DESC' | 'DNR_ASC' | 'DNR_DESC';

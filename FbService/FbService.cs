@@ -7,11 +7,11 @@ namespace FbService
 {
     public class FbService : IFbService
     {
-        private readonly FbProvider _fb;
+        private readonly IFbProvider _fb;
 
-        public FbService(VisaRService.Contracts.ConfigItem config)
+        public FbService(IFbProvider fbProvider)
         {
-            _fb = new FbProvider(config);
+            _fb = fbProvider;
         }
 
         public Task<Estate> GetEstate(string estateId)

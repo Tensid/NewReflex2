@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Reflex.Data;
-using Reflex.Models;
+using Reflex.Data.Models;
 
 namespace Reflex.Controllers
 {
@@ -36,7 +36,8 @@ namespace Reflex.Controllers
         [HttpPost]
         public async Task Post(EcosConfig ecosConfig)
         {
-            await _applicationDbContext.EcosConfigs.AddAsync(ecosConfig);
+            ecosConfig.Id = Guid.NewGuid();
+            await _applicationDbContext.AddAsync(ecosConfig);
             await _applicationDbContext.SaveChangesAsync();
         }
 
@@ -44,6 +45,14 @@ namespace Reflex.Controllers
         public async Task Put(EcosConfig ecosConfig)
         {
             _applicationDbContext.EcosConfigs.Update(ecosConfig);
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task Delete(Guid id)
+        {
+            var config = _applicationDbContext.EcosConfigs.FirstOrDefault(x => x.Id == id);
+            _applicationDbContext.EcosConfigs.Remove(config);
             await _applicationDbContext.SaveChangesAsync();
         }
     }

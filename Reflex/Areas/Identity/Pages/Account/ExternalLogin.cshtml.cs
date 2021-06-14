@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using Reflex.Models;
+using Reflex.Data.Models;
 
 namespace Reflex.Areas.Identity.Pages.Account
 {
