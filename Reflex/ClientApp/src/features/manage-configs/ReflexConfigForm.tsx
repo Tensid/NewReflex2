@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { createConfig, deleteConfig, Tab, updateConfig } from '../../api/api';
+import { CaseSourceOption, ConfigFormData, createConfig, deleteConfig, Tab, updateConfig } from '../../api/api';
 import SelectInput from '../common/forms/SelectInput';
 import TextInput from '../common/forms/TextInput';
 
@@ -11,12 +11,20 @@ const tabOptions = [
   { value: Tab.Property, label: 'Fastighet' }
 ];
 
-const ConfigForm = ({ edit, formData, caseSourceOptions, fetchAll, hideActiveForm }: any) => {
+export interface ConfigFormProps {
+  edit: boolean;
+  formData: ConfigFormData;
+  caseSourceOptions: CaseSourceOption[];
+  fetchAll: () => void;
+  hideActiveForm: () => void;
+}
+
+const ConfigForm = ({ edit, formData, caseSourceOptions, fetchAll, hideActiveForm }: ConfigFormProps) => {
   const { register, handleSubmit, control, reset } =
     useForm({
       defaultValues: {
         ...formData,
-        tabs: formData?.tabs?.map((x: any) => ({ value: x, label: tabOptions.find((t: any) => t.value === x)!.label })),
+        tabs: formData?.tabs?.map((x) => ({ value: x, label: tabOptions.find((t) => t.value === x)!.label })),
         caseSources: formData?.caseSources || []
       }
     });
@@ -24,7 +32,7 @@ const ConfigForm = ({ edit, formData, caseSourceOptions, fetchAll, hideActiveFor
   useEffect(() => {
     reset({
       ...formData,
-      tabs: formData?.tabs?.map((x: any) => ({ value: x, label: tabOptions.find((t: any) => t.value === x)!.label })),
+      tabs: formData?.tabs?.map((x) => ({ value: x, label: tabOptions.find((t) => t.value === x)!.label })),
       caseSources: formData?.caseSources || []
     });
   }, [formData, reset]);

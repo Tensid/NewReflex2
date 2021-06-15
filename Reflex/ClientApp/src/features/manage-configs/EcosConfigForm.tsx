@@ -1,12 +1,20 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { createEcosConfig, deleteEcosConfig, updateEcosConfig } from '../../api/api';
+import { EcosConfig, createEcosConfig, deleteEcosConfig, updateEcosConfig } from '../../api/api';
 import TextInput from '../common/forms/TextInput';
 
-const EcosConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: any) => {
+
+export interface EcosConfigFormProps {
+  edit: boolean;
+  formData: EcosConfig;
+  fetchAll: () => void;
+  hideActiveForm: () => void;
+}
+
+const EcosConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: EcosConfigFormProps) => {
   const { register, handleSubmit, reset } =
     useForm({
-      defaultValues: { formData }
+      defaultValues: { ...formData }
     });
 
   useEffect(() => {

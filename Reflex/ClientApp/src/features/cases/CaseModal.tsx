@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Tab, Tabs } from 'react-bootstrap';
 import { ModalData } from '../../Cases';
-import { ArchivedDocument, CasePerson, CaseSource, Occurence, Preview, getArchivedDocuments, getCasePersons, getOccurences, getPreview } from '../../api/api';
+import { ArchivedDocument, CasePerson, CaseSource, CaseTab, Occurence, Preview, getArchivedDocuments, getCasePersons, getOccurences, getPreview } from '../../api/api';
 import Archive from './ArchiveContent';
 import OccurenceContent from './OccurenceContent';
 import PersonsContent from './PersonsContent';
@@ -12,8 +12,6 @@ interface CaseProps {
   toggleShow: () => void;
   modalData: ModalData;
 }
-
-type CaseTab = 'Preview' | 'Occurences' | 'Persons' | 'Archive';
 
 export interface TabState<T> {
   value: T | undefined;

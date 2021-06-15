@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Nav, NavDropdown, Row, Tab } from 'react-bootstrap';
-import { CaseSourceOption, Config, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getEcosConfig, getEcosConfigs, getFormData } from './api/api';
+import { AgsConfig, ByggrConfig, CaseSourceOption, Config, EcosConfig, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getEcosConfig, getEcosConfigs, getFormData } from './api/api';
 import AgsConfigForm from './features/manage-configs/AgsConfigForm';
 import ByggrConfigForm from './features/manage-configs/ByggrConfigForm';
 import EcosConfigForm from './features/manage-configs/EcosConfigForm';
 import ReflexConfigForm from './features/manage-configs/ReflexConfigForm';
 
 const ManageConfigs = () => {
-  const [agsConfigs, setAgsConfigs] = useState<any[]>([]);
-  const [byggrConfigs, setByggrConfigs] = useState<any[]>([]);
-  const [ecosConfigs, setEcosConfigs] = useState<any[]>([]);
+  const [agsConfigs, setAgsConfigs] = useState<AgsConfig[]>([]);
+  const [byggrConfigs, setByggrConfigs] = useState<ByggrConfig[]>([]);
+  const [ecosConfigs, setEcosConfigs] = useState<EcosConfig[]>([]);
   const [reflexConfigs, setReflexConfigs] = useState<Config[]>([]);
   const [agsFormData, setAgsFormData] = useState<any>();
   const [byggrFormData, setByggrFormData] = useState<any>();

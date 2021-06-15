@@ -4,7 +4,12 @@ import { updateMiscSettings } from '../../api/settings/settingsApi';
 import TextInput from '../common/forms/TextInput';
 import TextareaInput from '../common/forms/TextareaInput';
 
-const MiscSettingsForm = ({ formData, setActiveKey }: any) => {
+export interface MiscSettingsFormProps {
+  formData: any;
+  setActiveKey: (key: string) => void;
+}
+
+const MiscSettingsForm = ({ formData, setActiveKey }: MiscSettingsFormProps) => {
   const { register, handleSubmit, reset } =
     useForm({
       defaultValues: { formData }

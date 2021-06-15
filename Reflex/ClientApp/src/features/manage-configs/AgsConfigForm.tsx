@@ -1,14 +1,21 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { createAgsConfig, deleteAgsConfig, updateAgsConfig } from '../../api/api';
+import { AgsConfig, createAgsConfig, deleteAgsConfig, updateAgsConfig } from '../../api/api';
 import CheckboxInput from '../common/forms/CheckboxInput';
 import PasswordInput from '../common/forms/PasswordInput';
 import TextInput from '../common/forms/TextInput';
 
-const AgsConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: any) => {
+export interface AgsConfigFormProps {
+  edit: boolean;
+  formData: AgsConfig;
+  fetchAll: () => void;
+  hideActiveForm: () => void;
+}
+
+const AgsConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: AgsConfigFormProps) => {
   const { register, handleSubmit, reset } =
     useForm({
-      defaultValues: { formData }
+      defaultValues: { ...formData }
     });
 
   useEffect(() => {

@@ -3,7 +3,12 @@ import { useForm } from 'react-hook-form';
 import { updateByggrSettings } from '../../api/settings/settingsApi';
 import TextInput from '../common/forms/TextInput';
 
-const ByggrSettingsForm = ({ formData, setActiveKey }: any) => {
+export interface ByggrSettingsFormProps {
+  formData: any;
+  setActiveKey: (key: string) => void;
+}
+
+const ByggrSettingsForm = ({ formData, setActiveKey }: ByggrSettingsFormProps) => {
   const { register, handleSubmit, reset } =
     useForm({
       defaultValues: { formData }

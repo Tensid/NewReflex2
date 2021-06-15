@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { createByggrConfig, deleteByggrConfig, updateByggrConfig } from '../../api/api';
+import { ByggrConfig, createByggrConfig, deleteByggrConfig, updateByggrConfig } from '../../api/api';
 import CheckboxInput from '../common/forms/CheckboxInput';
 import DateInput from '../common/forms/DateInput';
 import SelectInput from '../common/forms/SelectInput';
@@ -11,13 +11,20 @@ const tabOptions = [
   { value: 'Persons', label: 'Intressenter' }
 ];
 
-const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: any) => {
+export interface ByggrConfigFormProps {
+  edit: boolean;
+  formData: ByggrConfig;
+  fetchAll: () => void;
+  hideActiveForm: () => void;
+}
+
+const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConfigFormProps) => {
   const minCaseStartDate = (edit && !!formData?.minCaseStartDate) ? (new Date(formData?.minCaseStartDate)).toLocaleDateString() : null;
   const { register, handleSubmit, control, reset } =
     useForm({
       defaultValues: {
         ...formData,
-        tabs: formData?.tabs?.map((x: any) => ({ value: x, label: tabOptions.find((t: any) => t.value === x)!.label })),
+        tabs: formData?.tabs?.map((x) => ({ value: x, label: tabOptions.find((t) => t.value === x)!.label })),
         minCaseStartDate
       }
     });
@@ -25,7 +32,7 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: any) => {
   useEffect(() => {
     reset({
       ...formData,
-      tabs: edit ? formData?.tabs?.map((x: any) => ({ value: x, label: tabOptions.find((t: any) => t.value === x)!.label })) : [],
+      tabs: edit ? formData?.tabs?.map((x) => ({ value: x, label: tabOptions.find((t) => t.value === x)!.label })) : [],
       minCaseStartDate
     });
   }, [formData, reset]);

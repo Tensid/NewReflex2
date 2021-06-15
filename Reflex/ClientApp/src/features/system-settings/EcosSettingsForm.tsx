@@ -4,7 +4,12 @@ import { updateEcosSettings } from '../../api/settings/settingsApi';
 import PasswordInput from '../common/forms/PasswordInput';
 import TextInput from '../common/forms/TextInput';
 
-const EcosSettingsForm = ({ formData, setActiveKey }: any) => {
+export interface EcosSettingsFormProps {
+  formData: any;
+  setActiveKey: (key: string) => void;
+}
+
+const EcosSettingsForm = ({ formData, setActiveKey }: EcosSettingsFormProps) => {
   const { register, handleSubmit, reset } =
     useForm({
       defaultValues: { formData }

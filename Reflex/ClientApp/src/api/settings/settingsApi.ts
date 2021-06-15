@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FbWebbSettings, MiscSettings } from '.';
+import { AgsSettings, ByggrSettings, EcosSettings, FbSettings, FbWebbSettings, MiscSettings } from '.';
 import authService from '../../features/api-authorization/AuthorizeService';
 
 const instance = axios.create({
@@ -25,13 +25,13 @@ export async function getFbWebbSettings() {
 
 export async function getFbSettings() {
   const url = `systemsettings/fb`;
-  const { data } = await instance.get<any>(url);
+  const { data } = await instance.get<FbSettings>(url);
   return data;
 }
 
-export async function updateFbSettings(settings: any) {
+export async function updateFbSettings(settings: FbSettings) {
   const url = `systemsettings/fb`;
-  const { data } = await instance.put<any>(url, settings);
+  const { data } = await instance.put<FbSettings>(url, settings);
   return data;
 }
 
@@ -49,36 +49,36 @@ export async function updateMiscSettings(settings: MiscSettings) {
 
 export async function getAgsSettings() {
   const url = `systemsettings/ags`;
-  const { data } = await instance.get<any>(url);
+  const { data } = await instance.get<AgsSettings>(url);
   return data;
 }
 
-export async function updateAgsSettings(agsSettings: any) {
+export async function updateAgsSettings(agsSettings: AgsSettings) {
   const url = `systemsettings/ags`;
-  const { data } = await instance.put<any>(url, agsSettings);
+  const { data } = await instance.put<AgsSettings>(url, agsSettings);
   return data;
 }
 
 export async function getByggrSettings() {
   const url = `systemsettings/byggr`;
-  const { data } = await instance.get<any>(url);
+  const { data } = await instance.get<ByggrSettings>(url);
   return data;
 }
 
-export async function updateByggrSettings(byggrSettings: any) {
+export async function updateByggrSettings(byggrSettings: ByggrSettings) {
   const url = `systemsettings/byggr`;
-  const { data } = await instance.put<any>(url, byggrSettings);
+  const { data } = await instance.put<ByggrSettings>(url, byggrSettings);
   return data;
 }
 
 export async function getEcosSettings() {
   const url = `systemsettings/ecos`;
-  const { data } = await instance.get<any>(url);
+  const { data } = await instance.get<EcosSettings>(url);
   return data;
 }
 
-export async function updateEcosSettings(ecosSettings: any) {
+export async function updateEcosSettings(ecosSettings: EcosSettings) {
   const url = `systemsettings/ecos`;
-  const { data } = await instance.put<any>(url, ecosSettings);
+  const { data } = await instance.put<EcosSettings>(url, ecosSettings);
   return data;
 }

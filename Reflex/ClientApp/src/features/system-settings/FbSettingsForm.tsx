@@ -4,7 +4,12 @@ import { updateFbSettings } from '../../api/settings/settingsApi';
 import PasswordInput from '../common/forms/PasswordInput';
 import TextInput from '../common/forms/TextInput';
 
-const FbSettingsForm = ({ formData, setActiveKey }: any) => {
+export interface FbSettingsFormProps {
+  formData: any;
+  setActiveKey: (key: string) => void;
+}
+
+const FbSettingsForm = ({ formData, setActiveKey }: FbSettingsFormProps) => {
   const { register, handleSubmit, reset } =
     useForm({
       defaultValues: { formData }

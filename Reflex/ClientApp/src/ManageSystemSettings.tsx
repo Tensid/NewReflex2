@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Nav, Row, Tab } from 'react-bootstrap';
-import { getAgsSettings, getByggrSettings, getEcosSettings, getFbSettings, getMiscSettings } from './api/settings';
+import { AgsSettings, ByggrSettings, EcosSettings, FbSettings, MiscSettings, getAgsSettings, getByggrSettings, getEcosSettings, getFbSettings, getMiscSettings } from './api/settings';
 import AgsSettingsForm from './features/system-settings/AgsSettingsForm';
 import ByggrSettingsForm from './features/system-settings/ByggrSettingsForm';
 import EcosSettingsForm from './features/system-settings/EcosSettingsForm';
@@ -8,11 +8,11 @@ import FbSettingsForm from './features/system-settings/FbSettingsForm';
 import MiscSettingsForm from './features/system-settings/MiscSettingsForm';
 
 const ManageSystemSettings = () => {
-  const [agsFormData, setAgsFormData] = useState<any>();
-  const [byggrFormData, setByggrFormData] = useState<any>();
-  const [ecosFormData, setEcosFormData] = useState<any>();
-  const [fbFormData, setFbFormData] = useState<any>();
-  const [miscFormData, setMiscFormData] = useState<any>();
+  const [agsFormData, setAgsFormData] = useState<AgsSettings>();
+  const [byggrFormData, setByggrFormData] = useState<ByggrSettings>();
+  const [ecosFormData, setEcosFormData] = useState<EcosSettings>();
+  const [fbFormData, setFbFormData] = useState<FbSettings>();
+  const [miscFormData, setMiscFormData] = useState<MiscSettings>();
   const [activeKey, setActiveKey] = useState('');
 
   return (

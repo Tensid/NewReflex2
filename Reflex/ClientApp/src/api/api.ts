@@ -28,6 +28,8 @@ export enum CaseSource {
   Ecos = 'Ecos'
 }
 
+export type CaseTab = 'Preview' | 'Occurences' | 'Persons' | 'Archive';
+
 export enum Tab {
   Search = 'Search',
   Map = 'Map',
@@ -157,7 +159,7 @@ export interface UserSettings {
 
 export interface AgsConfig {
   id: string;
-  configId: string;
+  name: string;
   username: string;
   password: string;
   instance: string;
@@ -167,31 +169,26 @@ export interface AgsConfig {
   documentPattern: string;
   dateField: string;
   estateNameSearch: boolean;
-  serviceUrl: string;
 }
 
 export interface ByggrConfig {
   id: string;
-  configId: string;
+  name: string;
   documentTypes: string[];
   occurenceTypes: string[];
   personRoles: string[];
-  tabs: string[];
+  tabs: CaseTab[];
   workingMaterial: boolean;
   hideCasesWithSecretOccurences: boolean;
   hideDocumentsWithCommentMatching: string;
   onlyCasesWithoutMainDecision: boolean;
   onlyActiveCases: boolean;
   minCaseStartDate: string | null;
-  serviceUrl: string;
 }
 
 export interface EcosConfig {
   id: string;
-  configId: string;
-  serviceUrl: string;
-  username: string;
-  password: string;
+  name: string;
 }
 
 export interface ConfigFormData {

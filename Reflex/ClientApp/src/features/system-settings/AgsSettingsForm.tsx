@@ -3,7 +3,12 @@ import { useForm } from 'react-hook-form';
 import { updateAgsSettings } from '../../api/settings/settingsApi';
 import TextInput from '../common/forms/TextInput';
 
-const AgsSettingsForm = ({ formData, setActiveKey }: any) => {
+export interface AgsSettingsFormProps {
+  formData: any;
+  setActiveKey: (key: string) => void;
+}
+
+const AgsSettingsForm = ({ formData, setActiveKey }: AgsSettingsFormProps) => {
   const { register, handleSubmit, reset } =
     useForm({
       defaultValues: { formData }
