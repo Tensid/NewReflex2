@@ -127,8 +127,6 @@ const ManageConfigs = () => {
             </Col>
           </Row>
         </Tab.Container>
-        <div>Välj, <a href="# " onClick={(e) => { e.preventDefault(); setActiveKey(''); setEdit(false); setReflexFormData({}); setActiveForm('Reflex'); }}>skapa</a> eller redigera en befintlig konfiguration i menyraden ovan.<br />
-          <a href="api/documents/Reflex Manual.pdf">Öppna manual</a> för konfigurationshantering.</div>
       </div>
       <div className="col-6 col-form-label col-form-label-sm">
         {activeForm === 'Reflex' && <ReflexConfigForm edit={edit} formData={reflexFormData} caseSourceOptions={caseSourceOptions} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}

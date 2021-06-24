@@ -49,6 +49,7 @@ export function NavMenu() {
                   <LinkContainer to="/system-settings">
                     <NavDropdown.Item className="text-dark">Systeminställningar</NavDropdown.Item>
                   </LinkContainer>
+                  <NavDropdown.Item onClick={() => window.open('https://dok.sokigo.com/display/REFLEX/?os_username=kund&os_password=Sokigo2048')} className="text-dark">Hjälp</NavDropdown.Item>
                   <LinkContainer to="/about">
                     <NavDropdown.Item className="text-dark">Om Reflex</NavDropdown.Item>
                   </LinkContainer>
