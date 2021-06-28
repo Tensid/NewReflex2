@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { useLocation } from 'react-router-dom';
 import './NavMenu.css';
 import { LoginMenu } from './features/api-authorization/LoginMenu';
 import Spinner from './features/spinner/Spinner';
@@ -8,10 +9,12 @@ import UserSettingsModal from './features/user-settings/UserSettingsModal';
 
 export function NavMenu() {
   const [show, setShow] = useState(false);
+  const { pathname } = useLocation();
+
   return (
     <>
       <header>
-        <Navbar expand="lg" className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+        <Navbar expand="lg" className={`navbar-expand-sm navbar-toggleable-sm border-bottom ${pathname !== '/map' ? 'box-shadow  mb-3' : ''}`}>
           <Container>
             <LinkContainer to="configs">
               <Navbar.Brand>Reflex</Navbar.Brand>
