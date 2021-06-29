@@ -6,7 +6,7 @@ const About = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-form-label col-form-label-sm col">
-          <h3 className="text-info font-weight-bold">Om Reflex 2.0</h3>
+          <h3 className="text-info font-weight-bold">Om Reflex 2.1</h3>
         </div>
       </div>
       <p>
@@ -20,9 +20,6 @@ const About = () => {
       </p>
       <div className="form-group">
         <a href="https://www.sokigo.com" target="_blank" rel="noopener noreferrer">www.sokigo.com</a>
-      </div>
-      <div className="form-group">
-        För support, Ring: 0771-60 60 70, eller skicka E-post: <a href="mailto:support@sokigo.com">support@sokigo.com</a>
       </div>
       <div className="form-group">
         <a href="https://sokigo.com" target="_blank" rel="noopener noreferrer">
