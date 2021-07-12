@@ -1,6 +1,8 @@
 import React, { MouseEvent, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Config, ReflexUser, getConfigs, getContact, getCurrentUser } from './api/api';
+import { Config, getConfigs, getContact } from './api/api';
+import { RootState } from './app/store';
 import ConfigList from './features/configs/ConfigList';
 
 interface Contact {
@@ -11,8 +13,8 @@ interface Contact {
 
 const Configs = () => {
   const { push } = useHistory();
+  const roles = useSelector((state: RootState) => state.user?.roles);
   const [configs, setConfigs] = useState<Config[]>();
-  const [user, setUser] = useState<ReflexUser>();
   const [contact, setContact] = useState<Contact>({
     body: '',
     email: '',
@@ -23,7 +25,6 @@ const Configs = () => {
     (async () => {
       setConfigs(await getConfigs() || []);
       setContact(await getContact());
-      setUser(await getCurrentUser());
     })();
   }, []);
 
@@ -32,13 +33,13 @@ const Configs = () => {
     push('/manage-configs');
   };
 
-  if (!user || !configs)
+  if (!roles || !configs)
     return null;
 
   return (
     <>
       {(configs.length === 0) ?
-        user?.roles.includes('Admin') ?
+        roles.includes('Admin') ?
           <h5 className="text-center">
             <a href="/manage-configs" onClick={handleClick}>Skapa</a> en konfiguration för att fortsätta.
           </h5>

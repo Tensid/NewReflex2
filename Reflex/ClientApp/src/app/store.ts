@@ -7,6 +7,7 @@ import searchResultReducer from '../features/search-result/searchResultSlice';
 import spinnerReducer from '../features/spinner/spinnerSlice';
 import systemSettingsReducer from '../features/system-settings/systemSettingsSlice';
 import userSettingsReducer from '../features/user-settings/userSettingsSlice';
+import user from '../features/user/userSlice';
 
 const setConfigIdMiddleWare: Middleware = store => next => action => {
   if (action.type === 'config/setConfig') {
@@ -25,7 +26,8 @@ export const store = configureStore({
     searchResult: searchResultReducer,
     spinner: spinnerReducer,
     systemSettings: systemSettingsReducer,
-    userSettings: userSettingsReducer
+    userSettings: userSettingsReducer,
+    user: user
   },
 });
 

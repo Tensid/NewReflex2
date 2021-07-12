@@ -21,6 +21,7 @@ import AuthorizeRoute from './features/api-authorization/AuthorizeRoute';
 import authService from './features/api-authorization/AuthorizeService';
 import { setConfig } from './features/configs/configsSlice';
 import { fetchUserSettings } from './features/user-settings/userSettingsSlice';
+import { fetchGetUser } from './features/user/userSlice';
 
 async function populateState(setAuthenticated: (authenticated: boolean) => void) {
   const [authenticated] = await Promise.all([authService.isAuthenticated()]);
@@ -47,6 +48,7 @@ function App() {
   useEffect(() => {
     if (authenticated) {
       dispatch(fetchUserSettings());
+      dispatch(fetchGetUser());
       (async () => {
         setConfigs(await getConfigs());
       })();
