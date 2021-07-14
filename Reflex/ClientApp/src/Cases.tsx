@@ -60,10 +60,12 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
   const [filteredCases, setFilteredCases] = useState<Case[]>(cases);
   const [sortBy, setSortBy] = useState<SortBy>();
   const [showStatus, setShowStatus] = useState(false);
+  const [showDiarieprefix, setShowDiarieprefix] = useState(false);
   const [showCasesWithoutMainDecision, setShowCasesWithoutMainDecision] = useState(false);
   const [showCaseSource, setShowCaseSource] = useState(false);
   const [caseSourceFilter, setCaseSourceFilter] = useState<string[]>([]);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
+  const [diarieprefixFilter, setDiarieprefixFilter] = useState<string[]>([]);
   const [casesWithoutMainDecisionFilter, setCasesWithoutMainDecisionFilter] = useState<boolean[]>([]);
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
@@ -71,6 +73,7 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
   const caseSources: CaseSource[] = [];
   const statuses: string[] = [];
   const casesWithoutMainDecision: boolean[] = [];
+  const diarieprefixes: string[] = [];
 
   cases.forEach(c => {
     if (!caseSources.includes(c.caseSource))
@@ -79,6 +82,8 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
       statuses.push(c.status);
     if (c?.caseWithoutMainDecision !== null && !casesWithoutMainDecision.includes(c.caseWithoutMainDecision))
       casesWithoutMainDecision.push(c.caseWithoutMainDecision);
+    if (c?.diarieprefix !== null && !diarieprefixes.includes(c.diarieprefix))
+      diarieprefixes.push(c.diarieprefix);
   });
 
   const handleCaseSourceFilter = (caseSource: CaseSource) => {
@@ -89,6 +94,10 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
     setStatusFilter(_.xor(statusFilter, [status]));
   };
 
+  const handleDiarieprefixFilter = (diarieprefix: string) => {
+    setDiarieprefixFilter(_.xor(diarieprefixFilter, [diarieprefix]));
+  };
+
   const handleCasesWithoutMainDecisionFilter = (caseWithoutMainDecision: boolean) => {
     setCasesWithoutMainDecisionFilter(_.xor(casesWithoutMainDecisionFilter, [caseWithoutMainDecision]));
   };
@@ -96,9 +105,10 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
   useEffect(() => {
     const sortedCases = cases.filter(x => (caseSourceFilter.length === 0 || caseSourceFilter.includes(x.caseSource))
       && (statusFilter.length === 0 || statusFilter.includes(x.status))
+      && (diarieprefixFilter.length === 0 || diarieprefixFilter.includes(x.diarieprefix))
       && (casesWithoutMainDecisionFilter.length === 0 || casesWithoutMainDecisionFilter.includes(x.caseWithoutMainDecision)));
     setFilteredCases(sortCases(sortedCases, sortBy));
-  }, [cases, caseSourceFilter, statusFilter, casesWithoutMainDecisionFilter, sortBy]);
+  }, [cases, caseSourceFilter, statusFilter, casesWithoutMainDecisionFilter, diarieprefixFilter, sortBy]);
 
   return (
     <>
@@ -141,6 +151,19 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
               >
                 <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleStatusFilter('Pågående')}>Pågående {statusFilter.includes('Pågående') && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
                 <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleStatusFilter('Avslutat')}>Avslutat {statusFilter.includes('Avslutat') && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
+              </DropdownButton>}
+              {diarieprefixes.length > 0 && <DropdownButton variant="outline-secondary"
+                title={<>Diarier {(diarieprefixFilter.length > 0) && <span className="badge badge-secondary">{diarieprefixFilter.length}</span>}</>}
+                className="pr-2" show={showDiarieprefix} id="diarieprefixFilter"
+                onToggle={((show, e) => {
+                  if (!show && !e)
+                    setShowDiarieprefix(false);
+                  /*@ts-ignore*/
+                  if (e.target?.id === 'diarieprefixFilter')
+                    setShowDiarieprefix(!showDiarieprefix);
+                })}
+              >
+                {diarieprefixes.map(x => <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleDiarieprefixFilter(x)}>{x} {diarieprefixFilter.includes(x) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>)}
               </DropdownButton>}
               {casesWithoutMainDecision.length > 0 &&
                 <DropdownButton variant="outline-secondary"
