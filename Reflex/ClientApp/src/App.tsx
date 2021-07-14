@@ -20,6 +20,8 @@ import ApiAuthorizationRoutes from './features/api-authorization/ApiAuthorizatio
 import AuthorizeRoute from './features/api-authorization/AuthorizeRoute';
 import authService from './features/api-authorization/AuthorizeService';
 import { setConfig } from './features/configs/configsSlice';
+import { fetchLayers, fetchMapSettings } from './features/map/mapSettingsSlice';
+import { fetchSystemSettings } from './features/system-settings/systemSettingsSlice';
 import { fetchUserSettings } from './features/user-settings/userSettingsSlice';
 import { fetchGetUser } from './features/user/userSlice';
 
@@ -52,6 +54,9 @@ function App() {
       (async () => {
         setConfigs(await getConfigs());
       })();
+      dispatch(fetchMapSettings());
+      dispatch(fetchSystemSettings());
+      dispatch(fetchLayers());
     }
   }, [authenticated, dispatch]);
 

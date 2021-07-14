@@ -125,7 +125,7 @@ export interface Config {
   id: string;
   name: string;
   description: string;
-  map: string;
+  map: string | string[];
   tabs: Tab[];
 }
 
@@ -195,7 +195,7 @@ export interface ConfigFormData {
   id: string;
   name: string;
   description: string;
-  map: string;
+  map: string[];
   tabs: Tab[];
   caseSources: CaseSourceOption[];
 }
@@ -368,35 +368,29 @@ export async function getEcosConfig(id: string) {
   return data;
 }
 
-export async function getFnrFromPosition(lat: string, lon: string, srid: number, distance: number) {
+export async function getFnrFromPosition(lat: string | number, lon: string | number, srid: string | number, distance: number) {
   const url = `map/fnr?lat=${lat}&lon=${lon}&srid=${srid}&distance=${distance}`;
   const { data } = await instance.get<string>(url);
   return data;
 }
 
-export async function getGeometryFromFnr(fnr: number) {
+export async function getGeometryFromFnr(fnr: number | string) {
   const url = `map/geometry?fnr=${fnr}`;
   const { data } = await instance.get(url);
   return data;
 }
 
-export async function getEstateName(fnr: number) {
+export async function getEstateName(fnr: number | string) {
   const url = `map/estateName?fnr=${fnr}`;
   const { data } = await instance.get<string>(url);
   return data;
 }
 
-export async function getEstatePosition(fnr: number) {
+export async function getEstatePosition(fnr: number | string) {
   const url = `map/estatePosition?fnr=${fnr}`;
   const { data } = await instance.get(url);
   return data;
 }
-
-export async function getMapSettings() {
-  const { data } = await instance.get('mapSettings');
-  return data;
-}
-
 export async function getOccurences(caseId: string, source: string, caseSourceId: string) {
   const url = `cases/${caseId}/${source}/occurences?caseSourceId=${caseSourceId}`;
   const { data } = await instance.get<Occurence[]>(url);

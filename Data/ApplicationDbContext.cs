@@ -46,6 +46,14 @@ namespace Reflex.Data
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                         c => c));
+            modelBuilder.Entity<Config>().Property(p => p.Map)
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, null),
+                    v => JsonSerializer.Deserialize<List<string>>(v, null),
+                    new ValueComparer<ICollection<string>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                        c => c));
             modelBuilder.Entity<ByggrConfig>().Property(p => p.Tabs)
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, null),

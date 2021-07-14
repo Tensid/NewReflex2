@@ -86,8 +86,8 @@ namespace Reflex.Controllers
                 Id = formData.Id,
                 Name = formData.Name,
                 Description = formData.Description,
-                Map = formData.Map,
-                Tabs = formData.Tabs.ToList()
+                Map = formData.Map?.ToList() ?? null,
+                Tabs = formData.Tabs?.ToList() ?? null
             });
             _context.SaveChanges();
 
@@ -146,8 +146,8 @@ namespace Reflex.Controllers
                 Id = id,
                 Name = formData.Name,
                 Description = formData.Description,
-                Map = formData.Map,
-                Tabs = formData.Tabs.ToList()
+                Map = formData.Map?.ToList() ?? null,
+                Tabs = formData.Tabs?.ToList() ?? null
             });
             _context.SaveChanges();
 
@@ -198,7 +198,7 @@ namespace Reflex.Controllers
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Map { get; set; }
+        public virtual IEnumerable<string> Map { get; set; }
         public virtual IEnumerable<Tab> Tabs { get; set; }
         public virtual IEnumerable<CaseSourceOption> CaseSources { get; set; }
     }

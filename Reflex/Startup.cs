@@ -54,6 +54,7 @@ namespace Reflex
             services.AddScoped<EcosServiceFactory, EcosServiceFactory>();
             services.AddScoped<IFbProvider, FbProvider>();
             services.AddScoped<IFbService, FbService.FbService>();
+            services.AddScoped<IMapProxyService, MapProxyService>();
 
             services.AddHttpClient<IFbProvider, FbProvider>();
 

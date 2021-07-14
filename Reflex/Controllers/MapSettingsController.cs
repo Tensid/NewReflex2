@@ -25,5 +25,12 @@ namespace Reflex.Controllers
             var file = Path.Combine(_env.ContentRootPath, "", "mapSettings.json");
             return JsonDocument.Parse(System.IO.File.ReadAllText(file).Replace(Environment.NewLine, "")).RootElement;
         }
+
+        [HttpGet("layers")]
+        public JsonDocument GetLayers()
+        {
+            var file = Path.Combine(_env.ContentRootPath, "", "layers.json");
+            return JsonDocument.Parse(System.IO.File.ReadAllText(file).Replace(Environment.NewLine, ""));
+        }
     }
 }

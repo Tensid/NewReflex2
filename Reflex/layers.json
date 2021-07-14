@@ -1,0 +1,148 @@
+[
+  {
+    "type": "WMS",
+    "title": "Topowebbkartan",
+    "id": "1",
+    "baseLayer": true,
+    "endpoint": "https://maps-ver.lantmateriet.se/topowebb/wms/v1.3",
+    "username": "teki0001",
+    "password": "JE367O8rynnP",
+    "options": {
+      "url": "https://localhost:44317/api/mapProxy/1",
+      "projection": "EPSG:3006",
+      "params": {
+        "LAYERS": "Topowebbkartan"
+      }
+    }
+  },
+  {
+    "type": "WMS",
+    "title": "Ortofoto (0.25)",
+    "id": "2",
+    "baseLayer": true,
+    "endpoint": "https://maps-ver.lantmateriet.se/ortofoto/wms/v1.3",
+    "username": "teki0001",
+    "password": "JE367O8rynnP",
+    "options": {
+      "url": "https://localhost:44317/api/mapProxy/2",
+      "projection": "EPSG:3006",
+      "params": {
+        "LAYERS": "Ortofoto_0.25"
+      }
+    }
+  },
+  {
+    "type": "WMTS",
+    "title": "Topowebbkartan nedtonad WMTS",
+    "id": "3",
+    "baseLayer": true,
+    "endpoint": "https://map01.sokigohosting.com/wms/service/wmts",
+    "username": "teki0001",
+    "password": "JE367O8rynnP",
+    "options": {
+      "url": "https://localhost:44317/api/mapProxy/3",
+      "projection": "EPSG:3006",
+      "matrixSet": "EPSG:3006",
+      "params": {
+        "LAYERS": "Topowebbkartan_nedtonad",
+        "FORMAT": "image/png"
+      },
+      "style": "default",
+      "wrapX": false,
+      "layer": "Topowebb nedtonad"
+    },
+    "tileGridOptions": {
+      "origin": [ 218128.7031, 7692850.9468 ],
+      "resolutions": [
+        256,
+        128,
+        64,
+        32,
+        16,
+        8,
+        4,
+        2,
+        1,
+        0.5,
+        0.25,
+        0.125,
+        0.0625,
+        0.03125,
+        0.015625
+      ],
+      "matrixIds": [
+        "EPSG:3006:0",
+        "EPSG:3006:1",
+        "EPSG:3006:2",
+        "EPSG:3006:3",
+        "EPSG:3006:4",
+        "EPSG:3006:5",
+        "EPSG:3006:6",
+        "EPSG:3006:7",
+        "EPSG:3006:8",
+        "EPSG:3006:9",
+        "EPSG:3006:10",
+        "EPSG:3006:11",
+        "EPSG:3006:12",
+        "EPSG:3006:13",
+        "EPSG:3006:14"
+      ],
+      "tileSize": [
+        512,
+        512
+      ]
+    }
+  },
+  {
+    "type": "WMS",
+    "title": "Topowebbkartan nedtonad",
+    "id": "4",
+    "baseLayer": true,
+    "endpoint": "https://maps-ver.lantmateriet.se/topowebb/wms/v1.3",
+    "username": "teki0001",
+    "password": "JE367O8rynnP",
+    "options": {
+      "url": "https://localhost:44317/api/mapProxy/4",
+      "projection": "EPSG:3006",
+      "params": {
+        "LAYERS": "Topowebbkartan_nedtonad"
+      }
+    }
+  },
+  {
+    "type": "WMS",
+    "title": "Skyddsrum",
+    "id": "Skyddsrum",
+    "baseLayer": false,
+    "endpoint": "https://gis-services.metria.se/arcgis/rest/services/msb/InspireMSB_Skyddsrum/MapServer/exts/InspireView/service",
+    "options": {
+      "url": "https://gis-services.metria.se/arcgis/rest/services/msb/InspireMSB_Skyddsrum/MapServer/exts/InspireView/service",
+      "projection": "EPSG:3006",
+      "params": {
+        "LAYERS": "Skyddsrum",
+        "SERVICE": "WMS",
+        "VERSION": "1.1.1",
+        "REQUEST": "GetMap",
+        "FORMAT": "image/png"
+      }
+    }
+  },
+  {
+    "type": "WMS",
+    "title": "Habitat",
+    "id": "Habitat",
+    "baseLayer": false,
+    "endpoint": "https://gis-services.metria.se/arcgis/rest/services/nv/InspireNV_N2K/MapServer/exts/InspireView/SWE/service",
+    "options": {
+      "url": "https://gis-services.metria.se/arcgis/rest/services/nv/InspireNV_N2K/MapServer/exts/InspireView/SWE/service",
+      "projection": "EPSG:3006",
+      "params": {
+        "LAYERS": "PS.N2K.Habitatdirektivet",
+        "SERVICE": "WMS",
+        "VERSION": "1.1.1",
+        "REQUEST": "GetMap",
+        "FORMAT": "image/png"
+      }
+    }
+  }
+]

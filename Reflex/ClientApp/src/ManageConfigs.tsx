@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Nav, NavDropdown, Row, Tab } from 'react-bootstrap';
 import { AgsConfig, ByggrConfig, CaseSourceOption, Config, EcosConfig, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getEcosConfig, getEcosConfigs, getFormData } from './api/api';
+import { getLayersSettings } from './api/mapSettingsApi';
 import AgsConfigForm from './features/manage-configs/AgsConfigForm';
 import ByggrConfigForm from './features/manage-configs/ByggrConfigForm';
 import EcosConfigForm from './features/manage-configs/EcosConfigForm';
@@ -19,6 +20,7 @@ const ManageConfigs = () => {
   const [activeKey, setActiveKey] = useState<string>();
   const [caseSourceOptions, setCaseSourceOptions] = useState<CaseSourceOption[]>([]);
   const [edit, setEdit] = useState(false);
+  const [layers, setLayers] = useState<any>([]);
 
   useEffect(() => {
     (async () => {
@@ -27,6 +29,8 @@ const ManageConfigs = () => {
       setEcosConfigs(await getEcosConfigs());
       setReflexConfigs(await getConfigs());
       setCaseSourceOptions(await getCaseSourceOptions());
+      const mappedLayers = (await getLayersSettings()).map((x: any) => ({ value: x.id, label: x.title }));
+      setLayers(mappedLayers);
     })();
   }, []);
 
@@ -129,7 +133,7 @@ const ManageConfigs = () => {
         </Tab.Container>
       </div>
       <div className="col-6 col-form-label col-form-label-sm">
-        {activeForm === 'Reflex' && <ReflexConfigForm edit={edit} formData={reflexFormData} caseSourceOptions={caseSourceOptions} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
+        {activeForm === 'Reflex' && <ReflexConfigForm edit={edit} formData={reflexFormData} caseSourceOptions={caseSourceOptions} layers={layers} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
         {activeForm === 'AGS' && <AgsConfigForm edit={edit} formData={agsFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
         {activeForm === 'ByggR' && <ByggrConfigForm edit={edit} formData={byggrFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
         {activeForm === 'Ecos' && <EcosConfigForm edit={edit} formData={ecosFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}

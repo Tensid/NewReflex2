@@ -17,6 +17,7 @@
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.12.30",
     "@types/ol": "^6.2.0",
+    "@types/proj4": "^2.5.0",
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
     "@types/react-redux": "^7.1.7",
@@ -39,6 +40,7 @@
     "oidc-client": "^1.10.1",
     "ol": "^6.2.1",
     "ol-contextmenu": "^4.0.1",
+    "ol-layerswitcher": "^3.8.3",
     "pdfmake": "^0.1.65",
     "proj4": "^2.6.2 ",
     "react": "^16.13.0",
@@ -52,6 +54,7 @@
     "react-select": "^3.1.0",
     "react-table": "^7.0.4",
     "reactstrap": "^8.4.1",
+    "resize-observer-polyfill": "^1.5.1",
     "rimraf": "^3.0.2",
     "typescript": "^3.8.3"
   },
