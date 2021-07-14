@@ -70,9 +70,9 @@ namespace ReflexByggrService
 
             var hideByComment = !string.IsNullOrWhiteSpace(_config.HideDocumentsWithCommentMatching);
 
-            var cases = arenden
-                .Where(x => _config.OnlyCasesWithoutMainDecision == false || x.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true))
+            var cases = arenden.Where(x => _config.OnlyCasesWithoutMainDecision == false || x.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true))
                 .Where(x => _config.MinCaseStartDate == null || x.ankomstDatum > _config.MinCaseStartDate)
+                .Where(x => _config.Diarieprefixes?.Any() != true || _config.Diarieprefixes.Contains(x.diarieprefix))
                 .Select(arende => new Case
                 {
                     Arendegrupp = arende.arendegrupp,
@@ -92,7 +92,8 @@ namespace ReflexByggrService
                     CaseSourceId = _config.Id,
                     Date = arende.ankomstDatum,
                     UnavailableDueToSecrecy = _config.HideCasesWithSecretOccurences && arende.handelseLista.Any(x => x.sekretess),
-                    CaseWithoutMainDecision = arende.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true)
+                    CaseWithoutMainDecision = arende.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true),
+                    Diarieprefix = arende.diarieprefix
                 }).ToArray();
 
             return cases;

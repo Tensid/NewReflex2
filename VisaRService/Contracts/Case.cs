@@ -22,5 +22,6 @@ namespace VisaRService.Contracts
         public string HandlaggareSignatur { get; set; }
         public Guid CaseSourceId { get; set; }
         public bool? CaseWithoutMainDecision { get; set; }
+        public string Diarieprefix { get; set; }
     }
 }

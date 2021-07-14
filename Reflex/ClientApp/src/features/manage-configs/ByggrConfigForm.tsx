@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { ByggrConfig, createByggrConfig, deleteByggrConfig, updateByggrConfig } from '../../api/api';
 import CheckboxInput from '../common/forms/CheckboxInput';
+import CreatableSelectInput from '../common/forms/CreateableSelectInput';
 import DateInput from '../common/forms/DateInput';
 import SelectInput from '../common/forms/SelectInput';
 import TextInput from '../common/forms/TextInput';
@@ -20,12 +21,15 @@ export interface ByggrConfigFormProps {
 
 const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConfigFormProps) => {
   const minCaseStartDate = (edit && !!formData?.minCaseStartDate) ? (new Date(formData?.minCaseStartDate)).toLocaleDateString() : null;
+  const diarieprefixes = edit ? formData?.diarieprefixes?.map((x: any) => ({ value: x, label: x })) ?? [] : [];
+
   const { register, handleSubmit, control, reset } =
     useForm({
       defaultValues: {
         ...formData,
         tabs: formData?.tabs?.map((x) => ({ value: x, label: tabOptions.find((t) => t.value === x)!.label })),
-        minCaseStartDate
+        minCaseStartDate,
+        diarieprefixes
       }
     });
 
@@ -33,16 +37,18 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
     reset({
       ...formData,
       tabs: edit ? formData?.tabs?.map((x) => ({ value: x, label: tabOptions.find((t) => t.value === x)!.label })) : [],
-      minCaseStartDate
+      minCaseStartDate,
+      diarieprefixes
     });
   }, [formData, reset]);
 
   const onSubmit = async (data: any) => {
-    data.documentTypes = data?.documentTypes || null;
+    data.diarieprefixes = data?.diarieprefixes?.map((x: any) => x.value);
+    data.documentTypes = data?.documentTypes.split(",") || null;;
     data.hideDocumentsWithCommentMatching = data?.hideDocumentsWithCommentMatching || null;
     data.minCaseStartDate = data?.minCaseStartDate || null;
     data.occurenceTypes = data?.occurenceTypes || null;
-    data.personRoles = data?.personRoles || null;
+    data.personRoles = data?.personRoles.split(",") || null;
     data.tabs = data?.tabs?.map((x: any) => x.value);
 
     if (edit) {
@@ -69,6 +75,7 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
             <TextInput name="occurenceTypes" label="Händelsetyper" register={register} />
             <TextInput name="personRoles" label="Roller" register={register} />
             <SelectInput control={control} name="tabs" label="Flikar" isMulti register={register} options={tabOptions} />
+            <CreatableSelectInput control={control} name="diarieprefixes" label="Diarier" isMulti register={register} options={diarieprefixes} />
             <CheckboxInput name="workingMaterial" label="Visa arbetsmaterial" register={register} />
             <CheckboxInput name="hideCasesWithSecretOccurences" label="Dölj ärenden med sekretess" register={register} />
             <TextInput name="hideDocumentsWithCommentMatching" label="Dölj handlingar med kommentar" register={register} />

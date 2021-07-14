@@ -23,6 +23,7 @@ namespace Reflex.Data.Models
         public string[] DocumentTypes { get; set; }
         public string[] OccurenceTypes { get; set; }
         public string[] PersonRoles { get; set; }
+        public string[] Diarieprefixes { get; set; }
         public ICollection<CaseTab> Tabs { get; set; }
         public bool WorkingMaterial { get; set; }
         public bool HideCasesWithSecretOccurences { get; set; }

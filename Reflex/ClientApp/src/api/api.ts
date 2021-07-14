@@ -57,6 +57,7 @@ export interface Case {
   handlaggareSignatur: string;
   caseSourceId: string;
   caseWithoutMainDecision: boolean;
+  diarieprefix: string;
 }
 
 export interface Occurence {
@@ -177,6 +178,7 @@ export interface ByggrConfig {
   documentTypes: string[];
   occurenceTypes: string[];
   personRoles: string[];
+  diarieprefixes: string[];
   tabs: CaseTab[];
   workingMaterial: boolean;
   hideCasesWithSecretOccurences: boolean;
