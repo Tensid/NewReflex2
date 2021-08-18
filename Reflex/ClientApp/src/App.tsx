@@ -70,6 +70,17 @@ function App() {
     }
   }, [authenticated, config, defaultConfigId, configs, dispatch]);
 
+  useEffect(() => {
+    if (!authenticated) {
+      _subscription = authService.subscribe(() => populateState(setAuthenticated));
+      populateState(setAuthenticated);
+
+      return () => {
+        authService.unsubscribe(_subscription);
+      };
+    }
+  }, [authenticated]);
+
   return (
     <>
       <Layout>
