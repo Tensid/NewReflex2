@@ -258,5 +258,10 @@ namespace ReflexByggrService
 
             return rdoc;
         }
+
+        public Task<Case> SearchCase(string caseId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

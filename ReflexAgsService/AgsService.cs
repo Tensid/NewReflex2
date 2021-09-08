@@ -77,5 +77,10 @@ namespace ReflexAgsService
         {
             return await GetProvider().GetCase(caseId, _config.Instance, _config.Department, _config.DocumentPattern, _config.DateField, _config.SearchWay);
         }
+
+        public Task<Case> SearchCase(string caseId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

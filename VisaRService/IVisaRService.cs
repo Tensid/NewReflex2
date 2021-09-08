@@ -12,5 +12,6 @@ namespace VisaRService
         Task<ArchivedDocument[]> GetArchivedDocumentsByCase(string caseId);
         Task<Case> GetCase(string caseId);
         Task<PhysicalDocument> GetDocument(string documentId);
+        Task<Case> SearchCase(string caseId);
     }
 }

@@ -19,7 +19,7 @@ using Reflex.Data;
 using Reflex.SettingsService;
 using ReflexAgsService;
 using ReflexByggrService;
-using ReflexEcos2Service;
+using ReflexEcosService;
 
 namespace Reflex
 {

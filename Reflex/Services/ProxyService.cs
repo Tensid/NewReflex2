@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using VisaRService;
 using ReflexAgsService;
 using ReflexByggrService;
-using ReflexEcos2Service;
+using ReflexEcosService;
 
 namespace Reflex.Services
 {

@@ -36,8 +36,9 @@ namespace Reflex.Controllers
 
             if (query != null && query.Length >= 3)
             {
-                var config = _context.Configs.Include(x => x.ByggrConfigs).First(x => x.Id == configId);
+                var config = _context.Configs.Include(x => x.ByggrConfigs).Include(x => x.EcosConfigs).First(x => x.Id == configId);
                 var byggrTasks = new List<Task<VisaRService.Contracts.Case>>();
+                var ecosTasks = new List<Task<VisaRService.Contracts.Case>>();
 
                 var estateTask = _fbService.SearchEstates(query);
                 var addressTask = _fbService.SearchAddresses(query);
@@ -49,6 +50,13 @@ namespace Reflex.Controllers
                         var byggrProxy = _proxyService.GetProxy(CaseSource.ByggR, byggrConfig.Id);
                         byggrTasks.Add(byggrProxy.GetCase(query));
                     }
+
+                    foreach (var ecosConfig in config.EcosConfigs)
+                    {
+                        var ecosProxy = _proxyService.GetProxy(CaseSource.Ecos, ecosConfig.Id);
+                        ecosTasks.Add(ecosProxy.SearchCase(query));
+                    }
+
                     await Task.WhenAll(estateTask, addressTask);
                 }
                 catch
@@ -79,6 +87,7 @@ namespace Reflex.Controllers
                         Type = "Adress"
                     }));
 
+                await Task.WhenAll(byggrTasks);
                 var byggrCases = (await Task.WhenAll(byggrTasks.Where(task => task.Status == TaskStatus.RanToCompletion)).ConfigureAwait(false))
                     .Where(x => x != null);
                 foreach (var byggrCase in byggrCases)
@@ -90,6 +99,21 @@ namespace Reflex.Controllers
                         Source = "ByggR",
                         Type = "Ärende",
                         CaseSourceId = byggrCase.CaseSourceId
+                    });
+                }
+
+                await Task.WhenAll(ecosTasks);
+                var ecosCases = (await Task.WhenAll(ecosTasks.Where(task => task.Status == TaskStatus.RanToCompletion)).ConfigureAwait(false))
+                    .Where(x => x != null);
+                foreach (var ecosCase in ecosCases)
+                {
+                    searchResults.Add(new SearchResult
+                    {
+                        DisplayName = ecosCase.Dnr,
+                        Value = ecosCase.CaseId,
+                        Source = "Ecos",
+                        Type = "Ärende",
+                        CaseSourceId = ecosCase.CaseSourceId
                     });
                 }
             }

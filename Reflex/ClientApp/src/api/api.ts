@@ -191,6 +191,7 @@ export interface ByggrConfig {
 export interface EcosConfig {
   id: string;
   name: string;
+  hideCasesWithSecretOccurences: boolean;
 }
 
 export interface ConfigFormData {

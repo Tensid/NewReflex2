@@ -36,7 +36,7 @@
     <ProjectReference Include="..\Data\Reflex.Data.csproj" />
     <ProjectReference Include="..\FbService\FbService.csproj" />
     <ProjectReference Include="..\ReflexAgsService\ReflexAgsService.csproj" />
-    <ProjectReference Include="..\ReflexEcosService\ReflexEcos2Service.csproj" />
+    <ProjectReference Include="..\ReflexEcosService\ReflexEcosService.csproj" />
     <ProjectReference Include="..\VisaRService\VisaRService.csproj" />
   </ItemGroup>
 

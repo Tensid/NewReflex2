@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { EcosConfig, createEcosConfig, deleteEcosConfig, updateEcosConfig } from '../../api/api';
+import CheckboxInput from '../common/forms/CheckboxInput';
 import TextInput from '../common/forms/TextInput';
 
 
@@ -42,6 +43,7 @@ const EcosConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: EcosConfig
         <div className="col">
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextInput name="name" label="Namn" required register={register} />
+            <CheckboxInput name="hideCasesWithSecretOccurences" label="Dölj ärenden med sekretess" register={register} />
             <button className="btn btn-primary" type="submit">Spara</button>
             {edit &&
               <button
