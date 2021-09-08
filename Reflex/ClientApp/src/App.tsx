@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import About from './About';
 import './App.scss';
 import Cases from './Cases';
@@ -82,23 +83,20 @@ function App() {
   }, [authenticated]);
 
   return (
-    <>
-      <Layout>
-        <AuthorizeRoute exact path='/' component={() => config ? <Search /> : <Configs />} />
-        <AuthorizeRoute path='/configs' component={() => <Configs />} />
-        <AuthorizeRoute path='/search' component={() => config ? <Search /> : <Configs />} />
-        <AuthorizeRoute path='/cases' component={() => config ? <Cases /> : <Configs />} />
-        <AuthorizeRoute path='/population' component={() => config ? <Population /> : <Configs />} />
-        <AuthorizeRoute path='/property' component={() => config ? <Property /> : <Configs />} />
-        <AuthorizeRoute path='/manage-users' component={() => <ManageUsers />} />
-        <AuthorizeRoute path='/manage-configs' component={() => <ManageConfigs />} />
-        <AuthorizeRoute path='/system-settings' component={() => <ManageSystemSettings />} />
-        <AuthorizeRoute path='/about' component={() => <About />} />
-        {!config && <AuthorizeRoute path='/map' component={() => <Configs />} />}
-        <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-      </Layout>
-      {config && <AuthorizeRoute path='/map' component={() => config ? <Map /> : <Configs />} />}
-    </>
+    <Layout>
+      <AuthorizeRoute exact path='/' component={() => config ? <Search /> : <Redirect to="/configs" />} />
+      <AuthorizeRoute path='/configs' component={() => <Configs />} />
+      <AuthorizeRoute path='/search' component={() => config ? <Search /> : <Redirect to="/configs" />} />
+      <AuthorizeRoute path='/cases' component={() => config ? <Cases /> : <Redirect to="/configs" />} />
+      <AuthorizeRoute path='/population' component={() => config ? <Population /> : <Redirect to="/configs" />} />
+      <AuthorizeRoute path='/property' component={() => config ? <Property /> : <Redirect to="/configs" />} />
+      <AuthorizeRoute path='/manage-users' component={() => <ManageUsers />} />
+      <AuthorizeRoute path='/manage-configs' component={() => <ManageConfigs />} />
+      <AuthorizeRoute path='/system-settings' component={() => <ManageSystemSettings />} />
+      <AuthorizeRoute path='/about' component={() => <About />} />
+      <AuthorizeRoute path='/map' component={() => config ? <Map /> : <Redirect to="/configs" />} />
+      <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+    </Layout>
   );
 }
 
