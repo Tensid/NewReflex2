@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reflex.Data.Models;
+using Reflex.Services;
 using Reflex.SettingsService;
 
 namespace Reflex.Controllers
@@ -20,12 +21,14 @@ namespace Reflex.Controllers
             _systemSettingsService = systemSettingsService;
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpGet("fb")]
         public FbSettings GetFbSettings()
         {
             return _systemSettingsService.GetFbSettings();
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpPut("fb")]
         public void UpdateFbSettings(FbSettings fbSettings)
         {
@@ -44,42 +47,49 @@ namespace Reflex.Controllers
             return _systemSettingsService.GetMiscSettings();
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpPut("misc")]
         public void UpdateMiscSettings(MiscSettings miscSettings)
         {
             _systemSettingsService.UpdateMiscSettings(miscSettings);
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpGet("byggr")]
         public ByggrSettings GetByggrSettings()
         {
             return _systemSettingsService.GetByggrSettings();
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpPut("byggr")]
         public void UpdateByggrSettings(ByggrSettings settings)
         {
             _systemSettingsService.UpdateByggrSettings(settings);
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpGet("ags")]
         public AgsSettings GetAgsSettings()
         {
             return _systemSettingsService.GetAgsSettings();
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpPut("ags")]
         public void UpdateAgsSettings(AgsSettings settings)
         {
             _systemSettingsService.UpdateAgsSettings(settings);
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpGet("ecos")]
         public EcosSettings GetEcosSettings()
         {
             return _systemSettingsService.GetEcosSettings();
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpPut("ecos")]
         public void UpdateEcosSettings(EcosSettings settings)
         {

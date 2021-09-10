@@ -394,26 +394,38 @@ export async function getEstatePosition(fnr: number | string) {
   const { data } = await instance.get(url);
   return data;
 }
-export async function getOccurences(caseId: string, source: string, caseSourceId: string) {
-  const url = `cases/${caseId}/${source}/occurences?caseSourceId=${caseSourceId}`;
+export async function getOccurences(caseId: string, caseSource: string, caseSourceId: string) {
+  let url = `cases/${caseId}/occurences?caseSourceId=${caseSourceId}&caseSource=${caseSource}`;
+  if (configId) {
+    url = `${url}&configId=${configId}`;
+  }
   const { data } = await instance.get<Occurence[]>(url);
   return data;
 }
 
-export async function getPreview(caseId: string, source: string, caseSourceId: string) {
-  const url = `cases/${caseId}/${source}/preview?caseSourceId=${caseSourceId}`;
+export async function getPreview(caseId: string, caseSource: string, caseSourceId: string) {
+  let url = `cases/${caseId}/preview?caseSourceId=${caseSourceId}&caseSource=${caseSource}`;
+  if (configId) {
+    url = `${url}&configId=${configId}`;
+  }
   const { data } = await instance.get<Preview>(url);
   return data;
 }
 
-export async function getCasePersons(caseId: string, source: string, caseSourceId: string) {
-  const url = `cases/${caseId}/${source}/persons?caseSourceId=${caseSourceId}`;
+export async function getCasePersons(caseId: string, caseSource: string, caseSourceId: string) {
+  let url = `cases/${caseId}/persons?caseSourceId=${caseSourceId}&caseSource=${caseSource}`;
+  if (configId) {
+    url = `${url}&configId=${configId}`;
+  }
   const { data } = await instance.get<CasePerson[]>(url);
   return data;
 }
 
-export async function getArchivedDocuments(caseId: string, source: string, caseSourceId: string) {
-  const url = `cases/${caseId}/${source}/archivedDocuments?caseSourceId=${caseSourceId}`;
+export async function getArchivedDocuments(caseId: string, caseSource: string, caseSourceId: string) {
+  let url = `cases/${caseId}/archivedDocuments?caseSourceId=${caseSourceId}&caseSource=${caseSource}`;
+  if (configId) {
+    url = `${url}&configId=${configId}`;
+  }
   const { data } = await instance.get<ArchivedDocument[]>(url);
   return data;
 }
@@ -443,7 +455,7 @@ export async function deleteUsers(ids: string[]) {
 }
 
 export async function getDocument(docLinkId: string, caseSource: any, caseSourceId: string) {
-  const response = await instance.get(`cases/document?docId=${docLinkId}&caseSource=${caseSource}&caseSourceId=${caseSourceId}`, { responseType: 'blob' });
+  const response = await instance.get(`cases/document?docId=${docLinkId}&caseSource=${caseSource}&caseSourceId=${caseSourceId}&configId=${configId}`, { responseType: 'blob' });
 
   if (!response.data)
     return;

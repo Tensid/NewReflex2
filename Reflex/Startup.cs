@@ -20,6 +20,7 @@ using Reflex.SettingsService;
 using ReflexAgsService;
 using ReflexByggrService;
 using ReflexEcosService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Reflex
 {
@@ -44,7 +45,8 @@ namespace Reflex
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
+                .AddProfileService<ProfileService>();
 
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<ISystemSettingsService, SystemSettingsService>();
@@ -68,6 +70,25 @@ namespace Reflex
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.HasConfigPermission, policy =>
+                    policy.Requirements.Add(new HasConfigPermissionRequirement()));
+            });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.HasCaseSourcePermission, policy =>
+                    policy.Requirements.Add(new HasCaseSourcePermissionRequirement()));
+            });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.IsAdmin, policy =>
+                    policy.Requirements.Add(new IsAdminRequirement()));
+            });
+            services.AddScoped<IAuthorizationHandler, HasConfigPermissionHandler>();
+            services.AddScoped<IAuthorizationHandler, HasCaseSourcePermissionHandler>();
+            services.AddScoped<IAuthorizationHandler, IsAdminHandler>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route } from 'react-router';
 import { Redirect } from 'react-router-dom';
@@ -14,87 +14,45 @@ import Map from './Map';
 import Population from './Population';
 import Property from './Property';
 import Search from './Search';
-import { Config, getConfigs } from './api/api';
 import { RootState } from './app/store';
 import { ApplicationPaths } from './features/api-authorization/ApiAuthorizationConstants';
 import ApiAuthorizationRoutes from './features/api-authorization/ApiAuthorizationRoutes';
 import AuthorizeRoute from './features/api-authorization/AuthorizeRoute';
-import authService from './features/api-authorization/AuthorizeService';
-import { setConfig } from './features/configs/configsSlice';
+import useAuthService from './features/api-authorization/useAuthService';
 import { fetchLayers, fetchMapSettings } from './features/map/mapSettingsSlice';
 import { fetchSystemSettings } from './features/system-settings/systemSettingsSlice';
-import { fetchUserSettings } from './features/user-settings/userSettingsSlice';
+import { fetchInitiateSettings } from './features/user-settings/userSettingsSlice';
 import { fetchGetUser } from './features/user/userSlice';
 
-async function populateState(setAuthenticated: (authenticated: boolean) => void) {
-  const [authenticated] = await Promise.all([authService.isAuthenticated()]);
-  setAuthenticated(authenticated);
-}
-
 function App() {
-  const [authenticated, setAuthenticated] = useState<Boolean>();
-  const [configs, setConfigs] = useState<Config[]>([]);
   const dispatch = useDispatch();
   const config = useSelector((state: RootState) => state.config);
-  const defaultConfigId = useSelector((state: RootState) => state.userSettings?.defaultConfigId);
-
-  let _subscription: number;
-  useEffect(() => {
-    _subscription = authService.subscribe(() => populateState(setAuthenticated));
-    populateState(setAuthenticated);
-
-    return () => {
-      authService.unsubscribe(_subscription);
-    };
-  }, []);
+  const hasReceived = useSelector((state: RootState) => state.userSettings.hasReceived);
+  const { authenticated } = useAuthService();
 
   useEffect(() => {
     if (authenticated) {
-      dispatch(fetchUserSettings());
-      dispatch(fetchGetUser());
-      (async () => {
-        setConfigs(await getConfigs());
-      })();
+      dispatch(fetchInitiateSettings());
       dispatch(fetchMapSettings());
       dispatch(fetchSystemSettings());
       dispatch(fetchLayers());
+      dispatch(fetchGetUser());
     }
   }, [authenticated, dispatch]);
 
-  useEffect(() => {
-    if (!config && authenticated && defaultConfigId) {
-      (async () => {
-        const defaultConfig = configs.find(x => x.id === defaultConfigId);
-        if (defaultConfig)
-          dispatch(setConfig(defaultConfig));
-      })();
-    }
-  }, [authenticated, config, defaultConfigId, configs, dispatch]);
-
-  useEffect(() => {
-    if (!authenticated) {
-      _subscription = authService.subscribe(() => populateState(setAuthenticated));
-      populateState(setAuthenticated);
-
-      return () => {
-        authService.unsubscribe(_subscription);
-      };
-    }
-  }, [authenticated]);
-
   return (
     <Layout>
-      <AuthorizeRoute exact path='/' component={() => config ? <Search /> : <Redirect to="/configs" />} />
+      {hasReceived && <AuthorizeRoute exact path='/' component={() => config ? <Search /> : <Redirect to="/configs" />} />}
       <AuthorizeRoute path='/configs' component={() => <Configs />} />
-      <AuthorizeRoute path='/search' component={() => config ? <Search /> : <Redirect to="/configs" />} />
-      <AuthorizeRoute path='/cases' component={() => config ? <Cases /> : <Redirect to="/configs" />} />
-      <AuthorizeRoute path='/population' component={() => config ? <Population /> : <Redirect to="/configs" />} />
-      <AuthorizeRoute path='/property' component={() => config ? <Property /> : <Redirect to="/configs" />} />
-      <AuthorizeRoute path='/manage-users' component={() => <ManageUsers />} />
-      <AuthorizeRoute path='/manage-configs' component={() => <ManageConfigs />} />
-      <AuthorizeRoute path='/system-settings' component={() => <ManageSystemSettings />} />
-      <AuthorizeRoute path='/about' component={() => <About />} />
-      <AuthorizeRoute path='/map' component={() => config ? <Map /> : <Redirect to="/configs" />} />
+      {hasReceived && <AuthorizeRoute path='/search' component={() => config ? <Search /> : <Redirect to="/configs" />} />}
+      {hasReceived && <AuthorizeRoute path='/map' component={() => config ? <Map /> : <Redirect to="/configs" />} />}
+      {hasReceived && <AuthorizeRoute path='/cases' component={() => config ? <Cases /> : <Redirect to="/configs" />} />}
+      {hasReceived && <AuthorizeRoute path='/population' component={() => config ? <Population /> : <Redirect to="/configs" />} />}
+      {hasReceived && <AuthorizeRoute path='/property' component={() => config ? <Property /> : <Redirect to="/configs" />} />}
+      <AuthorizeRoute requiredRoles={["Admin"]} path='/manage-users' component={() => <ManageUsers />} />
+      <AuthorizeRoute requiredRoles={["Admin"]} path='/manage-configs' component={() => <ManageConfigs />} />
+      <AuthorizeRoute requiredRoles={["Admin"]} path='/system-settings' component={() => <ManageSystemSettings />} />
+      <Route path='/about' component={() => <About />} />
       <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
     </Layout>
   );

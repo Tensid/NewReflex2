@@ -30,6 +30,7 @@ namespace Reflex.Controllers
             _context = context;
         }
 
+        [Authorize(Policy = Policies.HasConfigPermission)]
         [HttpGet("{estateId}/{estateName?}")]
         public async Task<IEnumerable<Case>> GetCases(string estateId, string estateName, Guid configId)
         {
@@ -102,6 +103,7 @@ namespace Reflex.Controllers
             return cases;
         }
 
+        [Authorize(Policy = Policies.HasCaseSourcePermission)]
         [HttpGet]
         public async Task<IEnumerable<Case>> GetCase(string caseId, Guid caseSourceId, CaseSource caseSource)
         {
@@ -109,30 +111,39 @@ namespace Reflex.Controllers
             return new List<Case> { await proxy.GetCase(caseId) };
         }
 
+        [Authorize(Policy = Policies.HasCaseSourcePermission)]
         [HttpGet("{caseId}/{source}/persons")]
-        public async Task<IEnumerable<CasePerson>> GetPersonsByCase(string caseId, CaseSource source, Guid caseSourceId)
+        [HttpGet("{caseId}/persons")]
+        public async Task<IEnumerable<CasePerson>> GetPersonsByCase(string caseId, CaseSource caseSource, Guid caseSourceId)
         {
-            return await _proxyService.GetProxy(source, caseSourceId).GetPersonsByCase(caseId);
+            return await _proxyService.GetProxy(caseSource, caseSourceId).GetPersonsByCase(caseId);
         }
 
+        [Authorize(Policy = Policies.HasCaseSourcePermission)]
         [HttpGet("{caseId}/{source}/preview")]
-        public async Task<Preview> GetPreview(string caseId, CaseSource source, Guid caseSourceId)
+        [HttpGet("{caseId}/preview")]
+        public async Task<Preview> GetPreview(string caseId, CaseSource caseSource, Guid caseSourceId)
         {
-            return await _proxyService.GetProxy(source, caseSourceId).GetPreviewByCase(caseId);
+            return await _proxyService.GetProxy(caseSource, caseSourceId).GetPreviewByCase(caseId);
         }
 
+        [Authorize(Policy = Policies.HasCaseSourcePermission)]
         [HttpGet("{caseId}/{source}/archivedDocuments")]
-        public async Task<IEnumerable<ArchivedDocument>> GetArchivedDocuments(string caseId, CaseSource source, Guid caseSourceId)
+        [HttpGet("{caseId}/archivedDocuments")]
+        public async Task<IEnumerable<ArchivedDocument>> GetArchivedDocuments(string caseId, CaseSource caseSource, Guid caseSourceId)
         {
-            return await _proxyService.GetProxy(source, caseSourceId).GetArchivedDocumentsByCase(caseId);
+            return await _proxyService.GetProxy(caseSource, caseSourceId).GetArchivedDocumentsByCase(caseId);
         }
 
+        [Authorize(Policy = Policies.HasCaseSourcePermission)]
         [HttpGet("{caseId}/{source}/occurences")]
-        public async Task<IEnumerable<Occurence>> GetOccurences(string caseId, CaseSource source, Guid caseSourceId)
+        [HttpGet("{caseId}/occurences")]
+        public async Task<IEnumerable<Occurence>> GetOccurences(string caseId, CaseSource caseSource, Guid caseSourceId)
         {
-            return await _proxyService.GetProxy(source, caseSourceId).GetOccurencesByCase(caseId);
+            return await _proxyService.GetProxy(caseSource, caseSourceId).GetOccurencesByCase(caseId);
         }
 
+        [Authorize(Policy = Policies.HasCaseSourcePermission)]
         [HttpGet("document")]
         public async Task<IActionResult> GetDocument(string docId, CaseSource caseSource, Guid caseSourceId)
         {

@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Reflex.Data;
 using Reflex.Data.Models;
+using Reflex.Services;
 
 namespace Reflex.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = Policies.IsAdmin)]
     [ApiController]
     [Route("api/[controller]")]
     public class EcosController : ControllerBase

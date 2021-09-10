@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -19,18 +22,26 @@ namespace Reflex.Controllers
         private readonly ILogger<ConfigsController> _logger;
         private readonly IRepository _repository;
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ConfigsController(ILogger<ConfigsController> logger, IRepository repository, ApplicationDbContext context)
+        public ConfigsController(ILogger<ConfigsController> logger, IRepository repository, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
             _repository = repository;
             _context = context;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        public IEnumerable<Config> GetConfigs()
+        public async Task<IEnumerable<Config>> GetConfigs()
         {
-            return _repository.GetConfigs().Select(x => new Config
+            var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await _userManager.FindByIdAsync(id);
+
+            var configClaims = User.Claims.Where(x => x.Type == "config");
+            var isAdmin = (await _userManager.GetRolesAsync(user)).Contains("Admin");
+
+            return _repository.GetConfigs().Where(x => isAdmin || configClaims.Any(y => y.Value == x.Id.ToString())).Select(x => new Config
             {
                 Description = x.Description,
                 Id = x.Id,
@@ -40,6 +51,7 @@ namespace Reflex.Controllers
             });
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpGet("formData/{id}")]
         public ConfigFormData GetForm(Guid id)
         {
@@ -62,12 +74,14 @@ namespace Reflex.Controllers
             return formData;
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpDelete("{id}")]
         public void DeleteConfig(Guid id)
         {
             _repository.DeleteConfig(id);
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpGet("caseSourceOptions")]
         public IEnumerable<CaseSourceOption> GetCaseSourceOptions()
         {
@@ -78,6 +92,7 @@ namespace Reflex.Controllers
             return caseSourceOptions.ToList();
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpPut]
         public void UpdateConfig(ConfigFormData formData)
         {
@@ -137,6 +152,7 @@ namespace Reflex.Controllers
             _context.SaveChanges();
         }
 
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpPost]
         public void CreateConfig(ConfigFormData formData)
         {
