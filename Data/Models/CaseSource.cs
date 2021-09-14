@@ -7,6 +7,7 @@ namespace Reflex.Data.Models
     {
         AGS,
         ByggR,
-        Ecos
+        Ecos,
+        iipax
     }
 }

@@ -153,6 +153,40 @@ namespace Reflex.Controllers
                 }
             }
 
+            if (query != null && query.Length >= 3)
+            {
+                var config = _context.Configs.Include(x => x.IipaxConfigs).First(x => x.Id == configId);
+                var iipaxTasks = new List<Task<VisaRService.Contracts.Case>>();
+
+                try
+                {
+                    foreach (var iipaxConfig in config.IipaxConfigs)
+                    {
+                        var iipaxProxy = _proxyService.GetProxy(CaseSource.iipax, iipaxConfig.Id);
+                        iipaxTasks.Add(iipaxProxy.SearchCase(query));
+                    }
+                    await Task.WhenAll(iipaxTasks);
+                }
+                catch
+                {
+                    // ignored
+                }
+
+                var iipaxCases = (await Task.WhenAll(iipaxTasks.Where(task => task.Status == TaskStatus.RanToCompletion)).ConfigureAwait(false))
+                    .Where(x => x != null);
+                foreach (var iipaxCase in iipaxCases)
+                {
+                    searchResults.Add(new SearchResult
+                    {
+                        DisplayName = iipaxCase.Title,
+                        Value = iipaxCase.CaseId,
+                        Source = "iipax",
+                        Type = "Ärende",
+                        CaseSourceId = iipaxCase.CaseSourceId
+                    });
+                }
+            }
+
             return searchResults.Take(10).ToArray();
         }
 

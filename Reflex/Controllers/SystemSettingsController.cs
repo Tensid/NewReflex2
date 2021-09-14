@@ -95,5 +95,19 @@ namespace Reflex.Controllers
         {
             _systemSettingsService.UpdateEcosSettings(settings);
         }
+
+        [Authorize(Policy = Policies.IsAdmin)]
+        [HttpGet("iipax")]
+        public IipaxSettings GetIipaxSettings()
+        {
+            return _systemSettingsService.GetIipaxSettings();
+        }
+
+        [Authorize(Policy = Policies.IsAdmin)]
+        [HttpPut("iipax")]
+        public void UpdateIipaxSettings(IipaxSettings settings)
+        {
+            _systemSettingsService.UpdateIipaxSettings(settings);
+        }
     }
 }

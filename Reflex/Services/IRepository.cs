@@ -14,5 +14,6 @@ namespace Reflex.Services
         Task CreateAgs(AgsConfig agsConfig);
         Task CreateByggr(ByggrConfig byggRConfig);
         Task CreateEcos(EcosConfig ecosConfig);
+        Task CreateIipax(IipaxConfig ecosConfig);
     }
 }

@@ -92,9 +92,11 @@ namespace Reflex.Data
         public DbSet<AgsConfig> AgsConfigs { get; set; }
         public DbSet<ByggrConfig> ByggrConfigs { get; set; }
         public DbSet<EcosConfig> EcosConfigs { get; set; }
+        public DbSet<IipaxConfig> IipaxConfigs { get; set; }
         public DbSet<AgsSettings> AgsSettings { get; set; }
         public DbSet<ByggrSettings> ByggrSettings { get; set; }
         public DbSet<EcosSettings> EcosSettings { get; set; }
+        public DbSet<IipaxSettings> IipaxSettings { get; set; }
         public DbSet<FbSettings> FbSettings { get; set; }
 
         public string Encrypt(string plainText)

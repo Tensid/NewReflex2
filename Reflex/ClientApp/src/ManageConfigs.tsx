@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Nav, NavDropdown, Row, Tab } from 'react-bootstrap';
-import { AgsConfig, ByggrConfig, CaseSourceOption, Config, EcosConfig, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getEcosConfig, getEcosConfigs, getFormData } from './api/api';
+import { AgsConfig, ByggrConfig, CaseSourceOption, Config, EcosConfig, IipaxConfig, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getEcosConfig, getEcosConfigs, getFormData, getIipaxConfig, getIipaxConfigs } from './api/api';
 import { getLayersSettings } from './api/mapSettingsApi';
 import AgsConfigForm from './features/manage-configs/AgsConfigForm';
 import ByggrConfigForm from './features/manage-configs/ByggrConfigForm';
 import EcosConfigForm from './features/manage-configs/EcosConfigForm';
+import IipaxConfigForm from './features/manage-configs/IipaxConfigForm';
 import ReflexConfigForm from './features/manage-configs/ReflexConfigForm';
 
 const ManageConfigs = () => {
   const [agsConfigs, setAgsConfigs] = useState<AgsConfig[]>([]);
   const [byggrConfigs, setByggrConfigs] = useState<ByggrConfig[]>([]);
   const [ecosConfigs, setEcosConfigs] = useState<EcosConfig[]>([]);
+  const [iipaxConfigs, setIipaxConfigs] = useState<IipaxConfig[]>([]);
   const [reflexConfigs, setReflexConfigs] = useState<Config[]>([]);
   const [agsFormData, setAgsFormData] = useState<any>();
   const [byggrFormData, setByggrFormData] = useState<any>();
   const [ecosFormData, setEcosFormData] = useState<any>();
+  const [iipaxFormData, setIipaxFormData] = useState<any>();
   const [reflexFormData, setReflexFormData] = useState<any>();
   const [activeForm, setActiveForm] = useState<string>();
   const [activeKey, setActiveKey] = useState<string>();
@@ -27,6 +30,7 @@ const ManageConfigs = () => {
       setAgsConfigs(await getAgsConfigs());
       setByggrConfigs(await getByggrConfigs());
       setEcosConfigs(await getEcosConfigs());
+      setIipaxConfigs(await getIipaxConfigs());
       setReflexConfigs(await getConfigs());
       setCaseSourceOptions(await getCaseSourceOptions());
       const mappedLayers = (await getLayersSettings()).map((x: any) => ({ value: x.id, label: x.title }));
@@ -38,6 +42,7 @@ const ManageConfigs = () => {
     setAgsConfigs(await getAgsConfigs());
     setByggrConfigs(await getByggrConfigs());
     setEcosConfigs(await getEcosConfigs());
+    setIipaxConfigs(await getIipaxConfigs());
     setReflexConfigs(await getConfigs());
     setCaseSourceOptions(await getCaseSourceOptions());
   }
@@ -127,6 +132,24 @@ const ManageConfigs = () => {
                     setActiveForm('Ecos');
                   }}>Skapa konfiguration</NavDropdown.Item>
                 </NavDropdown>
+                <NavDropdown key="iipax" title="iipax" id="nav-dropdown">
+                  {iipaxConfigs?.map((cfg) =>
+                    <NavDropdown.Item key={cfg.id} eventKey={cfg.id} onClick={async () => {
+                      setActiveKey(cfg.id);
+                      setEdit(true);
+                      setActiveForm('iipax');
+                      setIipaxFormData(await getIipaxConfig(cfg.id));
+                    }}>
+                      {cfg?.name}
+                    </NavDropdown.Item>)}
+                  {iipaxConfigs.length > 0 && <NavDropdown.Divider />}
+                  <NavDropdown.Item key="iipax" eventKey="iipax" onClick={() => {
+                    setActiveKey('iipax');
+                    setEdit(false);
+                    setIipaxFormData({});
+                    setActiveForm('iipax');
+                  }}>Skapa konfiguration</NavDropdown.Item>
+                </NavDropdown>
               </Nav>
             </Col>
           </Row>
@@ -137,6 +160,7 @@ const ManageConfigs = () => {
         {activeForm === 'AGS' && <AgsConfigForm edit={edit} formData={agsFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
         {activeForm === 'ByggR' && <ByggrConfigForm edit={edit} formData={byggrFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
         {activeForm === 'Ecos' && <EcosConfigForm edit={edit} formData={ecosFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
+        {activeForm === 'iipax' && <IipaxConfigForm edit={edit} formData={iipaxFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
       </div>
     </div>
   );

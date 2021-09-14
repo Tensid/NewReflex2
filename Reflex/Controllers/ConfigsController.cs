@@ -55,11 +55,12 @@ namespace Reflex.Controllers
         [HttpGet("formData/{id}")]
         public ConfigFormData GetForm(Guid id)
         {
-            var formData = _context.Configs.Where(x => x.Id == id).Include(x => x.AgsConfigs).Include(x => x.ByggrConfigs).Include(x => x.EcosConfigs).ToList().Select(x =>
+            var formData = _context.Configs.Where(x => x.Id == id).Include(x => x.AgsConfigs).Include(x => x.ByggrConfigs).Include(x => x.EcosConfigs).Include(x => x.IipaxConfigs).ToList().Select(x =>
             {
                 var caseSources = x.AgsConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.AGS }).ToList();
                 caseSources.AddRange(x.ByggrConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.ByggR }));
                 caseSources.AddRange(x.EcosConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.Ecos }));
+                caseSources.AddRange(x.IipaxConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.iipax }));
 
                 return new ConfigFormData
                 {
@@ -88,6 +89,7 @@ namespace Reflex.Controllers
             var caseSourceOptions = _context.AgsConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.AGS }).ToList();
             caseSourceOptions.AddRange(_context.ByggrConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.ByggR }));
             caseSourceOptions.AddRange(_context.EcosConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.Ecos }));
+            caseSourceOptions.AddRange(_context.IipaxConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.iipax }));
 
             return caseSourceOptions.ToList();
         }
@@ -107,11 +109,12 @@ namespace Reflex.Controllers
             _context.SaveChanges();
 
             var config = _context.Configs.Include(p => p.AgsConfigs)
-                .Include(p => p.ByggrConfigs).Include(p => p.EcosConfigs)
+                .Include(p => p.ByggrConfigs).Include(p => p.EcosConfigs).Include(p => p.IipaxConfigs)
                 .Single(p => p.Id == formData.Id);
             config.AgsConfigs.Clear();
             config.ByggrConfigs.Clear();
             config.EcosConfigs.Clear();
+            config.IipaxConfigs.Clear();
 
             foreach (var option in formData.CaseSources ?? Enumerable.Empty<CaseSourceOption>())
             {
@@ -147,6 +150,17 @@ namespace Reflex.Controllers
                         .Single(p => p.Id == option.Value);
 
                     cfg.EcosConfigs.Add(ecosConfig);
+                }
+                if (option.CaseSource == CaseSource.iipax)
+                {
+                    var cfg = _context.Configs
+                        .Include(p => p.IipaxConfigs)
+                        .Single(p => p.Id == formData.Id);
+
+                    var iipaxConfig = _context.IipaxConfigs
+                        .Single(p => p.Id == option.Value);
+
+                    cfg.IipaxConfigs.Add(iipaxConfig);
                 }
             }
             _context.SaveChanges();
@@ -203,6 +217,18 @@ namespace Reflex.Controllers
                         .Single(p => p.Id == option.Value);
 
                     cfg.EcosConfigs.Add(ecosConfig);
+                    _context.SaveChanges();
+                }
+                if (option.CaseSource == CaseSource.iipax)
+                {
+                    var cfg = _context.Configs
+                        .Include(p => p.IipaxConfigs)
+                        .Single(p => p.Id == id);
+
+                    var iipaxConfig = _context.IipaxConfigs
+                        .Single(p => p.Id == option.Value);
+
+                    cfg.IipaxConfigs.Add(iipaxConfig);
                     _context.SaveChanges();
                 }
             }

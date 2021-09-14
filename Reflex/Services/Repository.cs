@@ -23,7 +23,7 @@ namespace Reflex.Services
         public IEnumerable<Config> GetConfigs()
         {
             return _context.Configs.Include(x => x.AgsConfigs)
-                .Include(x => x.ByggrConfigs).Include(x => x.EcosConfigs).ToList();
+                .Include(x => x.ByggrConfigs).Include(x => x.EcosConfigs).Include(x => x.IipaxConfigs).ToList();
         }
 
         public Config GetConfig(Guid id)
@@ -57,6 +57,13 @@ namespace Reflex.Services
         {
             ecosConfig.Id = Guid.NewGuid();
             _context.Add(ecosConfig);
+            return _context.SaveChangesAsync();
+        }
+
+        public Task CreateIipax(IipaxConfig iipaxConfig)
+        {
+            iipaxConfig.Id = Guid.NewGuid();
+            _context.Add(iipaxConfig);
             return _context.SaveChangesAsync();
         }
 

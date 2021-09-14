@@ -48,6 +48,7 @@ namespace Reflex.Services
                 "AGS" => _context.Configs.Include(x => x.AgsConfigs).FirstOrDefault(x => x.Id.ToString() == configId).AgsConfigs.Any(x => x.Id.ToString() == caseSourceId),
                 "ByggR" => _context.Configs.Include(x => x.ByggrConfigs).FirstOrDefault(x => x.Id.ToString() == configId).ByggrConfigs.Any(x => x.Id.ToString() == caseSourceId),
                 "Ecos" => _context.Configs.Include(x => x.EcosConfigs).FirstOrDefault(x => x.Id.ToString() == configId).EcosConfigs.Any(x => x.Id.ToString() == caseSourceId),
+                "iipax" => _context.Configs.Include(x => x.IipaxConfigs).FirstOrDefault(x => x.Id.ToString() == configId).IipaxConfigs.Any(x => x.Id.ToString() == caseSourceId),
                 _ => false
             };
 

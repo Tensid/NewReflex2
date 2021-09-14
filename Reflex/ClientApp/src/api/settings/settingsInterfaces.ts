@@ -16,6 +16,11 @@ export interface EcosSettings {
   password: string;
 }
 
+export interface IipaxSettings {
+  id: string;
+  serviceUrl: string;
+}
+
 export interface FbSettings {
   id: string;
   fbServiceDatabase: string;

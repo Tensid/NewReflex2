@@ -31,6 +31,10 @@ const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, ca
     color = 'warning';
     symbol = faArchive;
   }
+  if (caseSource === CaseSource.iipax) {
+    color = 'warning';
+    symbol = faArchive;
+  }
 
   function handleClick() {
     setModalData({ dnr, caseId, caseSource, title, caseSourceId });

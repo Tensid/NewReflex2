@@ -1,0 +1,29 @@
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.idainfront.se"
+    elementFormDefault="qualified" xmlns:ida="http://www.idainfront.se">
+
+	<!--  
+	This XML schema is reverse engineered from the default details element for a SOAP Fault 
+	returned from the access api.
+	
+	The namespace is different from the rest in the archive access api
+	so it had to be defined in its own schema file.
+	 -->
+
+	<element name="msg" type="string"/>
+	
+	<!-- Below is an example of how this element is used -->
+	<!-- 
+	<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   		<soapenv:Body>
+      			<soapenv:Fault>
+         		<faultcode>soapenv:Server</faultcode>
+         		<faultstring>Internal error</faultstring>
+         		<detail>
+            			<m:msg xmlns:m="http://www.idainfront.se">iipax.generic.plugin.broker.SynchronousPluginException: RuntimeException</m:msg>
+         		</detail>
+      			</soapenv:Fault>
+   		</soapenv:Body>
+	</soapenv:Envelope>
+	 -->
+    
+</schema>

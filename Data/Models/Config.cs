@@ -18,6 +18,7 @@ namespace Reflex.Data.Models
         public virtual ICollection<AgsConfig> AgsConfigs { get; set; }
         public virtual ICollection<ByggrConfig> ByggrConfigs { get; set; }
         public virtual ICollection<EcosConfig> EcosConfigs { get; set; }
+        public virtual ICollection<IipaxConfig> IipaxConfigs { get; set; }
         public virtual ICollection<ApplicationUser> ApplicationUserDefaultConfig { get; set; }
     }
 }

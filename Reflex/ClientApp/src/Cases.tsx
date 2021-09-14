@@ -144,6 +144,7 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
                 <Dropdown.Item disabled={!caseSources.includes(CaseSource.Ecos)} className="d-flex justify-content-between caseSourceFilter" onClick={() => handleCaseSourceFilter(CaseSource.Ecos)}>Ecos {caseSourceFilter.includes(CaseSource.Ecos) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
                 <Dropdown.Item disabled={!caseSources.includes(CaseSource.ByggR)} className="d-flex justify-content-between caseSourceFilter" onClick={() => handleCaseSourceFilter(CaseSource.ByggR)}>ByggR {caseSourceFilter.includes(CaseSource.ByggR) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
                 <Dropdown.Item disabled={!caseSources.includes(CaseSource.AGS)} className="d-flex justify-content-between caseSourceFilter" onClick={() => handleCaseSourceFilter(CaseSource.AGS)}>AGS {caseSourceFilter.includes(CaseSource.AGS) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
+                <Dropdown.Item disabled={!caseSources.includes(CaseSource.iipax)} className="d-flex justify-content-between caseSourceFilter" onClick={() => handleCaseSourceFilter(CaseSource.iipax)}>iipax {caseSourceFilter.includes(CaseSource.iipax) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
               </DropdownButton>
               {statuses.length > 0 && <DropdownButton variant="outline-secondary"
                 title={<>Status {(statusFilter.length > 0) && <span className="badge badge-secondary">{statusFilter.length}</span>}</>}

@@ -19,9 +19,11 @@ namespace Reflex.SettingsService
         FbSettings GetFbSettings();
         FbWebbSettings GetFbWebbSettings();
         MiscSettings GetMiscSettings();
+        IipaxSettings GetIipaxSettings();
         void UpdateAgsSettings(AgsSettings settings);
         void UpdateByggrSettings(ByggrSettings settings);
         void UpdateEcosSettings(EcosSettings settings);
+        void UpdateIipaxSettings(IipaxSettings settings);
         void UpdateFbSettings(FbSettings fbSettings);
         Task UpdateMiscSettings(MiscSettings miscSettings);
     }

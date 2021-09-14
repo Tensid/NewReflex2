@@ -38,6 +38,7 @@ namespace Reflex.Controllers
             var caseSources = new List<CaseSource>();
 
             var config = _context.Configs.Include(x => x.AgsConfigs).Include(x => x.ByggrConfigs).Include(x => x.EcosConfigs)
+                .Include(x => x.IipaxConfigs)
                 .First(x => x.Id == configId);
             if (config.AgsConfigs.Count > 0)
                 caseSources.Add(CaseSource.AGS);
@@ -45,6 +46,8 @@ namespace Reflex.Controllers
                 caseSources.Add(CaseSource.ByggR);
             if (config.EcosConfigs.Count > 0)
                 caseSources.Add(CaseSource.Ecos);
+            if (config.IipaxConfigs.Count > 0)
+                caseSources.Add(CaseSource.iipax);
 
             foreach (var source in caseSources)
             {
@@ -89,6 +92,19 @@ namespace Reflex.Controllers
                                 c.CaseSourceId = ecosConfig.Id;
                             }
                             caseResult.AddRange(ecosCases);
+                        }
+                    }
+                    if (source == CaseSource.iipax)
+                    {
+                        foreach (var iipaxConfig in config.IipaxConfigs)
+                        {
+                            var proxy = _proxyService.GetProxy(source, iipaxConfig.Id);
+                            var iipaxCases = await proxy.GetCasesByEstate(estateId);
+                            foreach (var c in iipaxCases)
+                            {
+                                c.CaseSourceId = iipaxConfig.Id;
+                            }
+                            caseResult.AddRange(iipaxCases);
                         }
                     }
 

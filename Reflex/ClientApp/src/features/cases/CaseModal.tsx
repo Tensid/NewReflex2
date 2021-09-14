@@ -26,6 +26,7 @@ const availableCaseDetailsTabs = new Map<CaseSource, CaseTab[]>();
 availableCaseDetailsTabs.set(CaseSource.AGS, ['Archive']);
 availableCaseDetailsTabs.set(CaseSource.ByggR, ['Preview', 'Occurences', 'Persons']);
 availableCaseDetailsTabs.set(CaseSource.Ecos, ['Occurences']);
+availableCaseDetailsTabs.set(CaseSource.iipax, ['Archive']);
 
 const mappedCaseTabs = new Map<CaseTab, string>();
 mappedCaseTabs.set('Preview', 'Förhandsgranskning');
@@ -85,7 +86,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
                 'Preview': <PreviewContent previewState={previewData} />,
                 'Occurences': <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} caseSourceId={caseSourceId} />,
                 'Persons': <PersonsContent personsState={personsData} />,
-                'Archive': <Archive archiveState={archivedDocumentsData} caseSource={caseSource} />
+                'Archive': <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} />
               }[availableTabs![0]]}
             </>}
             {availableTabs!.length > 1 &&
@@ -109,7 +110,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
                   if (availableTabs[i] === 'Archive')
                     return (
                       <Tab eventKey={tab} title="Intressenter">
-                        <Archive archiveState={archivedDocumentsData} caseSource={caseSource} />
+                        <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} />
                       </Tab>);
                 })}
               </Tabs>

@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Col, Nav, Row, Tab } from 'react-bootstrap';
-import { AgsSettings, ByggrSettings, EcosSettings, FbSettings, MiscSettings, getAgsSettings, getByggrSettings, getEcosSettings, getFbSettings, getMiscSettings } from './api/settings';
+import { AgsSettings, ByggrSettings, EcosSettings, FbSettings, IipaxSettings, MiscSettings, getAgsSettings, getByggrSettings, getEcosSettings, getFbSettings, getIipaxSettings, getMiscSettings } from './api/settings';
 import AgsSettingsForm from './features/system-settings/AgsSettingsForm';
 import ByggrSettingsForm from './features/system-settings/ByggrSettingsForm';
 import EcosSettingsForm from './features/system-settings/EcosSettingsForm';
 import FbSettingsForm from './features/system-settings/FbSettingsForm';
+import IipaxSettingsForm from './features/system-settings/IipaxSettingsForm';
 import MiscSettingsForm from './features/system-settings/MiscSettingsForm';
 
 const ManageSystemSettings = () => {
   const [agsFormData, setAgsFormData] = useState<AgsSettings>();
   const [byggrFormData, setByggrFormData] = useState<ByggrSettings>();
   const [ecosFormData, setEcosFormData] = useState<EcosSettings>();
+  const [iipaxFormData, setIipaxFormData] = useState<IipaxSettings>();
   const [fbFormData, setFbFormData] = useState<FbSettings>();
   const [miscFormData, setMiscFormData] = useState<MiscSettings>();
   const [activeKey, setActiveKey] = useState('');
@@ -55,6 +57,14 @@ const ManageSystemSettings = () => {
                     Ecos
                   </Nav.Link>
                 </Nav.Item>
+                <Nav.Item key="iipax" title="iipax" onClick={async () => {
+                  setActiveKey('iipax');
+                  setIipaxFormData(await getIipaxSettings());
+                }}>
+                  <Nav.Link eventKey="iipax" title="iipax">
+                    iipax
+                  </Nav.Link>
+                </Nav.Item>
                 <Nav.Item key="Övrigt" title="Övrigt" onClick={async () => {
                   setActiveKey('Övrigt');
                   setMiscFormData(await getMiscSettings());
@@ -73,6 +83,7 @@ const ManageSystemSettings = () => {
         {activeKey === 'AGS' && <AgsSettingsForm formData={agsFormData} setActiveKey={setActiveKey} />}
         {activeKey === 'ByggR' && <ByggrSettingsForm formData={byggrFormData} setActiveKey={setActiveKey} />}
         {activeKey === 'Ecos' && <EcosSettingsForm formData={ecosFormData} setActiveKey={setActiveKey} />}
+        {activeKey === 'iipax' && <IipaxSettingsForm formData={iipaxFormData} setActiveKey={setActiveKey} />}
         {activeKey === 'Övrigt' && <MiscSettingsForm formData={miscFormData} setActiveKey={setActiveKey} />}
       </div>
     </div>

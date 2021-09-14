@@ -103,5 +103,17 @@ namespace Reflex.SettingsService
             _context.EcosSettings.Update(settings);
             _context.SaveChanges();
         }
+
+        public IipaxSettings GetIipaxSettings()
+        {
+            return _context.IipaxSettings.FirstOrDefault();
+        }
+
+        public void UpdateIipaxSettings(IipaxSettings settings)
+        {
+            _context.IipaxSettings.RemoveRange(_context.IipaxSettings);
+            _context.IipaxSettings.Update(settings);
+            _context.SaveChanges();
+        }
     }
 }

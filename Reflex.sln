@@ -27,7 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reflex.Data", "Data\Reflex.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reflex.SettingsService", "SystemSettingsService\Reflex.SettingsService.csproj", "{2B90F582-E210-4A64-AB7B-37B25FB32EB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflexEcosService", "ReflexEcosService\ReflexEcosService.csproj", "{A6DE6112-C0C1-444C-9AB9-36994991375F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReflexEcosService", "ReflexEcosService\ReflexEcosService.csproj", "{A6DE6112-C0C1-444C-9AB9-36994991375F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReflexIipaxService", "ReflexIipaxService", "{5DCF25E9-8578-4A2B-9F1C-3B6243F43ADD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReflexIipaxService", "ReflexIipaxService\ReflexIipaxService.csproj", "{729463B1-3330-4167-AC65-CBAEBEE8C281}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +71,10 @@ Global
 		{A6DE6112-C0C1-444C-9AB9-36994991375F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6DE6112-C0C1-444C-9AB9-36994991375F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6DE6112-C0C1-444C-9AB9-36994991375F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{729463B1-3330-4167-AC65-CBAEBEE8C281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{729463B1-3330-4167-AC65-CBAEBEE8C281}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{729463B1-3330-4167-AC65-CBAEBEE8C281}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{729463B1-3330-4167-AC65-CBAEBEE8C281}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +89,8 @@ Global
 		{A34F889E-ADA0-4690-8619-FE3A9DC14045} = {E1F16F1B-2042-44FE-8689-D4F2385D34F7}
 		{E685D90A-6909-4A9F-89B3-5026C01AEE20} = {A34F889E-ADA0-4690-8619-FE3A9DC14045}
 		{A6DE6112-C0C1-444C-9AB9-36994991375F} = {BFA32C82-8DF4-43F1-B624-746D2099975F}
+		{5DCF25E9-8578-4A2B-9F1C-3B6243F43ADD} = {E1F16F1B-2042-44FE-8689-D4F2385D34F7}
+		{729463B1-3330-4167-AC65-CBAEBEE8C281} = {5DCF25E9-8578-4A2B-9F1C-3B6243F43ADD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4B3BA25-7045-4BC4-A5B9-AE6D115B3D59}

@@ -25,7 +25,8 @@ export function setConfigId(id: string) {
 export enum CaseSource {
   AGS = 'AGS',
   ByggR = 'ByggR',
-  Ecos = 'Ecos'
+  Ecos = 'Ecos',
+  iipax = 'iipax'
 }
 
 export type CaseTab = 'Preview' | 'Occurences' | 'Persons' | 'Archive';
@@ -105,6 +106,17 @@ export interface CasePerson {
 }
 
 export interface ArchivedDocument {
+  title: string;
+  physicalDocumentId: string;
+  docs: Doc[];
+}
+
+export interface Doc {
+  title: string;
+  files: File[];
+}
+
+export interface File {
   title: string;
   physicalDocumentId: string;
 }
@@ -192,6 +204,14 @@ export interface EcosConfig {
   id: string;
   name: string;
   hideCasesWithSecretOccurences: boolean;
+}
+
+export interface IipaxConfig {
+  id: string;
+  name: string;
+  hideCasesWithSecrecy: boolean;
+  hideCasesWithPulPersonalSecrecy: boolean;
+  hideCasesWithOtherSecrecy: boolean;
 }
 
 export interface ConfigFormData {
@@ -306,6 +326,11 @@ export async function getEcosConfigs() {
   return data;
 }
 
+export async function getIipaxConfigs() {
+  const { data } = await instance.get<IipaxConfig[]>('iipax');
+  return data;
+}
+
 export async function deleteAgsConfig(id: string) {
   const url = `ags/${id}`;
   const { data } = await instance.delete(url);
@@ -324,6 +349,12 @@ export async function deleteEcosConfig(id: string) {
   return data;
 }
 
+export async function deleteIipaxConfig(id: string) {
+  const url = `iipax/${id}`;
+  const { data } = await instance.delete(url);
+  return data;
+}
+
 export async function createAgsConfig(agsConfig: AgsConfig) {
   const { data } = await instance.post('ags', agsConfig);
   return data;
@@ -338,6 +369,12 @@ export async function createEcosConfig(ecosConfig: EcosConfig) {
   const { data } = await instance.post('ecos', ecosConfig);
   return data;
 }
+
+export async function createIipaxConfig(iipaxConfig: IipaxConfig) {
+  const { data } = await instance.post('iipax', iipaxConfig);
+  return data;
+}
+
 export async function updateAgsConfig(agsConfig: AgsConfig) {
   const { data } = await instance.put('ags', agsConfig);
   return data;
@@ -350,6 +387,11 @@ export async function updateByggrConfig(byggrConfig: ByggrConfig) {
 
 export async function updateEcosConfig(ecosConfig: EcosConfig) {
   const { data } = await instance.put('ecos', ecosConfig);
+  return data;
+}
+
+export async function updateIipaxConfig(iipaxConfig: IipaxConfig) {
+  const { data } = await instance.put('iipax', iipaxConfig);
   return data;
 }
 
@@ -368,6 +410,12 @@ export async function getByggrConfig(id: string) {
 export async function getEcosConfig(id: string) {
   const url = `ecos/${id}`;
   const { data } = await instance.get<EcosConfig>(url);
+  return data;
+}
+
+export async function getIipaxConfig(id: string) {
+  const url = `iipax/${id}`;
+  const { data } = await instance.get<IipaxConfig>(url);
   return data;
 }
 

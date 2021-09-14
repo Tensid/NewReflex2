@@ -21,6 +21,7 @@ using ReflexAgsService;
 using ReflexByggrService;
 using ReflexEcosService;
 using Microsoft.AspNetCore.Authorization;
+using ReflexIipaxService;
 
 namespace Reflex
 {
@@ -54,6 +55,7 @@ namespace Reflex
             services.AddScoped<AgsServiceFactory, AgsServiceFactory>();
             services.AddScoped<ByggrServiceFactory, ByggrServiceFactory>();
             services.AddScoped<EcosServiceFactory, EcosServiceFactory>();
+            services.AddScoped<IipaxServiceFactory, IipaxServiceFactory>();
             services.AddScoped<IFbProvider, FbProvider>();
             services.AddScoped<IFbService, FbService.FbService>();
             services.AddScoped<IMapProxyService, MapProxyService>();

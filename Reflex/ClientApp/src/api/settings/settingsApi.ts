@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AgsSettings, ByggrSettings, EcosSettings, FbSettings, FbWebbSettings, MiscSettings } from '.';
+import { AgsSettings, ByggrSettings, EcosSettings, FbSettings, FbWebbSettings, IipaxSettings, MiscSettings } from '.';
 import authService from '../../features/api-authorization/AuthorizeService';
 
 const instance = axios.create({
@@ -80,5 +80,17 @@ export async function getEcosSettings() {
 export async function updateEcosSettings(ecosSettings: EcosSettings) {
   const url = `systemsettings/ecos`;
   const { data } = await instance.put<EcosSettings>(url, ecosSettings);
+  return data;
+}
+
+export async function getIipaxSettings() {
+  const url = `systemsettings/iipax`;
+  const { data } = await instance.get<IipaxSettings>(url);
+  return data;
+}
+
+export async function updateIipaxSettings(iipaxSettings: IipaxSettings) {
+  const url = `systemsettings/iipax`;
+  const { data } = await instance.put<IipaxSettings>(url, iipaxSettings);
   return data;
 }
