@@ -212,6 +212,7 @@ export interface IipaxConfig {
   hideCasesWithSecrecy: boolean;
   hideCasesWithPulPersonalSecrecy: boolean;
   hideCasesWithOtherSecrecy: boolean;
+  objectTypes: string[];
 }
 
 export interface ConfigFormData {

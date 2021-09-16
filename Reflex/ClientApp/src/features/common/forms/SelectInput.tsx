@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import Select from 'react-select';
 
-const SelectInput = ({ name, label, options, isMulti, control }: any) => {
+const SelectInput = ({ name, label, options, isMulti, control, isSearchable = false }: any) => {
   return (
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
@@ -16,6 +16,7 @@ const SelectInput = ({ name, label, options, isMulti, control }: any) => {
         defaultValue={[]}
         name={name}
         control={control}
+        isSearchable={isSearchable}
       />
     </div>
   );

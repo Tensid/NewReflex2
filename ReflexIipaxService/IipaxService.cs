@@ -104,19 +104,20 @@ namespace ReflexIipaxService
             {
                 RequestedAttributes = new[]
                 {
-                    "case_sentence", "case_start_date", "display_name", "secrecy", "pul_personal_secrecy", "other_secrecy"
+                    "case_sentence", "decision_date", "display_name", "secrecy", "pul_personal_secrecy", "other_secrecy"
                 },
                 SortOrder = new[] { new SortOrderDirective { Attribute = "display_name", Order = Order.ASC } }
             };
 
             var response = await client.SearchAipsAsync(new SearchAips { Query = new[] { query }, callerId = "reflex", Options = options });
             return response?.SearchAipsResponse?.ArchiveObject?.Where(o => !ContainsSecrecy(o))
+                .Where(x => _config.ObjectTypes?.Any() != true || _config.ObjectTypes.Contains(x.ObjectType))
                 .Select(o => new Case
                 {
                     CaseSource = "iipax",
                     CaseId = o.Id.Replace(BaseId, ""),
                     Dnr = o.DisplayName,
-                    Date = TryConvertDate(o, "case_start_date"),
+                    Date = TryConvertDate(o, "decision_date"),
                     Title = o.Attribute.FindValue("case_sentence")
                 }).ToArray() ?? Array.Empty<Case>();
         }
@@ -188,7 +189,7 @@ namespace ReflexIipaxService
                     callerId = "reflex",
                     RequestedAttributes = new[]
                     {
-                        "case_sentence", "case_start_date", "description",
+                        "case_sentence", "decision_date", "description",
                         "secrecy", "pul_personal_secrecy", "other_secrecy"
                     }
                 })).GetAipResponse.ArchiveObject;
@@ -205,7 +206,7 @@ namespace ReflexIipaxService
                     CaseSource = "iipax",
                     Fastighetsbeteckning = archiveObject.Attribute.FindValue("property_name"),
                     CaseSourceId = _config.Id,
-                    Date = TryConvertDate(archiveObject, "case_start_date")
+                    Date = TryConvertDate(archiveObject, "decision_date")
                 };
             }
             catch (Exception)
@@ -224,7 +225,7 @@ namespace ReflexIipaxService
                 {
                     RequestedAttributes = new[]
                     {
-                        "case_sentence", "case_start_date", "display_name", "property_name",
+                        "case_sentence", "decision_date", "display_name", "property_name",
                         "secrecy", "pul_personal_secrecy", "other_secrecy"
                     },
                     SortOrder = new[] { new SortOrderDirective { Attribute = "display_name", Order = Order.ASC } }
@@ -232,13 +233,14 @@ namespace ReflexIipaxService
 
                 var response = (await client.SearchAipsAsync(new SearchAips { Query = new[] { query }, callerId = "reflex", Options = options }))?.SearchAipsResponse;
                 return response?.ArchiveObject?.Where(o => !ContainsSecrecy(o))
+                    .Where(x => _config.ObjectTypes?.Any() != true || _config.ObjectTypes.Contains(x.ObjectType))
                     .Select(o => new Case
                     {
                         CaseSource = "iipax",
                         CaseId = o.Id.Replace(BaseId, ""),
                         Dnr = o.DisplayName,
                         Title = o.DisplayName,
-                        Date = TryConvertDate(o, "case_start_date"),
+                        Date = TryConvertDate(o, "decision_date"),
                         CaseSourceId = _config.Id,
                         Fastighetsbeteckning = o.Attribute.FindValue("property_name")
                     }).ToArray()?.FirstOrDefault();

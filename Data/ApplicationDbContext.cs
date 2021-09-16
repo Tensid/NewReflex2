@@ -70,6 +70,8 @@ namespace Reflex.Data
                 .HasConversion(stringArrayConverter, stringArrayComparer);
             modelBuilder.Entity<ByggrConfig>().Property(p => p.Diarieprefixes)
                 .HasConversion(stringArrayConverter, stringArrayComparer);
+            modelBuilder.Entity<IipaxConfig>().Property(p => p.ObjectTypes)
+                .HasConversion(stringArrayConverter, stringArrayComparer);
             modelBuilder.Entity<AgsConfig>().Property(p => p.Password)
                 .HasConversion(
                     v => Encrypt(v),

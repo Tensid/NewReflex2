@@ -52,7 +52,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
   const [occurencesData, setOccurences] = useState<TabState<Occurence[]>>({ ...initTabState, tab: 'Occurences' });
   const [personsData, setPersons] = useState<TabState<CasePerson[]>>({ ...initTabState, tab: 'Persons' });
   const [archivedDocumentsData, setArchivedDocuments] = useState<TabState<ArchivedDocument[]>>({ ...initTabState, tab: 'Archive' });
-  const { caseSource, dnr, caseId, title, caseSourceId } = modalData;
+  const { caseSource, dnr, caseId, title, caseSourceId, date } = modalData;
 
   const availableTabs = availableCaseDetailsTabs.get(caseSource)!;
 
@@ -86,7 +86,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
                 'Preview': <PreviewContent previewState={previewData} />,
                 'Occurences': <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} caseSourceId={caseSourceId} />,
                 'Persons': <PersonsContent personsState={personsData} />,
-                'Archive': <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} />
+                'Archive': <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} date={date} />
               }[availableTabs![0]]}
             </>}
             {availableTabs!.length > 1 &&
@@ -110,7 +110,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
                   if (availableTabs[i] === 'Archive')
                     return (
                       <Tab eventKey={tab} title="Intressenter">
-                        <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} />
+                        <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} date={date} />
                       </Tab>);
                 })}
               </Tabs>

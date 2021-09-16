@@ -15,5 +15,6 @@ namespace Reflex.Data.Models
         public bool HideCasesWithSecrecy { get; set; }
         public bool HideCasesWithPulPersonalSecrecy { get; set; }
         public bool HideCasesWithOtherSecrecy { get; set; }
+        public string[] ObjectTypes { get; set; }
     }
 }
