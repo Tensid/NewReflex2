@@ -5,6 +5,7 @@ using Reflex.Data.Models;
 using System;
 using System.Linq;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using VisaRService;
 using VisaRService.Contracts;
@@ -72,48 +73,55 @@ namespace ReflexEcosService
 
         public async Task<Case[]> GetCasesByEstate(string estateId)
         {
-            var client = GetClient();
-
-            var searchResult = (await client.SearchCaseAsync(new ReflexSearchCase
+            try
             {
-                Filters = new Filter[] { new FnrFilter { Fnr = int.Parse(estateId) } }
-            })).ToList();
-
-            return searchResult.Where(c => !(_config.HideCasesWithSecretOccurences && HasSensitiveDocuments(c.CaseId)))
-                .Select(c => new Case
+                var client = GetClient();
+                var searchCaseResults = await client.SearchCaseAsync(new ReflexSearchCase
                 {
-                    CaseId = c.CaseId.ToString(),
-                    Dnr = c.CaseNumber,
-                    Title = c.CaseSubtitleFree,
+                    Filters = new Filter[] { new FnrFilter { Fnr = int.Parse(estateId) } }
+                });
+                return searchCaseResults?.Select(x => new Case
+                {
+                    Beskrivning = x.CaseSubtitleFree,
+                    CaseId = x.CaseId.ToString(),
+                    Dnr = x.CaseNumber,
+                    Fastighetsbeteckning = x.EstateDesignation,
+                    Title = Regex.Replace(x.ProcessTypeName, $"{x.CaseNumber}  -", ""),
                     CaseSource = "Ecos",
                     CaseSourceId = _config.Id
                 }).ToArray();
-        }
-
-        private bool HasSensitiveDocuments(Guid? caseId)
-        {
-            if (caseId == null)
-                return false;
-            var client = GetClient();
-            var result = client.GetCaseOccurencesAsync((Guid)caseId).Result;
-            return result.Any(o => o.HasSensitiveDocuments);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
         }
 
         public async Task<Occurence[]> GetOccurencesByCase(string caseId)
         {
-            var client = GetClient();
-            var result = await client.GetCaseOccurencesAsync(Guid.Parse(caseId));
-            return result.Select(o => new Occurence
+            try
             {
-                Title = o.OccurenceTitle,
-                Arrival = o.OccurenceDate,
-                IsSecret = o.HasSensitiveDocuments,
-                Documents = o.Documents.Select(d => new Document
+                var client = GetClient();
+                var fullCase = await client.GetCaseAsync(Guid.Parse(caseId));
+                return fullCase?.Occurrences.Select(o => new Occurence
                 {
-                    Title = d.DocumentTitle,
-                    DocLinkId = d.HasFile ? d.DocumentId.ToString() : null
-                }).ToArray()
-            }).ToArray();
+                    Title = o.OccurrenceDescription,
+                    Arrival = o.OccurrenceDate,
+                    IsSecret = o.IsConfidential,
+                    Documents = o.Documents.Select(d => new Document
+                    {
+                        Title = d.IsConfidential && _config.HideCasesWithSecretOccurences ? "Sekretess" : d.DocumentClassificationTypeDescription,
+                        DocLinkId = d.IsConfidential && _config.HideCasesWithSecretOccurences ? "-1" : d.DocumentId.ToString()
+                    }).ToArray()
+                }).ToArray();
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
         }
 
         public async Task<PhysicalDocument> GetDocument(string documentId)
@@ -148,24 +156,19 @@ namespace ReflexEcosService
             try
             {
                 var client = GetClient();
-                var searchResult = (await client.SearchCaseAsync(new ReflexSearchCase
-                {
-                    Filters = new Filter[] { new CaseNumberFilter { CaseNumber = caseId } }
-                }))
-                .FirstOrDefault(c => !(_config.HideCasesWithSecretOccurences && HasSensitiveDocuments(c.CaseId)));
-                if (searchResult == null)
+                var fullCase = await client.GetCaseAsync(Guid.Parse(caseId));
+                if (fullCase == null)
                     return null;
 
                 return new Case
                 {
-                    Beskrivning = searchResult.CaseSubtitleFree,
-                    CaseId = searchResult.CaseId.ToString(),
-                    Dnr = searchResult.CaseNumber,
-                    Fastighetsbeteckning = searchResult.EstateDesignation,
-                    Title = searchResult.CaseSubtitleFree,
+                    Beskrivning = fullCase.CaseSubtitleFree,
+                    CaseId = fullCase.CaseId.ToString(),
+                    Dnr = fullCase.CaseNumber,
+                    Fastighetsbeteckning = fullCase.EstateDesignation,
+                    Title = string.Join(" - ", fullCase.ProcessTypeName, fullCase.CaseSubtitle, fullCase.CaseSubtitleFree),
                     CaseSource = "Ecos",
-                    CaseSourceId = _config.Id,
-                    UnavailableDueToSecrecy = _config.HideCasesWithSecretOccurences && HasSensitiveDocuments(searchResult.CaseId)
+                    CaseSourceId = _config.Id
                 };
             }
             catch (Exception e)
@@ -190,10 +193,9 @@ namespace ReflexEcosService
                 return new Case
                 {
                     Beskrivning = searchResult.CaseSubtitleFree,
-                    CaseId = searchResult.CaseNumber,
+                    CaseId = searchResult.CaseId.ToString(),
                     Dnr = searchResult.CaseNumber,
                     Fastighetsbeteckning = searchResult?.EstateDesignation,
-                    Title = searchResult.CaseSubtitleFree,
                     CaseSource = "Ecos",
                     CaseSourceId = _config.Id
                 };
