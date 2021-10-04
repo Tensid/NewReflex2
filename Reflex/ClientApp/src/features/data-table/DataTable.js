@@ -13,6 +13,8 @@ import './buttons.bootstrap4.css';
 import './dataTables.bootstrap4.css';
 import './responsive.bootstrap4.css';
 import { increase, decrease } from '../spinner/spinnerSlice';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+window.pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const DataTable = (props) => {
   const linkButtons = props.linkButtons.map(x => {
