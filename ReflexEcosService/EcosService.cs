@@ -102,6 +102,8 @@ namespace ReflexEcosService
         {
             try
             {
+                var allowedDocumentStatuses = new[] { "Upprättad", "Inkommen" };
+
                 var client = GetClient();
                 var fullCase = await client.GetCaseAsync(Guid.Parse(caseId));
                 return fullCase?.Occurrences.Select(o => new Occurence
@@ -109,7 +111,8 @@ namespace ReflexEcosService
                     Title = o.OccurrenceDescription,
                     Arrival = o.OccurrenceDate,
                     IsSecret = o.IsConfidential,
-                    Documents = o.Documents.Select(d => new Document
+                    Documents = o.Documents.Where(x => allowedDocumentStatuses.Contains(x.DocumentStatus))
+                    .Select(d => new Document
                     {
                         Title = d.IsConfidential && _config.HideCasesWithSecretOccurences ? "Sekretess" : d.DocumentClassificationTypeDescription,
                         DocLinkId = d.IsConfidential && _config.HideCasesWithSecretOccurences ? "-1" : d.DocumentId.ToString()
