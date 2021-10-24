@@ -24,7 +24,7 @@ const Search = () => {
 
   return (
     <>
-      <label className="mb-1 col-form-label col-form-label-sm font-weight-bold">Sök fastighet eller adress:</label>
+      <label className="mb-1 col-form-label col-form-label-sm font-weight-bold">Sök fastighet, adress eller ärende</label>
       <Autocomplete onSelectCallback={onSelectCallback} searchResult={searchResult} />
     </>
   );
