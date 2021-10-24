@@ -6,12 +6,12 @@ const About = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-form-label col-form-label-sm col">
-          <h3 className="text-info font-weight-bold">Om Reflex 2.1</h3>
+          <h3 className="text-info font-weight-bold">Om Reflex 3.0</h3>
         </div>
       </div>
       <p>
         Reflex är en webb- och mobilanpassad applikation med syfte att erbjuda enkla och snabba funktioner för att tillgängligöra ärendeinformation från utvalda ärenderegister främst baserat på fastighet och adresssökningar.
-        Ärenden i Ecos, ByggR och AGS kan snabbt och enkelt hämtas och presenteras överskådligt till sökt fastighet eller adress.
+        Ärenden i Ecos, ByggR och AGS kan snabbt och enkelt hämtas och presenteras överskådligt till sökt fastighet, adress eller ärende.
         Reflexapplikationen kan även konfigureras för att erbjuda direkt tillgång till fastighets- och befolkningsrapporter från FB.
         Reflex sökfunktioner kan utföras via intuitiva sökfält eller via det ingående kartstödet. Reflexkartan har stöd för positionering med tillhörande Googles och Bings ruttningstjänster till utsökt fastighet.
       </p>
