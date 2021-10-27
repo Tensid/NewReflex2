@@ -169,7 +169,8 @@ namespace ReflexEcosService
                     CaseId = fullCase.CaseId.ToString(),
                     Dnr = fullCase.CaseNumber,
                     Fastighetsbeteckning = fullCase.EstateDesignation,
-                    Title = string.Join(" - ", fullCase.ProcessTypeName, fullCase.CaseSubtitle, fullCase.CaseSubtitleFree),
+                    Title = string.Join(" - ",
+                        new[] { fullCase.ProcessTypeName, fullCase.CaseSubtitle, fullCase.CaseSubtitleFree }.Where(s => !string.IsNullOrEmpty(s))),
                     CaseSource = "Ecos",
                     CaseSourceId = _config.Id
                 };
