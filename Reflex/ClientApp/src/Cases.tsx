@@ -218,8 +218,8 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
               <DropdownButton title="Sortera" variant="outline-secondary">
                 <Dropdown.Item className="d-flex justify-content-between" onClick={() => (setSortBy('TITLE_ASC'))} >Titel stigande {sortBy === 'TITLE_ASC' && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
                 <Dropdown.Item className="d-flex justify-content-between" onClick={() => (setSortBy('TITLE_DESC'))} >Titel fallande {sortBy === 'TITLE_DESC' && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
-                <Dropdown.Item className="d-flex justify-content-between" onClick={() => (setSortBy('DATE_ASC'))} >Datum stigande {sortBy === 'DATE_ASC' && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
-                <Dropdown.Item className="d-flex justify-content-between" onClick={() => (setSortBy('DATE_DESC'))} >Datum fallande {sortBy === 'DATE_DESC' && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
+                {/* <Dropdown.Item className="d-flex justify-content-between" onClick={() => (setSortBy('DATE_ASC'))} >Datum stigande {sortBy === 'DATE_ASC' && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
+                <Dropdown.Item className="d-flex justify-content-between" onClick={() => (setSortBy('DATE_DESC'))} >Datum fallande {sortBy === 'DATE_DESC' && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item> */}
                 <Dropdown.Item className="d-flex justify-content-between" onClick={() => (setSortBy('DNR_ASC'))} >DNR stigande {sortBy === 'DNR_ASC' && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
                 <Dropdown.Item className="d-flex justify-content-between" onClick={() => (setSortBy('DNR_DESC'))} >DNR fallande {sortBy === 'DNR_DESC' && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
               </DropdownButton>
