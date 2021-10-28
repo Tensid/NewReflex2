@@ -79,18 +79,18 @@ const DataTable = (props) => {
                 columns: ':visible'
               }
             },
-            {
-              extend: 'csv',
-              exportOptions: {
-                columns: ':visible'
-              }
-            },
-            {
-              extend: 'pdf',
-              exportOptions: {
-                columns: ':visible'
-              }
-            }
+            // {
+            //   extend: 'csv',
+            //   exportOptions: {
+            //     columns: ':visible'
+            //   }
+            // },
+            // {
+            //   extend: 'pdf',
+            //   exportOptions: {
+            //     columns: ':visible'
+            //   }
+            // }
           ]
         },
         {
