@@ -11,7 +11,7 @@ export const Layout: FC = ({ children }) => {
       <NavMenu />
       {pathname !== '/map' ?
         <>
-          <Container>
+          <Container style={{ paddingBottom: '24px' }}>
             {children}
           </Container>
           <Footer />
