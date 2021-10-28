@@ -8,7 +8,7 @@
     "username": "teki0001",
     "password": "JE367O8rynnP",
     "options": {
-      "url": "https://localhost:44317/api/mapProxy/1",
+      "url": "api/mapProxy/1",
       "projection": "EPSG:3006",
       "params": {
         "LAYERS": "Topowebbkartan"
@@ -24,7 +24,7 @@
     "username": "teki0001",
     "password": "JE367O8rynnP",
     "options": {
-      "url": "https://localhost:44317/api/mapProxy/2",
+      "url": "api/mapProxy/2",
       "projection": "EPSG:3006",
       "params": {
         "LAYERS": "Ortofoto_0.25"
@@ -40,7 +40,7 @@
     "username": "teki0001",
     "password": "JE367O8rynnP",
     "options": {
-      "url": "https://localhost:44317/api/mapProxy/3",
+      "url": "api/mapProxy/3",
       "projection": "EPSG:3006",
       "matrixSet": "EPSG:3006",
       "params": {
@@ -102,7 +102,7 @@
     "username": "teki0001",
     "password": "JE367O8rynnP",
     "options": {
-      "url": "https://localhost:44317/api/mapProxy/4",
+      "url": "api/mapProxy/4",
       "projection": "EPSG:3006",
       "params": {
         "LAYERS": "Topowebbkartan_nedtonad"
