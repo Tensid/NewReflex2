@@ -27,6 +27,7 @@ export interface ModalData {
 type SortBy = 'TITLE_ASC' | 'TITLE_DESC' | 'DATE_ASC' | 'DATE_DESC' | 'DNR_ASC' | 'DNR_DESC';
 
 function sortCases(filteredCases: Case[], sort: SortBy | undefined) {
+  const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
   switch (sort) {
     case 'TITLE_ASC':
       return filteredCases.sort((a, b) => a.title.localeCompare(b.title));
@@ -49,9 +50,9 @@ function sortCases(filteredCases: Case[], sort: SortBy | undefined) {
         return 0;
       });
     case 'DNR_ASC':
-      return filteredCases.sort((a, b) => a.dnr.localeCompare(b.dnr));
+      return filteredCases.sort((a, b) => collator.compare(a.dnr, b.dnr));
     case 'DNR_DESC':
-      return filteredCases.sort((a, b) => b.dnr.localeCompare(a.dnr));
+      return filteredCases.sort((a, b) => collator.compare(b.dnr, a.dnr));
     default:
       return filteredCases;
   }
