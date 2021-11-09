@@ -21,7 +21,10 @@ export interface ByggrConfigFormProps {
 
 const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConfigFormProps) => {
   const minCaseStartDate = (edit && !!formData?.minCaseStartDate) ? (new Date(formData?.minCaseStartDate)).toLocaleDateString() : null;
-  const diarieprefixes = edit ? formData?.diarieprefixes?.map((x: any) => ({ value: x, label: x })) ?? [] : [];
+  const diarieprefixes = edit ? formData?.diarieprefixes?.map((x) => ({ value: x, label: x })) ?? [] : [];
+  const documentTypes = edit ? formData?.documentTypes?.map((x) => ({ value: x, label: x })) ?? [] : [];
+  const occurenceTypes = edit ? formData?.occurenceTypes?.map((x) => ({ value: x, label: x })) ?? [] : [];
+  const personRoles = edit ? formData?.personRoles?.map((x) => ({ value: x, label: x })) ?? [] : [];
 
   const { register, handleSubmit, control, reset } =
     useForm({
@@ -29,7 +32,10 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
         ...formData,
         tabs: formData?.tabs?.map((x) => ({ value: x, label: tabOptions.find((t) => t.value === x)!.label })),
         minCaseStartDate,
-        diarieprefixes
+        diarieprefixes,
+        documentTypes,
+        occurenceTypes,
+        personRoles
       }
     });
 
@@ -38,17 +44,20 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
       ...formData,
       tabs: edit ? formData?.tabs?.map((x) => ({ value: x, label: tabOptions.find((t) => t.value === x)!.label })) : [],
       minCaseStartDate,
-      diarieprefixes
+      diarieprefixes,
+      documentTypes,
+      occurenceTypes,
+      personRoles
     });
   }, [formData, reset]);
 
   const onSubmit = async (data: any) => {
     data.diarieprefixes = data?.diarieprefixes?.map((x: any) => x.value);
-    data.documentTypes = data?.documentTypes.split(",") || null;;
+    data.documentTypes = data?.documentTypes?.map((x: any) => x.value);
     data.hideDocumentsWithCommentMatching = data?.hideDocumentsWithCommentMatching || null;
     data.minCaseStartDate = data?.minCaseStartDate || null;
-    data.occurenceTypes = data?.occurenceTypes || null;
-    data.personRoles = data?.personRoles.split(",") || null;
+    data.occurenceTypes = data?.occurenceTypes?.map((x: any) => x.value);
+    data.personRoles = data?.personRoles?.map((x: any) => x.value);
     data.tabs = data?.tabs?.map((x: any) => x.value);
 
     if (edit) {
@@ -71,9 +80,9 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
         <div className="col">
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextInput name="name" label="Namn" required register={register} />
-            <TextInput name="documentTypes" label="Handlingstyper" register={register} />
-            <TextInput name="occurenceTypes" label="Händelsetyper" register={register} />
-            <TextInput name="personRoles" label="Roller" register={register} />
+            <CreatableSelectInput control={control} name="documentTypes" label="Handlingstyper" isMulti register={register} options={documentTypes} />
+            <CreatableSelectInput control={control} name="occurenceTypes" label="Händelsetyper" isMulti register={register} options={occurenceTypes} />
+            <CreatableSelectInput control={control} name="personRoles" label="Roller" isMulti register={register} options={personRoles} />
             <SelectInput control={control} name="tabs" label="Flikar" isMulti register={register} options={tabOptions} />
             <CreatableSelectInput control={control} name="diarieprefixes" label="Diarier" isMulti register={register} options={diarieprefixes} />
             <CheckboxInput name="workingMaterial" label="Visa arbetsmaterial" register={register} />
@@ -81,7 +90,7 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
             <TextInput name="hideDocumentsWithCommentMatching" label="Dölj handlingar med kommentar" register={register} />
             <CheckboxInput name="onlyActiveCases" label="Endast aktiva ärenden" register={register} />
             <CheckboxInput name="onlyCasesWithoutMainDecision" label="Endast ärenden utan huvudbeslut" register={register} />
-            <DateInput name="minCaseStartDate" label="Tidigaste startdatum (ÅÅÅÅ-MM-DD)" register={register} />
+            <DateInput name="minCaseStartDate" label="Tidigaste startdatum" register={register} />
             <button className="btn btn-primary" type="submit">Spara</button>
             {edit &&
               <button
