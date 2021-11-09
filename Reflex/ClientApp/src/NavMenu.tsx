@@ -52,7 +52,7 @@ export function NavMenu() {
                         <Nav.Link className="text-dark">Fastighet</Nav.Link>
                       </LinkContainer>}
                   </>}
-                <NavDropdown title="Mer" id="basic-nav-dropdown">
+                <NavDropdown title="Mer" id="basic-nav-dropdown" alignRight>
                   {authenticated &&
                     <>
                       <NavDropdown.Item onClick={() => setShow(true)} className="text-dark">Personliga inställningar</NavDropdown.Item>
