@@ -244,18 +244,19 @@ namespace FbService.Provider
                 new StringContent(JsonSerializer.Serialize(fnrs), Encoding.UTF8, "application/json"));
             var agareSearchLagfarenagareFastighetFnr = JsonSerializer.Deserialize<AgareSearchLagfarenagareFastighetFnr>(await response.Content.ReadAsStringAsync());
             var ids = agareSearchLagfarenagareFastighetFnr.Data.SelectMany(x => x.Grupp.Select(y => y.Identitetsnummer));
-            var owners = await OwnersResult(ids);
+            var owners = await OwnersResult(ids, fnrs);
             return owners;
         }
 
-        private async Task<IEnumerable<Task<Owner>>> OwnersResult(IEnumerable<string> ids)
+        private async Task<IEnumerable<Task<Owner>>> OwnersResult(IEnumerable<string> ids, IEnumerable<string> fnrs)
         {
+            fnrs = fnrs.ToList();
             var response = await _httpClient.PostAsync($"agare/inskriven/personOrganisationsNummer?{_userConnection}",
                 new StringContent(JsonSerializer.Serialize(ids), Encoding.UTF8, "application/json"));
 
             var agareInskrivenPersonorganisationsnummer = JsonSerializer.Deserialize<AgareInskrivenPersonorganisationsnummer>(await response.Content.ReadAsStringAsync());
 
-            var owners = agareInskrivenPersonorganisationsnummer.Data.AsParallel().Select(async x =>
+            var owners = agareInskrivenPersonorganisationsnummer.Data.Where(x=>fnrs.ToList().Contains(x.Fnr.ToString())).AsParallel().Select(async x =>
             {
                 var fastighetResult = (await GetEstateInfo(new[] { x.Fnr })).Data.FirstOrDefault();
 
@@ -274,7 +275,8 @@ namespace FbService.Provider
                     MunicipalityCode = fastighetResult?.KommunKod.Substring(2, 2),
                     Municipality = fastighetResult?.Kommun,
                     Share = x.AndelTaljare + "/" + x.AndelNamnare,
-                    Name = x.InskrivetFornamn + x.InskrivetEfternamn,
+                    Name = string.IsNullOrEmpty(x?.GallandeOrganisationsnamn?.ToString()) ? $"{x.GallandeFornamn} {x.GallandeEfternamn}"
+                        : x.GallandeOrganisationsnamn,
                     StreetAddress = agareAdressPersonorganisationsnummer?.Utdelningsadress2,
                     PostalCode = agareAdressPersonorganisationsnummer?.Postnummer,
                     PostalArea = agareAdressPersonorganisationsnummer?.Postort

@@ -66,10 +66,10 @@ namespace FbService.QuickType.AgareInskrivenPersonorganisationsnummer
         public string GallandeFornamn { get; set; }
 
         [JsonPropertyName("inskrivetOrganisationsnamn")]
-        public object InskrivetOrganisationsnamn { get; set; }
+        public string InskrivetOrganisationsnamn { get; set; }
 
         [JsonPropertyName("gallandeOrganisationsnamn")]
-        public object GallandeOrganisationsnamn { get; set; }
+        public string GallandeOrganisationsnamn { get; set; }
 
         [JsonPropertyName("juridiskForm")]
         public string JuridiskForm { get; set; }
