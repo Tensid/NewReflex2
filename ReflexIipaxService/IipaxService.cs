@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading.Tasks;
@@ -118,7 +119,8 @@ namespace ReflexIipaxService
                     CaseId = o.Id.Replace(BaseId, ""),
                     Dnr = o.DisplayName,
                     Date = TryConvertDate(o, "decision_date"),
-                    Title = o.Attribute.FindValue("case_sentence")
+                    Title = o.Attribute.FindValue("case_sentence"),
+                    UnavailableDueToSecrecy = UnavailableDueToSecrecy(o)
                 }).ToArray() ?? Array.Empty<Case>();
         }
 
@@ -131,6 +133,9 @@ namespace ReflexIipaxService
         {
             var client = GetMtomClient();
             var file = (await client.GetFileContentAsync(new GetFileContent { callerId = "reflex", Id = BaseId + documentId })).GetFileContentResponse.File;
+
+            if (ContainsSecrecy(file) || UnavailableDueToSecrecy(file))
+                throw new SecurityException();
 
             return new PhysicalDocument
             {
@@ -159,18 +164,33 @@ namespace ReflexIipaxService
                 RequestedAttributes = new[] { "case_sentence", "description", "secrecy", "pul_personal_secrecy", "other_secrecy" }
             })).GetAipResponse.ArchiveObject;
 
+            if (ContainsSecrecy(archiveObject))
+                return Array.Empty<ArchivedDocument>();
+
             var archivedDocuments = new List<ArchivedDocument>();
 
             var archivedDocument = new ArchivedDocument
             {
                 Title = archiveObject.DisplayName,
-                Docs = archiveObject?.Items?.Cast<ArchiveService.Document>().Select(document => new Doc
+                Secrecy = archiveObject.Attribute.FindValue("secrecy"),
+                OtherSecrecy = archiveObject.Attribute.FindValue("pul_personal_secrecy"),
+                PulPersonalSecrecy = archiveObject.Attribute.FindValue("other_secrecy"),
+                UnavailableDueToSecrecy = UnavailableDueToSecrecy(archiveObject),
+                Docs = archiveObject?.Items?.Cast<ArchiveService.Document>().Where(x => !ContainsSecrecy(x) && !UnavailableDueToSecrecy(archiveObject)).Select(document => new Doc
                 {
                     Title = document.DisplayName,
-                    Files = document?.File?.Select(file => new File
+                    Secrecy = document.Attribute.FindValue("secrecy"),
+                    OtherSecrecy = document.Attribute.FindValue("pul_personal_secrecy"),
+                    PulPersonalSecrecy = document.Attribute.FindValue("other_secrecy"),
+                    UnavailableDueToSecrecy = UnavailableDueToSecrecy(document),
+                    Files = document?.File?.Where(x => !ContainsSecrecy(x) && !UnavailableDueToSecrecy(document)).Select(file => new File
                     {
                         Title = file?.DisplayName ?? "Fil saknas",
-                        PhysicalDocumentId = file?.Id?.Replace(BaseId, "") ?? "-1"
+                        PhysicalDocumentId = file?.Id?.Replace(BaseId, "") ?? "-1",
+                        Secrecy = file?.Attribute.FindValue("secrecy"),
+                        OtherSecrecy = file?.Attribute.FindValue("pul_personal_secrecy"),
+                        PulPersonalSecrecy = file?.Attribute.FindValue("other_secrecy"),
+                        UnavailableDueToSecrecy = UnavailableDueToSecrecy(file)
                     })
                 })
             };
@@ -206,7 +226,8 @@ namespace ReflexIipaxService
                     CaseSource = "iipax",
                     Fastighetsbeteckning = archiveObject.Attribute.FindValue("property_name"),
                     CaseSourceId = _config.Id,
-                    Date = TryConvertDate(archiveObject, "decision_date")
+                    Date = TryConvertDate(archiveObject, "decision_date"),
+                    UnavailableDueToSecrecy = UnavailableDueToSecrecy(archiveObject)
                 };
             }
             catch (Exception)
@@ -242,7 +263,8 @@ namespace ReflexIipaxService
                         Title = o.DisplayName,
                         Date = TryConvertDate(o, "decision_date"),
                         CaseSourceId = _config.Id,
-                        Fastighetsbeteckning = o.Attribute.FindValue("property_name")
+                        Fastighetsbeteckning = o.Attribute.FindValue("property_name"),
+                        UnavailableDueToSecrecy = UnavailableDueToSecrecy(o)
                     }).ToArray()?.FirstOrDefault();
             }
             catch (Exception)
@@ -257,11 +279,26 @@ namespace ReflexIipaxService
             int.TryParse(archiveObject?.Attribute?.FindValue("pul_personal_secrecy"), out var pulPersonalSecrecy);
             int.TryParse(archiveObject?.Attribute?.FindValue("other_secrecy"), out var otherSecrecy);
 
-            if (secrecy >= 10 && (_config?.HideCasesWithSecrecy ?? true))
+            if (secrecy >= 10 && (_config?.SecrecyVisibility ?? Visibility.Hide) == Visibility.Hide)
                 return true;
-            if (pulPersonalSecrecy >= 10 && (_config?.HideCasesWithPulPersonalSecrecy ?? true))
+            if (pulPersonalSecrecy >= 10 && (_config?.PulPersonalSecrecyVisibility ?? Visibility.Hide) == Visibility.Hide)
                 return true;
-            if (otherSecrecy >= 10 && (_config?.HideCasesWithOtherSecrecy ?? true))
+            if (otherSecrecy >= 10 && (_config?.OtherSecrecyVisibility ?? Visibility.Hide) == Visibility.Hide)
+                return true;
+            return false;
+        }
+
+        private bool UnavailableDueToSecrecy(IipaxObject archiveObject)
+        {
+            int.TryParse(archiveObject?.Attribute?.FindValue("secrecy"), out var secrecy);
+            int.TryParse(archiveObject?.Attribute?.FindValue("pul_personal_secrecy"), out var pulPersonalSecrecy);
+            int.TryParse(archiveObject?.Attribute?.FindValue("other_secrecy"), out var otherSecrecy);
+
+            if (secrecy >= 10 && _config.SecrecyVisibility == Visibility.Restrict)
+                return true;
+            if (pulPersonalSecrecy >= 10 && _config.PulPersonalSecrecyVisibility == Visibility.Restrict)
+                return true;
+            if (otherSecrecy >= 10 && _config.OtherSecrecyVisibility == Visibility.Restrict)
                 return true;
             return false;
         }

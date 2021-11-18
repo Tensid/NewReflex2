@@ -108,17 +108,29 @@ export interface CasePerson {
 export interface ArchivedDocument {
   title: string;
   physicalDocumentId: string;
+  secrecy: string;
+  pulPersonalSecrecy: string;
+  otherSecrecy: string;
   docs: Doc[];
+  unavailableDueToSecrecy: boolean;
 }
 
 export interface Doc {
   title: string;
+  secrecy: string;
+  pulPersonalSecrecy: string;
+  otherSecrecy: string;
   files: File[];
+  unavailableDueToSecrecy: boolean;
 }
 
 export interface File {
   title: string;
   physicalDocumentId: string;
+  secrecy: string;
+  pulPersonalSecrecy: string;
+  otherSecrecy: string;
+  unavailableDueToSecrecy: boolean;
 }
 
 export type Type = 'Adress' | 'Fastighet' | 'Ärende';
@@ -170,6 +182,12 @@ export interface UserSettings {
   defaultConfigId?: string | null;
 }
 
+export enum Visibility {
+  Hide,
+  Restrict,
+  Show
+}
+
 export interface AgsConfig {
   id: string;
   name: string;
@@ -209,9 +227,9 @@ export interface EcosConfig {
 export interface IipaxConfig {
   id: string;
   name: string;
-  hideCasesWithSecrecy: boolean;
-  hideCasesWithPulPersonalSecrecy: boolean;
-  hideCasesWithOtherSecrecy: boolean;
+  secrecyVisibility: Visibility;
+  pulPersonalSecrecyVisibility: Visibility;
+  otherSecrecyVisibility: Visibility;
   objectTypes: string[];
 }
 

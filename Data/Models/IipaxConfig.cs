@@ -5,6 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Reflex.Data.Models
 {
+    public enum Visibility
+    {
+        Hide,
+        Restrict,
+        Show
+    }
+
     public class IipaxConfig
     {
         [Key]
@@ -12,9 +19,9 @@ namespace Reflex.Data.Models
         public Guid Id { get; set; }
         public virtual ICollection<Config> Configs { get; set; }
         public string Name { get; set; }
-        public bool HideCasesWithSecrecy { get; set; }
-        public bool HideCasesWithPulPersonalSecrecy { get; set; }
-        public bool HideCasesWithOtherSecrecy { get; set; }
+        public Visibility SecrecyVisibility { get; set; }
+        public Visibility PulPersonalSecrecyVisibility { get; set; }
+        public Visibility OtherSecrecyVisibility { get; set; }
         public string[] ObjectTypes { get; set; }
     }
 }
