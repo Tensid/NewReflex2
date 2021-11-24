@@ -49,7 +49,7 @@ const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, ca
         <button disabled={unavailableDueToSecrecy} className={`btn btn-outline-${color} btn-block text-left mb-1 ${styles.blackOutline} ${styles.btn}`} onClick={() => handleClick()}>
           <span className={`${unavailableDueToSecrecy ? '' : styles.caseSymbol} pr-2 text-${color}`}><FontAwesomeIcon icon={symbol!} /></span>
           {dnr}: {title}{status ? ` (${status})` : ''}
-          <FontAwesomeIcon title="Sekretess" icon={faLock} />
+          {unavailableDueToSecrecy && <FontAwesomeIcon title="Sekretess" icon={faLock} />}
         </button>
       </div>
     </div>
