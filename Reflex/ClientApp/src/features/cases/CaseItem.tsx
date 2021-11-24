@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconDefinition, faArchive, faBug, faHammer } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faArchive, faBug, faHammer, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalData } from '../../Cases';
 import { CaseSource } from '../../api/api';
@@ -15,9 +15,10 @@ interface CaseItemProps {
   status: string;
   caseSourceId: string;
   date: string;
+  unavailableDueToSecrecy: boolean;
 }
 
-const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, caseId, caseSourceId, date }: CaseItemProps) => {
+const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, caseId, caseSourceId, date, unavailableDueToSecrecy }: CaseItemProps) => {
   let color = 'secondary';
   let symbol: IconDefinition;
   if (caseSource === CaseSource.Ecos) {
@@ -45,9 +46,10 @@ const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, ca
   return (
     <div className="row align-items-center">
       <div className="col-lg-12">
-        <button className={`btn btn-outline-${color} btn-block text-left mb-1 ${styles.blackOutline} ${styles.btn}`} onClick={() => handleClick()}>
-          <span className={`${styles.caseSymbol} pr-2 text-${color}`}><FontAwesomeIcon icon={symbol!} /></span>
+        <button disabled={unavailableDueToSecrecy} className={`btn btn-outline-${color} btn-block text-left mb-1 ${styles.blackOutline} ${styles.btn}`} onClick={() => handleClick()}>
+          <span className={`${unavailableDueToSecrecy ? '' : styles.caseSymbol} pr-2 text-${color}`}><FontAwesomeIcon icon={symbol!} /></span>
           {dnr}: {title}{status ? ` (${status})` : ''}
+          <FontAwesomeIcon title="Sekretess" icon={faLock} />
         </button>
       </div>
     </div>

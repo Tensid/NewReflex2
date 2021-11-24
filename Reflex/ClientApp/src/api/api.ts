@@ -221,7 +221,8 @@ export interface ByggrConfig {
 export interface EcosConfig {
   id: string;
   name: string;
-  hideCasesWithSecretOccurences: boolean;
+  hideConfidentialCases: boolean;
+  hideConfidentialDocuments: boolean;
 }
 
 export interface IipaxConfig {

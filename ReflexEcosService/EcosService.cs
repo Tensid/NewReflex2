@@ -80,16 +80,20 @@ namespace ReflexEcosService
                 {
                     Filters = new Filter[] { new FnrFilter { Fnr = int.Parse(estateId) } }
                 });
-                return searchCaseResults?.Select(x => new Case
-                {
-                    Beskrivning = x.CaseSubtitleFree,
-                    CaseId = x.CaseId.ToString(),
-                    Dnr = x.CaseNumber,
-                    Fastighetsbeteckning = x.EstateDesignation,
-                    Title = Regex.Replace(x.ProcessTypeName, $"{x.CaseNumber}  -", ""),
-                    CaseSource = "Ecos",
-                    CaseSourceId = _config.Id
-                }).ToArray();
+
+                //Ärende är sekretessmarkerat i Ecos om CaseId är null
+                return searchCaseResults?.Where(x => !(x.CaseId == null && _config.HideConfidentialCases))
+                    .Select(x => new Case
+                    {
+                        Beskrivning = x.CaseSubtitleFree,
+                        CaseId = x.CaseId.ToString(),
+                        Dnr = x.CaseNumber,
+                        Fastighetsbeteckning = x.EstateDesignation,
+                        Title = Regex.Replace(x.ProcessTypeName, $"{x.CaseNumber}  -", ""),
+                        CaseSource = "Ecos",
+                        CaseSourceId = _config.Id,
+                        UnavailableDueToSecrecy = x.CaseId == null
+                    }).ToArray();
             }
             catch (Exception e)
             {
@@ -114,8 +118,8 @@ namespace ReflexEcosService
                     Documents = o.Documents.Where(x => allowedDocumentStatuses.Contains(x.DocumentStatus))
                     .Select(d => new Document
                     {
-                        Title = d.IsConfidential && _config.HideCasesWithSecretOccurences ? "Sekretess" : d.DocumentClassificationTypeDescription,
-                        DocLinkId = d.IsConfidential && _config.HideCasesWithSecretOccurences ? "-1" : d.DocumentId.ToString()
+                        Title = d.IsConfidential && _config.HideConfidentialDocuments ? "Sekretess" : d.DocumentClassificationTypeDescription,
+                        DocLinkId = d.IsConfidential && _config.HideConfidentialDocuments ? "-1" : d.DocumentId.ToString()
                     }).ToArray()
                 }).ToArray();
 
@@ -158,8 +162,12 @@ namespace ReflexEcosService
         {
             try
             {
+                var result = Guid.TryParse(caseId, out Guid parsedCaseId);
+                if (!result)
+                    return await SearchConfidentialCase(caseId);
+
                 var client = GetClient();
-                var fullCase = await client.GetCaseAsync(Guid.Parse(caseId));
+                var fullCase = await client.GetCaseAsync(parsedCaseId);
                 if (fullCase == null)
                     return null;
 
@@ -182,10 +190,13 @@ namespace ReflexEcosService
             }
         }
 
-        public async Task<Case> SearchCase(string caseNumber)
+        private async Task<Case> SearchConfidentialCase(string caseNumber)
         {
             try
             {
+                if (_config.HideConfidentialCases)
+                    return null;
+
                 var client = GetClient();
                 var searchResult = (await client.SearchCaseAsync(new ReflexSearchCase
                 {
@@ -199,9 +210,43 @@ namespace ReflexEcosService
                     Beskrivning = searchResult.CaseSubtitleFree,
                     CaseId = searchResult.CaseId.ToString(),
                     Dnr = searchResult.CaseNumber,
+                    Fastighetsbeteckning = searchResult.EstateDesignation,
+                    Title = Regex.Replace(searchResult.ProcessTypeName, $"{searchResult.CaseNumber}  -", ""),
+                    CaseSource = "Ecos",
+                    CaseSourceId = _config.Id,
+                    UnavailableDueToSecrecy = true
+                };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<Case> SearchCase(string caseNumber)
+        {
+            try
+            {
+                var client = GetClient();
+                var searchResult = (await client.SearchCaseAsync(new ReflexSearchCase
+                {
+                    Filters = new Filter[] { new CaseNumberFilter { CaseNumber = caseNumber } }
+                })).FirstOrDefault();
+                if (searchResult == null)
+                    return null;
+                if (searchResult.CaseId == null && _config.HideConfidentialCases)
+                    return null;
+
+                return new Case
+                {
+                    Beskrivning = searchResult.CaseSubtitleFree,
+                    CaseId = searchResult.CaseId != null ? searchResult.CaseId.ToString() : Guid.Empty.ToString(),
+                    Dnr = searchResult.CaseNumber,
                     Fastighetsbeteckning = searchResult?.EstateDesignation,
                     CaseSource = "Ecos",
-                    CaseSourceId = _config.Id
+                    CaseSourceId = _config.Id,
+                    UnavailableDueToSecrecy = searchResult.CaseId == null
                 };
             }
             catch (Exception e)
