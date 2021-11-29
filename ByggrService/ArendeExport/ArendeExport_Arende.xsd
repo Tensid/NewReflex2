@@ -1,0 +1,530 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="www.tekis.se/arende" elementFormDefault="qualified" targetNamespace="www.tekis.se/arende" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://microsoft.com/wsdl/types/" />
+  <xs:import namespace="http://www.opengis.net/gml" />
+  <xs:complexType name="intressent">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="namn" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="adress" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="coAdress" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="postNr" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="ort" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="land" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="fornamn" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="efternamn" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="intressentKommunikationLista" type="tns:ArrayOfIntressentKommunikation" />
+      <xs:element minOccurs="0" maxOccurs="1" name="aktorbehorighetLista" type="tns:ArrayOfAktorbehorighet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="fakturaAdress" type="tns:fakturaadress" />
+    </xs:sequence>
+    <xs:attribute name="intressentId" type="xs:int" />
+    <xs:attribute name="persOrgNr" type="xs:string" />
+    <xs:attribute name="arForetag" type="xs:boolean" />
+    <xs:attribute name="intressentVersionId" type="xs:int" />
+    <xs:attribute name="kundnr" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfIntressentKommunikation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="intressentKommunikation" nillable="true" type="tns:intressentKommunikation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="intressentKommunikation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="beskrivning" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="komtyp" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="attention" type="tns:intressentAttention" />
+    </xs:sequence>
+    <xs:attribute name="arAktiv" type="xs:boolean" use="required" />
+  </xs:complexType>
+  <xs:complexType name="intressentAttention">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="attention" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute name="attentionId" type="xs:int" />
+    <xs:attribute name="persNr" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfAktorbehorighet">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="aktorbehorighet" nillable="true" type="tns:aktorbehorighet" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="aktorbehorighet">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="behorighetRoll" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="niva" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="nr" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="certifieradAv" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="certifieradTillDatum" type="xs:date" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="fakturaadress">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="adress" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="postNr" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="ort" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="land" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="attention" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="arende">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="status">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Avslutat" />
+            <xs:enumeration value="Pågående" />
+            <xs:enumeration value="Gallrat" />
+            <xs:enumeration value="Makulerat" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="1" name="beskrivning" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="ankomstDatum" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" name="slutDatum" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" name="uppdateradDatum" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" name="registreradDatum" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" name="handlaggare" type="tns:handlaggareBas" />
+      <xs:element minOccurs="0" maxOccurs="1" name="intressentLista" type="tns:ArrayOfArendeIntressent" />
+      <xs:element minOccurs="0" maxOccurs="1" name="handelseLista" type="tns:ArrayOfHandelse" />
+      <xs:element minOccurs="0" maxOccurs="1" name="arInomplan" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" name="projektnr" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="bevakningLista" type="tns:ArrayOfBevakning" />
+      <xs:element minOccurs="0" maxOccurs="1" name="objektLista" type="tns:ArrayOfAbstractArendeObjekt" />
+      <xs:element minOccurs="0" maxOccurs="1" name="atgardStartDatum" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" name="atgardSlutDatum" type="xs:date" />
+    </xs:sequence>
+    <xs:attribute name="arendeId" type="xs:int" />
+    <xs:attribute name="dnr" type="xs:string" />
+    <xs:attribute name="diarieprefix" type="xs:string" />
+    <xs:attribute name="kommun" type="xs:string" />
+    <xs:attribute name="enhet" type="xs:string" />
+    <xs:attribute name="enhetkod" type="xs:string" />
+    <xs:attribute name="arendegrupp" type="xs:string" />
+    <xs:attribute name="arendetyp" type="xs:string" />
+    <xs:attribute name="arendeslag" type="xs:string" />
+    <xs:attribute name="arendeklass" type="xs:string" />
+    <xs:attribute name="namndkod" type="xs:string" />
+    <xs:attribute name="kalla" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="handlaggareBas">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:handlaggareIdentity">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="fornamn" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="efternamn" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="handlaggareIdentity">
+    <xs:attribute name="handlaggareId" type="xs:int" />
+    <xs:attribute name="signatur" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfArendeIntressent">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="intressent" type="tns:arendeIntressent" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfHandelse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="handelse" type="tns:handelse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="handelse">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="riktning">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="In" />
+            <xs:enumeration value="Ut" />
+            <xs:enumeration value="Okänd" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="1" name="rubrik" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="startDatum" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="anteckning" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="handelseslag" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="handelsetyp" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="handelseutfall" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="sekretess" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" name="sekretessKapitel" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="sekretessParagraf" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="makulerad" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" name="beslut" type="tns:beslut" />
+      <xs:element minOccurs="0" maxOccurs="1" name="handlingLista" type="tns:ArrayOfHandelseHandling" />
+      <xs:element minOccurs="0" maxOccurs="1" name="intressentLista" type="tns:ArrayOfHandelseIntressent" />
+      <xs:element minOccurs="0" maxOccurs="1" name="bevakningLista" type="tns:ArrayOfBevakning" />
+      <xs:element minOccurs="1" maxOccurs="1" name="arbetsmaterial" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" name="TidDebiterbar" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="TidEjDebiterbar" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="handlaggare" type="tns:handlaggareIdentity" />
+    </xs:sequence>
+    <xs:attribute name="handelseId" type="xs:int" use="required" />
+    <xs:attribute name="checksum" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="beslut">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="beslutstext" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="delegatHandlaggare" type="tns:handlaggareBas" />
+      <xs:element minOccurs="0" maxOccurs="1" name="instanstyp" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="giltigTillDatum" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" name="arMindreAvvikelse" type="xs:boolean" />
+    </xs:sequence>
+    <xs:attribute name="beslutNr" type="xs:string" />
+    <xs:attribute name="arHuvudbeslut" type="xs:boolean" use="required" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfHandelseHandling">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="handling" type="tns:handelseHandling" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="handelseHandling">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:handling">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="refTyp" type="tns:referensTyp" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="handling">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="typ" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="status" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="handlingDatum" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" name="anteckning" type="xs:string" />
+      <xs:element xmlns:q1="http://microsoft.com/wsdl/types/" minOccurs="0" maxOccurs="1" name="uuid" type="q1:guid" />
+      <xs:element minOccurs="0" maxOccurs="1" name="arkivStatus" type="tns:ArkiveringStatus" />
+      <xs:element minOccurs="1" maxOccurs="1" name="makulerad" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" name="ejGallandeDatum" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dokument" type="tns:dokument" />
+    </xs:sequence>
+    <xs:attribute name="handlingId" type="xs:int" use="required" />
+    <xs:attribute name="checksum" type="xs:string" />
+  </xs:complexType>
+  <xs:simpleType name="ArkiveringStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ArkiverasEj" />
+      <xs:enumeration value="Arkiveras" />
+      <xs:enumeration value="Arkiverad" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="dokument">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="namn" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="beskrivning" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="filAndelse" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="fil" type="xs:base64Binary" />
+    </xs:sequence>
+    <xs:attribute name="dokId" type="xs:string" />
+    <xs:attribute name="docSplitToken" type="xs:string" />
+  </xs:complexType>
+  <xs:simpleType name="referensTyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Bifogad" />
+      <xs:enumeration value="Refererad" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ArrayOfHandelseIntressent">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="intressent" type="tns:handelseIntressent" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfBevakning">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="bevakning" type="tns:bevakning" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bevakning">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="bevakningTyp" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="bevakningDatum" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="handlaggarSign" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="anteckning" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="kvitteradDatum" type="xs:dateTime" />
+    </xs:sequence>
+    <xs:attribute name="bevakningId" type="xs:int" />
+    <xs:attribute name="timeStamp" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfAbstractArendeObjekt">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="abstractArendeObjekt" type="tns:abstractArendeObjekt" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="abstractArendeObjekt" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractArendeObjektId">
+        <xs:attribute name="arHuvudObjekt" type="xs:boolean" use="required" />
+        <xs:attribute name="checksum" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="abstractArendeObjektId" abstract="true">
+    <xs:attribute name="arendeObjektId" type="xs:int" />
+  </xs:complexType>
+  <xs:complexType name="abstractArendeObjektChild" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractArendeObjektId" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="arendeBelagenhetAdress">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractArendeObjektChild">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="belAdress" type="tns:belagenhetAdress" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="belagenhetAdress">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractObjekt">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="adressOmrade" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="adressPlatsNr" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="adrPlId" type="xs:int" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="abstractObjekt" abstract="true">
+    <xs:attribute name="checksum" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="regByggnad">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractObjekt">
+        <xs:attribute name="kom_bid" type="xs:int" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="prelRegByggnad">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:regByggnad">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="andamalKod" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="detaljAndamalKod" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="geom" type="tns:GeomType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GeomType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AbstractGeomType">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element xmlns:q2="http://www.opengis.net/gml" minOccurs="0" maxOccurs="1" ref="q2:Point" />
+            <xs:element xmlns:q3="http://www.opengis.net/gml" minOccurs="0" maxOccurs="1" ref="q3:LineString" />
+            <xs:element xmlns:q4="http://www.opengis.net/gml" minOccurs="0" maxOccurs="1" ref="q4:Polygon" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AbstractGeomType" abstract="true" />
+  <xs:complexType name="PointGeomType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AbstractGeomType">
+        <xs:sequence>
+          <xs:element xmlns:q5="http://www.opengis.net/gml" minOccurs="0" maxOccurs="1" ref="q5:Point" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="abstractOmrade" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractObjekt">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="beteckning" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="genericOmrade">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractOmrade">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="geom" type="tns:GeomType" />
+        </xs:sequence>
+        <xs:attribute name="genericOmradeTypId" type="xs:int" use="required" />
+        <xs:attribute name="genericOmradeId" type="xs:int" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="graevOmrade">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractOmrade">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="geom" type="tns:GeomType" />
+        </xs:sequence>
+        <xs:attribute name="graevOmradeId" type="xs:int" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tillsynsOmrade">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractOmrade">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="geom" type="tns:GeomType" />
+        </xs:sequence>
+        <xs:attribute name="tillsynsOmradeId" type="xs:int" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="detaljPlan" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractOmrade">
+        <xs:attribute name="planId" type="xs:int" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="prelDetaljPlan">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:detaljPlan">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="geom" type="tns:GeomType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="fastighet">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractObjekt">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="trakt" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="fbetNr" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="fnr" type="xs:int" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="prelFastighet">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:fastighet">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="geom" type="tns:GeomType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="prelBelagenhetAdress">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:belagenhetAdress" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="arendeRegByggnad">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractArendeObjektChild">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="byggnad" type="tns:regByggnad" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="arendeOmrade">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractArendeObjekt">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="omrade" type="tns:abstractOmrade" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="abstractArendeFastighet" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractArendeObjekt">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="belAdressList" type="tns:ArrayOfArendeBelagenhetAdress" />
+          <xs:element minOccurs="0" maxOccurs="1" name="byggnadList" type="tns:ArrayOfArendeRegByggnad" />
+          <xs:element minOccurs="0" maxOccurs="1" name="specGeom" type="tns:GeomType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfArendeBelagenhetAdress">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="arendeBelagenhetAdress" type="tns:arendeBelagenhetAdress" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfArendeRegByggnad">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="arendeRegByggnad" type="tns:arendeRegByggnad" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="arendeFastighet">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractArendeFastighet">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="fastighet" type="tns:fastighet" />
+          <xs:element minOccurs="0" maxOccurs="1" name="specFastOmr" type="xs:short" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="arendePrelFastighet">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractArendeFastighet">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="fastighet" type="tns:prelFastighet" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="handelseIntressent" type="tns:handelseIntressent" />
+  <xs:complexType name="handelseIntressent">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractHandelseIntressent" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="abstractHandelseIntressent" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractArendeIntressent">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="adressering" type="tns:intressentKommunikation" />
+        </xs:sequence>
+        <xs:attribute name="docSplitToken" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="abstractArendeIntressent" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:intressent">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="attention" type="tns:intressentAttention" />
+          <xs:element minOccurs="0" maxOccurs="1" name="rollLista" type="tns:ArrayOfString" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfString">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="roll" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="arendeIntressent" type="tns:arendeIntressent" />
+  <xs:complexType name="arendeIntressent">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractArendeIntressent" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="remiss">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="dnr" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="mottagare" type="tns:handelseIntressent" />
+      <xs:element minOccurs="1" maxOccurs="1" name="fnr" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="fastighetsbeteckning" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="erfordras" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" name="utskicksHandlingar" type="tns:ArrayOfHandelseHandling" />
+      <xs:element minOccurs="1" maxOccurs="1" name="senastSvarDatum" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="remissText" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="svarDatum" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+    <xs:attribute name="remissId" type="xs:int" use="required" />
+  </xs:complexType>
+  <xs:complexType name="arendeHandlaggare">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="handlaggare" type="tns:handlaggareIdentity" />
+      <xs:element minOccurs="1" maxOccurs="1" name="arHuvudHandlaggare" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

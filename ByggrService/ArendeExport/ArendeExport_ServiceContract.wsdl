@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="www.tekis.se/ServiceContract" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="www.tekis.se/ServiceContract" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="www.tekis.se/ServiceContract/Imports">
+      <xsd:import namespace="www.tekis.se/ServiceContract" />
+      <xsd:import namespace="www.tekis.se/arende" />
+      <xsd:import namespace="http://microsoft.com/wsdl/types/" />
+      <xsd:import namespace="http://www.opengis.net/gml" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IExportArenden_GetIntressent_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetIntressent" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetIntressent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetIntressentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetUpdatedArendenCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUpdatedArendenCount" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetUpdatedArendenCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUpdatedArendenCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetUpdatedArenden_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUpdatedArenden" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetUpdatedArenden_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUpdatedArendenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetArende_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetArende" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetArende_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetArendeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetRelateradeArendenByPersOrgNr_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRelateradeArendenByPersOrgNr" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetRelateradeArendenByPersOrgNr_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRelateradeArendenByPersOrgNrResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetRelateradeArendenByPersOrgNrAndRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRelateradeArendenByPersOrgNrAndRole" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetRelateradeArendenByPersOrgNrAndRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRelateradeArendenByPersOrgNrAndRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetRelateradeArendenByFastighet_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRelateradeArendenByFastighet" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetRelateradeArendenByFastighet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRelateradeArendenByFastighetResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentRequest">
+    <wsdl:part name="parameters" element="tns:GetDocument" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentResponse">
+    <wsdl:part name="parameters" element="tns:GetDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetRemisserByPersOrgNr_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRemisserByPersOrgNr" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetRemisserByPersOrgNr_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRemisserByPersOrgNrResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetHandlingTyper_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHandlingTyper" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetHandlingTyper_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHandlingTyperResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetRoller_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRoller" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetRoller_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRollerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_SaveNewArende_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveNewArende" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_SaveNewArende_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveNewArendeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_SaveNewHandelse_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveNewHandelse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_SaveNewHandelse_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveNewHandelseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_SaveNewRemissvar_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveNewRemissvar" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_SaveNewRemissvar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveNewRemissvarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_SaveBevakning_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveBevakning" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_SaveBevakning_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveBevakningResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetArendeObjekt_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetArendeObjekt" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetArendeObjekt_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetArendeObjektResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_SaveArendeObjekt_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveArendeObjekt" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_SaveArendeObjekt_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveArendeObjektResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetArendeHandlaggare_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetArendeHandlaggare" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_GetArendeHandlaggare_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetArendeHandlaggareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_SaveArendeHandlaggare_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveArendeHandlaggare" />
+  </wsdl:message>
+  <wsdl:message name="IExportArenden_SaveArendeHandlaggare_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveArendeHandlaggareResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IExportArenden">
+    <wsdl:operation name="GetIntressent">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetIntressent" message="tns:IExportArenden_GetIntressent_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetIntressentResponse" message="tns:IExportArenden_GetIntressent_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdatedArendenCount">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetUpdatedArendenCount" message="tns:IExportArenden_GetUpdatedArendenCount_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetUpdatedArendenCountResponse" message="tns:IExportArenden_GetUpdatedArendenCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdatedArenden">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetUpdatedArenden" message="tns:IExportArenden_GetUpdatedArenden_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetUpdatedArendenResponse" message="tns:IExportArenden_GetUpdatedArenden_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetArende">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetArende" message="tns:IExportArenden_GetArende_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetArendeResponse" message="tns:IExportArenden_GetArende_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRelateradeArendenByPersOrgNr">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetRelateradeArendenByPersOrgNr" message="tns:IExportArenden_GetRelateradeArendenByPersOrgNr_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetRelateradeArendenByPersOrgNrResponse" message="tns:IExportArenden_GetRelateradeArendenByPersOrgNr_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRelateradeArendenByPersOrgNrAndRole">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetRelateradeArendenByPersOrgNrAndRole" message="tns:IExportArenden_GetRelateradeArendenByPersOrgNrAndRole_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetRelateradeArendenByPersOrgNrAndRoleResponse" message="tns:IExportArenden_GetRelateradeArendenByPersOrgNrAndRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRelateradeArendenByFastighet">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetRelateradeArendenByFastighet" message="tns:IExportArenden_GetRelateradeArendenByFastighet_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetRelateradeArendenByFastighetResponse" message="tns:IExportArenden_GetRelateradeArendenByFastighet_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocument">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetDocument" name="GetDocumentRequest" message="tns:GetDocumentRequest" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetDocumentResponse" name="GetDocumentResponse" message="tns:GetDocumentResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRemisserByPersOrgNr">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetRemisserByPersOrgNr" message="tns:IExportArenden_GetRemisserByPersOrgNr_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetRemisserByPersOrgNrResponse" message="tns:IExportArenden_GetRemisserByPersOrgNr_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHandlingTyper">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetHandlingTyper" message="tns:IExportArenden_GetHandlingTyper_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetHandlingTyperResponse" message="tns:IExportArenden_GetHandlingTyper_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRoller">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetRoller" message="tns:IExportArenden_GetRoller_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetRollerResponse" message="tns:IExportArenden_GetRoller_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveNewArende">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/SaveNewArende" message="tns:IExportArenden_SaveNewArende_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/SaveNewArendeResponse" message="tns:IExportArenden_SaveNewArende_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveNewHandelse">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/SaveNewHandelse" message="tns:IExportArenden_SaveNewHandelse_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/SaveNewHandelseResponse" message="tns:IExportArenden_SaveNewHandelse_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveNewRemissvar">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/SaveNewRemissvar" message="tns:IExportArenden_SaveNewRemissvar_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/SaveNewRemissvarResponse" message="tns:IExportArenden_SaveNewRemissvar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveBevakning">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/SaveBevakning" message="tns:IExportArenden_SaveBevakning_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/SaveBevakningResponse" message="tns:IExportArenden_SaveBevakning_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetArendeObjekt">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetArendeObjekt" message="tns:IExportArenden_GetArendeObjekt_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetArendeObjektResponse" message="tns:IExportArenden_GetArendeObjekt_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveArendeObjekt">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/SaveArendeObjekt" message="tns:IExportArenden_SaveArendeObjekt_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/SaveArendeObjektResponse" message="tns:IExportArenden_SaveArendeObjekt_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetArendeHandlaggare">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/GetArendeHandlaggare" message="tns:IExportArenden_GetArendeHandlaggare_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/GetArendeHandlaggareResponse" message="tns:IExportArenden_GetArendeHandlaggare_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveArendeHandlaggare">
+      <wsdl:input wsaw:Action="www.tekis.se/ServiceContract/V4/IExportArenden/SaveArendeHandlaggare" message="tns:IExportArenden_SaveArendeHandlaggare_InputMessage" />
+      <wsdl:output wsaw:Action="www.tekis.se/ServiceContract/IExportArenden/SaveArendeHandlaggareResponse" message="tns:IExportArenden_SaveArendeHandlaggare_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

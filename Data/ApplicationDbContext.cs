@@ -80,6 +80,10 @@ namespace Reflex.Data
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, null),
                     v => JsonSerializer.Deserialize<Tab>(v, null));
+            modelBuilder.Entity<ByggrSettings>().Property(p => p.Password)
+                .HasConversion(
+                    v => Encrypt(v),
+                    v => Decrypt(v));
             modelBuilder.Entity<EcosSettings>().Property(p => p.Password)
                 .HasConversion(
                     v => Encrypt(v),

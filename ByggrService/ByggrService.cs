@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 using ArendeExportWS;
 using Reflex.Data;
@@ -44,14 +43,36 @@ namespace ReflexByggrService
 
         private ExportArendenClient GetExportArendenClient()
         {
-            Binding binding = new BasicHttpBinding
-            {
-                MaxReceivedMessageSize = int.MaxValue
-            };
-
             var uri = _settings.ServiceUrl;
-            var address = new EndpointAddress(uri);
-            var client = new ExportArendenClient(binding, address);
+
+            BasicHttpBinding binding;
+
+            if (uri.StartsWith("https:"))
+            {
+                binding = new BasicHttpBinding(BasicHttpSecurityMode.TransportWithMessageCredential)
+                {
+                    MaxBufferSize = int.MaxValue,
+                    MaxReceivedMessageSize = int.MaxValue
+                };
+            }
+            else
+            {
+                binding = new BasicHttpBinding
+                {
+                    MaxBufferSize = int.MaxValue,
+                    MaxReceivedMessageSize = int.MaxValue
+                };
+            }
+
+            var client = new ExportArendenClient(binding, new EndpointAddress(uri));
+            if (string.IsNullOrEmpty(_settings.Username) || string.IsNullOrEmpty(_settings.Password))
+            {
+                return client;
+            }
+
+            binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;
+            client.ClientCredentials.UserName.UserName = _settings.Username;
+            client.ClientCredentials.UserName.Password = _settings.Password;
 
             return client;
         }
@@ -64,39 +85,37 @@ namespace ReflexByggrService
         public async Task<Case[]> GetCasesByEstate(string estateId)
         {
             var client = GetExportArendenClient();
-            var arenden = client.GetRelateradeArendenByFastighetAsync(Convert.ToInt32(estateId), null, null, null,
-                _config.OnlyActiveCases ? StatusFilter.Aktiv : StatusFilter.None).Result.GetRelateradeArendenByFastighetResult;
-            await client.CloseAsync();
+            var arenden = (await client.GetRelateradeArendenByFastighetAsync(Convert.ToInt32(estateId), null, null, null,
+                _config.OnlyActiveCases ? StatusFilter.Aktiv : StatusFilter.None)).GetRelateradeArendenByFastighetResult;
+            client.Close();
 
-            var hideByComment = !string.IsNullOrWhiteSpace(_config.HideDocumentsWithCommentMatching);
-
-            var cases = arenden.Where(x => _config.OnlyCasesWithoutMainDecision == false || x.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true))
+            var filteredArenden = arenden.Where(x => _config.OnlyCasesWithoutMainDecision == false || x.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true))
                 .Where(x => _config.MinCaseStartDate == null || x.ankomstDatum > _config.MinCaseStartDate)
-                .Where(x => _config.Diarieprefixes?.Any() != true || _config.Diarieprefixes.Contains(x.diarieprefix))
-                .Select(arende => new Case
-                {
-                    Arendegrupp = arende.arendegrupp,
-                    Arendeslag = arende.arendeslag,
-                    Arendetyp = arende.arendetyp,
-                    Status = arende.status.ToString(),
-                    Fastighetsbeteckning = string.Join(", ", arende.fastighetLista.Select(x => x.fastighetsbeteckning)),
-                    Kommun = arende.kommun,
-                    Beskrivning = arende.beskrivning,
-                    HandlaggareEfternamn = arende.handlaggare.efternamn,
-                    HandlaggareFornamn = arende.handlaggare.fornamn,
-                    HandlaggareSignatur = arende.handlaggare.signatur,
-                    CaseId = arende.arendeId.ToString(),
-                    Dnr = arende.dnr,
-                    Title = arende.beskrivning,
-                    CaseSource = "ByggR",
-                    CaseSourceId = _config.Id,
-                    Date = arende.ankomstDatum,
-                    UnavailableDueToSecrecy = _config.HideCasesWithSecretOccurences && arende.handelseLista.Any(x => x.sekretess),
-                    CaseWithoutMainDecision = arende.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true),
-                    Diarieprefix = arende.diarieprefix
-                }).ToArray();
+                .Where(x => _config.Diarieprefixes?.Any() != true || _config.Diarieprefixes.Contains(x.diarieprefix));
+            var filteredCases = filteredArenden.Select(arende => new Case
+            {
+                Arendegrupp = arende.arendegrupp,
+                Arendeslag = arende.arendeslag,
+                Arendetyp = arende.arendetyp,
+                Status = arende.status.ToString(),
+                Fastighetsbeteckning = GetFastighetsbeteckning(arende),
+                Kommun = arende.kommun,
+                Beskrivning = arende.beskrivning,
+                HandlaggareEfternamn = arende.handlaggare.efternamn,
+                HandlaggareFornamn = arende.handlaggare.fornamn,
+                HandlaggareSignatur = arende.handlaggare.signatur,
+                CaseId = arende.arendeId.ToString(),
+                Dnr = arende.dnr,
+                Title = arende.beskrivning,
+                CaseSource = "ByggR",
+                CaseSourceId = _config.Id,
+                Date = arende.ankomstDatum,
+                UnavailableDueToSecrecy = _config.HideCasesWithSecretOccurences && arende.handelseLista.Any(x => x.sekretess),
+                CaseWithoutMainDecision = arende.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true),
+                Diarieprefix = arende.diarieprefix
+            }).ToArray();
 
-            return cases;
+            return filteredCases;
         }
 
         public async Task<Case> GetCase(string id)
@@ -105,7 +124,7 @@ namespace ReflexByggrService
             try
             {
                 var arende = await client.GetArendeAsync(id);
-                await client.CloseAsync();
+                client.Close();
 
                 return new Case
                 {
@@ -113,7 +132,7 @@ namespace ReflexByggrService
                     CaseId = arende?.dnr,
                     Dnr = arende?.dnr,
                     Title = arende?.beskrivning,
-                    Fastighetsbeteckning = string.Join(", ", arende.fastighetLista.Select(x => x.fastighetsbeteckning)),
+                    Fastighetsbeteckning = GetFastighetsbeteckning(arende),
                     CaseSource = "ByggR",
                     CaseSourceId = _config.Id
                 };
@@ -127,9 +146,9 @@ namespace ReflexByggrService
         public async Task<Occurence[]> GetOccurencesByCase(string caseId)
         {
             var client = GetExportArendenClient();
-            var arende = client.GetArendeAsync(caseId).Result;
-            var handlingTyper = client.GetHandlingTyperAsync(StatusFilter.None).Result;
-            await client.CloseAsync();
+            var arende = await client.GetArendeAsync(caseId);
+            var handlingTyper = await client.GetHandlingTyperAsync(StatusFilter.None);
+            client.Close();
 
             var hideByComment = !string.IsNullOrWhiteSpace(_config.HideDocumentsWithCommentMatching);
 
@@ -139,18 +158,15 @@ namespace ReflexByggrService
                 .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
                 .Select(handelse => new Occurence
                 {
-                    Documents = handelse.sekretess ? new Document[0] : handelse.handlingLista
-                        .Where(handling => (!_config?.DocumentTypes?.Any() ?? true) ||
-                            (_config?.DocumentTypes?.Contains(handling.typ) ?? true))
-                        .Where(handling => (_config?.WorkingMaterial ?? false) || !ContainsWorkingMaterial(handling.status))
+                    Documents = handelse.sekretess ? Array.Empty<Document>() : handelse.handlingLista
+                        .Where(handling => (!_config?.DocumentTypes?.Any() ?? true) || (_config?.DocumentTypes?.Contains(handling.typ) ?? true))
+                        .Where(handling => _config.WorkingMaterial || !ContainsWorkingMaterial(handling.status))
                         .Select(handling => new Document
                         {
-                            DocLinkId = (handling.docId == null ||
-                                         (hideByComment &&
-                                         (handelse.anteckning?.Contains(_config.HideDocumentsWithCommentMatching) ?? false))
+                            DocLinkId = (handling?.dokument?.dokId == null || (hideByComment && (handling?.anteckning?.Contains(_config.HideDocumentsWithCommentMatching) ?? false))
                                 ? "-1"
-                                : handling.docId).ToString(CultureInfo.InvariantCulture),
-                            Title = handlingTyper.FirstOrDefault(x => x.Typ == handling.typ)?.Beskrivning ?? handling.docName ?? "Dokument (namn saknas)"
+                                : handling.dokument.dokId).ToString(CultureInfo.InvariantCulture),
+                            Title = handlingTyper.FirstOrDefault(x => x.Typ == handling?.typ)?.Beskrivning ?? handling?.dokument?.dokId ?? "Dokument (namn saknas)"
                         })
                         .ToArray(),
                     Arrival = handelse.startDatum,
@@ -169,8 +185,8 @@ namespace ReflexByggrService
         public async Task<CasePerson[]> GetPersonsByCase(string caseId)
         {
             var client = GetExportArendenClient();
-            var arende = client.GetArendeAsync(caseId).Result;
-            await client.CloseAsync();
+            var arende = await client.GetArendeAsync(caseId);
+            client.Close();
 
             var arenden = arende.intressentLista
                 .Where(p => _config.PersonRoles?.Any() != true || p.rollLista == null || p.rollLista.Any(roll => _config.PersonRoles.Contains(roll)))
@@ -203,7 +219,7 @@ namespace ReflexByggrService
                 HandlaggareSignatur = arende.handlaggare.signatur,
                 CaseId = arende.arendeId.ToString(),
                 Dnr = arende.dnr,
-                Fastighetsbeteckning = string.Join(", ", arende.fastighetLista.Select(x => x.fastighetsbeteckning)),
+                Fastighetsbeteckning = GetFastighetsbeteckning(arende),
                 Persons = arende.intressentLista
                         .Where(p => _config.PersonRoles?.Any() != true || p.rollLista == null || p.rollLista.Any(roll => _config.PersonRoles.Contains(roll)))
                         .Select(p => new CasePerson
@@ -221,13 +237,13 @@ namespace ReflexByggrService
                         .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
                         .Select(handelse => new Handelse
                         {
-                            Documents = handelse.sekretess ? new Document[0] : handelse.handlingLista
-                                .Where(handling => !(_config?.DocumentTypes?.Any() ?? false) || _config.DocumentTypes.Contains(handling.typ))
+                            Documents = handelse.sekretess ? Array.Empty<Document>() : handelse.handlingLista
+                                .Where(handling => (!_config?.DocumentTypes?.Any() ?? true) || (_config?.DocumentTypes?.Contains(handling.typ) ?? true))
                                 .Where(handling => _config.WorkingMaterial || !ContainsWorkingMaterial(handling.status))
                                 .Select(handling => new Document
                                 {
-                                    DocLinkId = (handling.docId == null || (hideByComment && (handelse.anteckning?.Contains(_config.HideDocumentsWithCommentMatching) ?? false)) ? "-1" : handling.docId).ToString(CultureInfo.InvariantCulture),
-                                    Title = handling.docName ?? "Dokument (namn saknas)"
+                                    DocLinkId = (handling?.dokument?.dokId == null || (hideByComment && (handling.anteckning?.Contains(_config.HideDocumentsWithCommentMatching) ?? false)) ? "-1" : handling.dokument.dokId).ToString(CultureInfo.InvariantCulture),
+                                    Title = handling?.dokument?.namn ?? "Dokument (namn saknas)"
                                 }).ToArray(),
                             Arrival = handelse.startDatum,
                             Title = handelse.rubrik,
@@ -246,14 +262,14 @@ namespace ReflexByggrService
         public async Task<PhysicalDocument> GetDocument(string id)
         {
             var client = GetExportArendenClient();
-            var doc = await client.GetDocumentAsync(id);
+            var doc = (await client.GetDocumentAsync(id, "")).GetDocumentResult.FirstOrDefault();
 
             var rdoc = new PhysicalDocument
             {
-                Data = doc.DocumentBytes,
-                Extension = doc.DocumentExtension,
-                Id = doc.DocumentId,
-                Filename = doc.DocumentId + "." + doc.DocumentExtension.ToLower()
+                Data = doc.fil,
+                Extension = doc.filAndelse,
+                Id = doc.dokId,
+                Filename = doc.dokId + "." + doc.filAndelse.ToLower()
             };
 
             return rdoc;
@@ -262,6 +278,18 @@ namespace ReflexByggrService
         public Task<Case> SearchCase(string caseId)
         {
             throw new NotImplementedException();
+        }
+
+        private static string GetFastighetsbeteckning(arende arende)
+        {
+            return string.Join(", ", arende.objektLista.Select(x =>
+            {
+                if (x is arendeFastighet arendeFastighet)
+                    return $"{arendeFastighet.fastighet.trakt} {arendeFastighet.fastighet.fbetNr}";
+                if (x is arendeOmrade arendeOmrade)
+                    return $"{arendeOmrade.omrade.beteckning}";
+                return "";
+            }));
         }
     }
 }

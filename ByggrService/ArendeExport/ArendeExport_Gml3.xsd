@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://www.opengis.net/gml" elementFormDefault="qualified" targetNamespace="http://www.opengis.net/gml" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Point" type="tns:PointType" />
+  <xs:complexType name="PointType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AbstractGeometricPrimitiveType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="pos" type="tns:DirectPositionType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AbstractGeometricPrimitiveType" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AbstractGeometryType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AbstractGeometryType" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AbstractGMLType">
+        <xs:attribute name="gid" type="xs:string" />
+        <xs:attribute name="srsName" type="xs:anyURI" />
+        <xs:attribute name="srsDimension" type="xs:positiveInteger" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AbstractGMLType" abstract="true">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="metaDataProperty" type="tns:MetaDataPropertyType" />
+      <xs:element minOccurs="0" maxOccurs="1" name="description" type="tns:StringOrRefType" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="name" type="tns:CodeType" />
+    </xs:sequence>
+    <xs:attribute form="qualified" name="id" type="xs:ID" />
+  </xs:complexType>
+  <xs:complexType name="MetaDataPropertyType">
+    <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute form="qualified" name="remoteSchema" type="xs:anyURI" />
+    <xs:attribute name="about" type="xs:anyURI" />
+  </xs:complexType>
+  <xs:complexType name="StringOrRefType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute form="qualified" name="remoteSchema" type="xs:anyURI" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="CodeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="codeSpace" type="xs:anyURI" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="AbstractRingType" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AbstractGeometryType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LinearRingType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AbstractRingType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="posList" type="tns:DirectPositionListType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DirectPositionListType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="srsName" type="xs:anyURI" />
+        <xs:attribute name="srsDimension" type="xs:positiveInteger" />
+        <xs:attribute name="count" type="xs:positiveInteger" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="AbstractCurveType" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AbstractGeometricPrimitiveType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LineStringType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AbstractCurveType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="posList" type="tns:DirectPositionListType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AbstractSurfaceType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AbstractGeometricPrimitiveType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PolygonType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AbstractSurfaceType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="exterior" type="tns:AbstractRingPropertyType" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="interior" type="tns:AbstractRingPropertyType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AbstractRingPropertyType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="LinearRing" type="tns:LinearRingType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DirectPositionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="srsName" type="xs:anyURI" />
+        <xs:attribute name="srsDimension" type="xs:positiveInteger" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="LineString" type="tns:LineStringType" />
+  <xs:element name="Polygon" type="tns:PolygonType" />
+</xs:schema>

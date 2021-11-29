@@ -6,6 +6,8 @@ export interface AgsSettings {
 export interface ByggrSettings {
   id: string;
   serviceUrl: string;
+  username: string;
+  password: string;
 }
 
 
