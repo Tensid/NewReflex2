@@ -12,7 +12,7 @@ const CaseList = ({ cases, toggleShow, setModalData }: CaseListProps) => {
   return (
     <>
       {cases.map((case_) => <CaseItem
-        key={case_.caseId}
+        key={case_.caseId || (case_.title + case_.dnr)}
         caseId={case_.caseId}
         dnr={case_.dnr}
         title={case_.title}
