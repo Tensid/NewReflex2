@@ -213,10 +213,18 @@
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="1" name="namn" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="beskrivning" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="filAndelse" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="fil" type="xs:base64Binary" />
+      <xs:element minOccurs="0" maxOccurs="1" name="skapadDatum" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="handlaggare" type="tns:handlaggareIdentity" />
+      <xs:element minOccurs="0" maxOccurs="1" name="fil" type="tns:dokumentFil" />
     </xs:sequence>
     <xs:attribute name="dokId" type="xs:string" />
+    <xs:attribute name="checksum" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="dokumentFil">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="filBuffer" type="xs:base64Binary" />
+    </xs:sequence>
+    <xs:attribute name="filAndelse" type="xs:string" />
     <xs:attribute name="docSplitToken" type="xs:string" />
   </xs:complexType>
   <xs:simpleType name="referensTyp">
@@ -470,20 +478,10 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="handelseIntressent" type="tns:handelseIntressent" />
-  <xs:complexType name="handelseIntressent">
+  <xs:element name="arendeIntressent" type="tns:arendeIntressent" />
+  <xs:complexType name="arendeIntressent">
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:abstractHandelseIntressent" />
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="abstractHandelseIntressent" abstract="true">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:abstractArendeIntressent">
-        <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="1" name="adressering" type="tns:intressentKommunikation" />
-        </xs:sequence>
-        <xs:attribute name="docSplitToken" type="xs:string" />
-      </xs:extension>
+      <xs:extension base="tns:abstractArendeIntressent" />
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="abstractArendeIntressent" abstract="true">
@@ -501,10 +499,20 @@
       <xs:element minOccurs="0" maxOccurs="unbounded" name="roll" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="arendeIntressent" type="tns:arendeIntressent" />
-  <xs:complexType name="arendeIntressent">
+  <xs:element name="handelseIntressent" type="tns:handelseIntressent" />
+  <xs:complexType name="handelseIntressent">
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:abstractArendeIntressent" />
+      <xs:extension base="tns:abstractHandelseIntressent" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="abstractHandelseIntressent" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:abstractArendeIntressent">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="adressering" type="tns:intressentKommunikation" />
+        </xs:sequence>
+        <xs:attribute name="docSplitToken" type="xs:string" />
+      </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="remiss">

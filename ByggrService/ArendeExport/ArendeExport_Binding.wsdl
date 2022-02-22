@@ -121,15 +121,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="UpdateHandelse">
-      <soap:operation soapAction="www.tekis.se/ServiceContract/V4/IExportArenden/UpdateHandelse" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="SaveNewRemissvar">
       <soap:operation soapAction="www.tekis.se/ServiceContract/V4/IExportArenden/SaveNewRemissvar" style="document" />
       <wsdl:input>
@@ -159,15 +150,6 @@
     </wsdl:operation>
     <wsdl:operation name="SaveArendeObjekt">
       <soap:operation soapAction="www.tekis.se/ServiceContract/V4/IExportArenden/SaveArendeObjekt" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="SaveHandelseHandling">
-      <soap:operation soapAction="www.tekis.se/ServiceContract/V4/IExportArenden/SaveHandelseHandling" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

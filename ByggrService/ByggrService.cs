@@ -262,14 +262,14 @@ namespace ReflexByggrService
         public async Task<PhysicalDocument> GetDocument(string id)
         {
             var client = GetExportArendenClient();
-            var doc = (await client.GetDocumentAsync(id, "")).GetDocumentResult.FirstOrDefault();
+            var doc = (await client.GetDocumentAsync(id, true, "")).GetDocumentResult.FirstOrDefault();
 
             var rdoc = new PhysicalDocument
             {
-                Data = doc.fil,
-                Extension = doc.filAndelse,
-                Id = doc.dokId,
-                Filename = doc.dokId + "." + doc.filAndelse.ToLower()
+                Data = doc?.fil.filBuffer,
+                Extension = doc?.fil.filAndelse,
+                Id = doc?.dokId,
+                Filename = doc?.dokId + "." + doc?.fil.filAndelse?.ToLower() ?? ""
             };
 
             return rdoc;

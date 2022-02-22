@@ -170,6 +170,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" maxOccurs="1" name="documentId" type="xs:string" />
+        <xs:element minOccurs="1" maxOccurs="1" name="inkluderaFil" nillable="true" type="xs:boolean" />
         <xs:element minOccurs="0" maxOccurs="1" name="docSplitToken" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -337,20 +338,6 @@
       <xs:element minOccurs="1" maxOccurs="1" name="HandelseId" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="UpdateHandelse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="1" name="message" type="tns:UpdateHandelseMessage" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="UpdateHandelseResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="1" name="UpdateHandelseResult" type="tns:UpdateHandelseResponse" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="SaveNewRemissvar">
     <xs:complexType>
       <xs:sequence>
@@ -453,20 +440,16 @@
       <xs:element minOccurs="0" maxOccurs="1" name="ArendeObjekt" type="tns:ArrayOfAbstractArendeObjekt" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="SaveHandelseHandling">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="1" name="message" type="tns:SaveHandelseHandlingMessage" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="SaveHandelseHandlingResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="1" name="SaveHandelseHandlingResult" type="tns:SaveHandelseHandlingResponse" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xs:complexType name="ArrayOfArendeIntressent">
+    <xs:sequence>
+      <xs:element xmlns:q13="www.tekis.se/arende" minOccurs="0" maxOccurs="unbounded" name="arendeIntressent" nillable="true" type="q13:arendeIntressent" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfHandelseIntressent">
+    <xs:sequence>
+      <xs:element xmlns:q14="www.tekis.se/arende" minOccurs="0" maxOccurs="unbounded" name="handelseIntressent" nillable="true" type="q14:handelseIntressent" />
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="GetArendeHandlaggare">
     <xs:complexType>
       <xs:sequence>
@@ -494,7 +477,7 @@
   </xs:complexType>
   <xs:complexType name="ArrayOfArendeHandlaggare">
     <xs:sequence>
-      <xs:element xmlns:q13="www.tekis.se/arende" minOccurs="0" maxOccurs="unbounded" name="arendeHandlaggare" nillable="true" type="q13:arendeHandlaggare" />
+      <xs:element xmlns:q15="www.tekis.se/arende" minOccurs="0" maxOccurs="unbounded" name="arendeHandlaggare" nillable="true" type="q15:arendeHandlaggare" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SaveArendeHandlaggare">

@@ -3062,13 +3062,17 @@ namespace ArendeExportWS
         
         private string beskrivningField;
         
-        private string filAndelseField;
+        private System.DateTime skapadDatumField;
         
-        private byte[] filField;
+        private bool skapadDatumFieldSpecified;
+        
+        private handlaggareIdentity handlaggareField;
+        
+        private dokumentFil filField;
         
         private string dokIdField;
         
-        private string docSplitTokenField;
+        private string checksumField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
@@ -3100,21 +3104,49 @@ namespace ArendeExportWS
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string filAndelse
+        public System.DateTime skapadDatum
         {
             get
             {
-                return this.filAndelseField;
+                return this.skapadDatumField;
             }
             set
             {
-                this.filAndelseField = value;
+                this.skapadDatumField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary", Order=3)]
-        public byte[] fil
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool skapadDatumSpecified
+        {
+            get
+            {
+                return this.skapadDatumFieldSpecified;
+            }
+            set
+            {
+                this.skapadDatumFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public handlaggareIdentity handlaggare
+        {
+            get
+            {
+                return this.handlaggareField;
+            }
+            set
+            {
+                this.handlaggareField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public dokumentFil fil
         {
             get
             {
@@ -3137,6 +3169,64 @@ namespace ArendeExportWS
             set
             {
                 this.dokIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string checksum
+        {
+            get
+            {
+                return this.checksumField;
+            }
+            set
+            {
+                this.checksumField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="www.tekis.se/arende")]
+    public partial class dokumentFil
+    {
+        
+        private byte[] filBufferField;
+        
+        private string filAndelseField;
+        
+        private string docSplitTokenField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary", Order=0)]
+        public byte[] filBuffer
+        {
+            get
+            {
+                return this.filBufferField;
+            }
+            set
+            {
+                this.filBufferField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string filAndelse
+        {
+            get
+            {
+                return this.filAndelseField;
+            }
+            set
+            {
+                this.filAndelseField = value;
             }
         }
         
@@ -4058,9 +4148,9 @@ namespace ArendeExportWS
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(arendeIntressent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(abstractHandelseIntressent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(handelseIntressent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(arendeIntressent))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -4105,9 +4195,9 @@ namespace ArendeExportWS
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(abstractArendeIntressent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(arendeIntressent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(abstractHandelseIntressent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(handelseIntressent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(arendeIntressent))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -5875,15 +5965,20 @@ namespace ArendeExportWS
         public string documentId;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="www.tekis.se/ServiceContract", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<bool> inkluderaFil;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="www.tekis.se/ServiceContract", Order=2)]
         public string docSplitToken;
         
         public GetDocumentRequest()
         {
         }
         
-        public GetDocumentRequest(string documentId, string docSplitToken)
+        public GetDocumentRequest(string documentId, System.Nullable<bool> inkluderaFil, string docSplitToken)
         {
             this.documentId = documentId;
+            this.inkluderaFil = inkluderaFil;
             this.docSplitToken = docSplitToken;
         }
     }
@@ -6075,10 +6170,11 @@ namespace ArendeExportWS
             return base.Channel.GetDocument(request);
         }
         
-        public ArendeExportWS.dokument[] GetDocument(string documentId, string docSplitToken)
+        public ArendeExportWS.dokument[] GetDocument(string documentId, System.Nullable<bool> inkluderaFil, string docSplitToken)
         {
             ArendeExportWS.GetDocumentRequest inValue = new ArendeExportWS.GetDocumentRequest();
             inValue.documentId = documentId;
+            inValue.inkluderaFil = inkluderaFil;
             inValue.docSplitToken = docSplitToken;
             ArendeExportWS.GetDocumentResponse retVal = ((ArendeExportWS.IExportArenden)(this)).GetDocument(inValue);
             return retVal.GetDocumentResult;
@@ -6090,10 +6186,11 @@ namespace ArendeExportWS
             return base.Channel.GetDocumentAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ArendeExportWS.GetDocumentResponse> GetDocumentAsync(string documentId, string docSplitToken)
+        public System.Threading.Tasks.Task<ArendeExportWS.GetDocumentResponse> GetDocumentAsync(string documentId, System.Nullable<bool> inkluderaFil, string docSplitToken)
         {
             ArendeExportWS.GetDocumentRequest inValue = new ArendeExportWS.GetDocumentRequest();
             inValue.documentId = documentId;
+            inValue.inkluderaFil = inkluderaFil;
             inValue.docSplitToken = docSplitToken;
             return ((ArendeExportWS.IExportArenden)(this)).GetDocumentAsync(inValue);
         }
