@@ -99,7 +99,7 @@ namespace Reflex.Controllers
                         foreach (var iipaxConfig in config.IipaxConfigs)
                         {
                             var proxy = _proxyService.GetProxy(source, iipaxConfig.Id);
-                            var iipaxCases = await proxy.GetCasesByEstate(estateId);
+                            var iipaxCases = await proxy.GetCasesByEstate(estateName);
                             foreach (var c in iipaxCases)
                             {
                                 c.CaseSourceId = iipaxConfig.Id;

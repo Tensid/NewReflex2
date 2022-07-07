@@ -98,7 +98,7 @@ namespace ReflexIipaxService
             {
                 SearchCondition = new[]
                 {
-                    new SearchCondition {Attribute = "property_number", Operator = Operator.EQUAL, Value = new[] {estateId}}
+                    new SearchCondition {Attribute = "property_name", Operator = Operator.EQUAL, Value = new[] {estateId}}
                 }
             };
             var options = new SearchOptions

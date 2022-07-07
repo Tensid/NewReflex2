@@ -42,7 +42,7 @@ export const fetchCasesAsync = (data: SearchResult): AppThunk => async dispatch 
       dispatch(getCasesStart());
       let cases: Case[];
       if (data.type === 'Fastighet' || data.type === 'Adress')
-        cases = await getCases(data.value);
+        cases = await getCases(data.value, data.estateName);
       else
         if (data.value === '00000000-0000-0000-0000-000000000000')
           cases = await getCase(data.displayName, data.source as CaseSource, data?.caseSourceId);

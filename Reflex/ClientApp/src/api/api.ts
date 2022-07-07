@@ -276,8 +276,11 @@ export async function getOwners(estateId: string, distance: number | string) {
   return data;
 }
 
-export async function getCases(estateId: string) {
+export async function getCases(estateId: string, estateName?: string) {
   let url = `cases/${estateId}`;
+  if (estateName) {
+    url = `${url}/${estateName}`;
+  }
   if (configId) {
     url = `${url}?configId=${configId}`;
   }
