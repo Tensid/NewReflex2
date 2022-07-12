@@ -112,7 +112,8 @@ namespace ReflexByggrService
                 Date = arende.ankomstDatum,
                 UnavailableDueToSecrecy = _config.HideCasesWithSecretOccurences && arende.handelseLista.Any(x => x.sekretess),
                 CaseWithoutMainDecision = arende.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true),
-                Diarieprefix = arende.diarieprefix
+                Diarieprefix = arende.diarieprefix,
+                Tabs = _config.Tabs?.Select(x => x.ToString())
             }).ToArray();
 
             return filteredCases;
@@ -134,7 +135,8 @@ namespace ReflexByggrService
                     Title = arende?.beskrivning,
                     Fastighetsbeteckning = GetFastighetsbeteckning(arende),
                     CaseSource = "ByggR",
-                    CaseSourceId = _config.Id
+                    CaseSourceId = _config.Id,
+                    Tabs = _config.Tabs.Select(x => x.ToString())
                 };
             }
             catch (Exception)

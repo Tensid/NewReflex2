@@ -59,6 +59,7 @@ export interface Case {
   caseSourceId: string;
   caseWithoutMainDecision: boolean;
   diarieprefix: string;
+  tabs: CaseTab[];
 }
 
 export interface Occurence {

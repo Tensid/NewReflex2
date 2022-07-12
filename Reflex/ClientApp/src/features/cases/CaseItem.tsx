@@ -2,7 +2,7 @@ import React from 'react';
 import { IconDefinition, faArchive, faBug, faHammer, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalData } from '../../Cases';
-import { CaseSource } from '../../api/api';
+import { CaseSource, CaseTab } from '../../api/api';
 import styles from './Cases.module.css';
 
 interface CaseItemProps {
@@ -16,9 +16,10 @@ interface CaseItemProps {
   caseSourceId: string;
   date: string;
   unavailableDueToSecrecy: boolean;
+  tabs: CaseTab[];
 }
 
-const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, caseId, caseSourceId, date, unavailableDueToSecrecy }: CaseItemProps) => {
+const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, caseId, caseSourceId, date, unavailableDueToSecrecy, tabs }: CaseItemProps) => {
   let color = 'secondary';
   let symbol: IconDefinition;
   if (caseSource === CaseSource.Ecos) {
@@ -39,7 +40,7 @@ const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, ca
   }
 
   function handleClick() {
-    setModalData({ dnr, caseId, caseSource, title, caseSourceId, date });
+    setModalData({ dnr, caseId, caseSource, title, caseSourceId, date, tabs });
     toggleShow();
   }
 

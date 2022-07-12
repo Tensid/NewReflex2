@@ -52,9 +52,11 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
   const [occurencesData, setOccurences] = useState<TabState<Occurence[]>>({ ...initTabState, tab: 'Occurences' });
   const [personsData, setPersons] = useState<TabState<CasePerson[]>>({ ...initTabState, tab: 'Persons' });
   const [archivedDocumentsData, setArchivedDocuments] = useState<TabState<ArchivedDocument[]>>({ ...initTabState, tab: 'Archive' });
-  const { caseSource, dnr, caseId, title, caseSourceId, date } = modalData;
+  const { caseSource, dnr, caseId, title, caseSourceId, date, tabs } = modalData;
 
-  const availableTabs = availableCaseDetailsTabs.get(caseSource)!;
+  let availableTabs = tabs || availableCaseDetailsTabs.get(caseSource)!;
+  if (caseSource === 'ByggR' && (!tabs || tabs?.length === 0))
+    availableTabs = ['Occurences'];
 
   useEffect(() => {
     const id = caseSource === 'ByggR' ? dnr : caseId;

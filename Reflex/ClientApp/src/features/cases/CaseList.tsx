@@ -23,6 +23,7 @@ const CaseList = ({ cases, toggleShow, setModalData }: CaseListProps) => {
         caseSourceId={case_.caseSourceId}
         date={case_.date}
         unavailableDueToSecrecy={case_.unavailableDueToSecrecy}
+        tabs={case_.tabs}
       />)}
     </>
   );

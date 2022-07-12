@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _ from 'lodash';
 import { ButtonGroup, Col, Dropdown, DropdownButton, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { Case, CaseSource, SearchResult } from './api/api';
+import { Case, CaseSource, CaseTab, SearchResult } from './api/api';
 import { RootState } from './app/store';
 import CaseList from './features/cases/CaseList';
 import CaseModal from './features/cases/CaseModal';
@@ -22,6 +22,7 @@ export interface ModalData {
   title: string;
   caseSourceId: string;
   date: string | undefined;
+  tabs?: CaseTab[];
 }
 
 type SortBy = 'TITLE_ASC' | 'TITLE_DESC' | 'DATE_ASC' | 'DATE_DESC' | 'DNR_ASC' | 'DNR_DESC';

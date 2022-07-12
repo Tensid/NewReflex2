@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace VisaRService.Contracts
 {
@@ -23,5 +24,6 @@ namespace VisaRService.Contracts
         public Guid CaseSourceId { get; set; }
         public bool? CaseWithoutMainDecision { get; set; }
         public string Diarieprefix { get; set; }
+        public IEnumerable<string> Tabs { get; set; }
     }
 }
