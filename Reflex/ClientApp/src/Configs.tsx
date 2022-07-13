@@ -44,12 +44,9 @@ const Configs = () => {
             <a href="/manage-configs" onClick={handleClick}>Skapa</a> en konfiguration för att fortsätta.
           </h5>
           :
-          <>
-            <h5 className="text-center">Konfiguration saknas. Kontakta en administratör för att få tillgång till konfigurationerna.</h5>
-            <div className="row d-flex justify-content-center">
-              <a href={`mailto:${contact.email}?subject=${contact.subject}&body=${contact.body}`}>{contact.email}</a>
-            </div>
-          </>
+          <h5 className="text-center">
+            Konfiguration saknas. Klicka <a title={contact.email} href={`mailto:${contact.email}?subject=${contact.subject}&body=${contact.body}`}>här</a> och skicka mejl om du vill ha behörighet.
+          </h5>
         :
         <>
           <h5>Välj konfiguration</h5>
