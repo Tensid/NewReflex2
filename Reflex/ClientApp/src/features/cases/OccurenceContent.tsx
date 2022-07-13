@@ -6,7 +6,7 @@ import { TabState } from './CaseModal';
 function occurenceText(occurence: Occurence) {
   let occurenceText = '';
   if (occurence.isSecret)
-    occurenceText = ' (Sekretessbelagd händelse)';
+    occurenceText = ' (Sekretessmarkerad händelse)';
   else {
     if (occurence.documents != null && occurence.documents.length > 0) {
       let availableDocuments = 0;
@@ -63,7 +63,7 @@ const OccurenceContent = ({ occurenceState, caseSource, caseSourceId }: Occurenc
                         );
                       })
                       :
-                      occurence.isSecret ? 'Sekretessbelagt' : 'Inga handlingar kopplade till händelsen.'
+                      occurence.isSecret ? 'Sekretess' : 'Inga handlingar kopplade till händelsen.'
                     }
                   </ul>
                 </div>
