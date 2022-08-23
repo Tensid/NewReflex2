@@ -1,10 +1,10 @@
 using IdentityModel;
-using IdentityServer4.Models;
-using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Reflex.Data.Models;
 using System.Threading.Tasks;
 using System.Linq;
+using Duende.IdentityServer.Services;
+using Duende.IdentityServer.Models;
 
 namespace Reflex.Services
 {

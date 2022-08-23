@@ -1,4 +1,4 @@
-﻿using IdentityServer4.EntityFramework.Options;
+﻿using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -29,8 +29,8 @@ namespace Reflex.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var stringArrayConverter = new ValueConverter<string[], string>(
-                v => JsonSerializer.Serialize(v, null),
-                v => JsonSerializer.Deserialize<string[]>(v, null));
+                v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                v => JsonSerializer.Deserialize<string[]>(v, (JsonSerializerOptions)null));
 
             var stringArrayComparer = new ValueComparer<string[]>(
                 (c1, c2) => c1.SequenceEqual(c2),
@@ -40,24 +40,24 @@ namespace Reflex.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Config>().Property(p => p.Tabs)
                 .HasConversion(
-                    v => JsonSerializer.Serialize(v, null),
-                    v => JsonSerializer.Deserialize<List<Tab>>(v, null),
+                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<List<Tab>>(v, (JsonSerializerOptions)null),
                     new ValueComparer<ICollection<Tab>>(
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                         c => c));
             modelBuilder.Entity<Config>().Property(p => p.Map)
                 .HasConversion(
-                    v => JsonSerializer.Serialize(v, null),
-                    v => JsonSerializer.Deserialize<List<string>>(v, null),
+                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null),
                     new ValueComparer<ICollection<string>>(
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                         c => c));
             modelBuilder.Entity<ByggrConfig>().Property(p => p.Tabs)
                 .HasConversion(
-                    v => JsonSerializer.Serialize(v, null),
-                    v => JsonSerializer.Deserialize<List<CaseTab>>(v, null),
+                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<List<CaseTab>>(v, (JsonSerializerOptions)null),
                     new ValueComparer<ICollection<CaseTab>>(
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
@@ -78,8 +78,8 @@ namespace Reflex.Data
                     v => Decrypt(v));
             modelBuilder.Entity<ApplicationUser>().Property(p => p.DefaultTab)
                 .HasConversion(
-                    v => JsonSerializer.Serialize(v, null),
-                    v => JsonSerializer.Deserialize<Tab>(v, null));
+                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<Tab>(v, (JsonSerializerOptions)null));
             modelBuilder.Entity<ByggrSettings>().Property(p => p.Password)
                 .HasConversion(
                     v => Encrypt(v),
