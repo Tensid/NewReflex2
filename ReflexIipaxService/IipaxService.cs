@@ -240,8 +240,35 @@ namespace ReflexIipaxService
         {
             try
             {
+                var cases = new List<Task<Case[]>>();
+                var caseResult = SearchAips("display_name", Operator.MATCHES, caseNumber + "*", null);
+
+                return (await caseResult).ToArray()?.FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<Task<Case[]>>> SearchCases(string caseNumber)
+        {
+            var cases = new List<Task<Case[]>>();
+            var alternativBeteckningCases = SearchAips("alternative_property_names", Operator.EQUAL, caseNumber, "Alt bet");
+            var objektlistaCases = SearchAips("object_reference_extra", Operator.EQUAL, caseNumber, "Objektlista");
+            cases.Add(alternativBeteckningCases);
+            cases.Add(objektlistaCases);
+            var result = Task.FromResult(cases);
+
+            return await result.ConfigureAwait(false);
+        }
+
+        private async Task<Case[]> SearchAips(string attribute, Operator @operator, string value, string type)
+        {
+            try
+            {
                 var client = GetClient();
-                var query = new Query { SearchCondition = new[] { new SearchCondition { Attribute = "display_name", Operator = Operator.MATCHES, Value = new[] { caseNumber + "*" } } } };
+                var query = new Query { SearchCondition = new[] { new SearchCondition { Attribute = attribute, Operator = @operator, Value = new[] { value } } } };
                 var options = new SearchOptions
                 {
                     RequestedAttributes = new[]
@@ -264,11 +291,13 @@ namespace ReflexIipaxService
                         Date = TryConvertDate(o, "decision_date"),
                         CaseSourceId = _config.Id,
                         Fastighetsbeteckning = o.Attribute.FindValue("property_name"),
-                        UnavailableDueToSecrecy = UnavailableDueToSecrecy(o)
-                    }).ToArray()?.FirstOrDefault();
+                        UnavailableDueToSecrecy = UnavailableDueToSecrecy(o),
+                        Type = type
+                    }).ToArray();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.LogDebug(e.Message);
                 return null;
             }
         }

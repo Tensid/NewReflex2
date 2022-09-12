@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using VisaRService.Contracts;
 
 namespace VisaRService
@@ -13,5 +14,6 @@ namespace VisaRService
         Task<Case> GetCase(string caseId);
         Task<PhysicalDocument> GetDocument(string documentId);
         Task<Case> SearchCase(string caseId);
+        Task<List<Task<Case[]>>> SearchCases(string caseId);
     }
 }

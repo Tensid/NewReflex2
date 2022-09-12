@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Reflex.Data;
 using Reflex.Data.Models;
 using Reflex.Services;
+using VisaRService.Contracts;
 
 namespace Reflex.Controllers
 {
@@ -156,23 +157,26 @@ namespace Reflex.Controllers
             if (query != null && query.Length >= 3)
             {
                 var config = _context.Configs.Include(x => x.IipaxConfigs).First(x => x.Id == configId);
-                var iipaxTasks = new List<Task<VisaRService.Contracts.Case>>();
+                var iipaxTaskCases = new List<Task<VisaRService.Contracts.Case>>();
+                var iipaxTasksCasesList = new List<Task<List<Task<Case[]>>>>();
 
                 try
                 {
                     foreach (var iipaxConfig in config.IipaxConfigs)
                     {
                         var iipaxProxy = _proxyService.GetProxy(CaseSource.iipax, iipaxConfig.Id);
-                        iipaxTasks.Add(iipaxProxy.SearchCase(query));
+                        iipaxTaskCases.Add(iipaxProxy.SearchCase(query));
+                        iipaxTasksCasesList.Add(iipaxProxy.SearchCases(query));
                     }
-                    await Task.WhenAll(iipaxTasks);
+                    await Task.WhenAll(iipaxTaskCases);
+                    await Task.WhenAll(iipaxTasksCasesList);
                 }
                 catch
                 {
                     // ignored
                 }
 
-                var iipaxCases = (await Task.WhenAll(iipaxTasks.Where(task => task.Status == TaskStatus.RanToCompletion)).ConfigureAwait(false))
+                var iipaxCases = (await Task.WhenAll(iipaxTaskCases.Where(task => task.Status == TaskStatus.RanToCompletion)).ConfigureAwait(false))
                     .Where(x => x != null);
                 foreach (var iipaxCase in iipaxCases)
                 {
@@ -181,13 +185,30 @@ namespace Reflex.Controllers
                         DisplayName = iipaxCase.Title,
                         Value = iipaxCase.CaseId,
                         Source = "iipax",
-                        Type = "Ärende",
+                        Type = iipaxCase?.Type ?? "Ärende",
+                        CaseSourceId = iipaxCase.CaseSourceId
+                    });
+                }
+
+                var flattenedIipaxTaskCases = (await Task.WhenAll(iipaxTasksCasesList.Where(task => task.Status == TaskStatus.RanToCompletion)).ConfigureAwait(false))
+                    .Where(x => x != null).SelectMany(x => x);
+                var completedIipaxCases = (await Task.WhenAll(flattenedIipaxTaskCases.Where(task => task.Status == TaskStatus.RanToCompletion)).ConfigureAwait(false))
+                    .Where(x => x != null).SelectMany(x => x);
+
+                foreach (var iipaxCase in completedIipaxCases)
+                {
+                    searchResults.Add(new SearchResult
+                    {
+                        DisplayName = iipaxCase.Title,
+                        Value = iipaxCase.CaseId,
+                        Source = "iipax",
+                        Type = iipaxCase?.Type ?? "Ärende",
                         CaseSourceId = iipaxCase.CaseSourceId
                     });
                 }
             }
 
-            return searchResults.Take(10).ToArray();
+            return searchResults.Take(25).ToArray();
         }
 
         public class SearchResult

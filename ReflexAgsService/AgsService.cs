@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Reflex.Data;
@@ -79,6 +80,11 @@ namespace ReflexAgsService
         }
 
         public Task<Case> SearchCase(string caseId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Task<Case[]>>> SearchCases(string caseId)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
@@ -292,6 +293,11 @@ namespace ReflexByggrService
                     return $"{arendeOmrade.omrade.beteckning}";
                 return "";
             }));
+        }
+
+        public Task<List<Task<Case[]>>> SearchCases(string caseId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

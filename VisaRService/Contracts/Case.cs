@@ -25,5 +25,6 @@ namespace VisaRService.Contracts
         public bool? CaseWithoutMainDecision { get; set; }
         public string Diarieprefix { get; set; }
         public IEnumerable<string> Tabs { get; set; }
+        public string Type { get; set; }
     }
 }
