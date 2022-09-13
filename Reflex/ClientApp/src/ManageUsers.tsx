@@ -37,10 +37,6 @@ const ManageUsers = () => {
         accessor: 'userName'
       },
       {
-        Header: 'Bekräftad',
-        accessor: (originalRow: ReflexUser) => originalRow.isEmailConfirmed ? 'Ja' : 'Nej'
-      },
-      {
         Header: 'Roll',
         accessor: (originalRow: ReflexUser) =>
           originalRow.roles.map((role: string) => {
