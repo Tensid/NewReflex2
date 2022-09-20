@@ -223,8 +223,8 @@ export interface ByggrConfig {
 export interface EcosConfig {
   id: string;
   name: string;
-  hideConfidentialCases: boolean;
-  hideConfidentialDocuments: boolean;
+  hideConfidentialCases: Visibility;
+  hideConfidentialDocuments: Visibility;
 }
 
 export interface IipaxConfig {

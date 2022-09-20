@@ -83,7 +83,7 @@ namespace ReflexEcosService
                 });
 
                 //Ärende är sekretessmarkerat i Ecos om CaseId är null
-                return searchCaseResults?.Where(x => !(x.CaseId == null && _config.HideConfidentialCases))
+                return searchCaseResults?.Where(x => x.CaseId != null || _config.HideConfidentialCases != Visibility.Hide)
                     .Select(x => new Case
                     {
                         Beskrivning = x.CaseSubtitleFree,
@@ -116,11 +116,11 @@ namespace ReflexEcosService
                     Title = o.OccurrenceDescription,
                     Arrival = o.OccurrenceDate,
                     IsSecret = o.IsConfidential,
-                    Documents = o.Documents.Where(x => allowedDocumentStatuses.Contains(x.DocumentStatus))
+                    Documents = o.Documents.Where(x => allowedDocumentStatuses.Contains(x.DocumentStatus) && (!x.IsConfidential || _config.HideConfidentialDocuments != Visibility.Hide))
                     .Select(d => new Document
                     {
-                        Title = d.IsConfidential && _config.HideConfidentialDocuments ? "Sekretessmarkerad" : d.DocumentClassificationTypeDescription,
-                        DocLinkId = d.IsConfidential && _config.HideConfidentialDocuments ? "-1" : d.DocumentId.ToString()
+                        Title = d.IsConfidential && _config.HideConfidentialDocuments == Visibility.Restrict ? "Sekretessmarkerad" : d.DocumentClassificationTypeDescription,
+                        DocLinkId = d.IsConfidential && _config.HideConfidentialDocuments == Visibility.Restrict ? "-1" : d.DocumentId.ToString()
                     }).ToArray()
                 }).ToArray();
 
@@ -195,7 +195,7 @@ namespace ReflexEcosService
         {
             try
             {
-                if (_config.HideConfidentialCases)
+                if (_config.HideConfidentialCases == Visibility.Hide)
                     return null;
 
                 var client = GetClient();
@@ -236,7 +236,7 @@ namespace ReflexEcosService
                 })).FirstOrDefault();
                 if (searchResult == null)
                     return null;
-                if (searchResult.CaseId == null && _config.HideConfidentialCases)
+                if (searchResult.CaseId == null && _config.HideConfidentialCases == Visibility.Hide)
                     return null;
 
                 return new Case

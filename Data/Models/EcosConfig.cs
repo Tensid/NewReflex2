@@ -12,7 +12,7 @@ namespace Reflex.Data.Models
         public Guid Id { get; set; }
         public virtual ICollection<Config> Configs { get; set; }
         public string Name { get; set; }
-        public bool HideConfidentialCases { get; set; }
-        public bool HideConfidentialDocuments{ get; set; }
+        public Visibility HideConfidentialCases { get; set; }
+        public Visibility HideConfidentialDocuments { get; set; }
     }
 }
