@@ -1,4 +1,6 @@
 import React from 'react';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Accordion, Card } from 'react-bootstrap';
 import { CaseSource, Occurence, getDocument } from '../../api/api';
 import { TabState } from './CaseModal';
@@ -59,6 +61,7 @@ const OccurenceContent = ({ occurenceState, caseSource, caseSourceId }: Occurenc
                                 {doc.title}
                               </span>
                             }
+                            {doc.isConfidential && <FontAwesomeIcon title="Handlingen är sekretessmarkerad" icon={faLock} />}
                           </li>
                         );
                       })

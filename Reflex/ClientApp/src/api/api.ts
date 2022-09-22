@@ -96,6 +96,7 @@ export interface Preview {
 export interface Document {
   docLinkId: string;
   title: string;
+  isConfidential: boolean;
 }
 
 export interface CasePerson {

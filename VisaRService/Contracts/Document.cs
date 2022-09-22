@@ -4,5 +4,6 @@
     {
         public string DocLinkId { get; set; }
         public string Title { get; set; }
+        public bool IsConfidential { get; set; }
     }
 }
