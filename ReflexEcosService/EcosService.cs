@@ -119,7 +119,7 @@ namespace ReflexEcosService
                     Documents = o.Documents.Where(x => allowedDocumentStatuses.Contains(x.DocumentStatus) && (!x.IsConfidential || _config.HideConfidentialDocuments != Visibility.Hide))
                     .Select(d => new Document
                     {
-                        Title = d.IsConfidential && _config.HideConfidentialDocuments == Visibility.Restrict ? "Sekretessmarkerad" : d.DocumentClassificationTypeDescription,
+                        Title = d.DocumentClassificationTypeDescription,
                         DocLinkId = d.IsConfidential && _config.HideConfidentialDocuments == Visibility.Restrict ? "-1" : d.DocumentId.ToString()
                     }).ToArray()
                 }).ToArray();
