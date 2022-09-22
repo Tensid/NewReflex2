@@ -213,7 +213,7 @@ export interface ByggrConfig {
   diarieprefixes: string[];
   tabs: CaseTab[];
   workingMaterial: boolean;
-  hideCasesWithSecretOccurences: boolean;
+  hideConfidentialOccurences: Visibility;
   hideDocumentsWithCommentMatching: string;
   onlyCasesWithoutMainDecision: boolean;
   onlyActiveCases: boolean;

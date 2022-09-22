@@ -111,7 +111,6 @@ namespace ReflexByggrService
                 CaseSource = "ByggR",
                 CaseSourceId = _config.Id,
                 Date = arende.ankomstDatum,
-                UnavailableDueToSecrecy = _config.HideCasesWithSecretOccurences && arende.handelseLista.Any(x => x.sekretess),
                 CaseWithoutMainDecision = arende.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true),
                 Diarieprefix = arende.diarieprefix,
                 Tabs = _config.Tabs?.Select(x => x.ToString())
@@ -159,6 +158,7 @@ namespace ReflexByggrService
                 .Where(handelse => _config.OccurenceTypes?.Any() != true || _config.OccurenceTypes.Contains(handelse.handelsetyp))
                 .Where(handelse => !handelse.makulerad)
                 .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
+                .Where(x => !x.sekretess || _config.HideConfidentialOccurences != Visibility.Hide)
                 .Select(handelse => new Occurence
                 {
                     Documents = handelse.sekretess ? Array.Empty<Document>() : handelse.handlingLista

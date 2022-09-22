@@ -26,7 +26,7 @@ namespace Reflex.Data.Models
         public string[] Diarieprefixes { get; set; }
         public ICollection<CaseTab> Tabs { get; set; }
         public bool WorkingMaterial { get; set; }
-        public bool HideCasesWithSecretOccurences { get; set; }
+        public Visibility HideConfidentialOccurences { get; set; }
         public string HideDocumentsWithCommentMatching { get; set; }
         public bool OnlyCasesWithoutMainDecision { get; set; }
         public bool OnlyActiveCases { get; set; }

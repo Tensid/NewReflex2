@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { ByggrConfig, createByggrConfig, deleteByggrConfig, updateByggrConfig } from '../../api/api';
+import { ByggrConfig, Visibility, createByggrConfig, deleteByggrConfig, updateByggrConfig } from '../../api/api';
 import CheckboxInput from '../common/forms/CheckboxInput';
 import CreatableSelectInput from '../common/forms/CreateableSelectInput';
 import DateInput from '../common/forms/DateInput';
@@ -10,6 +10,11 @@ import TextInput from '../common/forms/TextInput';
 const tabOptions = [
   { value: 'Preview', label: 'Förhandsgranskning' },
   { value: 'Persons', label: 'Intressenter' }
+];
+
+const occurenceVisibilityOptions = [
+  { value: Visibility.Hide, label: 'Dölj sekretess' },
+  { value: Visibility.Restrict, label: 'Visa förekomst' }
 ];
 
 export interface ByggrConfigFormProps {
@@ -31,6 +36,7 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
       defaultValues: {
         ...formData,
         tabs: formData?.tabs?.map((x) => ({ value: x, label: tabOptions.find((t) => t.value === x)!.label })),
+        hideConfidentialOccurences: formData?.hideConfidentialOccurences in Visibility ? { value: formData.hideConfidentialOccurences, label: occurenceVisibilityOptions.find((t) => t.value === formData.hideConfidentialOccurences)!.label } : [],
         minCaseStartDate,
         diarieprefixes,
         documentTypes,
@@ -43,6 +49,7 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
     reset({
       ...formData,
       tabs: edit ? formData?.tabs?.map((x) => ({ value: x, label: tabOptions.find((t) => t.value === x)!.label })) : [],
+      hideConfidentialOccurences: formData?.hideConfidentialOccurences in Visibility ? { value: formData.hideConfidentialOccurences, label: occurenceVisibilityOptions.find((t) => t.value === formData.hideConfidentialOccurences)!.label } : [],
       minCaseStartDate,
       diarieprefixes,
       documentTypes,
@@ -52,6 +59,7 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
   }, [formData, reset]);
 
   const onSubmit = async (data: any) => {
+    data.hideConfidentialOccurences = data.hideConfidentialOccurences?.value;
     data.diarieprefixes = data?.diarieprefixes?.map((x: any) => x.value);
     data.documentTypes = data?.documentTypes?.map((x: any) => x.value);
     data.hideDocumentsWithCommentMatching = data?.hideDocumentsWithCommentMatching || null;
@@ -86,7 +94,7 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
             <SelectInput control={control} name="tabs" label="Flikar" isMulti register={register} options={tabOptions} />
             <CreatableSelectInput control={control} name="diarieprefixes" label="Diarier" isMulti register={register} options={diarieprefixes} />
             <CheckboxInput name="workingMaterial" label="Visa arbetsmaterial" register={register} />
-            <CheckboxInput name="hideCasesWithSecretOccurences" label="Dölj ärenden med sekretess" register={register} />
+            <SelectInput control={control} name="hideConfidentialOccurences" label="Sekretess på händelser" register={register} options={occurenceVisibilityOptions} />
             <TextInput name="hideDocumentsWithCommentMatching" label="Dölj handlingar med kommentar" register={register} />
             <CheckboxInput name="onlyActiveCases" label="Endast aktiva ärenden" register={register} />
             <CheckboxInput name="onlyCasesWithoutMainDecision" label="Endast ärenden utan huvudbeslut" register={register} />
