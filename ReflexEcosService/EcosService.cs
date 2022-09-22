@@ -120,7 +120,7 @@ namespace ReflexEcosService
                     .Select(d => new Document
                     {
                         Title = d.DocumentClassificationTypeDescription,
-                        DocLinkId = d.IsConfidential && _config.HideConfidentialDocuments == Visibility.Restrict ? "-1" : d.DocumentId.ToString()
+                        DocLinkId = (d.IsConfidential && _config.HideConfidentialDocuments == Visibility.Restrict || d.Filename == null) ? "-1" : d.DocumentId.ToString()
                     }).ToArray()
                 }).ToArray();
 
