@@ -6,7 +6,7 @@ import SelectInput from '../common/forms/SelectInput';
 import TextInput from '../common/forms/TextInput';
 
 const visibilityOptions = [
-  { value: Visibility.Hide, label: 'Dölj förekomst' },
+  { value: Visibility.Hide, label: 'Dölj sekretess' },
   { value: Visibility.Restrict, label: 'Visa förekomst' },
   { value: Visibility.Show, label: 'Visa sekretess' }
 ];

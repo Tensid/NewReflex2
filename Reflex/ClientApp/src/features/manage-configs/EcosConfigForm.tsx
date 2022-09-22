@@ -5,12 +5,12 @@ import SelectInput from '../common/forms/SelectInput';
 import TextInput from '../common/forms/TextInput';
 
 const caseVisibilityOptions = [
-  { value: Visibility.Hide, label: 'Dölj förekomst' },
+  { value: Visibility.Hide, label: 'Dölj sekretess' },
   { value: Visibility.Show, label: 'Visa sekretess' }
 ];
 
 const documentVisibilityOptions = [
-  { value: Visibility.Hide, label: 'Dölj förekomst' },
+  { value: Visibility.Hide, label: 'Dölj sekretess' },
   { value: Visibility.Restrict, label: 'Visa förekomst' },
   { value: Visibility.Show, label: 'Visa sekretess' }
 ];
