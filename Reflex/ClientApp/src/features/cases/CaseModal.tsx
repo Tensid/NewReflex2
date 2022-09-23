@@ -55,8 +55,12 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
   const { caseSource, dnr, caseId, title, caseSourceId, date, tabs } = modalData;
 
   let availableTabs = tabs || availableCaseDetailsTabs.get(caseSource)!;
-  if (caseSource === 'ByggR' && (!tabs || tabs?.length === 0))
-    availableTabs = ['Occurences'];
+  if (caseSource === 'ByggR') {
+    if (!tabs || tabs?.length === 0)
+      availableTabs = ['Occurences'];
+    else
+      availableTabs = [...availableTabs, 'Occurences'];
+  }
 
   useEffect(() => {
     const id = caseSource === 'ByggR' ? dnr : caseId;
@@ -93,28 +97,22 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
             </>}
             {availableTabs!.length > 1 &&
               <Tabs defaultActiveKey={availableTabs![0]} variant="pills">
-                {availableTabs.map((tab, i) => {
-                  if (availableTabs[i] === 'Preview')
-                    return (
-                      <Tab eventKey={tab} title="Förhandsgranskning">
-                        <PreviewContent previewState={previewData} />
-                      </Tab>);
-                  if (availableTabs[i] === 'Occurences')
-                    return (
-                      <Tab eventKey={tab} title="Händelser">
-                        <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} caseSourceId={caseSourceId} />
-                      </Tab>);
-                  if (availableTabs[i] === 'Persons')
-                    return (
-                      <Tab eventKey={tab} title="Intressenter">
-                        <PersonsContent personsState={personsData} />
-                      </Tab>);
-                  if (availableTabs[i] === 'Archive')
-                    return (
-                      <Tab eventKey={tab} title="Intressenter">
-                        <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} date={date} />
-                      </Tab>);
-                })}
+                {availableTabs.includes('Preview') &&
+                  <Tab eventKey={'Preview'} title="Förhandsgranskning" >
+                    <PreviewContent previewState={previewData} />
+                  </Tab>}
+                {availableTabs.includes('Occurences') &&
+                  <Tab eventKey={'Occurences'} title="Händelser">
+                    <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} caseSourceId={caseSourceId} />
+                  </Tab>}
+                {availableTabs.includes('Persons') &&
+                  <Tab eventKey={'Persons'} title="Intressenter">
+                    <PersonsContent personsState={personsData} />
+                  </Tab>}
+                {availableTabs.includes('Archive') &&
+                  <Tab eventKey={'Archive'} title="Arkiv">
+                    <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} date={date} />
+                  </Tab>}
               </Tabs>
             }
           </div>
