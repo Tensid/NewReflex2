@@ -1,13 +1,12 @@
-import CtxMenu from 'ol-contextmenu';
 import Geolocation from 'ol/Geolocation';
 import Map from 'ol/Map';
 import { unByKey } from 'ol/Observable';
 import { transform } from 'ol/proj';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { RootState } from '../../app/store';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
 import styles from './map.module.css';
 import './ol-contextmenu.css';
+import CtxMenu from './ol-contextmenu/main';
 import { useMapEffect } from './useMapEffect';
 
 function projToWgs(x: string | number, y: string | number, proj: string) {
@@ -47,10 +46,10 @@ interface ContextMenuProps {
 }
 
 export const ContextMenu = ({ fnr, estateName, estatePosition, setContextMenu }: ContextMenuProps) => {
-  const history = useHistory();
-  const csmUrl = useSelector((state: RootState) => state.systemSettings.miscSettings?.csmUrl);
-  const fbWebbBoendeUrl = useSelector((state: RootState) => state.systemSettings.fbWebbSettings?.fbWebbBoendeUrl);
-  const fbWebbFastighetUrl = useSelector((state: RootState) => state.systemSettings.fbWebbSettings?.fbWebbFastighetUrl);
+  const navigate = useNavigate();
+  const csmUrl = useAppSelector((state) => state.systemSettings.miscSettings?.csmUrl);
+  const fbWebbBoendeUrl = useAppSelector((state) => state.systemSettings.fbWebbSettings?.fbWebbBoendeUrl);
+  const fbWebbFastighetUrl = useAppSelector((state) => state.systemSettings.fbWebbSettings?.fbWebbFastighetUrl);
 
   useMapEffect(
     (map: Map) => {
@@ -98,26 +97,77 @@ export const ContextMenu = ({ fnr, estateName, estatePosition, setContextMenu }:
 
       const contextmenu = new CtxMenu({
         width: 185,
-        //eventType : 'contextmenu'
-        //defaultItems: true, // defaultItems are (for now) Zoom In/Zoom Out
+        defaultItems: false, // defaultItems are (for now) Zoom In/Zoom Out
       });
 
       map.addControl(contextmenu);
 
+      // @ts-ignore
       contextmenu.on('beforeopen', (evt: any) => {
         const values = forEachFeatureAtPixel(evt);
         if (values?.feature && values?.layer?.name === 'estateLayer') {
           contextmenu.enable();
+
+          const values = forEachFeatureAtPixel(evt);
+          contextmenu.clear();
+          if (values?.feature && values?.layer?.name === 'estateLayer') {
+            let estateItems: any = [
+              {
+                text: estateName,
+                classname: styles.menuTitle // add some CSS rules
+                //icon: 'img/marker.png',  // this can be relative or absolute
+              },
+              '-' // separator,
+              ,
+              {
+                text: 'Visa ärenden',
+                callback: () => navigate('/cases')
+              },
+              '-'
+            ];
+            if (fbWebbFastighetUrl) {
+              const csmOption = {
+                text: 'Öppna fastighetsrapport',
+                callback: () => window.open(fbWebbFastighetUrl + fnr)
+              };
+              estateItems.push(csmOption);
+            }
+            if (fbWebbBoendeUrl) {
+              const csmOption = {
+                text: 'Öppna befolkningsrapport',
+                callback: () => window.open(fbWebbBoendeUrl + fnr)
+              };
+              estateItems.push(csmOption);
+            }
+            if (csmUrl) {
+              const csmOption = {
+                text: 'Öppna CSM',
+                callback: () => openCsm(csmUrl)
+              };
+              estateItems.push(csmOption);
+            }
+            estateItems.push({
+              text: 'Vägbeskrivning hit (Google)',
+              callback: () => showDirections('Google')
+            });
+            estateItems.push({
+              text: 'Vägbeskrivning hit (Bing)',
+              callback: () => showDirections('Bing')
+            });
+            contextmenu.extend(estateItems);
+            document.addEventListener('keydown', handleKeydown);
+          }
         } else {
           contextmenu.disable();
         }
       });
 
+      // @ts-ignore
       contextmenu.on('open', (evt: any) => {
         const values = forEachFeatureAtPixel(evt);
         contextmenu.clear();
         if (values?.feature && values?.layer?.name === 'estateLayer') {
-          let estateItems = [
+          let estateItems: any = [
             {
               text: estateName,
               classname: styles.menuTitle // add some CSS rules
@@ -127,7 +177,7 @@ export const ContextMenu = ({ fnr, estateName, estatePosition, setContextMenu }:
             ,
             {
               text: 'Visa ärenden',
-              callback: () => history.push('/cases')
+              callback: () => navigate('/cases')
             },
             '-'
           ];
@@ -168,7 +218,7 @@ export const ContextMenu = ({ fnr, estateName, estatePosition, setContextMenu }:
       function handleKeydown(evt: any) {
         //Escape
         if (evt.keyCode === 27)
-          contextmenu.close();
+          contextmenu.closeMenu();
       }
 
       setContextMenu(contextmenu);

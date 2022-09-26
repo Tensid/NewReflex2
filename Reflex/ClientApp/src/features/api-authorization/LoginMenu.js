@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { NavDropdown } from 'react-bootstrap';
+import { Component, Fragment } from 'react';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import { LinkContainer } from 'react-router-bootstrap';
 import { ApplicationPaths } from './ApiAuthorizationConstants';
 import authService from './AuthorizeService';
@@ -39,17 +39,18 @@ export class LoginMenu extends Component {
       return this.anonymousView(registerPath, loginPath);
     } else {
       const profilePath = `${ApplicationPaths.Profile}`;
-      const logoutPath = { pathname: `${ApplicationPaths.LogOut}`, state: { local: true } };
-      return this.authenticatedView(userName, profilePath, logoutPath);
+      const logoutPath = `${ApplicationPaths.LogOut}`;
+      const logoutState = { local: true };
+      return this.authenticatedView(userName, profilePath, logoutPath, logoutState);
     }
   }
 
-  authenticatedView(userName, profilePath, logoutPath) {
+  authenticatedView(userName, profilePath, logoutPath, logoutState) {
     return (<Fragment>
       <LinkContainer to={profilePath}>
         <NavDropdown.Item className="text-dark">Kontoinställningar</NavDropdown.Item>
       </LinkContainer>
-      <LinkContainer to={logoutPath}>
+      <LinkContainer to={logoutPath} state={logoutState}>
         <NavDropdown.Item className="text-dark">Logga ut</NavDropdown.Item>
       </LinkContainer>
     </Fragment>);

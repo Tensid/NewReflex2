@@ -1,12 +1,11 @@
 import Feature from 'ol/Feature';
 import Map from 'ol/Map';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
 import { unByKey } from 'ol/Observable';
 import Overlay from 'ol/Overlay';
 import { Coordinate } from 'ol/coordinate';
 import { EventsKey } from 'ol/events';
 import { LineString, Polygon } from 'ol/geom';
-import GeometryType from 'ol/geom/GeometryType';
+import { Type as GeometryType } from 'ol/geom/Geometry';
 import Draw from 'ol/interaction/Draw';
 import Interaction from 'ol/interaction/Interaction';
 import { Vector as VectorLayer } from 'ol/layer';
@@ -96,7 +95,7 @@ export const Measure = ({ typeSelect }: MeasureProps) => {
        * Handle pointer move.
        * @param {import("../src/ol/MapBrowserEvent").default} evt The event.
        */
-      const pointerMoveHandler = (evt: MapBrowserEvent) => {
+      const pointerMoveHandler = (evt: any) => {
         if (evt.dragging) {
           return;
         }
@@ -125,7 +124,7 @@ export const Measure = ({ typeSelect }: MeasureProps) => {
       });
 
 
-      let draw: Interaction; // global so we can remove it later
+      let draw: any | Interaction; // global so we can remove it later
 
 
       /**
@@ -195,7 +194,7 @@ export const Measure = ({ typeSelect }: MeasureProps) => {
 
         let listener: EventsKey;
         draw.on('drawstart',
-          (evt) => {
+          (evt: any) => {
             // set sketch
             sketch = evt.feature;
 
@@ -263,14 +262,6 @@ export const Measure = ({ typeSelect }: MeasureProps) => {
         map.addOverlay(measureTooltip);
         tooltips.push(measureTooltipElement);
       }
-      const contextmenu = map.on('contextmenu', e => {
-        e.preventDefault();
-        map.removeOverlay(helpTooltip);
-        map.removeOverlay(measureTooltip);
-        map.removeInteraction(draw);
-        sketch = null;
-        addInteraction();
-      });
 
       function handleKeydown(evt: any) {
         //Escape
@@ -290,7 +281,6 @@ export const Measure = ({ typeSelect }: MeasureProps) => {
         map.removeOverlay(measureTooltip);
         map.removeInteraction(draw);
         document.removeEventListener('keydown', handleKeydown);
-        unByKey(contextmenu);
         unByKey(pointermove);
       };
     }, [typeSelect]);

@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
-import { Container } from 'react-bootstrap';
+import { FC, ReactNode } from 'react';
+import Container from 'react-bootstrap/Container';
 import { useLocation } from 'react-router-dom';
 import Footer from './Footer';
 import { NavMenu } from './NavMenu';
 
-export const Layout: FC = ({ children }) => {
+export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   const { pathname } = useLocation();
   return (
     <>

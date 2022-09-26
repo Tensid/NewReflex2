@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Preview } from '../../api/api';
 import { TabState } from './CaseModal';
 import styles from './Preview.module.css';
@@ -87,17 +87,17 @@ const PreviewContent = ({ previewState }: PreviewContentProps) => {
           <b>Händelser</b>
         </div>
         {handelser?.length > 0 && handelser.map((handelse, i) => <Fragment key={i}>
-          <div className="col-2 pr-0">
+          <div className="col-2 pe-0">
             {new Date(handelse.arrival).getFullYear()}-<wbr />{(new Date(handelse.arrival).getMonth() + 1).toString().padStart(2, '0')}-{(new Date(handelse.arrival).getDate()).toString().padStart(2, '0')}
           </div>
-          <div className={"col-3 pr-0 " + styles.breakAll}>
+          <div className={"col-3 pe-0 " + styles.breakAll}>
             {handelse.handelsetyp}
           </div>
-          <div className={"col-5 pr-0 " + styles.breakWord}>
+          <div className={"col-5 pe-0 " + styles.breakWord}>
             {handelse.title}
           </div>
           {handelse.beslutNr &&
-            <div className={"col-2 pl-1 text-right " + styles.breakWord}>
+            <div className={"col-2 ps-1 text-end " + styles.breakWord}>
               (nr: {handelse.beslutNr})
             </div>
           }

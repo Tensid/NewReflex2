@@ -2,10 +2,9 @@ import Feature from 'ol/Feature';
 import Geometry from 'ol/geom/Geometry';
 import Projection from 'ol/proj/Projection';
 import { Fill, Stroke, Style } from 'ol/style';
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { RootState } from '../../app/store';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
 import { ClearFeaturesControlButton } from './ClearFeaturesControlButton';
 import { ContextMenu } from './ContextMenu';
 import { DrawLineControlButton } from './DrawLineControlButton';
@@ -41,16 +40,16 @@ interface CaseAlertProps {
 }
 
 const CaseAlert = ({ estateName, show, toggleAlert }: CaseAlertProps) => {
-  const { push } = useHistory();
+  const navigate = useNavigate();
   if (show)
     return (
       <div className="mx-auto alert alert-info alert-dismissible alert-overlay">
         {estateName} <a href="cases" onClick={e => {
           e.preventDefault();
-          push('/cases');
+          navigate('/cases');
         }
         }>Visa ärenden</a>
-        <span className="close" onClick={toggleAlert} aria-label="close">&times;</span>
+        <button className="btn-close" onClick={toggleAlert} aria-label="close" />
       </div>
     );
   return null;
@@ -76,9 +75,9 @@ const estateLayerOptions = {
 };
 
 const ReflexMap = ({ projection, fnr, estateName: defaultEstateName }: ReflexMapProps) => {
-  const extent = useSelector((state: RootState) => state.mapSettings.mapSettings?.extent);
-  const layers = useSelector((state: RootState) => state.mapSettings.layers);
-  const map = useSelector((state: RootState) => state.config?.map);
+  const extent = useAppSelector((state) => state.mapSettings.mapSettings?.extent);
+  const layers = useAppSelector((state) => state.mapSettings.layers);
+  const map = useAppSelector((state) => state.config?.map);
   const [estateFeatures, setEstateFeatures] = useState<Feature<Geometry>[]>();
   const [estatePosition, setEstatePosition] = useState<Position>();
   const [estateName, setEstateName] = useState(defaultEstateName);

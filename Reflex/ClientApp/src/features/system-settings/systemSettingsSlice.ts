@@ -39,7 +39,7 @@ export const fetchSystemSettings = (): AppThunk => async dispatch => {
     dispatch(setFbWebbSettings(fbSettings) || {});
     dispatch(setMiscSettings(miscSettings) || {});
   }
-  catch (err) {
+  catch (err: any) {
     console.log(err.toString());
   }
 };

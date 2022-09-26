@@ -1,32 +1,26 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Config } from '../../api/api';
+import { useAppDispatch } from '../../app/hooks';
 import { setConfig } from './configsSlice';
 
 interface ConfigItemProps {
   config: Config;
-  setConfig: (config: Config) => void;
 }
 
-const ConfigItem = ({ config, setConfig }: ConfigItemProps) => {
-  const { push } = useHistory();
+const ConfigItem = ({ config }: ConfigItemProps) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   function handleClick() {
-    setConfig(config);
-    push('/search');
+    dispatch(setConfig(config));
+    navigate('/search');
   }
 
   return (
     <Link to="/search" className="list-group-item list-group-item-action" onClick={handleClick}>
-      <div className="font-weight-bold text-primary">{config.name}</div>
+      <div className="fw-bold text-primary">{config.name}</div>
       <div className="font-italic">{config.description}</div>
     </Link>);
 };
 
-const mapDispatch = { setConfig };
-
-export default connect(
-  null,
-  mapDispatch
-)(ConfigItem);
+export default ConfigItem;

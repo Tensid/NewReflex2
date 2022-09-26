@@ -87,7 +87,7 @@ namespace Reflex.Controllers
                         {
                             var proxy = _proxyService.GetProxy(source, ecosConfig.Id);
                             var ecosCases = await proxy.GetCasesByEstate(estateId);
-                            foreach (var c in ecosCases)
+                            foreach (var c in ecosCases ?? Array.Empty<Case>())
                             {
                                 c.CaseSourceId = ecosConfig.Id;
                             }

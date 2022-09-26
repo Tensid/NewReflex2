@@ -1,5 +1,5 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
-import _ from 'lodash';
+import { forwardRef, useEffect, useRef } from 'react';
+import isFunction from 'lodash/isFunction';
 import { useGlobalFilter, useRowSelect, useSortBy, useTable } from 'react-table';
 
 function GlobalFilter({
@@ -87,12 +87,12 @@ function Table({ onSelectedRows, columns, data }) {
         globalFilter={state.globalFilter}
         setGlobalFilter={setGlobalFilter}
       />
-      <table className="table table-striped" {...getTableProps()}>
+      <table className="table table-striped border-top" {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps({ title: _.isFunction(column.Header) ? undefined : 'Sortera på ' + column.Header }))}>
+                <th {...column.getHeaderProps(column.getSortByToggleProps({ title: isFunction(column.Header) ? undefined : 'Sortera på ' + column.Header }))}>
                   {column.render('Header')}
                   <span>
                     {column.isSorted ? (column.isSortedDesc ? ' 🔻' : ' 🔺') : ''}

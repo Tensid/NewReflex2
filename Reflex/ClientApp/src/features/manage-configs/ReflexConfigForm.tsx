@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { CaseSourceOption, ConfigFormData, createConfig, deleteConfig, Tab, updateConfig } from '../../api/api';
 import SelectInput from '../common/forms/SelectInput';
@@ -68,7 +68,7 @@ const ConfigForm = ({ edit, formData, caseSourceOptions, layers, fetchAll, hideA
             <button className="btn btn-primary" type="submit">Spara</button>
             {edit &&
               <button
-                className="btn btn-primary ml-2"
+                className="btn btn-primary ms-2"
                 onClick={async (e) => {
                   e.preventDefault();
                   await deleteConfig(formData.id);

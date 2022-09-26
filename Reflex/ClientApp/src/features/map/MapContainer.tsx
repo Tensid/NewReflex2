@@ -1,9 +1,10 @@
-import React, { CSSProperties, FC, useEffect, useRef } from 'react';
+import { CSSProperties, FC, ReactNode, useEffect, useRef } from 'react';
 import { useMap } from './MapProvider';
 
 interface MapContainerProps {
   className: string | undefined;
   style?: CSSProperties | undefined;
+  children?: ReactNode;
 }
 
 export const MapContainer: FC<MapContainerProps> = ({ className, style, children }) => {

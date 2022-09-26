@@ -19,7 +19,7 @@ export const fetchGetUser = (): AppThunk => async dispatch => {
     const user = await getCurrentUser();
     dispatch(setUser(user));
   }
-  catch (err) {
+  catch (err: any) {
     console.log(err.toString());
   }
 };

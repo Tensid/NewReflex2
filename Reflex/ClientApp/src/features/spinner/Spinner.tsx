@@ -1,13 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
+import { useAppSelector } from '../../app/hooks';
 
 const Spinner = () => {
-  const pendingActions = useSelector((state: RootState) => state.spinner.pendingActions);
+  const pendingActions = useAppSelector((state) => state.spinner.pendingActions);
   return (
-    <div className={`spinner-grow text-brand ${pendingActions > 0 ? '' : 'd-none'}`} role="status">
-      <span className="sr-only">Loading...</span>
-    </div>
+    <div className={`spinner-grow text-brand ${pendingActions > 0 ? '' : 'd-none'}`} role="status" />
   );
 };
 

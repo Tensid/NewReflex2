@@ -1,12 +1,13 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import MaterialAutocomplete from '@material-ui/lab/AutoComplete';
+import { ChangeEvent, MutableRefObject, useRef, useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
+import MaterialAutocomplete from '@mui/material/Autocomplete';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import throttle from 'lodash/throttle';
 import { SearchResult, search } from '../../api/api';
 
 interface AutocompleteProps {
@@ -15,11 +16,12 @@ interface AutocompleteProps {
 }
 
 export default function Autocomplete({ onSelectCallback, searchResult }: AutocompleteProps) {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(searchResult?.displayName || searchResult?.value || '');
   const [options, setOptions] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const inputRef: MutableRefObject<HTMLInputElement | undefined> = useRef<HTMLInputElement>();
 
-  async function getData(val: string, callback: any) {
+  async function getData(val: string) {
     setLoading(true);
     const data = await search(val);
     setOptions(data);
@@ -44,95 +46,86 @@ export default function Autocomplete({ onSelectCallback, searchResult }: Autocom
     setInputValue(event.target.value);
   };
 
-  const fetch = useMemo(
-    () => throttle((request: { input: string; }, callback: (results?: SearchResult[]) => void) => {
-      getData(request.input, callback);
-    }, 250),
-    [],
-  );
-
-  useEffect(() => {
-    let active = true;
-
-    if (inputValue === '') {
-      if (searchResult.displayName) {
-        setInputValue(searchResult.displayName);
-        setOptions([searchResult]);
-      }
-      else
-        setOptions([]);
-      return undefined;
-    }
-
-    fetch({ input: inputValue }, (results?: SearchResult[]) => {
-      if (active) {
-        setOptions(results || []);
-      }
-    });
-
-    return () => {
-      active = false;
-    };
-  }, [inputValue, fetch, searchResult]);
-
   return (
-    <MaterialAutocomplete
-      style={{ width: 300 }}
-      getOptionLabel={(option) => (typeof option === 'string' ? option : option.displayName)}
-      filterOptions={(x) => x}
-      options={options}
-      freeSolo
-      autoComplete
-      includeInputInList
-      defaultValue={searchResult}
-      loading={loading}
-      onChange={(_event: any, newInputValue: any) => newInputValue ? onSelectCallback(newInputValue) : null}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Sök"
-          variant="outlined"
-          fullWidth
-          onChange={handleChange}
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                {params.InputProps.endAdornment}
-              </>
-            ),
+    <Grid container>
+      <Grid item>
+        <MaterialAutocomplete
+          openOnFocus
+          style={{ width: 300 }}
+          getOptionLabel={(option) => (typeof option === 'string' ? option : option.displayName)}
+          filterOptions={(x) => x}
+          options={options}
+          freeSolo
+          autoComplete
+          includeInputInList
+          loadingText="Hämtar"
+          defaultValue={searchResult}
+          loading={loading}
+          onChange={(_event: any, newInputValue: any) => newInputValue && onSelectCallback(newInputValue)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              inputRef={input => {
+                if (input)
+                  inputRef.current = input;
+              }}
+              variant="outlined"
+              fullWidth
+              onChange={handleChange}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <>
+                    {loading && <CircularProgress color="inherit" size={20} />}
+                    {params.InputProps.endAdornment}
+                  </>
+                )
+              }}
+            />
+          )}
+          renderOption={(props, option) => {
+            let matches = match(option.displayName, inputValue);
+
+            if (matches?.length < 1 && option.displayName && inputValue)
+              matches = customMatch(option.displayName, inputValue);
+
+            const parts = parse(
+              option.displayName,
+              matches
+            );
+
+            return (
+              <Grid container alignItems="center"  {...props as any}>
+                <Grid item>
+                </Grid>
+                <Grid item xs>
+                  {parts.map((part, index) => (
+                    <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
+                      {part.text}
+                    </span>
+                  ))}
+                  <Typography variant="body2" color="textSecondary">
+                    {option.source} | {option.type}
+                  </Typography>
+                </Grid>
+              </Grid>
+            );
           }}
         />
-      )}
-      renderOption={(option) => {
-        let matches = match(option.displayName, inputValue);
-
-        if (matches?.length < 1 && option.displayName && inputValue)
-          matches = customMatch(option.displayName, inputValue);
-
-        const parts = parse(
-          option.displayName,
-          matches
-        );
-
-        return (
-          <Grid container alignItems="center">
-            <Grid item>
-            </Grid>
-            <Grid item xs>
-              {parts.map((part, index) => (
-                <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
-                  {part.text}
-                </span>
-              ))}
-              <Typography variant="body2" color="textSecondary">
-                {option.source} | {option.type}
-              </Typography>
-            </Grid>
-          </Grid>
-        );
-      }}
-    />
+      </Grid>
+      <Grid item style={{ display: "flex" }}>
+        <Button
+          variant="contained"
+          startIcon={<SearchIcon />}
+          aria-label="Sök"
+          onClick={async () => {
+            await getData(inputValue);
+            inputRef.current?.focus();
+          }}
+        >
+          Sök
+        </Button>
+      </Grid>
+    </Grid>
   );
 }

@@ -1,5 +1,7 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import * as _ from 'lodash';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import differenceWith from 'lodash/differenceWith';
+import isEqual from 'lodash/isEqual';
+import unionWith from 'lodash/unionWith';
 import Modal from 'react-bootstrap/Modal';
 import { CellValue, Row } from 'react-table';
 import { Config, ReflexUser, deleteUsers, getConfigs, getUsers, updateConfigPermissions, updateRoles } from './api/api';
@@ -105,7 +107,7 @@ const ManageUsers = () => {
       name
     }));
     const newData = selectedRows.map((user: ReflexUser) => {
-      return { userId: user.id, configPermissions: _.differenceWith(user.configPermissions, selectedPermissions, _.isEqual) };
+      return { userId: user.id, configPermissions: differenceWith(user.configPermissions, selectedPermissions, isEqual) };
     });
 
     await updateConfigPermissions(newData);
@@ -119,7 +121,7 @@ const ManageUsers = () => {
     }));
 
     const newData = selectedRows.map((user: ReflexUser) => {
-      return { userId: user.id, configPermissions: _.unionWith(user.configPermissions, selectedPermissions, _.isEqual) };
+      return { userId: user.id, configPermissions: unionWith(user.configPermissions, selectedPermissions, isEqual) };
     });
 
     await updateConfigPermissions(newData);
@@ -148,7 +150,7 @@ const ManageUsers = () => {
   return (
     <>
       <h4>Hantera användare</h4>
-      <div className="form-row float-right mb-1">
+      <div className="form-row float-end mb-1">
         <select value={select} className="mr-1" onChange={(evt: ChangeEvent<HTMLSelectElement>) => setSelect(Number(evt.target.value))}>
           {options.map((option) => <option key={option.action} value={option.action}>{option.actionText}</option>
           )}

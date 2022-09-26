@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Nav, NavDropdown, Row, Tab } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import Col from 'react-bootstrap/Col';
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Row from 'react-bootstrap/Row';
+import Tab from 'react-bootstrap/Tab';
 import { AgsConfig, ByggrConfig, CaseSourceOption, Config, EcosConfig, IipaxConfig, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getEcosConfig, getEcosConfigs, getFormData, getIipaxConfig, getIipaxConfigs } from './api/api';
 import { getLayersSettings } from './api/mapSettingsApi';
 import AgsConfigForm from './features/manage-configs/AgsConfigForm';

@@ -1,13 +1,11 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from './app/store';
+import { useAppSelector } from './app/hooks';
 import ReflexMap from './features/map/ReflexMap';
 
 const Map = () => {
-  const type = useSelector((state: RootState) => state.searchResult.type);
-  const value = useSelector((state: RootState) => state.searchResult.value);
-  const estateName = useSelector((state: RootState) => state.searchResult.estateName);
-  const projection = useSelector((state: RootState) => state.mapSettings?.mapSettings?.projection);
+  const type = useAppSelector((state) => state.searchResult.type);
+  const value = useAppSelector((state) => state.searchResult.value);
+  const estateName = useAppSelector((state) => state.searchResult.estateName);
+  const projection = useAppSelector((state) => state.mapSettings?.mapSettings?.projection);
 
   if (!projection)
     return null;

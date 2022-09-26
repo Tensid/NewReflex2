@@ -52,7 +52,7 @@ export const fetchCasesAsync = (data: SearchResult): AppThunk => async dispatch 
       dispatch(decrease());
     }
   }
-  catch (err) {
+  catch (err: any) {
     dispatch(getCasesFailed(err.toString()));
     console.log(err.toString());
     dispatch(decrease());

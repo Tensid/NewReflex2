@@ -31,7 +31,7 @@ export const fetchUserSettings = (): AppThunk => async dispatch => {
     const userSettings = await getUserSettings();
     dispatch(setUserSettings(userSettings));
   }
-  catch (err) {
+  catch (err: any) {
     console.log(err.toString());
   }
 };
@@ -41,7 +41,7 @@ export const fetchUpdateUserSettings = (userSettings: UserSettings): AppThunk =>
     await updateUserSettings(userSettings);
     dispatch(setUserSettings(userSettings));
   }
-  catch (err) {
+  catch (err: any) {
     console.log(err.toString());
   }
 };
@@ -56,7 +56,7 @@ export const fetchInitiateSettings = (): AppThunk => async dispatch => {
     dispatch(setConfig(defaultConfig));
     dispatch(setUserSettingsHasReceived());
   }
-  catch (err) {
+  catch (err: any) {
     console.log(err.toString());
   }
 };

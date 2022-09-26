@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Modal, Tab, Tabs } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import { ModalData } from '../../Cases';
 import { ArchivedDocument, CasePerson, CaseSource, CaseTab, Occurence, Preview, getArchivedDocuments, getCasePersons, getOccurences, getPreview } from '../../api/api';
 import Archive from './ArchiveContent';
@@ -41,7 +43,7 @@ function fetchTabData(setTabState: (tabState: TabState<any>) => void, tabData: a
       const result = await fetchFunction();
       setTabState({ value: result, loading: false, error: undefined });
     }
-    catch (e) {
+    catch (e: any) {
       setTabState({ value: undefined, loading: false, error: e });
     }
   })();

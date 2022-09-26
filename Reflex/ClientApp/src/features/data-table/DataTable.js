@@ -59,11 +59,11 @@ const DataTable = (props) => {
         {
           extend: 'colvis',
           text: 'Välj kolumner',
-          className: 'mr-2'
+          className: 'me-2'
         },
         {
           extend: 'collection',
-          className: 'mr-2 rounded',
+          className: 'me-2 rounded',
           text: 'Exportera',
           buttons: [
             {
@@ -153,11 +153,11 @@ const DataTable = (props) => {
 
   return (
     <div>
-      <div className="form-inline justify-content-end">
-        <div className="form-group mb-2">
+      <div className="d-flex justify-content-end">
+        <div className="mb-2">
           <label type="text" readOnly className="form-control-plaintext" value="Sök" title="Sök närliggande fastigheter inom radie">Sök:</label>
         </div>
-        <div className="form-group mx-2 mb-2">
+        <div className="mx-2 mb-2">
           <input type="number" className="form-control" min="0" max="1000" defaultValue="0" id="radius_input" placeholder="Meter"></input>
         </div>
         <button id="get_button" className="btn btn-primary mb-2">Hämta</button>

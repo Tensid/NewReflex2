@@ -1,10 +1,9 @@
-import React from 'react';
 import { Controller } from 'react-hook-form';
 import CreatableSelect from 'react-select/creatable';
 
 const CreatableSelectInput = ({ name, label, options, isMulti, control }: any) => {
   return (
-    <div className="form-group">
+    <div className="mb-3">
       <label htmlFor={name}>{label}</label>
       <Controller
         as={<CreatableSelect />}

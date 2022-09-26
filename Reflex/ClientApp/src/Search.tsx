@@ -1,30 +1,28 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { SearchResult } from './api/api';
-import { RootState } from './app/store';
+import { useAppDispatch, useAppSelector } from './app/hooks';
 import Autocomplete from './features/autocomplete/Autocomplete';
 import { fetchCasesAsync } from './features/cases/casesSlice';
 import { setSearchResult } from './features/search-result/searchResultSlice';
 
 const Search = () => {
-  const defaultTab = useSelector((state: RootState) => state.userSettings.defaultTab);
-  const searchResult = useSelector((state: RootState) => state.searchResult);
-  const tabs = useSelector((state: RootState) => state.config?.tabs);
-  const dispatch = useDispatch();
-  const { push } = useHistory();
+  const defaultTab = useAppSelector((state) => state.userSettings.defaultTab);
+  const searchResult = useAppSelector((state) => state.searchResult);
+  const tabs = useAppSelector((state) => state.config?.tabs);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   function onSelectCallback(data: SearchResult) {
     dispatch(fetchCasesAsync(data));
     dispatch(setSearchResult(data));
 
     if (tabs?.includes(defaultTab))
-      push('/' + defaultTab.toLowerCase());
+      navigate('/' + defaultTab.toLowerCase());
   }
 
   return (
     <>
-      <label className="mb-1 col-form-label col-form-label-sm font-weight-bold">Sök fastighet, adress eller ärende</label>
+      <label className="mb-1 col-form-label-sm fw-bold">Sök fastighet, adress eller ärende</label>
       <Autocomplete onSelectCallback={onSelectCallback} searchResult={searchResult} />
     </>
   );

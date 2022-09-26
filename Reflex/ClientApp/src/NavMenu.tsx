@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
-import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Navbar from 'react-bootstrap/Navbar';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useLocation } from 'react-router-dom';
 import './NavMenu.css';
 import { Tab } from './api/api';
-import { RootState } from './app/store';
+import { useAppSelector } from './app/hooks';
 import { LoginMenu } from './features/api-authorization/LoginMenu';
 import useAuthService from './features/api-authorization/useAuthService';
 import Spinner from './features/spinner/Spinner';
 import UserSettingsModal from './features/user-settings/UserSettingsModal';
 
 export function NavMenu() {
-  const tabs = useSelector((state: RootState) => state.config?.tabs);
+  const tabs = useAppSelector((state) => state.config?.tabs);
   const [show, setShow] = useState(false);
   const { pathname } = useLocation();
   const { authenticated, user } = useAuthService();
@@ -27,7 +29,7 @@ export function NavMenu() {
               <Navbar.Brand>Reflex</Navbar.Brand>
             </LinkContainer>
             <Spinner />
-            <Navbar.Toggle className="mr-2" />
+            <Navbar.Toggle className="me-2" />
             <Navbar.Collapse className="d-sm-inline-flex flex-sm-row-reverse">
               <ul className="navbar-nav flex-grow">
                 {authenticated &&
@@ -52,7 +54,7 @@ export function NavMenu() {
                         <Nav.Link className="text-dark">Fastighet</Nav.Link>
                       </LinkContainer>}
                   </>}
-                <NavDropdown title="Mer" id="basic-nav-dropdown" alignRight>
+                <NavDropdown title="Mer" id="basic-nav-dropdown" align="end">
                   {authenticated &&
                     <>
                       <NavDropdown.Item onClick={() => setShow(true)} className="text-dark">Personliga inställningar</NavDropdown.Item>

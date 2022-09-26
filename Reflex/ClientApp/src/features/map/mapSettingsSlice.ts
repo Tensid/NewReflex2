@@ -48,7 +48,7 @@ export const fetchMapSettings = (): AppThunk => async dispatch => {
     var result = await getMapSettings();
     dispatch(setMapSettings(result));
   }
-  catch (err) {
+  catch (err: any) {
     console.log(err.toString());
   }
 };
@@ -58,7 +58,7 @@ export const fetchLayers = (): AppThunk => async dispatch => {
     var result = await getLayersSettings();
     dispatch(setLayers(result));
   }
-  catch (err) {
+  catch (err: any) {
     console.log(err.toString());
   }
 };

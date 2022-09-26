@@ -2,38 +2,34 @@ import Geolocation from 'ol/Geolocation';
 import Map from 'ol/Map';
 import { unByKey } from 'ol/Observable';
 import { Control } from 'ol/control';
-import goToUserLocationSvg from '../../assets/navigation-white.svg';
+import { renderToStaticMarkup } from 'react-dom/server';
+import GoToUserLocationSvg from '../../assets/NavigationWhite';
 import styles from './map.module.css';
 import { useMapEffect } from './useMapEffect';
 
-const GoToUserLocationControl: any = ((Control) => {
-  function GoToUserLocationControl(this: any, opt_options: any) {
+class GoToUserLocationControl extends Control {
+  constructor(opt_options: any) {
     const options = opt_options || {};
 
-    const button = document.createElement('button');
-    button.style.overflow = 'hidden';
-    button.innerHTML = `<img src="${goToUserLocationSvg}" class="img-fluid ${styles.svg}" title="Gå till min position">`;
+    const el = document.createElement('div');
+    el.className = `${styles.goToUserLocation} draw-shape ol-unselectable ol-control`;
+    const button = (
+      <button style={{ overflow: 'hidden' }} title="Gå till min position">
+        <GoToUserLocationSvg />
+      </button>
+    );
+    el.innerHTML = renderToStaticMarkup(button);
 
-    const element = document.createElement('div');
-    element.className = `${styles.goToUserLocation} ol-unselectable ol-control`;
-    element.appendChild(button);
-
-    Control.call(this,
-      {
-        element: element,
-        target: options.target
-      });
-    button.addEventListener('click', this.handleGoToUserLocation.bind(this, options), true);
+    super({
+      element: el,
+      target: options.target,
+    });
+    el.addEventListener?.('click', () => this.handleGoToUserLocation(options));
   }
 
-  if (Control)
-    GoToUserLocationControl.__proto__ = Control;
-  GoToUserLocationControl.prototype = Object.create(Control && Control.prototype);
-  GoToUserLocationControl.prototype.constructor = GoToUserLocationControl;
-
-  GoToUserLocationControl.prototype.handleGoToUserLocation = function (options: any) {
+  handleGoToUserLocation = (options: any) => {
     const geolocation = options.geolocation;
-    const map: Map = this.getMap();
+    const map: Map = this.getMap()!;
     const changePosition = geolocation.on('change:position', () => {
       map.getView().setCenter(geolocation.getPosition());
       map.getView().setZoom(13);
@@ -42,8 +38,7 @@ const GoToUserLocationControl: any = ((Control) => {
     });
     options.geolocation.setTracking(true);
   };
-  return GoToUserLocationControl;
-})(Control);
+}
 
 export const GoToUserLocationControlButton = () => {
   useMapEffect(

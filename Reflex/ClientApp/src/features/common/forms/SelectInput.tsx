@@ -1,10 +1,9 @@
-import React from 'react';
 import { Controller } from 'react-hook-form';
 import Select from 'react-select';
 
 const SelectInput = ({ name, label, options, isMulti, control, isSearchable = false }: any) => {
   return (
-    <div className="form-group">
+    <div className="mb-3">
       <label htmlFor={name}>{label}</label>
       <Controller
         as={<Select />}

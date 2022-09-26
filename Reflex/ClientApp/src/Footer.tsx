@@ -1,25 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { RootState } from './app/store';
+import { useAppSelector } from './app/hooks';
 
-interface FooterProps {
-  name: string;
-  description: string;
-}
+const Footer = () => {
+  const name = useAppSelector((state) => state?.config?.name);
+  const description = useAppSelector((state) => state?.config?.description ? ' - ' + state?.config?.description : '');
 
-const Footer = ({ name, description }: FooterProps) => (
-  <footer className="fixed-bottom bg-brand text-white flex-shrink-0">
-    {name ? name + description : 'Konfiguration ej vald'}
-    <span className="float-right">Sokigo</span>
-  </footer>
-);
+  return (
+    <div className="fixed-bottom bg-brand text-white flex-shrink-0">
+      {name ? name + description : 'Konfiguration ej vald'}
+      <span className="float-end">Sokigo</span>
+    </div>
+  );
+};
 
-const mapStateToProps = (state: RootState, _ownProps: any) => ({
-  name: state?.config?.name,
-  description: state?.config?.description ? ' - ' + state?.config?.description : ''
-});
-
-export default connect(
-  mapStateToProps,
-  null
-)(Footer);
+export default Footer;

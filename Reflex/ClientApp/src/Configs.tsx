@@ -1,8 +1,7 @@
-import React, { MouseEvent, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { MouseEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Config, getConfigs, getContact } from './api/api';
-import { RootState } from './app/store';
+import { useAppSelector } from './app/hooks';
 import ConfigList from './features/configs/ConfigList';
 
 interface Contact {
@@ -12,8 +11,8 @@ interface Contact {
 }
 
 const Configs = () => {
-  const { push } = useHistory();
-  const roles = useSelector((state: RootState) => state.user?.roles);
+  const navigate = useNavigate();
+  const roles = useAppSelector((state) => state.user?.roles);
   const [configs, setConfigs] = useState<Config[]>();
   const [contact, setContact] = useState<Contact>({
     body: '',
@@ -30,7 +29,7 @@ const Configs = () => {
 
   function handleClick(e: MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
-    push('/manage-configs');
+    navigate('/manage-configs');
   };
 
   if (!roles || !configs)

@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { getPersons } from './api/api';
-import { RootState } from './app/store';
+import { useAppSelector } from './app/hooks';
 import DataTable from './features/data-table/DataTable';
-import { fetchSystemSettings } from './features/system-settings/systemSettingsSlice';
 
 interface LinkButton {
   displayName: string;
@@ -39,32 +37,29 @@ const headers = [
 const Population = () => {
   const [count, setCount] = useState(0);
   const [linkButtons, setLinkButtons] = useState<LinkButton[]>([]);
-  const fbWebbSettings = useSelector((state: RootState) => state.systemSettings.fbWebbSettings);
-  const searchResult = useSelector((state: RootState) => state.searchResult);
-  const isValid = searchResult.value && (searchResult.type === 'Fastighet' || searchResult.type === 'Adress');
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!fbWebbSettings)
-      dispatch(fetchSystemSettings());
-  }, [fbWebbSettings]);
+  const fbWebbBoendeUrl = useAppSelector((state) => state.systemSettings.fbWebbSettings?.fbWebbBoendeUrl);
+  const fbWebbLagenhetUrl = useAppSelector((state) => state.systemSettings.fbWebbSettings?.fbWebbLagenhetUrl);
+  const displayName = useAppSelector((state) => state.searchResult.displayName);
+  const type = useAppSelector((state) => state.searchResult.type);
+  const value = useAppSelector((state) => state.searchResult.value);
+  const isValid = value && (type === 'Fastighet' || type === 'Adress');
 
   useEffect(() => {
     setLinkButtons([
       {
         displayName: 'Boenderapport',
-        url: fbWebbSettings?.fbWebbBoendeUrl ? fbWebbSettings.fbWebbBoendeUrl + searchResult.value : ''
+        url: fbWebbBoendeUrl ? fbWebbBoendeUrl + value : ''
       },
       {
         displayName: 'Lägenhetsrapport',
-        url: fbWebbSettings?.fbWebbLagenhetUrl ? fbWebbSettings.fbWebbLagenhetUrl + searchResult.value : ''
+        url: fbWebbLagenhetUrl ? fbWebbLagenhetUrl + value : ''
       }
     ]);
-  }, [fbWebbSettings, searchResult.value]);
+  }, [fbWebbBoendeUrl, fbWebbLagenhetUrl, value]);
 
   return (
     <>
-      <h4>{(isValid) ? `Boende: ${count} personer på ` + searchResult.displayName : 'Ingen fastighet vald'}</h4>
+      <h4>{(isValid) ? `Boende: ${count} personer på ` + displayName : 'Ingen fastighet vald'}</h4>
       {(isValid && linkButtons.length > 0) && <DataTable setCount={setCount} headers={headers} columns={columns} linkButtons={linkButtons} getTableData={getPersons} />}
     </>
   );

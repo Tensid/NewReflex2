@@ -1,39 +1,34 @@
 import Map from 'ol/Map';
 import { Control } from 'ol/control';
-import drawPolygonSvg from '../../assets/measure-polygon-white.svg';
+import { renderToStaticMarkup } from 'react-dom/server';
+import DrawPolygonSvg from '../../assets/MeasurePolygonWhite';
 import styles from './map.module.css';
 import { useMapEffect } from './useMapEffect';
 
-export const DrawPolygonControl: any = ((Control) => {
-  function DrawPolygonControl(this: any, opt_options: any) {
+class DrawPolygonControl extends Control {
+  constructor(opt_options: any) {
     const options = opt_options || {};
 
-    const button = document.createElement('button');
-    button.style.overflow = 'hidden';
-    button.innerHTML = `<img src="${drawPolygonSvg}" class="img-fluid ${styles.svg} ${styles.toggle}" title="Mät yta">`;
+    const el = document.createElement('div');
+    el.className = `${styles.drawPolygon} draw-shape ol-unselectable ol-control`;
+    const button = (
+      <button style={{ overflow: 'hidden' }} title="Mät sträcka">
+        <DrawPolygonSvg />
+      </button>
+    );
+    el.innerHTML = renderToStaticMarkup(button);
 
-    const element = document.createElement('div');
-    element.className = `${styles.drawPolygon} draw-shape ol-unselectable ol-control`;
-    element.appendChild(button);
-
-    Control.call(this,
-      {
-        element: element,
-        target: options.target
-      });
-    button.addEventListener('click', this.handleDrawPolygon.bind(this, options), false);
+    super({
+      element: el,
+      target: options.target,
+    });
+    el.addEventListener?.('click', () => this.handlePolygonLine(options));
   }
 
-  if (Control)
-    DrawPolygonControl.__proto__ = Control;
-  DrawPolygonControl.prototype = Object.create(Control && Control.prototype);
-  DrawPolygonControl.prototype.constructor = DrawPolygonControl;
-
-  DrawPolygonControl.prototype.handleDrawPolygon = (options: { callBack: () => void }) => {
+  handlePolygonLine = (options: { callBack: () => void }) => {
     options.callBack();
   };
-  return DrawPolygonControl;
-})(Control);
+}
 
 export interface DrawPolygonControlButtonProps {
   callBack: () => void;
@@ -42,10 +37,10 @@ export interface DrawPolygonControlButtonProps {
 export const DrawPolygonControlButton = ({ callBack }: DrawPolygonControlButtonProps) => {
   useMapEffect(
     (map: Map) => {
-      const drawPolygonControl = new DrawPolygonControl({ callBack });
-      map.addControl(drawPolygonControl);
+      const drawLineControl = new DrawPolygonControl({ callBack });
+      map.addControl(drawLineControl);
       return () => {
-        map.removeControl(drawPolygonControl);
+        map.removeControl(drawLineControl);
       };
     }, [callBack]);
   return null;

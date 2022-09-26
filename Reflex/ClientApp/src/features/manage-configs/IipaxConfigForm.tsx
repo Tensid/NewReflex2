@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { IipaxConfig, Visibility, createIipaxConfig, deleteIipaxConfig, updateIipaxConfig } from '../../api/api';
 import CreatableSelectInput from '../common/forms/CreateableSelectInput';
@@ -97,7 +97,7 @@ const IipaxConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: IipaxConf
             <button className="btn btn-primary" type="submit">Spara</button>
             {edit &&
               <button
-                className="btn btn-primary ml-2"
+                className="btn btn-primary ms-2"
                 onClick={async (e) => {
                   e.preventDefault();
                   await deleteIipaxConfig(formData.id);

@@ -1,40 +1,35 @@
 import Map from 'ol/Map';
 import { unByKey } from 'ol/Observable';
 import { Control } from 'ol/control';
-import infoClickSvg from '../../assets/round-info-button-white.svg';
+import { renderToStaticMarkup } from 'react-dom/server';
+import InfoClickSvg from '../../assets/RoundInfoButtonWhite';
 import styles from './map.module.css';
 import { useMapEffect } from './useMapEffect';
 
-export const InfoClickControl: any = ((Control) => {
-  function InfoClickControl(this: any, opt_options: any) {
+class InfoClickControl extends Control {
+  constructor(opt_options: any) {
     const options = opt_options || {};
 
-    const button = document.createElement('button');
-    button.style.overflow = 'hidden';
-    button.innerHTML = `<img src="${infoClickSvg}" class="img-fluid ${styles.svg} ${styles.toggle}" title="Infoklick">`;
+    const el = document.createElement('div');
+    el.className = `${styles.infoClick} draw-shape ol-unselectable ol-control`;
+    const button = (
+      <button style={{ overflow: 'hidden' }} title="Infoklick">
+        <InfoClickSvg />
+      </button>
+    );
+    el.innerHTML = renderToStaticMarkup(button);
 
-    const element = document.createElement('div');
-    element.className = `${styles.infoClick} ol-unselectable ol-control`;
-    element.appendChild(button);
-
-    Control.call(this,
-      {
-        element: element,
-        target: options.target
-      });
-    button.addEventListener('click', this.handleInfoClick.bind(this, options), false);
+    super({
+      element: el,
+      target: options.target,
+    });
+    el.addEventListener?.('click', () => this.handleGoToUserLocation(options));
   }
 
-  if (Control)
-    InfoClickControl.__proto__ = Control;
-  InfoClickControl.prototype = Object.create(Control && Control.prototype);
-  InfoClickControl.prototype.constructor = InfoClickControl;
-
-  InfoClickControl.prototype.handleInfoClick = (options: { callBack: () => void }) => {
+  handleGoToUserLocation = (options: any) => {
     options.callBack();
   };
-  return InfoClickControl;
-})(Control);
+}
 
 export interface InfoClickControlButtonProps {
   infoClick: boolean;

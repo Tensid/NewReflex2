@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconDefinition, faArchive, faBug, faHammer, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalData } from '../../Cases';
@@ -46,9 +45,9 @@ const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, ca
 
   return (
     <div className="row align-items-center">
-      <div className="col-lg-12">
-        <button disabled={unavailableDueToSecrecy} className={`btn btn-outline-${color} btn-block text-left mb-1 ${styles.blackOutline} ${styles.btn}`} onClick={() => handleClick()}>
-          <span className={`${unavailableDueToSecrecy ? '' : styles.caseSymbol} pr-2 text-${color}`}><FontAwesomeIcon icon={symbol!} /></span>
+      <div className="col-lg-12 d-grid">
+        <button disabled={unavailableDueToSecrecy} className={`btn btn-outline-${color} text-start mb-1 ${styles.blackOutline} ${styles.btn}`} onClick={handleClick}>
+          <span className={`${unavailableDueToSecrecy ? '' : styles.caseSymbol} pe-2 text-${color}`}><FontAwesomeIcon icon={symbol!} /></span>
           {dnr}: {title}{status ? ` (${status})` : ''}
           {unavailableDueToSecrecy && <FontAwesomeIcon title="Sekretess" icon={faLock} />}
         </button>

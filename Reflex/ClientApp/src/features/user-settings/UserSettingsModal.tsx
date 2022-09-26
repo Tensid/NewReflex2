@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import { Tab, getConfigs } from '../../api/api';
-import { RootState } from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetchUpdateUserSettings, fetchUserSettings } from './userSettingsSlice';
 
 interface SettingTabs {
@@ -43,12 +43,12 @@ interface UserSettingsModalProps {
 };
 
 const UserSettingsModal = ({ setShow }: UserSettingsModalProps) => {
-  const defaultConfigId = useSelector((state: RootState) => state.userSettings.defaultConfigId);
-  const defaultTab = useSelector((state: RootState) => state.userSettings.defaultTab);
+  const defaultConfigId = useAppSelector((state) => state.userSettings.defaultConfigId);
+  const defaultTab = useAppSelector((state) => state.userSettings.defaultTab);
   const [configOptions, setConfigOptions] = useState<ConfigOption[]>([]);
   const [selectedConfigId, setSelectedConfigId] = useState<string>();
   const [selectedTab, setSelectedTab] = useState((settingsTabs.find(x => x.value === defaultTab)!));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     (async () => {
@@ -72,28 +72,18 @@ const UserSettingsModal = ({ setShow }: UserSettingsModalProps) => {
         <Modal.Title>Personliga inställningar</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="row pt-2">
-          <div className="col-12">
-            <label>Flik som öppnas vid sökträff</label>
-          </div>
-        </div>
+        <label className="pt-2">Flik som öppnas vid sökträff</label>
         {settingsTabs?.map((tab) =>
-          <div className="row" key={tab.value}>
-            <div className="col-12">
-              <input className="mr-2"
-                type="radio"
-                value={tab.value}
-                checked={selectedTab?.value === tab.value}
-                onChange={() => setSelectedTab(tab)} />
-              {tab.text}
-            </div>
+          <div key={tab.value}>
+            <input className="me-2"
+              type="radio"
+              value={tab.value}
+              checked={selectedTab?.value === tab.value}
+              onChange={() => setSelectedTab(tab)} />
+            {tab.text}
           </div>
         )}
-        <div className="row pt-2">
-          <div className="col-12">
-            <label>Välj standardkonfiguration</label>
-          </div>
-        </div>
+        <label className="pt-2">Välj standardkonfiguration</label>
         <select className="form-control" value={selectedConfigId} onChange={(e) => setSelectedConfigId(e.target.value)}>
           {configOptions?.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>

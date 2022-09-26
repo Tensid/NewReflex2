@@ -4,8 +4,8 @@ import { buffer, extend } from 'ol/extent';
 import GeoJson from 'ol/format/GeoJSON';
 import { transform } from 'ol/proj';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { CaseSource, SearchResult, getEstateName, getEstatePosition, getFnrFromPosition, getGeometryFromFnr } from '../../api/api';
+import { useAppDispatch } from '../../app/hooks';
 import { fetchCasesAsync } from '../cases/casesSlice';
 import { setSearchResult } from '../search-result/searchResultSlice';
 import { useMap } from './MapProvider';
@@ -22,7 +22,7 @@ interface MapClickEventProps {
 
 export const MapClickEvent = ({ fnr, setAlert, contextmenu, setEstateFeatures, infoClick, setEstateName, setEstatePosition }: MapClickEventProps) => {
   const map = useMap();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   function searchEstateCases(estateId: string, estateName: string | undefined) {
     const searchResult: SearchResult = {
       value: estateId,

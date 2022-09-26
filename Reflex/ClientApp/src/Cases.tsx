@@ -1,19 +1,12 @@
-import React, { useEffect, useState } from 'react';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import _ from 'lodash';
+import xor from 'lodash/xor';
+import { useEffect, useState } from 'react';
 import { ButtonGroup, Col, Dropdown, DropdownButton, Row } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { Case, CaseSource, CaseTab, SearchResult } from './api/api';
-import { RootState } from './app/store';
+import { Case, CaseSource, CaseTab } from './api/api';
+import { useAppSelector } from './app/hooks';
 import CaseList from './features/cases/CaseList';
 import CaseModal from './features/cases/CaseModal';
-
-interface CasesProps {
-  cases: Case[];
-  searchResult: SearchResult;
-  loading: boolean;
-}
 
 export interface ModalData {
   dnr: string;
@@ -59,13 +52,12 @@ function sortCases(filteredCases: Case[], sort: SortBy | undefined) {
   }
 }
 
-const Cases = ({ cases, searchResult, loading }: CasesProps) => {
+const Cases = () => {
+  const cases = useAppSelector((state) => state.cases?.value);
+  const loading = useAppSelector((state) => state.cases?.loading);
+  const searchResult = useAppSelector((state) => state.searchResult);
   const [filteredCases, setFilteredCases] = useState<Case[]>(cases);
   const [sortBy, setSortBy] = useState<SortBy>();
-  const [showStatus, setShowStatus] = useState(false);
-  const [showDiarieprefix, setShowDiarieprefix] = useState(false);
-  const [showCasesWithoutMainDecision, setShowCasesWithoutMainDecision] = useState(false);
-  const [showCaseSource, setShowCaseSource] = useState(false);
   const [caseSourceFilter, setCaseSourceFilter] = useState<string[]>([]);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
   const [diarieprefixFilter, setDiarieprefixFilter] = useState<string[]>([]);
@@ -90,19 +82,19 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
   });
 
   const handleCaseSourceFilter = (caseSource: CaseSource) => {
-    setCaseSourceFilter(_.xor(caseSourceFilter, [caseSource]));
+    setCaseSourceFilter(xor(caseSourceFilter, [caseSource]));
   };
 
   const handleStatusFilter = (status: string) => {
-    setStatusFilter(_.xor(statusFilter, [status]));
+    setStatusFilter(xor(statusFilter, [status]));
   };
 
   const handleDiarieprefixFilter = (diarieprefix: string) => {
-    setDiarieprefixFilter(_.xor(diarieprefixFilter, [diarieprefix]));
+    setDiarieprefixFilter(xor(diarieprefixFilter, [diarieprefix]));
   };
 
   const handleCasesWithoutMainDecisionFilter = (caseWithoutMainDecision: boolean) => {
-    setCasesWithoutMainDecisionFilter(_.xor(casesWithoutMainDecisionFilter, [caseWithoutMainDecision]));
+    setCasesWithoutMainDecisionFilter(xor(casesWithoutMainDecisionFilter, [caseWithoutMainDecision]));
   };
 
   useEffect(() => {
@@ -127,95 +119,43 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
           <Col>
             <ButtonGroup>
               <DropdownButton variant="outline-secondary"
-                title={<>Ärendekällor {(caseSourceFilter.length > 0) && <span className="badge badge-secondary">{caseSourceFilter.length}</span>}</>}
-                className="pr-2" show={showCaseSource} id="caseSourceFilter"
-                onToggle={((show, e) => {
-                  if (!show && !e)
-                    setShowCaseSource(false);
-                  /*@ts-ignore*/
-                  if (e.target?.id === 'caseSourceFilter')
-                    setShowCaseSource(!showCaseSource);
-                })}
-                onBlur={(e) => {
-                  e.persist();
-                  /*@ts-ignore*/
-                  if (!e?.relatedTarget?.className?.includes('caseSourceFilter')) {
-                    setShowCaseSource(false);
-                  }
-                }}
+                autoClose="outside"
+                title={<>Ärendekällor {(caseSourceFilter.length > 0) && <span className="badge text-bg-secondary">{caseSourceFilter.length}</span>}</>}
+                className="pe-2"
               >
-                <Dropdown.Item disabled={!caseSources.includes(CaseSource.Ecos)} className="d-flex justify-content-between caseSourceFilter" onClick={() => handleCaseSourceFilter(CaseSource.Ecos)}>Ecos {caseSourceFilter.includes(CaseSource.Ecos) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
-                <Dropdown.Item disabled={!caseSources.includes(CaseSource.ByggR)} className="d-flex justify-content-between caseSourceFilter" onClick={() => handleCaseSourceFilter(CaseSource.ByggR)}>ByggR {caseSourceFilter.includes(CaseSource.ByggR) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
-                <Dropdown.Item disabled={!caseSources.includes(CaseSource.AGS)} className="d-flex justify-content-between caseSourceFilter" onClick={() => handleCaseSourceFilter(CaseSource.AGS)}>AGS {caseSourceFilter.includes(CaseSource.AGS) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
-                <Dropdown.Item disabled={!caseSources.includes(CaseSource.iipax)} className="d-flex justify-content-between caseSourceFilter" onClick={() => handleCaseSourceFilter(CaseSource.iipax)}>iipax {caseSourceFilter.includes(CaseSource.iipax) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
+                <Dropdown.Item disabled={!caseSources.includes(CaseSource.Ecos)} className="d-flex justify-content-between" onClick={() => handleCaseSourceFilter(CaseSource.Ecos)}>Ecos {caseSourceFilter.includes(CaseSource.Ecos) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
+                <Dropdown.Item disabled={!caseSources.includes(CaseSource.ByggR)} className="d-flex justify-content-between" onClick={() => handleCaseSourceFilter(CaseSource.ByggR)}>ByggR {caseSourceFilter.includes(CaseSource.ByggR) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
+                <Dropdown.Item disabled={!caseSources.includes(CaseSource.AGS)} className="d-flex justify-content-between" onClick={() => handleCaseSourceFilter(CaseSource.AGS)}>AGS {caseSourceFilter.includes(CaseSource.AGS) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
+                <Dropdown.Item disabled={!caseSources.includes(CaseSource.iipax)} className="d-flex justify-content-between" onClick={() => handleCaseSourceFilter(CaseSource.iipax)}>iipax {caseSourceFilter.includes(CaseSource.iipax) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
               </DropdownButton>
               {statuses.length > 0 && <DropdownButton variant="outline-secondary"
-                title={<>Status {(statusFilter.length > 0) && <span className="badge badge-secondary">{statusFilter.length}</span>}</>}
-                className="pr-2" show={showStatus} id="statusFilter"
-                onToggle={((show, e) => {
-                  if (!show && !e)
-                    setShowStatus(false);
-                  /*@ts-ignore*/
-                  if (e.target?.id === 'statusFilter')
-                    setShowStatus(!showStatus);
-                })}
-                onBlur={(e) => {
-                  e.persist();
-                  /*@ts-ignore*/
-                  if (!e?.relatedTarget?.className?.includes('statusFilter')) {
-                    setShowStatus(false);
-                  }
-                }}
+                autoClose="outside"
+                title={<>Status {(statusFilter.length > 0) && <span className="badge text-bg-secondary">{statusFilter.length}</span>}</>}
+                className="pe-2"
               >
-                <Dropdown.Item className="d-flex justify-content-between statusFilter" onClick={() => handleStatusFilter('Pågående')}>Pågående {statusFilter.includes('Pågående') && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
-                <Dropdown.Item className="d-flex justify-content-between statusFilter" onClick={() => handleStatusFilter('Avslutat')}>Avslutat {statusFilter.includes('Avslutat') && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
+                <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleStatusFilter('Pågående')}>Pågående {statusFilter.includes('Pågående') && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
+                <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleStatusFilter('Avslutat')}>Avslutat {statusFilter.includes('Avslutat') && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
               </DropdownButton>}
               {diarieprefixes.length > 0 && <DropdownButton variant="outline-secondary"
-                title={<>Diarier {(diarieprefixFilter.length > 0) && <span className="badge badge-secondary">{diarieprefixFilter.length}</span>}</>}
-                className="pr-2" show={showDiarieprefix} id="diarieprefixFilter"
-                onToggle={((show, e) => {
-                  if (!show && !e)
-                    setShowDiarieprefix(false);
-                  /*@ts-ignore*/
-                  if (e.target?.id === 'diarieprefixFilter')
-                    setShowDiarieprefix(!showDiarieprefix);
-                })}
-                onBlur={(e) => {
-                  e.persist();
-                  /*@ts-ignore*/
-                  if (!e?.relatedTarget?.className?.includes('diarieprefixFilter')) {
-                    setShowDiarieprefix(false);
-                  }
-                }}
+                autoClose="outside"
+                title={<>Diarier {(diarieprefixFilter.length > 0) && <span className="badge text-bg-secondary">{diarieprefixFilter.length}</span>}</>}
+                className="pe-2"
               >
-                {diarieprefixes.map(x => <Dropdown.Item className="d-flex justify-content-between diarieprefixFilter" onClick={() => handleDiarieprefixFilter(x)}>{x} {diarieprefixFilter.includes(x) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>)}
+                {diarieprefixes.map(x => <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleDiarieprefixFilter(x)}>{x} {diarieprefixFilter.includes(x) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>)}
               </DropdownButton>}
               {casesWithoutMainDecision.length > 0 &&
                 <DropdownButton variant="outline-secondary"
-                  title={<>Huvudbeslut {(casesWithoutMainDecisionFilter.length > 0) && <span className="badge badge-secondary">{casesWithoutMainDecisionFilter.length}</span>}</>}
-                  className="pr-2" show={showCasesWithoutMainDecision} id="casesWithoutMainDecisionFilter"
-                  onToggle={((show, e) => {
-                    if (!show && !e)
-                      setShowCasesWithoutMainDecision(false);
-                    /*@ts-ignore*/
-                    if (e.target?.id === 'casesWithoutMainDecisionFilter')
-                      setShowCasesWithoutMainDecision(!showCasesWithoutMainDecision);
-                  })}
-                  onBlur={(e) => {
-                    e.persist();
-                    /*@ts-ignore*/
-                    if (!e?.relatedTarget?.className?.includes('casesWithoutMainDecisionFilter')) {
-                      setShowCasesWithoutMainDecision(false);
-                    }
-                  }}
+                  autoClose="outside"
+                  title={<>Huvudbeslut {(casesWithoutMainDecisionFilter.length > 0) && <span className="badge text-bg-secondary">{casesWithoutMainDecisionFilter.length}</span>}</>}
+                  className="pe-2"
                 >
-                  <Dropdown.Item className="d-flex justify-content-between casesWithoutMainDecisionFilter" onClick={() => handleCasesWithoutMainDecisionFilter(true)}>Ärenden med huvudbeslut {casesWithoutMainDecisionFilter.includes(true) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
-                  <Dropdown.Item className="d-flex justify-content-between casesWithoutMainDecisionFilter" onClick={() => handleCasesWithoutMainDecisionFilter(false)}>Ärenden utan huvudbeslut {casesWithoutMainDecisionFilter.includes(false) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
+                  <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleCasesWithoutMainDecisionFilter(true)}>Ärenden med huvudbeslut {casesWithoutMainDecisionFilter.includes(true) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
+                  <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleCasesWithoutMainDecisionFilter(false)}>Ärenden utan huvudbeslut {casesWithoutMainDecisionFilter.includes(false) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
                 </DropdownButton>}
             </ButtonGroup>
           </Col>
-          <Col className="text-right">
-            <ButtonGroup>
+          <Col>
+            <ButtonGroup className="float-end">
               <DropdownButton title="Sortera" variant="outline-secondary">
                 <Dropdown.Item className="d-flex justify-content-between" onClick={() => (setSortBy('TITLE_ASC'))} >Titel stigande {sortBy === 'TITLE_ASC' && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
                 <Dropdown.Item className="d-flex justify-content-between" onClick={() => (setSortBy('TITLE_DESC'))} >Titel fallande {sortBy === 'TITLE_DESC' && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
@@ -237,13 +177,4 @@ const Cases = ({ cases, searchResult, loading }: CasesProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState, _: any) => ({
-  searchResult: state.searchResult,
-  cases: state.cases?.value,
-  loading: state.cases?.loading
-});
-
-export default connect(
-  mapStateToProps,
-  null
-)(Cases);
+export default Cases;

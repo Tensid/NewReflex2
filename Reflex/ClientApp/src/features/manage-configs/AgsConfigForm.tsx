@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { AgsConfig, createAgsConfig, deleteAgsConfig, updateAgsConfig } from '../../api/api';
 import CheckboxInput from '../common/forms/CheckboxInput';
@@ -55,7 +55,7 @@ const AgsConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: AgsConfigFo
             <button className="btn btn-primary" type="submit">Spara</button>
             {edit &&
               <button
-                className="btn btn-primary ml-2"
+                className="btn btn-primary ms-2"
                 onClick={async (e) => {
                   e.preventDefault();
                   await deleteAgsConfig(formData.id);

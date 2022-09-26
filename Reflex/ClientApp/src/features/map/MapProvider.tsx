@@ -6,8 +6,8 @@ import 'ol/ol.css';
 import Projection from 'ol/proj/Projection';
 import { register } from 'ol/proj/proj4';
 import proj4 from 'proj4';
-import React, {
-  FC,
+import {
+  FC, ReactNode,
   createContext,
   useContext,
   useEffect, useState
@@ -72,6 +72,7 @@ interface MapProviderProps {
   projection: string | Projection | undefined;
   extent?: Extent;
   initialExtent: Extent;
+  children?: ReactNode;
 }
 
 function useTrackExtent(map: Map | undefined, extent: Extent | undefined) {

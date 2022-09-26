@@ -1,7 +1,8 @@
-import React from 'react';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Accordion, Card } from 'react-bootstrap';
+import { useAccordionButton } from 'react-bootstrap';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
 import { CaseSource, Occurence, getDocument } from '../../api/api';
 import { TabState } from './CaseModal';
 
@@ -31,6 +32,21 @@ interface OccurenceContentProps {
   caseSourceId: string;
 }
 
+function CustomToggle({ children, eventKey }: any) {
+  const decoratedOnClick = useAccordionButton(eventKey);
+
+  return (
+    <Card.Header className="p-1" onClick={decoratedOnClick}>
+      <button
+        type="button"
+        className="btn btn-link collapsed text-start text-decoration-none"
+      >
+        {children}
+      </button>
+    </Card.Header>
+  );
+}
+
 const OccurenceContent = ({ occurenceState, caseSource, caseSourceId }: OccurenceContentProps) => {
   if (occurenceState.error)
     return <>Kunde inte hämta händelser kopplade till ärendet.</>;
@@ -39,16 +55,14 @@ const OccurenceContent = ({ occurenceState, caseSource, caseSourceId }: Occurenc
   return (
     <div className="row">
       <div className="col">
-        <Accordion>
+        <Accordion flush>
           {occurenceState.value?.map((occurence, i) =>
-            <div className="card" key={i}>
-              <Accordion.Toggle as={Card.Header} className="p-1" eventKey={i.toString()} >
-                <h5 className="mb-0">
-                  <button className="btn btn-link collapsed text-left"><i className="fa"></i> {new Date(occurence.arrival).toLocaleDateString()}: {`${occurence.title} ${occurenceText(occurence)}`}</button>
-                </h5>
-              </Accordion.Toggle>
+            <Card className={"list-group-flush"} key={i}>
+              <CustomToggle eventKey={i.toString()}>
+                {new Date(occurence.arrival).toLocaleDateString()}: {`${occurence.title} ${occurenceText(occurence)}`}
+              </CustomToggle>
               <Accordion.Collapse eventKey={i.toString()}>
-                <div className="card-body">
+                <Card.Body>
                   <ul className="mb-0">
                     {occurence.documents?.length > 0 ?
                       occurence.documents.map((doc) => {
@@ -69,9 +83,9 @@ const OccurenceContent = ({ occurenceState, caseSource, caseSourceId }: Occurenc
                       occurence.isSecret ? 'Sekretess' : 'Inga handlingar kopplade till händelsen.'
                     }
                   </ul>
-                </div>
+                </Card.Body>
               </Accordion.Collapse>
-            </div>
+            </Card>
           )}
         </Accordion>
       </div>

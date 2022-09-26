@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Route } from 'react-router';
-import { Redirect } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Route, Routes } from 'react-router';
+import { Navigate } from 'react-router-dom';
 import About from './About';
 import './App.scss';
 import Cases from './Cases';
@@ -14,8 +13,7 @@ import Map from './Map';
 import Population from './Population';
 import Property from './Property';
 import Search from './Search';
-import { RootState } from './app/store';
-import { ApplicationPaths } from './features/api-authorization/ApiAuthorizationConstants';
+import { useAppDispatch, useAppSelector } from './app/hooks';
 import ApiAuthorizationRoutes from './features/api-authorization/ApiAuthorizationRoutes';
 import AuthorizeRoute from './features/api-authorization/AuthorizeRoute';
 import useAuthService from './features/api-authorization/useAuthService';
@@ -25,9 +23,9 @@ import { fetchInitiateSettings } from './features/user-settings/userSettingsSlic
 import { fetchGetUser } from './features/user/userSlice';
 
 function App() {
-  const dispatch = useDispatch();
-  const config = useSelector((state: RootState) => state.config);
-  const hasReceived = useSelector((state: RootState) => state.userSettings.hasReceived);
+  const dispatch = useAppDispatch();
+  const config = useAppSelector((state) => state.config);
+  const hasReceived = useAppSelector((state) => state.userSettings.hasReceived);
   const { authenticated } = useAuthService();
 
   useEffect(() => {
@@ -42,18 +40,20 @@ function App() {
 
   return (
     <Layout>
-      {hasReceived && <AuthorizeRoute exact path='/' component={() => config ? <Search /> : <Redirect to="/configs" />} />}
-      <AuthorizeRoute path='/configs' component={() => <Configs />} />
-      {hasReceived && <AuthorizeRoute path='/search' component={() => config ? <Search /> : <Redirect to="/configs" />} />}
-      {hasReceived && <AuthorizeRoute path='/map' component={() => config ? <Map /> : <Redirect to="/configs" />} />}
-      {hasReceived && <AuthorizeRoute path='/cases' component={() => config ? <Cases /> : <Redirect to="/configs" />} />}
-      {hasReceived && <AuthorizeRoute path='/population' component={() => config ? <Population /> : <Redirect to="/configs" />} />}
-      {hasReceived && <AuthorizeRoute path='/property' component={() => config ? <Property /> : <Redirect to="/configs" />} />}
-      <AuthorizeRoute requiredRoles={["Admin"]} path='/manage-users' component={() => <ManageUsers />} />
-      <AuthorizeRoute requiredRoles={["Admin"]} path='/manage-configs' component={() => <ManageConfigs />} />
-      <AuthorizeRoute requiredRoles={["Admin"]} path='/system-settings' component={() => <ManageSystemSettings />} />
-      <Route path='/about' component={() => <About />} />
-      <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+      <Routes>
+        <Route path='/' element={<AuthorizeRoute path='/search' element={(hasReceived && config) ? <Search /> : <Navigate to="/configs" />} />} />
+        <Route path='/configs' element={<AuthorizeRoute path='/configs' element={<Configs />} />} />
+        <Route path='/search' element={<AuthorizeRoute path='/search' element={(hasReceived && config) ? <Search /> : <Navigate to="/configs" />} />} />
+        <Route path='/map' element={<AuthorizeRoute path='/map' element={(hasReceived && config) ? <Map /> : <Navigate to="/configs" />} />} />
+        <Route path='/cases' element={<AuthorizeRoute path='/cases' element={(hasReceived && config) ? <Cases /> : <Navigate to="/configs" />} />} />
+        <Route path='/population' element={<AuthorizeRoute path='/population' element={(hasReceived && config) ? <Population /> : <Navigate to="/configs" />} />} />
+        <Route path='/property' element={<AuthorizeRoute path='/property' element={(hasReceived && config) ? <Property /> : <Navigate to="/configs" />} />} />
+        <Route path='/manage-users' element={<AuthorizeRoute requiredRoles={["Admin"]} path='/manage-users' element={<ManageUsers />} />} />
+        <Route path='/manage-configs' element={<AuthorizeRoute requiredRoles={["Admin"]} path='/manage-configs' element={<ManageConfigs />} />} />
+        <Route path='/system-settings' element={<AuthorizeRoute requiredRoles={["Admin"]} path='/system-settings' element={<ManageSystemSettings />} />} />
+        <Route path='/about' element={<About />} />
+        {ApiAuthorizationRoutes()}
+      </Routes>
     </Layout>
   );
 }

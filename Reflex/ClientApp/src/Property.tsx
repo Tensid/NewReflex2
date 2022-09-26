@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { getOwners } from './api/api';
-import { RootState } from './app/store';
+import { useAppSelector } from './app/hooks';
 import DataTable from './features/data-table/DataTable';
-import { fetchSystemSettings } from './features/system-settings/systemSettingsSlice';
 
 interface LinkButton {
   displayName: string;
@@ -46,40 +44,39 @@ const headers = [
 const Property = () => {
   const [count, setCount] = useState(0);
   const [linkButtons, setLinkButtons] = useState<LinkButton[]>([]);
-  const fbWebbSettings = useSelector((state: RootState) => state.systemSettings.fbWebbSettings);
-  const searchResult = useSelector((state: RootState) => state.searchResult);
-  const isValid = searchResult.value && (searchResult.type === 'Fastighet' || searchResult.type === 'Adress');
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!fbWebbSettings)
-      dispatch(fetchSystemSettings());
-  }, [fbWebbSettings]);
+  const fbWebbFastighetUrl = useAppSelector((state) => state.systemSettings.fbWebbSettings?.fbWebbFastighetUrl);
+  const fbWebbFastighetUsrUrl = useAppSelector((state) => state.systemSettings.fbWebbSettings?.fbWebbFastighetUsrUrl);
+  const fbWebbByggnadUrl = useAppSelector((state) => state.systemSettings.fbWebbSettings?.fbWebbByggnadUrl);
+  const fbWebbByggnadUsrUrl = useAppSelector((state) => state.systemSettings.fbWebbSettings?.fbWebbByggnadUsrUrl);
+  const displayName = useAppSelector((state) => state.searchResult.displayName);
+  const type = useAppSelector((state) => state.searchResult.type);
+  const value = useAppSelector((state) => state.searchResult.value);
+  const isValid = value && (type === 'Fastighet' || type === 'Adress');
 
   useEffect(() => {
     setLinkButtons([
       {
         displayName: 'Fastighetsrapport',
-        url: fbWebbSettings?.fbWebbFastighetUrl ? fbWebbSettings.fbWebbFastighetUrl + searchResult.value : ''
+        url: fbWebbFastighetUrl ? fbWebbFastighetUrl + value : ''
       },
       {
         displayName: 'Fastighetsrapport med val',
-        url: fbWebbSettings?.fbWebbFastighetUsrUrl ? fbWebbSettings.fbWebbFastighetUsrUrl + searchResult.value : ''
+        url: fbWebbFastighetUsrUrl ? fbWebbFastighetUsrUrl + value : ''
       },
       {
         displayName: 'Byggnadsrapport',
-        url: fbWebbSettings?.fbWebbByggnadUrl ? fbWebbSettings.fbWebbByggnadUrl + searchResult.value : ''
+        url: fbWebbByggnadUrl ? fbWebbByggnadUrl + value : ''
       },
       {
         displayName: 'Byggnadsrapport med val',
-        url: fbWebbSettings?.fbWebbByggnadUsrUrl ? fbWebbSettings.fbWebbByggnadUsrUrl + searchResult.value : ''
+        url: fbWebbByggnadUsrUrl ? fbWebbByggnadUsrUrl + value : ''
       }
     ]);
-  }, [fbWebbSettings, searchResult.value]);
+  }, [fbWebbFastighetUrl, fbWebbFastighetUsrUrl, fbWebbByggnadUrl, fbWebbByggnadUsrUrl, value]);
 
   return (
     <>
-      <h4>{(isValid) ? `Ägare: ${count} för ${searchResult.displayName}` : 'Ingen fastighet vald'}</h4>
+      <h4>{(isValid) ? `Ägare: ${count} för ${displayName}` : 'Ingen fastighet vald'}</h4>
       {(isValid && linkButtons.length > 0) && <DataTable setCount={setCount} headers={headers} columns={columns} linkButtons={linkButtons} getTableData={getOwners} />}
     </>
   );
