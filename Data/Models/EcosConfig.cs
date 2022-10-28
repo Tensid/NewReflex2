@@ -14,5 +14,8 @@ namespace Reflex.Data.Models
         public string Name { get; set; }
         public Visibility HideConfidentialCases { get; set; }
         public Visibility HideConfidentialDocuments { get; set; }
+        public Guid[] DocumentTypes { get; set; }
+        public Guid[] OccurrenceTypes { get; set; }
+        public string[] ProcessTypes { get; set; }
     }
 }

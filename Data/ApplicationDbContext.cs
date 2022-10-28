@@ -31,8 +31,15 @@ namespace Reflex.Data
             var stringArrayConverter = new ValueConverter<string[], string>(
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
                 v => JsonSerializer.Deserialize<string[]>(v, (JsonSerializerOptions)null));
+            var guidArrayConverter = new ValueConverter<Guid[], string>(
+                v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                v => JsonSerializer.Deserialize<Guid[]>(v, (JsonSerializerOptions)null));
 
             var stringArrayComparer = new ValueComparer<string[]>(
+                (c1, c2) => c1.SequenceEqual(c2),
+                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                c => c.ToArray());
+            var guidArrayComparer = new ValueComparer<Guid[]>(
                 (c1, c2) => c1.SequenceEqual(c2),
                 c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                 c => c.ToArray());
@@ -69,6 +76,12 @@ namespace Reflex.Data
             modelBuilder.Entity<ByggrConfig>().Property(p => p.PersonRoles)
                 .HasConversion(stringArrayConverter, stringArrayComparer);
             modelBuilder.Entity<ByggrConfig>().Property(p => p.Diarieprefixes)
+                .HasConversion(stringArrayConverter, stringArrayComparer);
+            modelBuilder.Entity<EcosConfig>().Property(p => p.DocumentTypes)
+                .HasConversion(guidArrayConverter, guidArrayComparer);
+            modelBuilder.Entity<EcosConfig>().Property(p => p.OccurrenceTypes)
+                .HasConversion(guidArrayConverter, guidArrayComparer);
+            modelBuilder.Entity<EcosConfig>().Property(p => p.ProcessTypes)
                 .HasConversion(stringArrayConverter, stringArrayComparer);
             modelBuilder.Entity<IipaxConfig>().Property(p => p.ObjectTypes)
                 .HasConversion(stringArrayConverter, stringArrayComparer);

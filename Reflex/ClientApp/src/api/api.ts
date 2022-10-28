@@ -226,6 +226,9 @@ export interface EcosConfig {
   name: string;
   hideConfidentialCases: Visibility;
   hideConfidentialDocuments: Visibility;
+  documentTypes: string[];
+  occurrenceTypes: string[];
+  processTypes: string[];
 }
 
 export interface IipaxConfig {

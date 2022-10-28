@@ -1,0 +1,662 @@
+[
+  {
+    "Id": "DF49981A-4434-43CC-95C3-B9FDF88A216C",
+    "ProcessTypeName": "Administrativt ärende"
+  },
+  {
+    "Id": "6A2FAD76-DF72-44CF-BF28-4949EBE6B106",
+    "ProcessTypeName": "Alarm att livsmedel/foder ej uppfyller säkerhetskrav - RASFF"
+  },
+  {
+    "Id": "0A442643-E908-4E02-B140-65B1A9A4582C",
+    "ProcessTypeName": "Anmälan"
+  },
+  {
+    "Id": "EABB7527-4E51-4257-936B-8207992420EA",
+    "ProcessTypeName": "Anmälan av bortskaffande av avfall"
+  },
+  {
+    "Id": "F2B7C065-AAC3-4511-9F2B-BEC63F9BDDB7",
+    "ProcessTypeName": "Anmälan av driftstörning"
+  },
+  {
+    "Id": "48C31276-CB19-425D-99E8-4BD77FE9679E",
+    "ProcessTypeName": "Anmälan av fett- och/eller oljeavskiljare"
+  },
+  {
+    "Id": "925340C8-DEF7-422B-977B-1F05DC6FACDB",
+    "ProcessTypeName": "Anmälan av försäljning av receptfria läkemedel"
+  },
+  {
+    "Id": "AF6D94EC-94FB-4C0A-AF39-CC5E4C732D4B",
+    "ProcessTypeName": "Anmälan av hälsoskyddsverksamhet"
+  },
+  {
+    "Id": "294F547E-C1C9-445E-87F9-8829D0FB1ED6",
+    "ProcessTypeName": "Anmälan av installation av enskilt avlopp utan vattentoalett"
+  },
+  {
+    "Id": "38C76611-DFE0-4358-864A-31C320712F69",
+    "ProcessTypeName": "Anmälan av installation av värmepump"
+  },
+  {
+    "Id": "98F6CA59-1A59-422A-AE3E-375FE68EEA30",
+    "ProcessTypeName": "Anmälan av kemisk bekämpning"
+  },
+  {
+    "Id": "87C496A2-6877-4ED8-9CB0-4937F09F4DB9",
+    "ProcessTypeName": "Anmälan av kompostering"
+  },
+  {
+    "Id": "206F98B0-85F9-4CEE-B559-FA6B08747442",
+    "ProcessTypeName": "Anmälan av miljöfarlig verksamhet"
+  },
+  {
+    "Id": "E2B487F8-F05B-477F-BE07-3DF23716BAF3",
+    "ProcessTypeName": "Anmälan av miljöfarlig verksamhet avseende ändring"
+  },
+  {
+    "Id": "4421C913-9E55-4137-BE56-BDB90A3A0FDD",
+    "ProcessTypeName": "Anmälan av nedgrävningsplats för häst"
+  },
+  {
+    "Id": "01B04EFE-B973-4348-A5B9-3A720B670F55",
+    "ProcessTypeName": "Anmälan av sanering av PCB"
+  },
+  {
+    "Id": "C24FD779-10B1-4D76-845E-F5DDFBAD317B",
+    "ProcessTypeName": "Anmälan av skrotning av cistern"
+  },
+  {
+    "Id": "001D894D-B423-4F4D-8EE1-03B8540E2807",
+    "ProcessTypeName": "Anmälan av skrotning av köldmedieaggregat"
+  },
+  {
+    "Id": "CAE3EC8E-2F8B-48DD-A890-A2C60A3ED159",
+    "ProcessTypeName": "Anmälan av solarieverksamhet"
+  },
+  {
+    "Id": "E10D4648-482A-4E78-BF0C-DEB63B4EB9E4",
+    "ProcessTypeName": "Anmälan av tobaksförsäljning"
+  },
+  {
+    "Id": "F19EED93-AB92-475F-96D0-695FE70C8E78",
+    "ProcessTypeName": "Anmälan av utökning av varusortiment"
+  },
+  {
+    "Id": "59E8A9C9-BF79-4EAC-9B37-5923B7094992",
+    "ProcessTypeName": "Anmälan av ändring av livsmedelslokal"
+  },
+  {
+    "Id": "C35E611F-60D2-421E-97C9-519351C94E06",
+    "ProcessTypeName": "Anmälan enligt lokala hälsoskyddsföreskrifter"
+  },
+  {
+    "Id": "3AF63B44-AE97-444B-A272-D620DFC66E55",
+    "ProcessTypeName": "Anmälan enligt lokala renhållningsordningen"
+  },
+  {
+    "Id": "AA423298-B9C7-4A1B-805D-64CF3028A013",
+    "ProcessTypeName": "Anmälan enligt vattenskyddsföreskrifter"
+  },
+  {
+    "Id": "7AA1A70E-4842-4CF0-A15A-EEF99707811E",
+    "ProcessTypeName": "Anmälan om avhjälpandeåtgärd för förorening"
+  },
+  {
+    "Id": "E6DE009E-665D-46DC-A3E9-8302E98781B0",
+    "ProcessTypeName": "Anmälan om eget omhändertagande"
+  },
+  {
+    "Id": "2F936EBD-EC27-403A-AFE1-3077A6187D07",
+    "ProcessTypeName": "Anmälan om försäljning av elektroniska cigaretter"
+  },
+  {
+    "Id": "1315CBCD-6F00-4279-AFC4-F2098A52D99D",
+    "ProcessTypeName": "Anmälan om försäljning av folköl"
+  },
+  {
+    "Id": "1D798864-E66D-4FF7-91BA-B8321BD587B3",
+    "ProcessTypeName": "Anmälan om kryddning av spritdryck"
+  },
+  {
+    "Id": "17EC8D85-3C80-4E2C-A4A8-35CA9595178D",
+    "ProcessTypeName": "Anmälan om lokal för catering till slutet sällskap"
+  },
+  {
+    "Id": "3C9791BC-D702-49D7-8E4B-D2BBB72595E5",
+    "ProcessTypeName": "Anmälan om misstänkt brott"
+  },
+  {
+    "Id": "4A4066C3-96E2-4A5D-92F5-A20575C2C7BE",
+    "ProcessTypeName": "Anmälan om personer med betydande inflytande"
+  },
+  {
+    "Id": "181D455F-FE17-4E8B-9E05-D9AAFEDCC0C5",
+    "ProcessTypeName": "Anmälan om provsmakning"
+  },
+  {
+    "Id": "AAF96527-4331-45A2-AB1F-0FF2EA08D45F",
+    "ProcessTypeName": "Anmälan om serveringsansvariga personer"
+  },
+  {
+    "Id": "75864AE7-44E4-4A6D-8893-4A01C5DA7304",
+    "ProcessTypeName": "Anmälan om tillfällig ändring av lokaler"
+  },
+  {
+    "Id": "84A16A7A-CF7C-4BC8-819E-3C8D5EC84E3B",
+    "ProcessTypeName": "Anmälan om upphörande av serveringstillstånd"
+  },
+  {
+    "Id": "BC358CD5-8985-46DD-8A1E-E59062F1651C",
+    "ProcessTypeName": "Anmälan om vattenverksamhet"
+  },
+  {
+    "Id": "D35F81D6-B233-4886-B82C-8D9E46887587",
+    "ProcessTypeName": "Anmälan om ägarbyte"
+  },
+  {
+    "Id": "9511B1D1-4BAA-4FC1-92FD-84622AD8A4C8",
+    "ProcessTypeName": "Anmälan om ändring av avloppsanläggning"
+  },
+  {
+    "Id": "11428429-E292-44B5-B03A-A4FE6CEBAAD7",
+    "ProcessTypeName": "Anmälan om ändring av avloppsanordning"
+  },
+  {
+    "Id": "8FD040BE-5CAC-489C-BFCA-640D49FB53CA",
+    "ProcessTypeName": "Anmälan om ändring av lokaler"
+  },
+  {
+    "Id": "ABE4022E-BE4B-4B17-B12F-D11B642E04EE",
+    "ProcessTypeName": "Anmälan om ändring av tobakstillstånd"
+  },
+  {
+    "Id": "50517C4F-A07B-4824-9999-6B038569587D",
+    "ProcessTypeName": "Anmälan om ändring i serveringstillstånd"
+  },
+  {
+    "Id": "2B89520B-4C78-4F6B-86DE-937966F55124",
+    "ProcessTypeName": "Anmälan ändring av anläggning/verksamhet"
+  },
+  {
+    "Id": "54617585-692A-432F-86BE-08A9364D8F40",
+    "ProcessTypeName": "Anmälan ändring av livsmedelsverksamhet"
+  },
+  {
+    "Id": "1096DC86-0274-476F-A8CE-60969A31D5F6",
+    "ProcessTypeName": "Ansökan"
+  },
+  {
+    "Id": "42AEFBE1-79E8-420F-863C-D832B9EEC416",
+    "ProcessTypeName": "Ansökan dispens från deponeringsföreskrift"
+  },
+  {
+    "Id": "222597DE-2A03-4334-92DE-DB0963648EAD",
+    "ProcessTypeName": "Ansökan om dispens"
+  },
+  {
+    "Id": "ADC9A7F1-5E6A-4BE4-B0F5-3B0B69F958DF",
+    "ProcessTypeName": "Ansökan om dispens från lokala hälsoskyddsföreskrifter"
+  },
+  {
+    "Id": "BC545B73-BD4D-4C57-85D2-D828579DE78A",
+    "ProcessTypeName": "Ansökan om dispens från renhållningsordningen"
+  },
+  {
+    "Id": "512C4D02-BCF2-4E6E-A5E3-6F47187BAED9",
+    "ProcessTypeName": "Ansökan om dispens från sanering av PCB"
+  },
+  {
+    "Id": "072536C2-2E13-4468-B7EF-9F42192BF483",
+    "ProcessTypeName": "Ansökan om dispens från skyddsföreskrifter"
+  },
+  {
+    "Id": "D415DCAA-AB75-417B-AC39-2B385AC02AA4",
+    "ProcessTypeName": "Ansökan om dispens för spridning av slam"
+  },
+  {
+    "Id": "A52740DA-C33A-4368-BDFD-99D933137409",
+    "ProcessTypeName": "Ansökan om godkännande av livsmedelsanläggning"
+  },
+  {
+    "Id": "57FF3E7A-8A9D-41BF-AE0C-C9A2FB54D1E4",
+    "ProcessTypeName": "Ansökan om längre tömningsintervall för slamavskiljare"
+  },
+  {
+    "Id": "457AB8AC-2B52-4C34-A03A-8CDFFAAB12BB",
+    "ProcessTypeName": "Ansökan om provsmakning"
+  },
+  {
+    "Id": "68A1AEC7-C0B7-46D9-B580-E27C9F252BB0",
+    "ProcessTypeName": "Ansökan om serveringstillstånd stadigvarande allmänheten"
+  },
+  {
+    "Id": "91D7302C-D684-4EB4-B4A9-7BD5D768986E",
+    "ProcessTypeName": "Ansökan om serveringstillstånd stadigvarande för catering"
+  },
+  {
+    "Id": "4D1D8F6B-7795-48EB-A98F-78C580D50F0C",
+    "ProcessTypeName": "Ansökan om serveringstillstånd stadigvarande slutet sällskap"
+  },
+  {
+    "Id": "D790A192-38D2-44AD-ACC4-61564F3FB8AC",
+    "ProcessTypeName": "Ansökan om strandskyddsdispens"
+  },
+  {
+    "Id": "556381EF-6A73-451B-A4D3-C3804A082FDA",
+    "ProcessTypeName": "Ansökan om tillfälligt serveringstillstånd, allmänheten"
+  },
+  {
+    "Id": "06DBE164-0C49-4964-9A04-71FB339DB415",
+    "ProcessTypeName": "Ansökan om tillfälligt serveringstillstånd, slutet sällskap"
+  },
+  {
+    "Id": "6B540128-41A0-4EFD-BB25-A11C23446F0B",
+    "ProcessTypeName": "Ansökan om tillfälligt utökat serveringstillstånd"
+  },
+  {
+    "Id": "BB674366-7688-4451-BF4A-C2966AAEEC4B",
+    "ProcessTypeName": "Ansökan om tillstånd"
+  },
+  {
+    "Id": "EB3A43F1-5121-4E3E-9A5D-956CC3814515",
+    "ProcessTypeName": "Ansökan om tillstånd att sprida kemiska bekämpningsmedel"
+  },
+  {
+    "Id": "8F25E4D6-3082-4CBD-9AAC-A5EF85AC711A",
+    "ProcessTypeName": "Ansökan om tillstånd enligt lokala hälsoskyddsföreskrifter"
+  },
+  {
+    "Id": "41ECB44F-E308-4BF0-ACA5-7247FF37C74A",
+    "ProcessTypeName": "Ansökan om tillstånd enligt vattenskyddsföreskrifter"
+  },
+  {
+    "Id": "50B6FA5B-23E2-4ABA-B393-0B3ADEFC6C9F",
+    "ProcessTypeName": "Ansökan om tillstånd för enskilt avlopp"
+  },
+  {
+    "Id": "202C2D57-67D5-4844-9E0A-FCCF569DD766",
+    "ProcessTypeName": "Ansökan om tillstånd för försäljning av tobak"
+  },
+  {
+    "Id": "FC59257B-83F6-4138-8A86-D8E902695786",
+    "ProcessTypeName": "Ansökan om tillstånd för försäljning av tobak under viss tid"
+  },
+  {
+    "Id": "102315F4-D379-4512-9EA0-60AA3389CA8E",
+    "ProcessTypeName": "Ansökan om tillstånd för hantering av brandfarlig vara"
+  },
+  {
+    "Id": "E0F433D6-4AE6-4640-A017-EC730E436454",
+    "ProcessTypeName": "Ansökan om tillstånd för partihandel med tobaksvaror"
+  },
+  {
+    "Id": "06020EA4-FDD7-455F-89AB-C81B294526F1",
+    "ProcessTypeName": "Ansökan om tillstånd till bortskaffande av avfall"
+  },
+  {
+    "Id": "BDFE8FBB-18D5-45FC-A9E7-DE43E42F6218",
+    "ProcessTypeName": "Ansökan om tillstånd till värmepump"
+  },
+  {
+    "Id": "6C4DF367-B4F1-4B05-883B-3C154A5B3387",
+    "ProcessTypeName": "Ansökan om vattenverksamhet"
+  },
+  {
+    "Id": "3C4D44D0-178E-4B43-A697-95C5477269FB",
+    "ProcessTypeName": "Avgift för handläggning/tillsyn"
+  },
+  {
+    "Id": "47166349-4A18-43D5-91DC-5C7C2B10A375",
+    "ProcessTypeName": "Avtal"
+  },
+  {
+    "Id": "B6C383BE-9A58-414E-B369-1458AA3E3280",
+    "ProcessTypeName": "Begäran"
+  },
+  {
+    "Id": "AC276F82-5D00-4121-984C-85F90ED66A4E",
+    "ProcessTypeName": "Begäran om registerutdrag"
+  },
+  {
+    "Id": "19158A82-F189-429C-9358-EFE9BD48E8C0",
+    "ProcessTypeName": "Begäran om utlämnande av allmän handling"
+  },
+  {
+    "Id": "B1218782-24AE-4C82-BB67-2C54DD899596",
+    "ProcessTypeName": "Budget"
+  },
+  {
+    "Id": "EEEEF8E7-FC4B-42D4-812A-C171DE710DD0",
+    "ProcessTypeName": "Enkätundersökning"
+  },
+  {
+    "Id": "DAA70188-4D5B-453A-8BE7-653B4ADC3CF9",
+    "ProcessTypeName": "Exportintyg"
+  },
+  {
+    "Id": "E1CBC595-3532-4CFC-92A7-76D95AE9988B",
+    "ProcessTypeName": "Fastställande av egenkontrollprogram"
+  },
+  {
+    "Id": "987BED30-45B7-4F3B-8207-B54E04AE2A8A",
+    "ProcessTypeName": "Fastställande av faroanalys"
+  },
+  {
+    "Id": "61955E6E-CC2F-4D34-8A07-E18106EB5261",
+    "ProcessTypeName": "Fastställande av undersökningsprogram (vatten)"
+  },
+  {
+    "Id": "6D47FE8E-1CBB-46B4-A674-BA565B510F4F",
+    "ProcessTypeName": "Granskning av utförandeintyg"
+  },
+  {
+    "Id": "0BFFC10D-057E-4AEC-9C4B-8492C5871F54",
+    "ProcessTypeName": "Händelsestyrd tillsyn"
+  },
+  {
+    "Id": "90B5C584-02AE-460E-A3D6-2D87F4FC8A3C",
+    "ProcessTypeName": "Incidentrapportering"
+  },
+  {
+    "Id": "9D219A7B-E1E6-496F-B7B7-184927A3C8EE",
+    "ProcessTypeName": "Information"
+  },
+  {
+    "Id": "A56BE12E-896E-4C8D-9D56-68A7D944F55B",
+    "ProcessTypeName": "Information om cisterninstallation"
+  },
+  {
+    "Id": "6176B042-11D5-4672-864F-5F6021C6602E",
+    "ProcessTypeName": "Information om konvertering av köldmediaaggregat"
+  },
+  {
+    "Id": "BB25017E-741A-4404-ADB1-18F683BA5F78",
+    "ProcessTypeName": "Information om köldmedieinstallation"
+  },
+  {
+    "Id": "23818205-7B5D-4C99-829B-9D709CEE46BA",
+    "ProcessTypeName": "Information om nedgrävningsplats för häst"
+  },
+  {
+    "Id": "8BD5F0D1-92DC-4468-9E32-F5FEA020B918",
+    "ProcessTypeName": "Information om skrotning av köldmedieaggregat"
+  },
+  {
+    "Id": "35BD3254-2DD3-43A2-8D4F-271EC267DB33",
+    "ProcessTypeName": "Information om spridning av biocidprodukt på allmän plats"
+  },
+  {
+    "Id": "20BB6BDA-75A2-4728-8EDF-589E86F4446F",
+    "ProcessTypeName": "Information om upphörande av verksamhet"
+  },
+  {
+    "Id": "624AC47A-38CF-464A-8344-9C04B114CCD9",
+    "ProcessTypeName": "Klagomål"
+  },
+  {
+    "Id": "629475B6-BFE5-4F0D-9BC3-B2C6A8BB308D",
+    "ProcessTypeName": "Klagomål alkohol"
+  },
+  {
+    "Id": "70DC4549-58E8-468D-AE83-6A374115BDFD",
+    "ProcessTypeName": "Klagomål djur"
+  },
+  {
+    "Id": "C5C96211-0E23-43DA-A581-ECEFFF2E12E4",
+    "ProcessTypeName": "Klagomål enskilt avlopp"
+  },
+  {
+    "Id": "AD56220A-EA5F-458A-8412-9C122AE5BA3C",
+    "ProcessTypeName": "Klagomål hälsoskydd"
+  },
+  {
+    "Id": "2D436A67-0257-4CEB-BB9B-01328DF9D9D3",
+    "ProcessTypeName": "Klagomål livsmedel"
+  },
+  {
+    "Id": "EBD1DB5F-56EA-4E66-A2F8-D678F35D55A3",
+    "ProcessTypeName": "Klagomål miljöskydd"
+  },
+  {
+    "Id": "0EAFB346-3B2E-46D0-894E-AE9C99AB33C3",
+    "ProcessTypeName": "Klagomål på inomhusmiljö"
+  },
+  {
+    "Id": "E016B606-C5D4-47A2-8B62-82C50C97D236",
+    "ProcessTypeName": "Klagomål på störande verksamhet"
+  },
+  {
+    "Id": "826DC968-1AD3-4074-B6EB-6D717D1FFCBC",
+    "ProcessTypeName": "Klagomål receptfria läkemedel"
+  },
+  {
+    "Id": "AC9B39FC-00DA-4D4A-8FF4-4B98DF82F8E6",
+    "ProcessTypeName": "Klagomål strandskydd"
+  },
+  {
+    "Id": "B227434E-A7D6-4912-ACFF-31348492CA05",
+    "ProcessTypeName": "Klagomål tobaksförsäljning"
+  },
+  {
+    "Id": "E8E389D4-FE45-4195-A790-C58AE4DC96BF",
+    "ProcessTypeName": "Klassning av anläggning/verksamhet"
+  },
+  {
+    "Id": "67CA497B-740A-4073-BF3B-B96F13F78ADF",
+    "ProcessTypeName": "Konverterad"
+  },
+  {
+    "Id": "E90DF0CF-0CD6-4120-82BA-F2E2DF4A96F3",
+    "ProcessTypeName": "Köldmediarapport"
+  },
+  {
+    "Id": "13C44387-64B7-4594-86E7-B08682261F22",
+    "ProcessTypeName": "Miljörapport"
+  },
+  {
+    "Id": "8B65E611-EFAA-4B56-A6D1-41F3EAF88781",
+    "ProcessTypeName": "Miljösanktionsavgift"
+  },
+  {
+    "Id": "84291910-E502-4840-AA7E-C1CD2D3B6E51",
+    "ProcessTypeName": "Periodisk besiktning"
+  },
+  {
+    "Id": "F41342E6-EB5A-4F02-BFE6-885972175088",
+    "ProcessTypeName": "Planerad tillsyn"
+  },
+  {
+    "Id": "A51CB468-E100-4710-8E5A-2751A934C1E8",
+    "ProcessTypeName": "Rapport"
+  },
+  {
+    "Id": "FAE4F39F-703E-46D6-BCC3-46CB7DDFE864",
+    "ProcessTypeName": "Rapport om besiktning av cistern"
+  },
+  {
+    "Id": "8277D409-3475-4D06-8E89-70F643AE6057",
+    "ProcessTypeName": "Rapport om ej anmälningspliktig ändring av verksamhet"
+  },
+  {
+    "Id": "14D79CB3-80AD-4007-8A7F-50E0F10659D1",
+    "ProcessTypeName": "Rapport om ej anmälningspliktigt ägarbyte"
+  },
+  {
+    "Id": "E35166EC-7D63-4BCC-82D5-502FDCF3F7F9",
+    "ProcessTypeName": "Rapport om förorening i mark"
+  },
+  {
+    "Id": "96AC8873-2BAE-4C74-86DF-956C01BCF5EE",
+    "ProcessTypeName": "Rapport om förorening i sediment"
+  },
+  {
+    "Id": "D1B478B7-A956-4AAF-BF7E-E7C7916ABEBD",
+    "ProcessTypeName": "Rapport om inventering av PCB"
+  },
+  {
+    "Id": "6B22B0D2-F67F-4EF4-94FB-6FA96EEDCDF2",
+    "ProcessTypeName": "Rapport om undersökning av förorening"
+  },
+  {
+    "Id": "04E28CEF-4F11-4558-A0F9-BBC09668283F",
+    "ProcessTypeName": "Rapport om upphörd verksamhet"
+  },
+  {
+    "Id": "A764A86B-7327-445B-98C5-C26543D6F705",
+    "ProcessTypeName": "Registrering av livsmedelsanläggning"
+  },
+  {
+    "Id": "E5D6E37B-E7F4-4D0D-93E9-538C21DE7ED2",
+    "ProcessTypeName": "Rekrytering"
+  },
+  {
+    "Id": "55A61291-EE9D-434E-B185-7D1A9E18F354",
+    "ProcessTypeName": "Remiss"
+  },
+  {
+    "Id": "5288A466-25BF-4336-AAFD-AAE7A059B559",
+    "ProcessTypeName": "Remiss alkoholservering"
+  },
+  {
+    "Id": "F3F251F3-D10E-449E-ADF5-08F018612D3C",
+    "ProcessTypeName": "Remiss bygglov"
+  },
+  {
+    "Id": "61A1F055-3536-46E5-9E9B-AADD0C758948",
+    "ProcessTypeName": "Remiss egenkontrollprogram"
+  },
+  {
+    "Id": "4318AFF3-14DC-4382-9ED6-D446D06B50E0",
+    "ProcessTypeName": "Remiss enligt lotterilagen"
+  },
+  {
+    "Id": "5A0347C8-EE73-4D01-A07B-0E57B87C2A7E",
+    "ProcessTypeName": "Remiss investeringsstöd"
+  },
+  {
+    "Id": "7983C446-871D-4DD0-BCA1-CD02F63884A0",
+    "ProcessTypeName": "Remiss medborgarförslag"
+  },
+  {
+    "Id": "7C44B94D-359C-4197-A7C7-E1643B3E6CC8",
+    "ProcessTypeName": "Remiss miljöfarlig verksamhet"
+  },
+  {
+    "Id": "2BC4DC08-263C-45CB-B749-25731ECAAD40",
+    "ProcessTypeName": "Remiss naturvård"
+  },
+  {
+    "Id": "B62E15F0-82A3-4EDB-A38C-7503DB48528A",
+    "ProcessTypeName": "Remiss om förhandsbesked"
+  },
+  {
+    "Id": "00350EFC-ED14-448B-9075-BB5B540AAAEC",
+    "ProcessTypeName": "Remiss ordningslagen"
+  },
+  {
+    "Id": "68E5021C-2DC1-4F48-9C1E-1EC4BB83594F",
+    "ProcessTypeName": "Remiss planärenden"
+  },
+  {
+    "Id": "ED917824-CE6B-47DB-9E1B-0ECD9AD041DC",
+    "ProcessTypeName": "Remiss samrådsärende"
+  },
+  {
+    "Id": "414CE14A-9170-4EE2-AF71-814EF29E44B2",
+    "ProcessTypeName": "Remiss strandskyddsdispens"
+  },
+  {
+    "Id": "F89D10B5-EF1E-4CF4-BF6A-378968D6CAEE",
+    "ProcessTypeName": "Remiss transport av avfall"
+  },
+  {
+    "Id": "672F9AB2-2FB1-4AC7-826C-8429A41376A4",
+    "ProcessTypeName": "Remiss vattenverksamhet"
+  },
+  {
+    "Id": "1C94E608-2B39-42D1-BAAA-3271F77793E3",
+    "ProcessTypeName": "Remiss övrigt"
+  },
+  {
+    "Id": "5055C154-8BF9-456D-A4EF-E3408C4E7B7E",
+    "ProcessTypeName": "Restaurangrapport"
+  },
+  {
+    "Id": "821D6911-7D00-4632-BF9D-99A19212C0EA",
+    "ProcessTypeName": "Samrådsärende"
+  },
+  {
+    "Id": "C21D6D33-8AB5-492C-AFA1-995849141121",
+    "ProcessTypeName": "Saneringsintyg för fartyg"
+  },
+  {
+    "Id": "77E6B99F-9494-4EC4-A6E7-9E0EF253ED9A",
+    "ProcessTypeName": "Sanktionsavgift livsmedel"
+  },
+  {
+    "Id": "078BC5E1-01DB-401C-8C63-EE4982F31A77",
+    "ProcessTypeName": "Smittskydd"
+  },
+  {
+    "Id": "F724951A-7AF4-413D-98B5-9829C530F383",
+    "ProcessTypeName": "Underrättelse om påträffad förorening"
+  },
+  {
+    "Id": "2D243AF8-6162-4BDB-A45A-56E192B10799",
+    "ProcessTypeName": "Årsrapport miljöfarlig verksamhet"
+  },
+  {
+    "Id": "882D1040-6C40-49FC-AEC1-0E857BC4D42B",
+    "ProcessTypeName": "Åtalsanmälan"
+  },
+  {
+    "Id": "5E54DD22-9C62-4026-BD6D-EEDA2A3BAD89",
+    "ProcessTypeName": "Återkallande av godkännande"
+  },
+  {
+    "Id": "F3BCA3C2-196A-4359-B295-B480FB53EDAB",
+    "ProcessTypeName": "Åtgärdskrav"
+  },
+  {
+    "Id": "D67B5B9C-87DA-4DD0-9E2F-82A14B95AFD8",
+    "ProcessTypeName": "Åtgärdskrav cistern"
+  },
+  {
+    "Id": "6383A063-52BB-422E-A013-DA1EC3969003",
+    "ProcessTypeName": "Åtgärdskrav enskilt avlopp"
+  },
+  {
+    "Id": "11C17EF1-289E-4115-A759-9B90530BD345",
+    "ProcessTypeName": "Åtgärdskrav fettavskiljare"
+  },
+  {
+    "Id": "231D0E2F-3540-43D0-A2CC-E7D8A5D69DDB",
+    "ProcessTypeName": "Åtgärdskrav hälsoskyddsverksamhet"
+  },
+  {
+    "Id": "29C08410-8188-464C-B4C6-CFDF1E1FFE6D",
+    "ProcessTypeName": "Åtgärdskrav köldmedieanläggning"
+  },
+  {
+    "Id": "E69A41D6-5260-4661-A459-F42BB97A4946",
+    "ProcessTypeName": "Åtgärdskrav livsmedelsanläggning"
+  },
+  {
+    "Id": "4166DECE-C02A-4326-8D5B-546F555BEEF2",
+    "ProcessTypeName": "Åtgärdskrav miljöfarlig verksamhet"
+  },
+  {
+    "Id": "20C3EB87-B7C6-4003-BD5C-01C76C262D1E",
+    "ProcessTypeName": "Åtgärdskrav oljeavskiljare"
+  },
+  {
+    "Id": "78F4A4AE-0F87-41CB-B0C4-C2ADB993DC0C",
+    "ProcessTypeName": "Åtgärdskrav värmepumpsanläggning"
+  },
+  {
+    "Id": "C3B98427-11AF-48B1-BF2B-874AF6957C92",
+    "ProcessTypeName": "Överklagan"
+  }
+]

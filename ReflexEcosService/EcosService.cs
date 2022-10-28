@@ -1,4 +1,5 @@
-﻿using EcosService;
+﻿using CustomExtensions;
+using EcosService;
 using Microsoft.Extensions.Logging;
 using Reflex.Data;
 using Reflex.Data.Models;
@@ -84,6 +85,7 @@ namespace ReflexEcosService
 
                 //Ärende är sekretessmarkerat i Ecos om CaseId är null
                 return searchCaseResults?.Where(x => x.CaseId != null || _config.HideConfidentialCases != Visibility.Hide)
+                    .Where(x => !_config.ProcessTypes.Any(p => x.ProcessTypeName.Contains(p)))
                     .Select(x => new Case
                     {
                         Beskrivning = x.CaseSubtitleFree,
@@ -111,20 +113,22 @@ namespace ReflexEcosService
 
                 var client = GetClient();
                 var fullCase = await client.GetCaseAsync(Guid.Parse(caseId));
-                return fullCase?.Occurrences.Select(o => new Occurence
-                {
-                    Title = o.OccurrenceDescription,
-                    Arrival = o.OccurrenceDate,
-                    IsSecret = o.IsConfidential,
-                    Documents = o.Documents.Where(x => allowedDocumentStatuses.Contains(x.DocumentStatus) && (!x.IsConfidential || _config.HideConfidentialDocuments != Visibility.Hide))
-                    .Select(d => new Document
+                return fullCase?.Occurrences.Where(x => _config.OccurrenceTypes.IsNullOrEmpty() || !_config.OccurrenceTypes.Contains(x.OccurrenceTypeId))
+                    .Select(o => new Occurence
                     {
-                        Title = d.DocumentClassificationTypeDescription,
-                        DocLinkId = (d.IsConfidential && _config.HideConfidentialDocuments == Visibility.Restrict || d.Filename == null) ? "-1" : d.DocumentId.ToString(),
-                        IsConfidential = d.IsConfidential
-                    }).ToArray()
-                }).ToArray();
-
+                        Title = o.OccurrenceDescription,
+                        Arrival = o.OccurrenceDate,
+                        IsSecret = o.IsConfidential,
+                        Documents = o.Documents
+                        .Where(x => allowedDocumentStatuses.Contains(x.DocumentStatus) && (!x.IsConfidential || _config.HideConfidentialDocuments != Visibility.Hide))
+                        .Where(x => _config.DocumentTypes.IsNullOrEmpty() || !_config.DocumentTypes.Contains(x.DocumentTypeId))
+                        .Select(d => new Document
+                        {
+                            Title = d.DocumentClassificationTypeDescription,
+                            DocLinkId = (d.IsConfidential && _config.HideConfidentialDocuments == Visibility.Restrict || d.Filename == null) ? "-1" : d.DocumentId.ToString(),
+                            IsConfidential = d.IsConfidential
+                        }).ToArray()
+                    }).ToArray();
             }
             catch (Exception e)
             {
@@ -172,6 +176,8 @@ namespace ReflexEcosService
                 var fullCase = await client.GetCaseAsync(parsedCaseId);
                 if (fullCase == null)
                     return null;
+                if (_config.ProcessTypes.Contains(fullCase.ProcessTypeName))
+                    return null;
 
                 return new Case
                 {
@@ -206,6 +212,8 @@ namespace ReflexEcosService
                 })).FirstOrDefault();
                 if (searchResult == null)
                     return null;
+                if (_config.ProcessTypes.Any(p => searchResult.ProcessTypeName.Contains(p)))
+                    return null;
 
                 return new Case
                 {
@@ -238,6 +246,8 @@ namespace ReflexEcosService
                 if (searchResult == null)
                     return null;
                 if (searchResult.CaseId == null && _config.HideConfidentialCases == Visibility.Hide)
+                    return null;
+                if (_config.ProcessTypes.Any(p => searchResult.ProcessTypeName.Contains(p)))
                     return null;
 
                 return new Case

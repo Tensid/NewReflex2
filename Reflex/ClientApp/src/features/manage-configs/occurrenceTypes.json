@@ -1,0 +1,438 @@
+[
+  {
+    "OccurrenceTypeId": "E2D69CF8-C458-460E-B5EC-664C27AF0230",
+    "OccurrenceDescription": "Administrativt ärende"
+  },
+  {
+    "OccurrenceTypeId": "A7DA9B84-25C3-4293-B053-63E38F1DB5C2",
+    "OccurrenceDescription": "Aktrensning"
+  },
+  {
+    "OccurrenceTypeId": "5218ACEA-B2B5-4738-8A4F-DB11EE75B947",
+    "OccurrenceDescription": "Analysresultat"
+  },
+  {
+    "OccurrenceTypeId": "34BA125B-E9EE-4389-AEAE-9F66288C1B63",
+    "OccurrenceDescription": "Anmälan"
+  },
+  {
+    "OccurrenceTypeId": "67C8D4F9-20BC-4FE5-AC0B-7A8024811200",
+    "OccurrenceDescription": "Anmälningsbeslut"
+  },
+  {
+    "OccurrenceTypeId": "75C45C4F-F250-474B-BF92-B29A29D8DE8D",
+    "OccurrenceDescription": "Ansökan"
+  },
+  {
+    "OccurrenceTypeId": "AC474B1F-715B-42C7-86C1-01EF58E17989",
+    "OccurrenceDescription": "Arkivering"
+  },
+  {
+    "OccurrenceTypeId": "495C4F44-C3A9-407E-9C19-F420F0C6C548",
+    "OccurrenceDescription": "Avslutat"
+  },
+  {
+    "OccurrenceTypeId": "6F7FAAB2-8F5B-495C-8713-6EE5701F32A9",
+    "OccurrenceDescription": "Begäran om anstånd"
+  },
+  {
+    "OccurrenceTypeId": "5ACD3629-2753-4714-8B33-3E7433D6F684",
+    "OccurrenceDescription": "Begäran om komplettering"
+  },
+  {
+    "OccurrenceTypeId": "E2C5A62A-B7AC-4FFB-B417-C57902FBECBF",
+    "OccurrenceDescription": "Begäran om komplettering"
+  },
+  {
+    "OccurrenceTypeId": "640D5AB7-68EB-499F-9FD7-12B78CCFCAEB",
+    "OccurrenceDescription": "Begäran om korrigering av uppgifter"
+  },
+  {
+    "OccurrenceTypeId": "43ED15CB-6286-41DC-BBC3-901981320928",
+    "OccurrenceDescription": "Begäran om restaurangrapport"
+  },
+  {
+    "OccurrenceTypeId": "D5D2B2E6-C6C6-496F-A161-C950982E5C08",
+    "OccurrenceDescription": "Bekräftelse"
+  },
+  {
+    "OccurrenceTypeId": "B937A2ED-F719-45AB-A460-FB889D6215F3",
+    "OccurrenceDescription": "Bekräftelse"
+  },
+  {
+    "OccurrenceTypeId": "AA18DC51-BAF1-40FB-82C3-42C8D8885426",
+    "OccurrenceDescription": "Bekräftelse inkommen handling"
+  },
+  {
+    "OccurrenceTypeId": "E16BBAF4-068A-49EC-BA62-451484E23D6C",
+    "OccurrenceDescription": "Bekräftelse inkommen handling"
+  },
+  {
+    "OccurrenceTypeId": "1E4F97CB-A619-4C5B-B97E-EB691BA26A33",
+    "OccurrenceDescription": "Bekräftelse köldmedierapport"
+  },
+  {
+    "OccurrenceTypeId": "F10D277E-332F-4838-A55F-CEC7C82213F1",
+    "OccurrenceDescription": "Beredning påbörjad"
+  },
+  {
+    "OccurrenceTypeId": "27142BBF-B284-4FCA-94E3-D3BE210DE8FF",
+    "OccurrenceDescription": "Beslut"
+  },
+  {
+    "OccurrenceTypeId": "CF2B241D-76F1-4273-BCAF-E86E71405FB2",
+    "OccurrenceDescription": "Beslut om avgift"
+  },
+  {
+    "OccurrenceTypeId": "87528DB6-EAB0-453E-8FF5-C86C70351182",
+    "OccurrenceDescription": "Beslut om avslut"
+  },
+  {
+    "OccurrenceTypeId": "9F7C6311-78F8-4A50-8C06-D8874776F5FF",
+    "OccurrenceDescription": "Beslut om klassning"
+  },
+  {
+    "OccurrenceTypeId": "CA77EC14-D8C5-4FD6-9D0A-9C9365229928",
+    "OccurrenceDescription": "Beslut om miljösanktionsavgift"
+  },
+  {
+    "OccurrenceTypeId": "A9DA5FCB-6DF8-4533-9E2F-ADE92C2E238D",
+    "OccurrenceDescription": "Beslut om sanktionsavgift livsmedel"
+  },
+  {
+    "OccurrenceTypeId": "BD8352D0-C182-47F1-8856-309C9A86BA20",
+    "OccurrenceDescription": "Beslut om åtalsanmälan"
+  },
+  {
+    "OccurrenceTypeId": "0B5E95DD-58CD-4522-8C66-206CC8388A30",
+    "OccurrenceDescription": "Beslut om åtgärdskrav"
+  },
+  {
+    "OccurrenceTypeId": "DAAADEBB-C03E-41BD-A4B3-AD44897EC477",
+    "OccurrenceDescription": "Beslut vid överprövning"
+  },
+  {
+    "OccurrenceTypeId": "B154C172-873D-4B9B-AAF9-A16DC19F0C1D",
+    "OccurrenceDescription": "Beslutat"
+  },
+  {
+    "OccurrenceTypeId": "D0388564-D01C-4DD2-ACA4-0EB2F46B29E4",
+    "OccurrenceDescription": "Beslutsförslag"
+  },
+  {
+    "OccurrenceTypeId": "8846A7B2-F6EB-4C68-8FFC-6DD25634843B",
+    "OccurrenceDescription": "Beslutsförslag avgift"
+  },
+  {
+    "OccurrenceTypeId": "E5E3AF7F-D541-459F-AF42-554621A1FAE1",
+    "OccurrenceDescription": "Beslutsförslag klassning"
+  },
+  {
+    "OccurrenceTypeId": "1A631E64-157E-4299-BB92-7DDCCE0E696B",
+    "OccurrenceDescription": "Beslutsförslag miljösanktionsavgift"
+  },
+  {
+    "OccurrenceTypeId": "92A5E622-F4FD-4CA8-BF1F-B6F8681DF410",
+    "OccurrenceDescription": "Beslutsförslag sanktionsavgift livsmedel"
+  },
+  {
+    "OccurrenceTypeId": "930ECC22-E856-4A55-A9A8-58DD1C19A465",
+    "OccurrenceDescription": "Beslutsförslag åtgärdskrav"
+  },
+  {
+    "OccurrenceTypeId": "B7BA42CA-06F9-42BA-8439-7B9D8777AFE8",
+    "OccurrenceDescription": "Beviljande av anstånd"
+  },
+  {
+    "OccurrenceTypeId": "53C5BF81-0BEB-46A2-8642-151708992C56",
+    "OccurrenceDescription": "Beviljande av anstånd"
+  },
+  {
+    "OccurrenceTypeId": "1C88924D-45C9-4DE1-9553-D47FF1102331",
+    "OccurrenceDescription": "Boka tillsyn"
+  },
+  {
+    "OccurrenceTypeId": "3B3764E7-D611-4EFB-B18B-4BDDAC54744F",
+    "OccurrenceDescription": "Debiteringsunderlag"
+  },
+  {
+    "OccurrenceTypeId": "A80B355F-DA73-473C-BE12-552203A4B223",
+    "OccurrenceDescription": "Delgivning"
+  },
+  {
+    "OccurrenceTypeId": "91E862F7-D32F-4AB0-82A2-B411DCBF04EB",
+    "OccurrenceDescription": "Dispensbeslut"
+  },
+  {
+    "OccurrenceTypeId": "81BD0142-22C0-4BC7-A68F-E8D085FCA9A9",
+    "OccurrenceDescription": "Domslut"
+  },
+  {
+    "OccurrenceTypeId": "926CCB98-D940-4AA1-8D15-4AC5398A3F40",
+    "OccurrenceDescription": "Egen överklagan"
+  },
+  {
+    "OccurrenceTypeId": "7AE6E15F-67E9-455E-AD6B-35D389F913AA",
+    "OccurrenceDescription": "Enkät"
+  },
+  {
+    "OccurrenceTypeId": "B8390618-9361-49F4-8655-52A14C1F5CAA",
+    "OccurrenceDescription": "Enkätsvar utgående"
+  },
+  {
+    "OccurrenceTypeId": "17FE7D2E-58C9-44A4-918D-738ABAE4691D",
+    "OccurrenceDescription": "Expediering"
+  },
+  {
+    "OccurrenceTypeId": "B592EE9F-ED76-4252-9F86-067C4A859EDE",
+    "OccurrenceDescription": "Exportintyg"
+  },
+  {
+    "OccurrenceTypeId": "91531257-0910-4AF8-875D-494E66A28554",
+    "OccurrenceDescription": "Fastställande av egenkontrollprogram"
+  },
+  {
+    "OccurrenceTypeId": "626B88BF-175F-4D74-B61E-01E05105BB54",
+    "OccurrenceDescription": "Fastställande av faroanalys"
+  },
+  {
+    "OccurrenceTypeId": "48DCC1B5-7620-468C-8EDC-40B7D8136ACB",
+    "OccurrenceDescription": "Fastställande av undersökningsprogram"
+  },
+  {
+    "OccurrenceTypeId": "58036FF4-660F-48D5-99DD-617118FC753A",
+    "OccurrenceDescription": "Fastställt beslut"
+  },
+  {
+    "OccurrenceTypeId": "5C80A9B3-7FC4-4C77-9698-CD7FD6E18134",
+    "OccurrenceDescription": "Fortsätt beredning/omformulera"
+  },
+  {
+    "OccurrenceTypeId": "462AE6D6-E66C-4564-96DD-8E9BFA2F87A7",
+    "OccurrenceDescription": "Förbud"
+  },
+  {
+    "OccurrenceTypeId": "DC184230-AE00-4A7F-86D9-005CC270EE5A",
+    "OccurrenceDescription": "Gallring"
+  },
+  {
+    "OccurrenceTypeId": "13FF6BBD-5A2E-4BEA-BEB1-198EE1817CB2",
+    "OccurrenceDescription": "Granskning"
+  },
+  {
+    "OccurrenceTypeId": "D79C64A5-F902-4D2A-875E-BDB6124F8CCD",
+    "OccurrenceDescription": "Handling expedierad"
+  },
+  {
+    "OccurrenceTypeId": "83458B61-F179-476E-9C9D-1A7EF1EDB318",
+    "OccurrenceDescription": "Information"
+  },
+  {
+    "OccurrenceTypeId": "BF28124A-7C51-452C-8F72-16412364F8C2",
+    "OccurrenceDescription": "Information från e-tjänst"
+  },
+  {
+    "OccurrenceTypeId": "ADA531DA-2F10-47C6-887E-2486E46C8A7B",
+    "OccurrenceDescription": "Inläsning"
+  },
+  {
+    "OccurrenceTypeId": "B4EAFD45-CF71-49EA-B735-2196CA051DE2",
+    "OccurrenceDescription": "Interndebitering"
+  },
+  {
+    "OccurrenceTypeId": "97CABFFD-9EEF-42CA-A7DB-2A7D9FD4F2E1",
+    "OccurrenceDescription": "Kallelse"
+  },
+  {
+    "OccurrenceTypeId": "CCB727C1-DB63-4710-9D58-4208B6B02BB8",
+    "OccurrenceDescription": "Klagomål"
+  },
+  {
+    "OccurrenceTypeId": "C3C4B93B-A29C-4F23-8E8F-02F4DF0D0FCF",
+    "OccurrenceDescription": "Klagomål"
+  },
+  {
+    "OccurrenceTypeId": "F9DB259A-4D83-45BA-A8B0-C13776ADA656",
+    "OccurrenceDescription": "Kommunicering"
+  },
+  {
+    "OccurrenceTypeId": "AE3F6E26-6B4F-4231-8BCA-C81A98547727",
+    "OccurrenceDescription": "Komplettering"
+  },
+  {
+    "OccurrenceTypeId": "EBB01BF2-EDB9-4941-9409-012CA3EDD9CD",
+    "OccurrenceDescription": "Komplettering"
+  },
+  {
+    "OccurrenceTypeId": "AB4A0247-7115-4519-8E23-973CB6B7098C",
+    "OccurrenceDescription": "Kontakt"
+  },
+  {
+    "OccurrenceTypeId": "3D82608C-8567-4100-A949-033D409D84A6",
+    "OccurrenceDescription": "Kontrollrapport"
+  },
+  {
+    "OccurrenceTypeId": "0B62AE2E-1DEB-481B-9171-F63F8CF66CD5",
+    "OccurrenceDescription": "Kungörelse"
+  },
+  {
+    "OccurrenceTypeId": "505C16D1-A358-4631-851E-D3CA9AFC85E9",
+    "OccurrenceDescription": "Makulerat"
+  },
+  {
+    "OccurrenceTypeId": "EC551257-2553-401F-B307-0C38CA9304EB",
+    "OccurrenceDescription": "Muntlig kommunicering"
+  },
+  {
+    "OccurrenceTypeId": "8C46E471-25B7-4727-BCD3-44809E06205A",
+    "OccurrenceDescription": "Nämndbeslut"
+  },
+  {
+    "OccurrenceTypeId": "EED500DE-FEEC-4DC0-9584-F668ABBC4527",
+    "OccurrenceDescription": "Nämndbeslut"
+  },
+  {
+    "OccurrenceTypeId": "97C5FB7F-5A89-4A3E-8DB7-EC99E9A06DDA",
+    "OccurrenceDescription": "Omprövning"
+  },
+  {
+    "OccurrenceTypeId": "674D3CBB-53DB-4FB1-8392-9FBEC70C727A",
+    "OccurrenceDescription": "Platsbesök"
+  },
+  {
+    "OccurrenceTypeId": "D3887CEB-ADE8-4D1C-8D41-1B5318E9313C",
+    "OccurrenceDescription": "Provtagning"
+  },
+  {
+    "OccurrenceTypeId": "3E3D3628-4BFD-4B15-8E58-CE8F1FC17E5D",
+    "OccurrenceDescription": "Påminnelse"
+  },
+  {
+    "OccurrenceTypeId": "31272FD6-71EE-444D-8371-205B0F9DCE15",
+    "OccurrenceDescription": "Rapport"
+  },
+  {
+    "OccurrenceTypeId": "7EEF3884-D1B2-4276-B43E-9F6D17430059",
+    "OccurrenceDescription": "Redovisning"
+  },
+  {
+    "OccurrenceTypeId": "78BC47A7-434A-4906-85FC-A68D1EFD52E9",
+    "OccurrenceDescription": "Remiss"
+  },
+  {
+    "OccurrenceTypeId": "A28C0762-991E-487B-AE5D-4BBA17589A66",
+    "OccurrenceDescription": "Remissvar"
+  },
+  {
+    "OccurrenceTypeId": "E2613ECF-6A8E-4500-8709-C6BFB7437ECA",
+    "OccurrenceDescription": "Rådgivning"
+  },
+  {
+    "OccurrenceTypeId": "24C518DB-C390-43DC-91D6-FA56A5B39B0A",
+    "OccurrenceDescription": "Samråd/möte"
+  },
+  {
+    "OccurrenceTypeId": "7D5A152A-F693-4336-8221-95118F6BAFBE",
+    "OccurrenceDescription": "Samråd/möte (internt)"
+  },
+  {
+    "OccurrenceTypeId": "36E3543B-F355-417D-A335-BD7D073DF208",
+    "OccurrenceDescription": "Skickat för beslut"
+  },
+  {
+    "OccurrenceTypeId": "46C2FE07-AB04-46F1-B20A-DBE407B7ED18",
+    "OccurrenceDescription": "Skrivelse"
+  },
+  {
+    "OccurrenceTypeId": "E4095774-5EBD-4203-9F3A-F88B9B9D1574",
+    "OccurrenceDescription": "Telefonsamtal"
+  },
+  {
+    "OccurrenceTypeId": "E00564AE-0511-4906-B3B9-33EE36E31C8D",
+    "OccurrenceDescription": "Tidrapport"
+  },
+  {
+    "OccurrenceTypeId": "E265B669-F61A-4C12-8715-971DF01A9286",
+    "OccurrenceDescription": "Tillståndsbeslut"
+  },
+  {
+    "OccurrenceTypeId": "26F2BD3F-6983-4976-9989-93112A4668BC",
+    "OccurrenceDescription": "Tillsyn"
+  },
+  {
+    "OccurrenceTypeId": "75820CDA-0606-4587-8D16-74F07EF1EA1A",
+    "OccurrenceDescription": "Tillsyn provgrop"
+  },
+  {
+    "OccurrenceTypeId": "6C2C56D0-487F-4EC2-B377-199C29F7C973",
+    "OccurrenceDescription": "Tillsynsärende"
+  },
+  {
+    "OccurrenceTypeId": "BA708F34-5865-42EF-9B33-19B1F39C3791",
+    "OccurrenceDescription": "Tjänsteutlåtande till nämnd"
+  },
+  {
+    "OccurrenceTypeId": "4D0F09F3-884F-4608-A719-CCA0C5E28736",
+    "OccurrenceDescription": "Upplysning"
+  },
+  {
+    "OccurrenceTypeId": "0AB13EA2-461B-4C93-8CC8-BB3D1AFE35FD",
+    "OccurrenceDescription": "Utdragsbegäran"
+  },
+  {
+    "OccurrenceTypeId": "AA3AAE03-377D-4CAB-A0F5-346F2D31DFA5",
+    "OccurrenceDescription": "Utfärdande av tillståndsbevis"
+  },
+  {
+    "OccurrenceTypeId": "B58EA5C2-5BCF-431C-A358-6F69155FDD17",
+    "OccurrenceDescription": "Utgående remiss"
+  },
+  {
+    "OccurrenceTypeId": "6D2B749C-21EA-45D9-9D63-779B649AA751",
+    "OccurrenceDescription": "Vidarebefordran av överklagan"
+  },
+  {
+    "OccurrenceTypeId": "2F6A372E-58B3-4BD4-B9D1-DF32A53821C8",
+    "OccurrenceDescription": "Yttrande"
+  },
+  {
+    "OccurrenceTypeId": "DCFACB03-4825-4880-A1EC-45B84048C7D4",
+    "OccurrenceDescription": "Åtalsanmälan"
+  },
+  {
+    "OccurrenceTypeId": "B9AEBD90-8779-49B7-9772-97FD955135EE",
+    "OccurrenceDescription": "Återkallande"
+  },
+  {
+    "OccurrenceTypeId": "5C853ED8-0F30-462B-99EB-4753FF7E8FAD",
+    "OccurrenceDescription": "Återkallande av ansökan/anmälan"
+  },
+  {
+    "OccurrenceTypeId": "33FE4DE2-DD77-4149-9226-828263350F52",
+    "OccurrenceDescription": "Återkallande av tillstånd"
+  },
+  {
+    "OccurrenceTypeId": "53FBC73E-C6F6-4021-B4E5-B4E258EDA44C",
+    "OccurrenceDescription": "Återkoppling"
+  },
+  {
+    "OccurrenceTypeId": "FB90B4A7-1355-4B88-A885-B5BB51CD4133",
+    "OccurrenceDescription": "Återöppnat"
+  },
+  {
+    "OccurrenceTypeId": "2DC2E218-14B3-4054-BDAC-333A32472CEB",
+    "OccurrenceDescription": "Ärendet avskrivet"
+  },
+  {
+    "OccurrenceTypeId": "87CF4D8F-B303-455F-B789-FA6253AF9DF8",
+    "OccurrenceDescription": "Ärendet avvisat"
+  },
+  {
+    "OccurrenceTypeId": "20D0A37A-E737-488B-8315-F9F1B4045809",
+    "OccurrenceDescription": "Överklagan"
+  },
+  {
+    "OccurrenceTypeId": "D098A5EE-6319-4173-AF4A-522E1E1BBF3E",
+    "OccurrenceDescription": "Överklagat"
+  }
+]
