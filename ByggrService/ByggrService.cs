@@ -5,6 +5,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using ArendeExportWS;
+using CustomExtensions;
 using Reflex.Data;
 using Reflex.Data.Models;
 using VisaRService;
@@ -92,7 +93,8 @@ namespace ReflexByggrService
 
             var filteredArenden = arenden.Where(x => _config.OnlyCasesWithoutMainDecision == false || x.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true))
                 .Where(x => _config.MinCaseStartDate == null || x.ankomstDatum > _config.MinCaseStartDate)
-                .Where(x => _config.Diarieprefixes?.Any() != true || _config.Diarieprefixes.Contains(x.diarieprefix));
+                .Where(x => _config.Diarieprefixes?.Any() != true || _config.Diarieprefixes.Contains(x.diarieprefix))
+                .Where(x => _config.Statuses.IsNullOrEmpty() || !_config.Statuses.Contains(x.status.ToString()));
             var filteredCases = filteredArenden.Select(arende => new Case
             {
                 Arendegrupp = arende.arendegrupp,

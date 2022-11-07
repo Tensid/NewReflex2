@@ -39,6 +39,13 @@ export enum Tab {
   Property = 'Property'
 }
 
+export enum ArendeStatus {
+  Avslutat = 'Avslutat',
+  Pågende = 'Pågende',
+  Gallrat = 'Gallrat',
+  Makulerat = 'Makulerat'
+}
+
 export interface Case {
   caseId: string;
   dnr: string;
@@ -46,7 +53,7 @@ export interface Case {
   caseSource: CaseSource;
   date: string;
   unavailableDueToSecrecy: boolean;
-  status: string;
+  status: ArendeStatus;
   arendegrupp: string;
   arendetyp: string;
   arendeslag: string;
@@ -219,6 +226,7 @@ export interface ByggrConfig {
   onlyCasesWithoutMainDecision: boolean;
   onlyActiveCases: boolean;
   minCaseStartDate: string | null;
+  statuses: string[];
 }
 
 export interface EcosConfig {

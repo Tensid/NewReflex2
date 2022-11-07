@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { ByggrConfig, Visibility, createByggrConfig, deleteByggrConfig, updateByggrConfig } from '../../api/api';
+import { ArendeStatus, ByggrConfig, Visibility, createByggrConfig, deleteByggrConfig, updateByggrConfig } from '../../api/api';
 import CheckboxInput from '../common/forms/CheckboxInput';
 import CreatableSelectInput from '../common/forms/CreateableSelectInput';
 import DateInput from '../common/forms/DateInput';
@@ -17,6 +17,13 @@ const occurenceVisibilityOptions = [
   { value: Visibility.Restrict, label: 'Visa förekomst' }
 ];
 
+const statusOptions = [
+  { value: ArendeStatus.Avslutat, label: ArendeStatus.Avslutat },
+  { value: ArendeStatus.Pågende, label: ArendeStatus.Pågende },
+  { value: ArendeStatus.Gallrat, label: ArendeStatus.Gallrat },
+  { value: ArendeStatus.Makulerat, label: ArendeStatus.Makulerat }
+];
+
 export interface ByggrConfigFormProps {
   edit: boolean;
   formData: ByggrConfig;
@@ -30,6 +37,7 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
   const documentTypes = edit ? formData?.documentTypes?.map((x) => ({ value: x, label: x })) ?? [] : [];
   const occurenceTypes = edit ? formData?.occurenceTypes?.map((x) => ({ value: x, label: x })) ?? [] : [];
   const personRoles = edit ? formData?.personRoles?.map((x) => ({ value: x, label: x })) ?? [] : [];
+  const statuses = edit ? formData?.statuses?.map((x) => ({ value: x, label: x })) ?? [] : [{ value: ArendeStatus.Makulerat, label: ArendeStatus.Makulerat }];
 
   const { register, handleSubmit, control, reset } =
     useForm({
@@ -41,7 +49,8 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
         diarieprefixes,
         documentTypes,
         occurenceTypes,
-        personRoles
+        personRoles,
+        statuses
       }
     });
 
@@ -54,7 +63,8 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
       diarieprefixes,
       documentTypes,
       occurenceTypes,
-      personRoles
+      personRoles,
+      statuses
     });
   }, [formData, reset]);
 
@@ -67,6 +77,7 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
     data.occurenceTypes = data?.occurenceTypes?.map((x: any) => x.value);
     data.personRoles = data?.personRoles?.map((x: any) => x.value);
     data.tabs = data?.tabs?.map((x: any) => x.value);
+    data.statuses = data?.statuses?.map((x: any) => x.value);
 
     if (edit) {
       data.id = formData.id;
@@ -99,6 +110,7 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
             <CheckboxInput name="onlyActiveCases" label="Endast aktiva ärenden" register={register} />
             <CheckboxInput name="onlyCasesWithoutMainDecision" label="Endast ärenden utan huvudbeslut" register={register} />
             <DateInput name="minCaseStartDate" label="Tidigaste startdatum" register={register} />
+            <SelectInput control={control} name="statuses" label="Statusar på ärenden att exkludera" isMulti register={register} options={statusOptions} />
             <button className="btn btn-primary" type="submit">Spara</button>
             {edit &&
               <button

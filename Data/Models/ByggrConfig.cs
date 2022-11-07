@@ -31,5 +31,6 @@ namespace Reflex.Data.Models
         public bool OnlyCasesWithoutMainDecision { get; set; }
         public bool OnlyActiveCases { get; set; }
         public DateTime? MinCaseStartDate { get; set; }
+        public string[] Statuses { get; set; }
     }
 }
