@@ -1,13 +1,14 @@
 import { Fragment } from 'react';
-import { Preview } from '../../api/api';
+import { CaseTab, Preview } from '../../api/api';
 import { TabState } from './CaseModal';
 import styles from './Preview.module.css';
 
 interface PreviewContentProps {
   previewState: TabState<Preview>;
+  tabs: CaseTab[];
 }
 
-const PreviewContent = ({ previewState }: PreviewContentProps) => {
+const PreviewContent = ({ previewState, tabs }: PreviewContentProps) => {
   if (previewState.error)
     return <>Kunde inte hämta förhandsgranskning för ärendet.</>;
   if (previewState.loading)
@@ -51,27 +52,28 @@ const PreviewContent = ({ previewState }: PreviewContentProps) => {
           </p>
         </div>
       </div>
-      {persons?.length > 0 && (<div className="row">
-        <div className="col-12">
-          <b>Intressenter</b>
+      {(persons?.length > 0 && tabs.includes('Persons')) && (
+        <div className="row">
+          <div className="col-12">
+            <b>Intressenter</b>
+          </div>
+          {persons.map((person) =>
+            <div className="row" key={person.adress + person.fullName}>
+              <div className="col-4">
+                {person.fullName}
+              </div>
+              <div className="col-5">
+                {person.adress} {person.postNr} {person.ort}
+              </div>
+              <div className="col-3 text-end">
+                {person.roles &&
+                  <> {person.roles.join(', ')} </>
+                }
+              </div>
+            </div>
+          )}
         </div>
-        {persons.map((person) =>
-          <Fragment key={person.adress + person.fullName}>
-            <div className="col-4">
-              {person.fullName}
-            </div>
-            <div className="col-7">
-              {person.adress} {person.postNr} {person.ort}
-            </div>
-            <div className="col-1">
-              {person.roles &&
-                <> {person.roles.join(', ')} </>
-              }
-            </div>
-          </Fragment>
-        )}
-      </div>)
-      }
+      )}
       <div className="row" id="händelser">
         <div className="col-12">
           <b>Händelser</b>

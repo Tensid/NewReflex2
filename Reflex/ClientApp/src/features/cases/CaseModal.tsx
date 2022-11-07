@@ -91,7 +91,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
                 {mappedCaseTabs.get(availableTabs![0])}
               </h3>
               {{
-                'Preview': <PreviewContent previewState={previewData} />,
+                'Preview': <PreviewContent previewState={previewData} tabs={tabs!} />,
                 'Occurences': <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} caseSourceId={caseSourceId} />,
                 'Persons': <PersonsContent personsState={personsData} />,
                 'Archive': <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} date={date} />
@@ -101,7 +101,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
               <Tabs defaultActiveKey={availableTabs![0]} variant="pills">
                 {availableTabs.includes('Preview') &&
                   <Tab eventKey={'Preview'} title="Förhandsgranskning" >
-                    <PreviewContent previewState={previewData} />
+                    <PreviewContent previewState={previewData} tabs={tabs!} />
                   </Tab>}
                 {availableTabs.includes('Occurences') &&
                   <Tab eventKey={'Occurences'} title="Händelser">
