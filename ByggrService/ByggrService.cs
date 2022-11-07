@@ -189,6 +189,7 @@ namespace ReflexByggrService
         {
             var client = GetExportArendenClient();
             var arende = await client.GetArendeAsync(caseId);
+            var roller = await client.GetRollerAsync(RollTyp.Intressent, StatusFilter.None);
             client.Close();
 
             var arenden = arende.intressentLista
@@ -197,7 +198,7 @@ namespace ReflexByggrService
                 {
                     FullName = p.namn,
                     Communication = p.intressentKommunikationLista?.Select(x => x.beskrivning).ToArray(),
-                    Roles = p.rollLista,
+                    Roles = p.rollLista?.Select(x => roller.FirstOrDefault(y => y.RollKod == x).Beskrivning).ToArray(),
                     Adress = p.adress,
                     Ort = p.ort,
                     PostNr = p.postNr
@@ -210,6 +211,7 @@ namespace ReflexByggrService
             var client = GetExportArendenClient();
             var arende = await client.GetArendeAsync(caseId);
             var handlingTyper = await client.GetHandlingTyperAsync(StatusFilter.None);
+            var roller = await client.GetRollerAsync(RollTyp.Intressent, StatusFilter.None);
 
             var hideByComment = !string.IsNullOrWhiteSpace(_config.HideDocumentsWithCommentMatching);
             var preview = new Preview
@@ -230,7 +232,7 @@ namespace ReflexByggrService
                         {
                             FullName = p.namn,
                             Communication = p.intressentKommunikationLista?.Select(x => x.beskrivning).ToArray(),
-                            Roles = p.rollLista,
+                            Roles = p.rollLista?.Select(x => roller.FirstOrDefault(y => y.RollKod == x).Beskrivning).ToArray(),
                             Adress = p.adress,
                             Ort = p.ort,
                             PostNr = p.postNr
