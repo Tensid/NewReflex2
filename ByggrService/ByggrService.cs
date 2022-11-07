@@ -209,6 +209,7 @@ namespace ReflexByggrService
         {
             var client = GetExportArendenClient();
             var arende = await client.GetArendeAsync(caseId);
+            var handlingTyper = await client.GetHandlingTyperAsync(StatusFilter.None);
 
             var hideByComment = !string.IsNullOrWhiteSpace(_config.HideDocumentsWithCommentMatching);
             var preview = new Preview
@@ -246,7 +247,7 @@ namespace ReflexByggrService
                                 .Select(handling => new Document
                                 {
                                     DocLinkId = (handling?.dokument?.dokId == null || (hideByComment && (handling.anteckning?.Contains(_config.HideDocumentsWithCommentMatching) ?? false)) ? "-1" : handling.dokument.dokId).ToString(CultureInfo.InvariantCulture),
-                                    Title = handling?.dokument?.namn ?? "Dokument (namn saknas)"
+                                    Title = handlingTyper.FirstOrDefault(x => x.Typ == handling?.typ)?.Beskrivning ?? handling?.dokument?.namn ?? "Dokument (namn saknas)"
                                 }).ToArray(),
                             Arrival = handelse.startDatum,
                             Title = handelse.rubrik,
