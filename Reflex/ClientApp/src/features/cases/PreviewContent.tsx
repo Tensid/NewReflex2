@@ -71,7 +71,7 @@ const PreviewContent = ({ previewState }: PreviewContentProps) => {
               {person.fullName}
             </div>
             <div className="col-7">
-              {person.adress} {person.fullName} {person.ort}
+              {person.adress} {person.postNr} {person.ort}
             </div>
             <div className="col-1">
               {person.roles &&
