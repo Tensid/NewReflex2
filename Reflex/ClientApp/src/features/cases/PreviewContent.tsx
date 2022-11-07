@@ -19,9 +19,6 @@ const PreviewContent = ({ previewState }: PreviewContentProps) => {
       handelser,
       persons,
       fastighetsbeteckning,
-      arendegrupp,
-      arendetyp,
-      arendeslag,
       dnr,
       status,
       handlaggareFornamn,
@@ -42,13 +39,6 @@ const PreviewContent = ({ previewState }: PreviewContentProps) => {
             <b>Huvudhandläggare</b>
             <br />
             {handlaggareFornamn} {handlaggareEfternamn} {handlaggareSignatur && <>({handlaggareSignatur})</>}
-          </p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-12">
-          <p>
-            {arendegrupp} {arendetyp} {arendeslag}
           </p>
         </div>
       </div>
