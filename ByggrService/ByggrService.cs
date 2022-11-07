@@ -241,6 +241,7 @@ namespace ReflexByggrService
                         .Where(handelse => _config.OccurenceTypes?.Any() != true || _config.OccurenceTypes.Contains(handelse.handelsetyp))
                         .Where(handelse => !handelse.makulerad)
                         .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
+                        .Where(x => !x.sekretess || _config.HideConfidentialOccurences != Visibility.Hide)
                         .Select(handelse => new Handelse
                         {
                             Documents = handelse.sekretess ? Array.Empty<Document>() : handelse.handlingLista
