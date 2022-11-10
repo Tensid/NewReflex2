@@ -95,6 +95,9 @@ namespace Reflex.Data
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
                     v => JsonSerializer.Deserialize<Tab>(v, (JsonSerializerOptions)null));
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(t => t.DefaultTab)
+                .HasDefaultValue(Tab.Cases);
             modelBuilder.Entity<ByggrSettings>().Property(p => p.Password)
                 .HasConversion(
                     v => Encrypt(v),
