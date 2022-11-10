@@ -44,7 +44,7 @@ const Configs = () => {
           </h5>
           :
           <h5 className="text-center">
-            Konfiguration saknas. Klicka <a title={contact.email} href={`mailto:${contact.email}?subject=${contact.subject}&body=${contact.body}`}>här</a> och skicka mejl om du vill ha behörighet.
+            Konfiguration saknas. Klicka <a title={contact.email} href={`mailto:${contact.email}?subject=${contact.subject}&body=${encodeURIComponent(contact.body)}`}>här</a> och skicka mejl om du vill ha behörighet.
           </h5>
         :
         <>
