@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { ArendeStatus, ByggrConfig, Visibility, createByggrConfig, deleteByggrConfig, updateByggrConfig } from '../../api/api';
+import { ArendeStatus, ByggrConfig, SelectOption, Visibility, createByggrConfig, deleteByggrConfig, updateByggrConfig } from '../../api/api';
 import CheckboxInput from '../common/forms/CheckboxInput';
 import CreatableSelectInput from '../common/forms/CreateableSelectInput';
 import DateInput from '../common/forms/DateInput';
@@ -27,16 +27,18 @@ const statusOptions = [
 export interface ByggrConfigFormProps {
   edit: boolean;
   formData: ByggrConfig;
+  documentTypeOptions: SelectOption[];
+  roleOptions: SelectOption[];
   fetchAll: () => void;
   hideActiveForm: () => void;
 }
 
-const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConfigFormProps) => {
+const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fetchAll, hideActiveForm }: ByggrConfigFormProps) => {
   const minCaseStartDate = (edit && !!formData?.minCaseStartDate) ? (new Date(formData?.minCaseStartDate)).toLocaleDateString() : null;
   const diarieprefixes = edit ? formData?.diarieprefixes?.map((x) => ({ value: x, label: x })) ?? [] : [];
-  const documentTypes = edit ? formData?.documentTypes?.map((x) => ({ value: x, label: x })) ?? [] : [];
+  const documentTypes = edit ? formData?.documentTypes?.map((x) => ({ value: x, label: documentTypeOptions.find((t) => t.value === x)?.label })) ?? [] : [];
   const occurenceTypes = edit ? formData?.occurenceTypes?.map((x) => ({ value: x, label: x })) ?? [] : [];
-  const personRoles = edit ? formData?.personRoles?.map((x) => ({ value: x, label: x })) ?? [] : [];
+  const personRoles = edit ? formData?.documentTypes?.map((x) => ({ value: x, label: roleOptions.find((t) => t.value === x)?.label })) ?? [] : [];
   const statuses = edit ? formData?.statuses?.map((x) => ({ value: x, label: x })) ?? [] : [{ value: ArendeStatus.Makulerat, label: ArendeStatus.Makulerat }];
 
   const { register, handleSubmit, control, reset } =
@@ -72,7 +74,10 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
     data.hideConfidentialOccurences = data.hideConfidentialOccurences?.value;
     data.diarieprefixes = data?.diarieprefixes?.map((x: any) => x.value);
     data.documentTypes = data?.documentTypes?.map((x: any) => x.value);
-    data.hideDocumentsWithCommentMatching = data?.hideDocumentsWithCommentMatching || null;
+    data.hideCasesWithTextMatching = data?.hideCasesWithTextMatching || null;
+    data.hideOccurencesWithTextMatching = data?.hideOccurencesWithTextMatching || null;
+    data.hideDocumentsWithTextMatching = data?.hideDocumentsWithTextMatching || null;
+    data.hideDocumentsWithNoteTextMatching = data?.hideDocumentsWithNoteTextMatching || null;
     data.minCaseStartDate = data?.minCaseStartDate || null;
     data.occurenceTypes = data?.occurenceTypes?.map((x: any) => x.value);
     data.personRoles = data?.personRoles?.map((x: any) => x.value);
@@ -99,18 +104,21 @@ const ByggrConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: ByggrConf
         <div className="col">
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextInput name="name" label="Namn" required register={register} />
-            <CreatableSelectInput control={control} name="documentTypes" label="Handlingstyper" isMulti register={register} options={documentTypes} />
+            <SelectInput control={control} name="documentTypes" label="Handlingstyper" isMulti register={register} options={documentTypeOptions} />
             <CreatableSelectInput control={control} name="occurenceTypes" label="Händelsetyper" isMulti register={register} options={occurenceTypes} />
-            <CreatableSelectInput control={control} name="personRoles" label="Roller" isMulti register={register} options={personRoles} />
+            <SelectInput control={control} name="personRoles" label="Roller" isMulti register={register} options={roleOptions} />
             <SelectInput control={control} name="tabs" label="Flikar" isMulti register={register} options={tabOptions} />
             <CreatableSelectInput control={control} name="diarieprefixes" label="Diarier" isMulti register={register} options={diarieprefixes} />
             <CheckboxInput name="workingMaterial" label="Visa arbetsmaterial" register={register} />
             <SelectInput control={control} name="hideConfidentialOccurences" label="Sekretess på händelser" register={register} options={occurenceVisibilityOptions} />
-            <TextInput name="hideDocumentsWithCommentMatching" label="Dölj handlingar med kommentar" register={register} />
+            <TextInput name="hideCasesWithTextMatching" label="Dölj ärenden med text" register={register} />
+            <TextInput name="hideOccurencesWithTextMatching" label="Dölj händelser med text" register={register} />
+            <TextInput name="hideDocumentsWithTextMatching" label="Dölj handlingar text" register={register} />
+            <TextInput name="hideDocumentsWithNoteTextMatching" label="Dölj handlingar innehållandes anteckning med text" register={register} />
             <CheckboxInput name="onlyActiveCases" label="Endast aktiva ärenden" register={register} />
             <CheckboxInput name="onlyCasesWithoutMainDecision" label="Endast ärenden utan huvudbeslut" register={register} />
             <DateInput name="minCaseStartDate" label="Tidigaste startdatum" register={register} />
-            <SelectInput control={control} name="statuses" label="Statusar på ärenden att exkludera" isMulti register={register} options={statusOptions} />
+            <SelectInput control={control} name="statuses" label="Statusar på ärenden att exkludera" isMulti register={register} options={statusOptions} menuPlacement="top" />
             <button className="btn btn-primary" type="submit">Spara</button>
             {edit &&
               <button

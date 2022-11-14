@@ -222,11 +222,27 @@ export interface ByggrConfig {
   tabs: CaseTab[];
   workingMaterial: boolean;
   hideConfidentialOccurences: Visibility;
-  hideDocumentsWithCommentMatching: string;
+  hideCasesWithTextMatching: string;
+  hideOccurencesWithTextMatching: string;
+  hideDocumentsWithTextMatching: string;
+  hideDocumentsWithNoteTextMatching: string;
   onlyCasesWithoutMainDecision: boolean;
   onlyActiveCases: boolean;
   minCaseStartDate: string | null;
   statuses: string[];
+}
+
+export interface HandlingTyp {
+  typ: string;
+  beskrivning: string;
+  arAktiv: boolean;
+  sortOrdn: number;
+}
+
+export interface Roll {
+  rollKod: string;
+  beskrivning: string;
+  arAktiv: boolean;
 }
 
 export interface EcosConfig {
@@ -261,6 +277,11 @@ export interface CaseSourceOption {
   value: string;
   label: string;
   caseSource: CaseSource;
+}
+
+export interface SelectOption {
+  value: string;
+  label: string;
 }
 
 export async function search(query: string) {
@@ -355,6 +376,16 @@ export async function getAgsConfigs() {
 
 export async function getByggrConfigs() {
   const { data } = await instance.get<ByggrConfig[]>('byggr');
+  return data;
+}
+
+export async function getDocumentTypes() {
+  const { data } = await instance.get<SelectOption[]>('byggr/documentTypes');
+  return data;
+}
+
+export async function getRoles() {
+  const { data } = await instance.get<SelectOption[]>('byggr/roles');
   return data;
 }
 

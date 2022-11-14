@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
-import { AgsConfig, ByggrConfig, CaseSourceOption, Config, EcosConfig, IipaxConfig, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getEcosConfig, getEcosConfigs, getFormData, getIipaxConfig, getIipaxConfigs } from './api/api';
+import { AgsConfig, ByggrConfig, CaseSourceOption, Config, EcosConfig, IipaxConfig, SelectOption, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getDocumentTypes, getEcosConfig, getEcosConfigs, getFormData, getIipaxConfig, getIipaxConfigs, getRoles } from './api/api';
 import { getLayersSettings } from './api/mapSettingsApi';
 import AgsConfigForm from './features/manage-configs/AgsConfigForm';
 import ByggrConfigForm from './features/manage-configs/ByggrConfigForm';
@@ -26,6 +26,8 @@ const ManageConfigs = () => {
   const [activeForm, setActiveForm] = useState<string>();
   const [activeKey, setActiveKey] = useState<string>();
   const [caseSourceOptions, setCaseSourceOptions] = useState<CaseSourceOption[]>([]);
+  const [documentTypeOptions, setDocumentTypeOptions] = useState<SelectOption[]>();
+  const [roleOptions, setRoleOptions] = useState<SelectOption[]>();
   const [edit, setEdit] = useState(false);
   const [layers, setLayers] = useState<any>([]);
 
@@ -37,6 +39,8 @@ const ManageConfigs = () => {
       setIipaxConfigs(await getIipaxConfigs());
       setReflexConfigs(await getConfigs());
       setCaseSourceOptions(await getCaseSourceOptions());
+      setDocumentTypeOptions(await getDocumentTypes() || []);
+      setRoleOptions(await getRoles() || []);
       const mappedLayers = (await getLayersSettings()).map((x: any) => ({ value: x.id, label: x.title }));
       setLayers(mappedLayers);
     })();
@@ -162,7 +166,7 @@ const ManageConfigs = () => {
       <div className="col-6 col-form-label col-form-label-sm">
         {activeForm === 'Reflex' && <ReflexConfigForm edit={edit} formData={reflexFormData} caseSourceOptions={caseSourceOptions} layers={layers} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
         {activeForm === 'AGS' && <AgsConfigForm edit={edit} formData={agsFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
-        {activeForm === 'ByggR' && <ByggrConfigForm edit={edit} formData={byggrFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
+        {(activeForm === 'ByggR' && documentTypeOptions && roleOptions) && <ByggrConfigForm edit={edit} formData={byggrFormData} documentTypeOptions={documentTypeOptions} roleOptions={roleOptions} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
         {activeForm === 'Ecos' && <EcosConfigForm edit={edit} formData={ecosFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
         {activeForm === 'iipax' && <IipaxConfigForm edit={edit} formData={iipaxFormData} fetchAll={fetchAll} hideActiveForm={hideActiveForm} />}
       </div>

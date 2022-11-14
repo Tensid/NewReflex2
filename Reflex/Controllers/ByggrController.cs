@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Reflex.Data;
 using Reflex.Data.Models;
 using Reflex.Services;
+using ReflexByggrService;
 
 namespace Reflex.Controllers
 {
@@ -17,17 +18,47 @@ namespace Reflex.Controllers
     {
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly IRepository _repository;
+        private readonly ByggrServiceFactory _byggrService;
 
-        public ByggrController(ApplicationDbContext applicationDbContext, IRepository repository)
+        public ByggrController(ApplicationDbContext applicationDbContext, IRepository repository, ByggrServiceFactory byggrService)
         {
             _applicationDbContext = applicationDbContext;
             _repository = repository;
+            _byggrService = byggrService;
         }
 
         [HttpGet]
         public IEnumerable<ByggrConfig> Get()
         {
             return _applicationDbContext.ByggrConfigs;
+        }
+
+        [HttpGet("documentTypes")]
+        public async Task<IEnumerable<SelectOption>> GetDocumentTypes()
+        {
+            try
+            {
+                return (await _byggrService.Create(Guid.Empty).GetDocumentTypes())
+                    .Select(x => new SelectOption { Value = x.Typ, Label = x.Beskrivning });
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        [HttpGet("roles")]
+        public async Task<IEnumerable<SelectOption>> GetRoles()
+        {
+            try
+            {
+                return (await _byggrService.Create(Guid.Empty).GetRoles())
+                    .Select(x => new SelectOption { Value = x.RollKod, Label = x.Beskrivning });
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         [HttpGet("{id}")]
@@ -55,6 +86,12 @@ namespace Reflex.Controllers
             var config = _applicationDbContext.ByggrConfigs.FirstOrDefault(x => x.Id == id);
             _applicationDbContext.ByggrConfigs.Remove(config);
             await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public class SelectOption
+        {
+            public string Value { get; set; }
+            public string Label { get; set; }
         }
     }
 }

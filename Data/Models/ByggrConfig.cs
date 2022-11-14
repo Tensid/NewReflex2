@@ -27,7 +27,10 @@ namespace Reflex.Data.Models
         public ICollection<CaseTab> Tabs { get; set; }
         public bool WorkingMaterial { get; set; }
         public Visibility HideConfidentialOccurences { get; set; }
-        public string HideDocumentsWithCommentMatching { get; set; }
+        public string HideCasesWithTextMatching { get; set; }
+        public string HideOccurencesWithTextMatching { get; set; }
+        public string HideDocumentsWithTextMatching { get; set; }
+        public string HideDocumentsWithNoteTextMatching { get; set; }
         public bool OnlyCasesWithoutMainDecision { get; set; }
         public bool OnlyActiveCases { get; set; }
         public DateTime? MinCaseStartDate { get; set; }

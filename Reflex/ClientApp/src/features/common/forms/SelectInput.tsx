@@ -1,7 +1,7 @@
 import { Controller } from 'react-hook-form';
 import Select from 'react-select';
 
-const SelectInput = ({ name, label, options, isMulti, control, isSearchable = false }: any) => {
+const SelectInput = ({ name, label, options, isMulti, control, isSearchable = false, ...props }: any) => {
   return (
     <div className="mb-3">
       <label htmlFor={name}>{label}</label>
@@ -16,6 +16,7 @@ const SelectInput = ({ name, label, options, isMulti, control, isSearchable = fa
         name={name}
         control={control}
         isSearchable={isSearchable}
+        {...props}
       />
     </div>
   );
