@@ -160,15 +160,15 @@ namespace ReflexByggrService
             var hideByText = !string.IsNullOrWhiteSpace(_config.HideDocumentsWithNoteTextMatching);
 
             return arende.handelseLista
-                .Where(handelse => _config.OccurenceTypes?.Any() != true || _config.OccurenceTypes.Contains(handelse.handelsetyp))
+                .Where(handelse => _config.OccurenceTypes.IsNullOrEmpty() || !_config.OccurenceTypes.Contains(handelse.handelsetyp))
                 .Where(handelse => !handelse.makulerad)
                 .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
-                .Where(x => !x.sekretess || _config.HideConfidentialOccurences != Visibility.Hide)
-                .Where(x => string.IsNullOrEmpty(_config.HideOccurencesWithTextMatching) || !_config.HideOccurencesWithTextMatching.Contains(x.rubrik))
+                .Where(handelse => !handelse.sekretess || _config.HideConfidentialOccurences != Visibility.Hide)
+                .Where(handelse => string.IsNullOrEmpty(_config.HideOccurencesWithTextMatching) || !_config.HideOccurencesWithTextMatching.Contains(handelse.rubrik))
                 .Select(handelse => new Occurence
                 {
                     Documents = handelse.sekretess ? Array.Empty<Document>() : handelse.handlingLista
-                        .Where(handling => (!_config?.DocumentTypes?.Any() ?? true) || (_config?.DocumentTypes?.Contains(handling.typ) ?? true))
+                        .Where(handling => _config.DocumentTypes.IsNullOrEmpty() || !_config.DocumentTypes.Contains(handling.typ))
                         .Where(handling => _config.WorkingMaterial || !ContainsWorkingMaterial(handling.status))
                         .Where(handling => string.IsNullOrEmpty(_config.HideDocumentsWithTextMatching)
                         || !_config.HideDocumentsWithTextMatching.Contains(handlingTyper.FirstOrDefault(x => x.Typ == handling?.typ)?.Beskrivning))
@@ -201,7 +201,7 @@ namespace ReflexByggrService
             client.Close();
 
             var arenden = arende.intressentLista
-                .Where(p => _config.PersonRoles?.Any() != true || p.rollLista == null || p.rollLista.Any(roll => _config.PersonRoles.Contains(roll)))
+                .Where(p => _config.PersonRoles.IsNullOrEmpty() || p.rollLista.IsNullOrEmpty() || p.rollLista.Any(roll => !_config.PersonRoles.Contains(roll)))
                 .Select(p => new CasePerson
                 {
                     FullName = p.namn,
@@ -235,7 +235,7 @@ namespace ReflexByggrService
                 Dnr = arende.dnr,
                 Fastighetsbeteckning = GetFastighetsbeteckning(arende),
                 Persons = arende.intressentLista
-                        .Where(p => _config.PersonRoles?.Any() != true || p.rollLista == null || p.rollLista.Any(roll => _config.PersonRoles.Contains(roll)))
+                        .Where(p => _config.PersonRoles.IsNullOrEmpty() || p.rollLista.IsNullOrEmpty() || p.rollLista.Any(roll => !_config.PersonRoles.Contains(roll)))
                         .Select(p => new CasePerson
                         {
                             FullName = p.namn,
@@ -246,7 +246,7 @@ namespace ReflexByggrService
                             PostNr = p.postNr
                         }).ToArray(),
                 Handelser = arende.handelseLista
-                        .Where(handelse => _config.OccurenceTypes?.Any() != true || _config.OccurenceTypes.Contains(handelse.handelsetyp))
+                        .Where(handelse => _config.OccurenceTypes.IsNullOrEmpty() || !_config.OccurenceTypes.Contains(handelse.handelsetyp))
                         .Where(handelse => !handelse.makulerad)
                         .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
                         .Where(x => string.IsNullOrEmpty(_config.HideOccurencesWithTextMatching) || !_config.HideOccurencesWithTextMatching.Contains(x.rubrik))
@@ -254,7 +254,7 @@ namespace ReflexByggrService
                         .Select(handelse => new Handelse
                         {
                             Documents = handelse.sekretess ? Array.Empty<Document>() : handelse.handlingLista
-                                .Where(handling => (!_config?.DocumentTypes?.Any() ?? true) || (_config?.DocumentTypes?.Contains(handling.typ) ?? true))
+                                .Where(handling => _config.DocumentTypes.IsNullOrEmpty() || !_config.DocumentTypes.Contains(handling.typ))
                                 .Where(handling => _config.WorkingMaterial || !ContainsWorkingMaterial(handling.status))
                                 .Where(handling => string.IsNullOrEmpty(_config.HideDocumentsWithTextMatching)
                                 || !_config.HideDocumentsWithTextMatching.Contains(handlingTyper.FirstOrDefault(x => x.Typ == handling?.typ)?.Beskrivning))
