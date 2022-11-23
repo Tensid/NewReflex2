@@ -29,7 +29,6 @@ namespace Reflex.Data.Models
         public Visibility HideConfidentialOccurences { get; set; }
         public string HideCasesWithTextMatching { get; set; }
         public string HideOccurencesWithTextMatching { get; set; }
-        public string HideDocumentsWithTextMatching { get; set; }
         public string HideDocumentsWithNoteTextMatching { get; set; }
         public bool OnlyCasesWithoutMainDecision { get; set; }
         public bool OnlyActiveCases { get; set; }

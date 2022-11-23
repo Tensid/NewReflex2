@@ -170,8 +170,6 @@ namespace ReflexByggrService
                     Documents = handelse.sekretess ? Array.Empty<Document>() : handelse.handlingLista
                         .Where(handling => _config.DocumentTypes.IsNullOrEmpty() || !_config.DocumentTypes.Contains(handling.typ))
                         .Where(handling => _config.WorkingMaterial || !ContainsWorkingMaterial(handling.status))
-                        .Where(handling => string.IsNullOrEmpty(_config.HideDocumentsWithTextMatching)
-                        || handlingTyper.First(x => x.Typ == handling?.typ).Beskrivning.Contains(_config.HideDocumentsWithTextMatching))
                         .Select(handling => new Document
                         {
                             DocLinkId = (handling?.dokument?.dokId == null || (hideByText && (handling?.anteckning?.Contains(_config.HideDocumentsWithNoteTextMatching) ?? false))
@@ -256,8 +254,6 @@ namespace ReflexByggrService
                             Documents = handelse.sekretess ? Array.Empty<Document>() : handelse.handlingLista
                                 .Where(handling => _config.DocumentTypes.IsNullOrEmpty() || !_config.DocumentTypes.Contains(handling.typ))
                                 .Where(handling => _config.WorkingMaterial || !ContainsWorkingMaterial(handling.status))
-                                .Where(handling => string.IsNullOrEmpty(_config.HideDocumentsWithTextMatching)
-                                || !_config.HideDocumentsWithTextMatching.Contains(handlingTyper.FirstOrDefault(x => x.Typ == handling?.typ)?.Beskrivning))
                                 .Select(handling => new Document
                                 {
                                     DocLinkId = (handling?.dokument?.dokId == null || (hideByText && (handling.anteckning?.Contains(_config.HideDocumentsWithNoteTextMatching) ?? false)) ? "-1" : handling.dokument.dokId).ToString(CultureInfo.InvariantCulture),

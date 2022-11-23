@@ -76,7 +76,6 @@ const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fet
     data.documentTypes = data?.documentTypes?.map((x: any) => x.value);
     data.hideCasesWithTextMatching = data?.hideCasesWithTextMatching || null;
     data.hideOccurencesWithTextMatching = data?.hideOccurencesWithTextMatching || null;
-    data.hideDocumentsWithTextMatching = data?.hideDocumentsWithTextMatching || null;
     data.hideDocumentsWithNoteTextMatching = data?.hideDocumentsWithNoteTextMatching || null;
     data.minCaseStartDate = data?.minCaseStartDate || null;
     data.occurenceTypes = data?.occurenceTypes?.map((x: any) => x.value);
@@ -113,7 +112,6 @@ const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fet
             <SelectInput control={control} name="hideConfidentialOccurences" label="Sekretess på händelser" register={register} options={occurenceVisibilityOptions} />
             <TextInput name="hideCasesWithTextMatching" label="Dölj ärende där ärendemening innehåller följande text" register={register} />
             <TextInput name="hideOccurencesWithTextMatching" label="Dölj händelse där rubriken innehåller följande text" register={register} />
-            <TextInput name="hideDocumentsWithTextMatching" label="Dölj handlingar text" register={register} />
             <TextInput name="hideDocumentsWithNoteTextMatching" label="Dölj handlingar där anteckning innehåller följande text" register={register} />
             <CheckboxInput name="onlyActiveCases" label="Endast aktiva ärenden" register={register} />
             <CheckboxInput name="onlyCasesWithoutMainDecision" label="Endast ärenden utan huvudbeslut" register={register} />
