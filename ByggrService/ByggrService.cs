@@ -97,7 +97,7 @@ namespace ReflexByggrService
                 .Where(x => _config.MinCaseStartDate == null || x.ankomstDatum > _config.MinCaseStartDate)
                 .Where(x => _config.Diarieprefixes?.Any() != true || _config.Diarieprefixes.Contains(x.diarieprefix))
                 .Where(x => _config.Statuses.IsNullOrEmpty() || !_config.Statuses.Contains(x.status.ToString()))
-                .Where(x => string.IsNullOrEmpty(_config.HideCasesWithTextMatching) || !_config.HideCasesWithTextMatching.Contains(x.beskrivning));
+                .Where(x => string.IsNullOrEmpty(_config.HideCasesWithTextMatching) || !x.beskrivning.Contains(_config.HideCasesWithTextMatching));
             var filteredCases = filteredArenden.Select(arende => new Case
             {
                 Arendegrupp = arende.arendegrupp,
@@ -164,14 +164,14 @@ namespace ReflexByggrService
                 .Where(handelse => !handelse.makulerad)
                 .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
                 .Where(handelse => !handelse.sekretess || _config.HideConfidentialOccurences != Visibility.Hide)
-                .Where(handelse => string.IsNullOrEmpty(_config.HideOccurencesWithTextMatching) || !_config.HideOccurencesWithTextMatching.Contains(handelse.rubrik))
+                .Where(handelse => string.IsNullOrEmpty(_config.HideOccurencesWithTextMatching) || !handelse.rubrik.Contains(_config.HideOccurencesWithTextMatching))
                 .Select(handelse => new Occurence
                 {
                     Documents = handelse.sekretess ? Array.Empty<Document>() : handelse.handlingLista
                         .Where(handling => _config.DocumentTypes.IsNullOrEmpty() || !_config.DocumentTypes.Contains(handling.typ))
                         .Where(handling => _config.WorkingMaterial || !ContainsWorkingMaterial(handling.status))
                         .Where(handling => string.IsNullOrEmpty(_config.HideDocumentsWithTextMatching)
-                        || !_config.HideDocumentsWithTextMatching.Contains(handlingTyper.FirstOrDefault(x => x.Typ == handling?.typ)?.Beskrivning))
+                        || handlingTyper.First(x => x.Typ == handling?.typ).Beskrivning.Contains(_config.HideDocumentsWithTextMatching))
                         .Select(handling => new Document
                         {
                             DocLinkId = (handling?.dokument?.dokId == null || (hideByText && (handling?.anteckning?.Contains(_config.HideDocumentsWithNoteTextMatching) ?? false))
