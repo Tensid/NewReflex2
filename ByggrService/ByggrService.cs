@@ -93,11 +93,7 @@ namespace ReflexByggrService
                 _config.OnlyActiveCases ? StatusFilter.Aktiv : StatusFilter.None)).GetRelateradeArendenByFastighetResult;
             client.Close();
 
-            var filteredArenden = arenden.Where(x => _config.OnlyCasesWithoutMainDecision == false || x.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true))
-                .Where(x => _config.MinCaseStartDate == null || x.ankomstDatum > _config.MinCaseStartDate)
-                .Where(x => _config.Diarieprefixes?.Any() != true || _config.Diarieprefixes.Contains(x.diarieprefix))
-                .Where(x => _config.Statuses.IsNullOrEmpty() || !_config.Statuses.Contains(x.status.ToString()))
-                .Where(x => string.IsNullOrEmpty(_config.HideCasesWithTextMatching) || !x.beskrivning.Contains(_config.HideCasesWithTextMatching));
+            var filteredArenden = FilterArenden(arenden);
             var filteredCases = filteredArenden.Select(arende => new Case
             {
                 Arendegrupp = arende.arendegrupp,
@@ -132,6 +128,11 @@ namespace ReflexByggrService
                 var arende = await client.GetArendeAsync(id);
                 client.Close();
 
+                var arenden = new List<Arende>() { arende };
+                var filteredArenden = FilterArenden(arenden);
+                if (!filteredArenden.Any())
+                    return null;
+
                 return new Case
                 {
                     Beskrivning = arende?.beskrivning,
@@ -148,6 +149,16 @@ namespace ReflexByggrService
             {
                 return null;
             }
+        }
+
+        private IEnumerable<Arende> FilterArenden(IEnumerable<Arende> arenden)
+        {
+            var filteredArenden = arenden.Where(x => _config.OnlyCasesWithoutMainDecision == false || x.handelseLista.All(h => !h.beslut?.arHuvudbeslut ?? true));
+            filteredArenden = filteredArenden.Where(x => _config.MinCaseStartDate == null || x.ankomstDatum > _config.MinCaseStartDate);
+            filteredArenden = filteredArenden.Where(x => _config.Diarieprefixes?.Any() != true || _config.Diarieprefixes.Contains(x.diarieprefix));
+            filteredArenden = filteredArenden.Where(x => _config.Statuses.IsNullOrEmpty() || !_config.Statuses.Contains(x.status.ToString()));
+            filteredArenden = filteredArenden.Where(x => string.IsNullOrEmpty(_config.HideCasesWithTextMatching) || !x.beskrivning.Contains(_config.HideCasesWithTextMatching));
+            return filteredArenden;
         }
 
         public async Task<Occurence[]> GetOccurencesByCase(string caseId)
