@@ -111,10 +111,10 @@ const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fet
             <CreatableSelectInput control={control} name="diarieprefixes" label="Diarier" isMulti register={register} options={diarieprefixes} />
             <CheckboxInput name="workingMaterial" label="Visa arbetsmaterial" register={register} />
             <SelectInput control={control} name="hideConfidentialOccurences" label="Sekretess på händelser" register={register} options={occurenceVisibilityOptions} />
-            <TextInput name="hideCasesWithTextMatching" label="Dölj ärenden med text" register={register} />
-            <TextInput name="hideOccurencesWithTextMatching" label="Dölj händelser med text" register={register} />
+            <TextInput name="hideCasesWithTextMatching" label="Dölj ärende där ärendemening innehåller följande text" register={register} />
+            <TextInput name="hideOccurencesWithTextMatching" label="Dölj händelse där rubriken innehåller följande text" register={register} />
             <TextInput name="hideDocumentsWithTextMatching" label="Dölj handlingar text" register={register} />
-            <TextInput name="hideDocumentsWithNoteTextMatching" label="Dölj handlingar innehållandes anteckning med text" register={register} />
+            <TextInput name="hideDocumentsWithNoteTextMatching" label="Dölj handlingar där anteckning innehåller följande text" register={register} />
             <CheckboxInput name="onlyActiveCases" label="Endast aktiva ärenden" register={register} />
             <CheckboxInput name="onlyCasesWithoutMainDecision" label="Endast ärenden utan huvudbeslut" register={register} />
             <DateInput name="minCaseStartDate" label="Tidigaste startdatum" register={register} />
