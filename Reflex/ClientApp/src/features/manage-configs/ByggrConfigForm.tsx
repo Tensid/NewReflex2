@@ -38,7 +38,7 @@ const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fet
   const diarieprefixes = edit ? formData?.diarieprefixes?.map((x) => ({ value: x, label: x })) ?? [] : [];
   const documentTypes = edit ? formData?.documentTypes?.map((x) => ({ value: x, label: documentTypeOptions.find((t) => t.value === x)?.label })) ?? [] : [];
   const occurenceTypes = edit ? formData?.occurenceTypes?.map((x) => ({ value: x, label: x })) ?? [] : [];
-  const personRoles = edit ? formData?.documentTypes?.map((x) => ({ value: x, label: roleOptions.find((t) => t.value === x)?.label })) ?? [] : [];
+  const personRoles = edit ? formData?.personRoles?.map((x) => ({ value: x, label: roleOptions.find((t) => t.value === x)?.label })) ?? [] : [];
   const statuses = edit ? formData?.statuses?.map((x) => ({ value: x, label: x })) ?? [] : [{ value: ArendeStatus.Makulerat, label: ArendeStatus.Makulerat }];
 
   const { register, handleSubmit, control, reset } =
