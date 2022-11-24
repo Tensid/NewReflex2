@@ -59,7 +59,7 @@ const OccurenceContent = ({ occurenceState, caseSource, caseSourceId }: Occurenc
           {occurenceState.value?.map((occurence, i) =>
             <Card className={"list-group-flush"} key={i}>
               <CustomToggle eventKey={i.toString()}>
-                {new Date(occurence.arrival).toLocaleDateString()}: {`${occurence.title} ${occurenceText(occurence)}`}
+                {new Date(occurence.arrival).toLocaleDateString('sv-SE')}: {`${occurence.title} ${occurenceText(occurence)}`}
               </CustomToggle>
               <Accordion.Collapse eventKey={i.toString()}>
                 <Card.Body>

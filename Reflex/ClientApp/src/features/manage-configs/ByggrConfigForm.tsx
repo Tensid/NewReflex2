@@ -34,7 +34,7 @@ export interface ByggrConfigFormProps {
 }
 
 const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fetchAll, hideActiveForm }: ByggrConfigFormProps) => {
-  const minCaseStartDate = (edit && !!formData?.minCaseStartDate) ? (new Date(formData?.minCaseStartDate)).toLocaleDateString() : null;
+  const minCaseStartDate = (edit && !!formData?.minCaseStartDate) ? (new Date(formData?.minCaseStartDate)).toLocaleDateString('sv-SE') : null;
   const diarieprefixes = edit ? formData?.diarieprefixes?.map((x) => ({ value: x, label: x })) ?? [] : [];
   const documentTypes = edit ? formData?.documentTypes?.map((x) => ({ value: x, label: documentTypeOptions.find((t) => t.value === x)?.label })) ?? [] : [];
   const occurenceTypes = edit ? formData?.occurenceTypes?.map((x) => ({ value: x, label: x })) ?? [] : [];
