@@ -8,7 +8,7 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-@if ((Model.ExternalLogins?.Count ?? 0) > 0)
+@if ((Model.ExternalLogins?.Count ?? 0) > 0 && configuration.GetValue<bool>("EnableExternalLogins"))
 {
     <div class="row">
         <div class="col-md-4">
@@ -31,9 +31,16 @@
 }
 @if (configuration.GetValue<bool>("EnableLocalAccounts"))
 {
-    <p>
-        <a asp-page="./LocalLogin" asp-route-returnUrl="@Model.ReturnUrl">Logga in med lokalt konto</a>
-    </p>
+    if (configuration.GetValue<bool>("EnableExternalLogins"))
+    {
+        <p>
+            <a asp-page="./LocalLogin" asp-route-returnUrl="@Model.ReturnUrl">Logga in med lokalt konto</a>
+        </p>
+    }
+    else
+    {
+        <partial name="_LocalLogin" />
+    }
 }
 
 @section Scripts {
