@@ -103,9 +103,9 @@ const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fet
         <div className="col">
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextInput name="name" label="Namn" required register={register} />
-            <SelectInput control={control} name="documentTypes" label="Handlingstyper att exkludera" isMulti register={register} options={documentTypeOptions} />
+            <SelectInput control={control} name="documentTypes" label="Handlingstyper att exkludera" isMulti isSearchable register={register} options={documentTypeOptions} />
             <CreatableSelectInput control={control} name="occurenceTypes" label="Händelsetyper att exkludera" isMulti register={register} options={occurenceTypes} />
-            <SelectInput control={control} name="personRoles" label="Roller att exkludera" isMulti register={register} options={roleOptions} />
+            <SelectInput control={control} name="personRoles" label="Roller att exkludera" isMulti isSearchable register={register} options={roleOptions} />
             <SelectInput control={control} name="tabs" label="Flikar" isMulti register={register} options={tabOptions} />
             <CreatableSelectInput control={control} name="diarieprefixes" label="Diarier" isMulti register={register} options={diarieprefixes} />
             <CheckboxInput name="workingMaterial" label="Visa arbetsmaterial" register={register} />
