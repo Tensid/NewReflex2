@@ -38,9 +38,8 @@ namespace Reflex.Controllers
         {
             try
             {
-                var options = (await _byggrService.Create(Guid.Empty).GetDocumentTypes())
-                    .Select(x => new SelectOption { Value = x.Typ, Label = x.Beskrivning }).ToList();
-                options.Sort((x, y) => x.Label.CompareTo(y.Label));
+                var options = (await _byggrService.Create(Guid.Empty).GetDocumentTypes()).OrderByDescending(x => x.ArAktiv).ThenBy((x) => x.Beskrivning)
+                    .Select(x => new SelectOption { Value = x.Typ, Label = x.Beskrivning });
                 return options;
             }
             catch (Exception)
@@ -54,9 +53,8 @@ namespace Reflex.Controllers
         {
             try
             {
-                var options = (await _byggrService.Create(Guid.Empty).GetRoles())
-                    .Select(x => new SelectOption { Value = x.RollKod, Label = x.Beskrivning }).ToList();
-                options.Sort((x, y) => x.Label.CompareTo(y.Label));
+                var options = (await _byggrService.Create(Guid.Empty).GetRoles()).OrderByDescending(x => x.ArAktiv).ThenBy((x) => x.Beskrivning)
+                    .Select(x => new SelectOption { Value = x.RollKod, Label = x.Beskrivning });
                 return options;
             }
             catch (Exception)
