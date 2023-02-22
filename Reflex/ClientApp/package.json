@@ -28,6 +28,7 @@
     "autosuggest-highlight": "^3.3.4",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
+    "chroma-js": "^2.4.2",
     "datatables.net-bs4": "^1.12.1",
     "datatables.net-buttons-bs4": "^2.2.3",
     "datatables.net-responsive-bs4": "^2.3.0",
@@ -58,6 +59,7 @@
     "sass-loader": "^13.0.2"
   },
   "devDependencies": {
+    "@types/chroma-js": "^2.1.5",
     "cross-env": "^7.0.3",
     "eslint": "^8.23.1",
     "eslint-config-react-app": "^7.0.1",

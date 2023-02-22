@@ -38,8 +38,8 @@ namespace Reflex.Controllers
         {
             try
             {
-                var options = (await _byggrService.Create(Guid.Empty).GetDocumentTypes()).OrderByDescending(x => x.ArAktiv).ThenBy((x) => x.Beskrivning)
-                    .Select(x => new SelectOption { Value = x.Typ, Label = x.Beskrivning });
+                var options = (await _byggrService.Create(Guid.Empty).GetDocumentTypes()).OrderByDescending(x => x.ArAktiv).ThenBy((x)=> x.Beskrivning)
+                    .Select(x => new SelectOption { Value = x.Typ, Label = x.Beskrivning, Active = x.ArAktiv });
                 return options;
             }
             catch (Exception)
@@ -54,7 +54,7 @@ namespace Reflex.Controllers
             try
             {
                 var options = (await _byggrService.Create(Guid.Empty).GetRoles()).OrderByDescending(x => x.ArAktiv).ThenBy((x) => x.Beskrivning)
-                    .Select(x => new SelectOption { Value = x.RollKod, Label = x.Beskrivning });
+                    .Select(x => new SelectOption { Value = x.RollKod, Label = x.Beskrivning, Active = x.ArAktiv });
                 return options;
             }
             catch (Exception)
@@ -94,6 +94,7 @@ namespace Reflex.Controllers
         {
             public string Value { get; set; }
             public string Label { get; set; }
+            public bool Active { get; set; }
         }
     }
 }

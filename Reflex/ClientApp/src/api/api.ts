@@ -282,6 +282,7 @@ export interface CaseSourceOption {
 export interface SelectOption {
   value: string;
   label: string;
+  active: boolean;
 }
 
 export async function search(query: string) {
