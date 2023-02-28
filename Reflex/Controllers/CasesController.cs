@@ -156,7 +156,8 @@ namespace Reflex.Controllers
         [HttpGet("{caseId}/occurences")]
         public async Task<IEnumerable<Occurence>> GetOccurences(string caseId, CaseSource caseSource, Guid caseSourceId)
         {
-            return await _proxyService.GetProxy(caseSource, caseSourceId).GetOccurencesByCase(caseId);
+            var occurences = (await _proxyService.GetProxy(caseSource, caseSourceId).GetOccurencesByCase(caseId)).OrderByDescending(x => x.Arrival);
+            return occurences;
         }
 
         [Authorize(Policy = Policies.HasCaseSourcePermission)]
