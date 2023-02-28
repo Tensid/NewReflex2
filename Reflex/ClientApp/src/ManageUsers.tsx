@@ -150,7 +150,7 @@ const ManageUsers = () => {
   return (
     <>
       <h4>Hantera användare</h4>
-      <div className="form-row float-end mb-1">
+      <div className="d-flex align-items-center float-end mb-1">
         <select value={select} className="mr-1" onChange={(evt: ChangeEvent<HTMLSelectElement>) => setSelect(Number(evt.target.value))}>
           {options.map((option) => <option key={option.action} value={option.action}>{option.actionText}</option>
           )}
