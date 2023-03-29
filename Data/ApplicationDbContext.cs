@@ -77,6 +77,12 @@ namespace Reflex.Data
                 .HasConversion(stringArrayConverter, stringArrayComparer);
             modelBuilder.Entity<ByggrConfig>().Property(p => p.Diarieprefixes)
                 .HasConversion(stringArrayConverter, stringArrayComparer);
+            modelBuilder.Entity<ByggrConfig>().Property(p => p.HideCasesWithTextMatching)
+                .HasConversion(stringArrayConverter, stringArrayComparer);
+            modelBuilder.Entity<ByggrConfig>().Property(p => p.HideDocumentsWithNoteTextMatching)
+                .HasConversion(stringArrayConverter, stringArrayComparer);
+            modelBuilder.Entity<ByggrConfig>().Property(p => p.HideOccurencesWithTextMatching)
+                .HasConversion(stringArrayConverter, stringArrayComparer);
             modelBuilder.Entity<ByggrConfig>().Property(p => p.Statuses)
                 .HasConversion(stringArrayConverter, stringArrayComparer);
             modelBuilder.Entity<EcosConfig>().Property(p => p.DocumentTypes)

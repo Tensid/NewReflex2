@@ -157,7 +157,7 @@ namespace ReflexByggrService
             filteredArenden = filteredArenden.Where(x => _config.MinCaseStartDate == null || x.ankomstDatum > _config.MinCaseStartDate);
             filteredArenden = filteredArenden.Where(x => _config.Diarieprefixes?.Any() != true || _config.Diarieprefixes.Contains(x.diarieprefix));
             filteredArenden = filteredArenden.Where(x => _config.Statuses.IsNullOrEmpty() || !_config.Statuses.Contains(x.status.ToString()));
-            filteredArenden = filteredArenden.Where(x => string.IsNullOrEmpty(_config.HideCasesWithTextMatching) || !x.beskrivning.Contains(_config.HideCasesWithTextMatching));
+            filteredArenden = filteredArenden.Where(x => _config.HideCasesWithTextMatching.IsNullOrEmpty() || _config.HideCasesWithTextMatching.All(h => !x.beskrivning.Contains(h)));
             return filteredArenden;
         }
 
@@ -168,14 +168,12 @@ namespace ReflexByggrService
             var handlingTyper = await client.GetHandlingTyperAsync(StatusFilter.None);
             client.Close();
 
-            var hideByText = !string.IsNullOrWhiteSpace(_config.HideDocumentsWithNoteTextMatching);
-
             return arende.handelseLista
                 .Where(handelse => _config.OccurenceTypes.IsNullOrEmpty() || !_config.OccurenceTypes.Contains(handelse.handelsetyp))
                 .Where(handelse => !handelse.makulerad)
                 .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
                 .Where(handelse => !handelse.sekretess || _config.HideConfidentialOccurences != Visibility.Hide)
-                .Where(handelse => string.IsNullOrEmpty(_config.HideOccurencesWithTextMatching) || !handelse.rubrik.Contains(_config.HideOccurencesWithTextMatching))
+                .Where(handelse => _config.HideOccurencesWithTextMatching.IsNullOrEmpty() || _config.HideOccurencesWithTextMatching.All(text => !handelse.rubrik.Contains(text)))
                 .Select(handelse => new Occurence
                 {
                     Documents = handelse.sekretess ? Array.Empty<Document>() : handelse.handlingLista
@@ -183,9 +181,7 @@ namespace ReflexByggrService
                         .Where(handling => _config.WorkingMaterial || !ContainsWorkingMaterial(handling.status))
                         .Select(handling => new Document
                         {
-                            DocLinkId = (handling?.dokument?.dokId == null || (hideByText && (handling?.anteckning?.Contains(_config.HideDocumentsWithNoteTextMatching) ?? false))
-                                ? "-1"
-                                : handling.dokument.dokId).ToString(CultureInfo.InvariantCulture),
+                            DocLinkId = GetDocLinkId(handling),
                             Title = handlingTyper.FirstOrDefault(x => x.Typ == handling?.typ)?.Beskrivning ?? handling?.dokument?.dokId ?? "Dokument (namn saknas)"
                         })
                         .ToArray(),
@@ -230,7 +226,6 @@ namespace ReflexByggrService
             var handlingTyper = await client.GetHandlingTyperAsync(StatusFilter.None);
             var roller = await client.GetRollerAsync(RollTyp.Intressent, StatusFilter.None);
 
-            var hideByText = !string.IsNullOrWhiteSpace(_config.HideDocumentsWithNoteTextMatching);
             var preview = new Preview
             {
                 Arendegrupp = arende.arendegrupp,
@@ -258,7 +253,7 @@ namespace ReflexByggrService
                         .Where(handelse => _config.OccurenceTypes.IsNullOrEmpty() || !_config.OccurenceTypes.Contains(handelse.handelsetyp))
                         .Where(handelse => !handelse.makulerad)
                         .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
-                        .Where(x => string.IsNullOrEmpty(_config.HideOccurencesWithTextMatching) || !_config.HideOccurencesWithTextMatching.Contains(x.rubrik))
+                        .Where(handelse => _config.HideOccurencesWithTextMatching.IsNullOrEmpty() || _config.HideOccurencesWithTextMatching.All(text => !handelse.rubrik.Contains(text)))
                         .Where(x => !x.sekretess || _config.HideConfidentialOccurences != Visibility.Hide)
                         .Select(handelse => new Handelse
                         {
@@ -267,13 +262,13 @@ namespace ReflexByggrService
                                 .Where(handling => _config.WorkingMaterial || !ContainsWorkingMaterial(handling.status))
                                 .Select(handling => new Document
                                 {
-                                    DocLinkId = (handling?.dokument?.dokId == null || (hideByText && (handling.anteckning?.Contains(_config.HideDocumentsWithNoteTextMatching) ?? false)) ? "-1" : handling.dokument.dokId).ToString(CultureInfo.InvariantCulture),
+                                    DocLinkId = GetDocLinkId(handling),
                                     Title = handlingTyper.FirstOrDefault(x => x.Typ == handling?.typ)?.Beskrivning ?? handling?.dokument?.namn ?? "Dokument (namn saknas)"
                                 }).ToArray(),
                             Arrival = handelse.startDatum,
                             Title = handelse.rubrik,
                             IsSecret = handelse.sekretess,
-                            Anteckning = handelse.anteckning,
+                            Anteckning = _config.HideNotesInPreview ? "" : handelse.anteckning,
                             BeslutNr = handelse.beslut?.beslutNr,
                             BeslutsText = handelse.beslut?.beslutstext,
                             Handelsetyp = handelse.handelsetyp,
@@ -303,6 +298,18 @@ namespace ReflexByggrService
         public Task<Case> SearchCase(string caseId)
         {
             throw new NotImplementedException();
+        }
+
+        private string GetDocLinkId(handling handling)
+        {
+            if (handling?.dokument?.dokId == null || handling?.anteckning == null)
+                return "-1";
+
+            var doNotHideByText = _config.HideDocumentsWithNoteTextMatching.IsNullOrEmpty();
+            if (doNotHideByText || !_config.HideDocumentsWithNoteTextMatching.Any(h => handling.anteckning.Contains(h)))
+                return handling.dokument.dokId.ToString(CultureInfo.InvariantCulture);
+
+            return "-1";
         }
 
         private static string GetFastighetsbeteckning(arende arende)

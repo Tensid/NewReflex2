@@ -95,6 +95,9 @@ export interface ByggrConfigFormProps {
 const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fetchAll, hideActiveForm }: ByggrConfigFormProps) => {
   const minCaseStartDate = (edit && !!formData?.minCaseStartDate) ? (new Date(formData?.minCaseStartDate)).toLocaleDateString('sv-SE') : null;
   const diarieprefixes = edit ? formData?.diarieprefixes?.map((x) => ({ value: x, label: x })) ?? [] : [];
+  const hideCasesWithTextMatching = edit ? formData?.hideCasesWithTextMatching?.map((x) => ({ value: x, label: x })) ?? [] : [];
+  const hideOccurencesWithTextMatching = edit ? formData?.hideOccurencesWithTextMatching?.map((x) => ({ value: x, label: x })) ?? [] : [];
+  const hideDocumentsWithNoteTextMatching = edit ? formData?.hideDocumentsWithNoteTextMatching?.map((x) => ({ value: x, label: x })) ?? [] : [];
   const documentTypes = edit ? formData?.documentTypes?.map((x) => ({ value: x, label: documentTypeOptions.find((t) => t.value === x)?.label, active: documentTypeOptions.find((t) => t.value === x)?.active })) ?? [] : [];
   const occurenceTypes = edit ? formData?.occurenceTypes?.map((x) => ({ value: x, label: x })) ?? [] : [];
   const personRoles = edit ? formData?.personRoles?.map((x) => ({ value: x, label: roleOptions.find((t) => t.value === x)?.label, active: roleOptions.find((t) => t.value === x)?.active })) ?? [] : [];
@@ -124,6 +127,9 @@ const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fet
         hideConfidentialOccurences: formData?.hideConfidentialOccurences in Visibility ? { value: formData.hideConfidentialOccurences, label: occurenceVisibilityOptions.find((t) => t.value === formData.hideConfidentialOccurences)!.label } : [],
         minCaseStartDate,
         diarieprefixes,
+        hideCasesWithTextMatching,
+        hideOccurencesWithTextMatching,
+        hideDocumentsWithNoteTextMatching,
         documentTypes,
         occurenceTypes,
         personRoles,
@@ -138,6 +144,9 @@ const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fet
       hideConfidentialOccurences: formData?.hideConfidentialOccurences in Visibility ? { value: formData.hideConfidentialOccurences, label: occurenceVisibilityOptions.find((t) => t.value === formData.hideConfidentialOccurences)!.label } : [],
       minCaseStartDate,
       diarieprefixes,
+      hideCasesWithTextMatching,
+      hideOccurencesWithTextMatching,
+      hideDocumentsWithNoteTextMatching,
       documentTypes,
       occurenceTypes,
       personRoles,
@@ -149,9 +158,9 @@ const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fet
     data.hideConfidentialOccurences = data.hideConfidentialOccurences?.value;
     data.diarieprefixes = data?.diarieprefixes?.map((x: any) => x.value);
     data.documentTypes = data?.documentTypes?.map((x: any) => x.value);
-    data.hideCasesWithTextMatching = data?.hideCasesWithTextMatching || null;
-    data.hideOccurencesWithTextMatching = data?.hideOccurencesWithTextMatching || null;
-    data.hideDocumentsWithNoteTextMatching = data?.hideDocumentsWithNoteTextMatching || null;
+    data.hideCasesWithTextMatching = data?.hideCasesWithTextMatching?.map((x: any) => x.value);
+    data.hideOccurencesWithTextMatching = data?.hideOccurencesWithTextMatching?.map((x: any) => x.value);
+    data.hideDocumentsWithNoteTextMatching = data?.hideDocumentsWithNoteTextMatching?.map((x: any) => x.value);
     data.minCaseStartDate = data?.minCaseStartDate || null;
     data.occurenceTypes = data?.occurenceTypes?.map((x: any) => x.value);
     data.personRoles = data?.personRoles?.map((x: any) => x.value);
@@ -182,12 +191,13 @@ const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fet
             <CreatableSelectInput control={control} name="occurenceTypes" label="Händelsetyper att exkludera" isMulti register={register} options={occurenceTypes} />
             <SelectInput control={control} name="personRoles" label="Roller att exkludera" isMulti isSearchable register={register} options={[...activePersonRoles, ...groupedPersonOptions]} styles={colourStyles} />
             <SelectInput control={control} name="tabs" label="Flikar" isMulti register={register} options={tabOptions} />
+            <CheckboxInput name="hideNotesInPreview" label="Dölj anteckningar i förhandsgrankning" register={register} />
             <CreatableSelectInput control={control} name="diarieprefixes" label="Diarier" isMulti register={register} options={diarieprefixes} />
             <CheckboxInput name="workingMaterial" label="Visa arbetsmaterial" register={register} />
             <SelectInput control={control} name="hideConfidentialOccurences" label="Sekretess på händelser" register={register} options={occurenceVisibilityOptions} />
-            <TextInput name="hideCasesWithTextMatching" label="Dölj ärende där ärendemening innehåller följande text" register={register} />
-            <TextInput name="hideOccurencesWithTextMatching" label="Dölj händelse där rubriken innehåller följande text" register={register} />
-            <TextInput name="hideDocumentsWithNoteTextMatching" label="Dölj handlingar där anteckning innehåller följande text" register={register} />
+            <CreatableSelectInput control={control} name="hideCasesWithTextMatching" label="Dölj ärende där ärendemening innehåller följande text" isMulti register={register} options={hideCasesWithTextMatching} />
+            <CreatableSelectInput control={control} name="hideOccurencesWithTextMatching" label="Dölj händelse där rubriken innehåller följande text" isMulti register={register} options={hideOccurencesWithTextMatching} />
+            <CreatableSelectInput control={control} name="hideDocumentsWithNoteTextMatching" label="Dölj handlingar där anteckning innehåller följande text" isMulti register={register} options={hideDocumentsWithNoteTextMatching} />
             <CheckboxInput name="onlyActiveCases" label="Endast aktiva ärenden" register={register} />
             <CheckboxInput name="onlyCasesWithoutMainDecision" label="Endast ärenden utan huvudbeslut" register={register} />
             <DateInput name="minCaseStartDate" label="Tidigaste startdatum" register={register} />

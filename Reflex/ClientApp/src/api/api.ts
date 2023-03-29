@@ -220,12 +220,12 @@ export interface ByggrConfig {
   personRoles: string[];
   diarieprefixes: string[];
   tabs: CaseTab[];
+  hideNotesInPreview: boolean;
   workingMaterial: boolean;
   hideConfidentialOccurences: Visibility;
-  hideCasesWithTextMatching: string;
-  hideOccurencesWithTextMatching: string;
-  hideDocumentsWithTextMatching: string;
-  hideDocumentsWithNoteTextMatching: string;
+  hideCasesWithTextMatching: string[];
+  hideOccurencesWithTextMatching: string[];
+  hideDocumentsWithNoteTextMatching: string[];
   onlyCasesWithoutMainDecision: boolean;
   onlyActiveCases: boolean;
   minCaseStartDate: string | null;

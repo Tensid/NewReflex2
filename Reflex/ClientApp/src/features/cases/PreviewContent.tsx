@@ -93,9 +93,11 @@ const PreviewContent = ({ previewState, tabs }: PreviewContentProps) => {
               (nr: {handelse.beslutNr})
             </div>
           }
-          <div className="col-10 offset-2">
-            <div className={styles.preWrap}><i>{handelse.anteckning}</i></div>
-          </div>
+          {handelse?.anteckning &&
+            <div className="col-10 offset-2">
+              <div className={styles.preWrap}><i>{handelse.anteckning}</i></div>
+            </div>
+          }
           {handelse?.documents.length > 0 &&
             <div className="col-10 offset-2">
               <u>Handlingar</u>
