@@ -1,4 +1,4 @@
-import { ChangeEvent, MutableRefObject, useRef, useState } from 'react';
+import { ChangeEvent, MutableRefObject, useEffect, useRef, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import MaterialAutocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
@@ -46,6 +46,16 @@ export default function Autocomplete({ onSelectCallback, searchResult }: Autocom
     setInputValue(event.target.value);
   };
 
+  useEffect(() => {
+    (async () => {
+      const query = searchResult?.displayName || searchResult?.value;
+      if (query) {
+        const data = await search(query);
+        setOptions(data);
+      }
+    })();
+  }, [searchResult]);
+
   return (
     <Grid container>
       <Grid item>
@@ -61,7 +71,15 @@ export default function Autocomplete({ onSelectCallback, searchResult }: Autocom
           loadingText="Hämtar"
           defaultValue={searchResult}
           loading={loading}
-          onChange={(_event: any, newInputValue: any) => newInputValue && onSelectCallback(newInputValue)}
+          onChange={async (_event: any, newInputValue: any, reason: any) => {
+            if (newInputValue && reason === "selectOption")
+              onSelectCallback(newInputValue);
+            else if (newInputValue && reason === "createOption") {
+              await getData(inputValue);
+              inputRef.current?.blur();
+              inputRef.current?.focus();
+            }
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
