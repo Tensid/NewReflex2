@@ -157,7 +157,7 @@ namespace ReflexByggrService
             filteredArenden = filteredArenden.Where(x => _config.MinCaseStartDate == null || x.ankomstDatum > _config.MinCaseStartDate);
             filteredArenden = filteredArenden.Where(x => _config.Diarieprefixes?.Any() != true || _config.Diarieprefixes.Contains(x.diarieprefix));
             filteredArenden = filteredArenden.Where(x => _config.Statuses.IsNullOrEmpty() || !_config.Statuses.Contains(x.status.ToString()));
-            filteredArenden = filteredArenden.Where(x => _config.HideCasesWithTextMatching.IsNullOrEmpty() || _config.HideCasesWithTextMatching.All(h => !x.beskrivning.Contains(h)));
+            filteredArenden = filteredArenden.Where(x => _config.HideCasesWithTextMatching.IsNullOrEmpty() || _config.HideCasesWithTextMatching.All(h => !x.beskrivning.Contains(h, StringComparison.OrdinalIgnoreCase)));
             return filteredArenden;
         }
 
@@ -173,7 +173,7 @@ namespace ReflexByggrService
                 .Where(handelse => !handelse.makulerad)
                 .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
                 .Where(handelse => !handelse.sekretess || _config.HideConfidentialOccurences != Visibility.Hide)
-                .Where(handelse => _config.HideOccurencesWithTextMatching.IsNullOrEmpty() || _config.HideOccurencesWithTextMatching.All(text => !handelse.rubrik.Contains(text)))
+                .Where(handelse => _config.HideOccurencesWithTextMatching.IsNullOrEmpty() || _config.HideOccurencesWithTextMatching.All(text => !handelse.rubrik.Contains(text, StringComparison.OrdinalIgnoreCase)))
                 .Select(handelse => new Occurence
                 {
                     Documents = handelse.sekretess ? Array.Empty<Document>() : handelse.handlingLista
@@ -253,7 +253,7 @@ namespace ReflexByggrService
                         .Where(handelse => _config.OccurenceTypes.IsNullOrEmpty() || !_config.OccurenceTypes.Contains(handelse.handelsetyp))
                         .Where(handelse => !handelse.makulerad)
                         .Where(handelse => _config.WorkingMaterial || handelse.arbetsmaterial == false)
-                        .Where(handelse => _config.HideOccurencesWithTextMatching.IsNullOrEmpty() || _config.HideOccurencesWithTextMatching.All(text => !handelse.rubrik.Contains(text)))
+                        .Where(handelse => _config.HideOccurencesWithTextMatching.IsNullOrEmpty() || _config.HideOccurencesWithTextMatching.All(text => !handelse.rubrik.Contains(text, StringComparison.OrdinalIgnoreCase)))
                         .Where(x => !x.sekretess || _config.HideConfidentialOccurences != Visibility.Hide)
                         .Select(handelse => new Handelse
                         {
@@ -306,7 +306,7 @@ namespace ReflexByggrService
                 return "-1";
 
             var doNotHideByText = _config.HideDocumentsWithNoteTextMatching.IsNullOrEmpty();
-            if (doNotHideByText || !_config.HideDocumentsWithNoteTextMatching.Any(h => handling.anteckning.Contains(h)))
+            if (doNotHideByText || !_config.HideDocumentsWithNoteTextMatching.Any(h => handling.anteckning.Contains(h, StringComparison.OrdinalIgnoreCase)))
                 return handling.dokument.dokId.ToString(CultureInfo.InvariantCulture);
 
             return "-1";
