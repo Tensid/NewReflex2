@@ -49,23 +49,22 @@ namespace ReflexByggrService
             if (uri == null)
                 return null;
 
-            BasicHttpBinding binding;
+            var binding = new BasicHttpBinding
+            {
+                MaxBufferSize = int.MaxValue,
+                MaxReceivedMessageSize = int.MaxValue
+            };
 
             if (uri.StartsWith("https:"))
             {
-                binding = new BasicHttpBinding(BasicHttpSecurityMode.TransportWithMessageCredential)
+                if (!string.IsNullOrEmpty(_settings.Username) && !string.IsNullOrEmpty(_settings.Password))
                 {
-                    MaxBufferSize = int.MaxValue,
-                    MaxReceivedMessageSize = int.MaxValue
-                };
-            }
-            else
-            {
-                binding = new BasicHttpBinding
+                    binding.Security.Mode = BasicHttpSecurityMode.TransportWithMessageCredential;
+                }
+                else
                 {
-                    MaxBufferSize = int.MaxValue,
-                    MaxReceivedMessageSize = int.MaxValue
-                };
+                    binding.Security.Mode = BasicHttpSecurityMode.Transport;
+                }
             }
 
             var client = new ExportArendenClient(binding, new EndpointAddress(uri));
