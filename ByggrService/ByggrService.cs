@@ -301,11 +301,11 @@ namespace ReflexByggrService
 
         private string GetDocLinkId(handling handling)
         {
-            if (handling?.dokument?.dokId == null || handling?.anteckning == null)
+            if (handling?.dokument?.dokId == null)
                 return "-1";
 
             var doNotHideByText = _config.HideDocumentsWithNoteTextMatching.IsNullOrEmpty();
-            if (doNotHideByText || !_config.HideDocumentsWithNoteTextMatching.Any(h => handling.anteckning.Contains(h, StringComparison.OrdinalIgnoreCase)))
+            if (doNotHideByText || handling?.anteckning == null || !_config.HideDocumentsWithNoteTextMatching.Any(h => handling.anteckning.Contains(h, StringComparison.OrdinalIgnoreCase)))
                 return handling.dokument.dokId.ToString(CultureInfo.InvariantCulture);
 
             return "-1";
