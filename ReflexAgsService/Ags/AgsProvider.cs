@@ -83,28 +83,32 @@ namespace ReflexAgsService.Ags
             searchResultDoc.LoadXml(searchResultXml);
             var groups = searchResultDoc.GetElementsByTagName("ags_Groups")[0];
 
-            var title = new Dictionary<string, string>();
-            var groupId = groups.ChildNodes.Cast<XmlNode>().FirstOrDefault()?.Attributes?["AGS_GROUPID"].Value;
-            var groupData = (await svc.Client.ags_GroupGetDataFromIdAsync(svc.ValidationKey, instanceId, departmentId, groupId, "true")).Body.ags_GroupGetDataFromIdResult;
-            var searchResultDocGroupData = new XmlDocument();
-            searchResultDocGroupData.LoadXml(groupData);
-            var agsGroupAliasAndColumnName = searchResultDocGroupData.GetElementsByTagName("ags_GroupAliasAndColumnName");
-            foreach (var alias in displayColumns)
-            {
-                title.Add(alias, agsGroupAliasAndColumnName.Cast<XmlNode>().FirstOrDefault(
-                               groupNode => groupNode.Attributes?["ALIAS"].Value == alias)?.Attributes?["COLUMN_VALUE"]?.Value?.Trim() ?? "-");
-            }
-
             var searchResult = groups.ChildNodes.Cast<XmlNode>().Select(groupNode => new Case
             {
                 CaseSource = "AGS",
                 Date = string.IsNullOrEmpty(dateColumn) ? DateTime.Today : DateTime.Parse(groupNode.Attributes.Cast<XmlAttribute>().SingleOrDefault(attr => attr.Name == dateColumn)?.Value ?? DateTime.Today.ToShortDateString()),
                 CaseId = groupNode.Attributes["AGS_GROUPID"].Value,
                 Dnr = groupNode.Attributes["AGS_GROUPID"].Value,
-                Title = string.Format(display, displayColumns.Select(dp => title[dp] ?? "-").ToArray())
+                Title = string.Format(display, displayColumns.Select(dp => GetTitle(groupNode.Attributes["AGS_GROUPID"].Value).Result[dp] ?? "-").ToArray())
             }).ToArray();
 
             return searchResult;
+
+            async Task<Dictionary<string, string>> GetTitle(string groupId)
+            {
+                var title = new Dictionary<string, string>();
+                var groupData = (await svc.Client.ags_GroupGetDataFromIdAsync(svc.ValidationKey, instanceId, departmentId, groupId, "true")).Body.ags_GroupGetDataFromIdResult;
+                var searchResultDocGroupData = new XmlDocument();
+                searchResultDocGroupData.LoadXml(groupData);
+                var agsGroupAliasAndColumnName = searchResultDocGroupData.GetElementsByTagName("ags_GroupAliasAndColumnName");
+                foreach (var alias in displayColumns)
+                {
+                    title.Add(alias, agsGroupAliasAndColumnName.Cast<XmlNode>().FirstOrDefault(
+                                   groupNode => groupNode.Attributes?["ALIAS"].Value == alias)?.Attributes?["COLUMN_VALUE"]?.Value?.Trim() ?? "-");
+                }
+
+                return title;
+            }
         }
 
         public async Task<ArchivedDocument[]> GetDocumentsByCase(string caseId, string displayPattern, string instanceId, string departmentId, string searchWay)
@@ -125,16 +129,26 @@ namespace ReflexAgsService.Ags
 
             var documentNodes = documentsDoc.GetElementsByTagName("ags_Documents")[0];
 
-            return documentNodes.ChildNodes.Cast<XmlNode>().Select(docNode => new ArchivedDocument
+            var archivedDocument = new ArchivedDocument
             {
-                PhysicalDocumentId = docNode.Attributes["AGS_DOCUMENTID"].Value,
-                Title = string.Format(display,
+                Docs = documentNodes.ChildNodes.Cast<XmlNode>().Select(docNode => new Doc
+                {
+                    Title = string.Format(display,
                         displayColumns.Select(
-                            dp =>
-                                docNode.Attributes.Cast<XmlAttribute>()
-                                    .FirstOrDefault(attr => attr.Name == dp)?
-                                    .Value ?? "-").ToArray())
-            }).ToArray();
+                            dp => docNode.Attributes.Cast<XmlAttribute>()
+                            .FirstOrDefault(attr => attr.Name == dp)?.Value ?? "-").ToArray()),
+                    Files = new[] { new File
+                    {
+                        Title = string.Format(display,
+                            displayColumns.Select(
+                                dp => docNode.Attributes.Cast<XmlAttribute>()
+                                .FirstOrDefault(attr => attr.Name == dp)?.Value ?? "-").ToArray()),
+                        PhysicalDocumentId = docNode.Attributes["AGS_DOCUMENTID"].Value ?? "-1",
+                    }}
+                })
+            };
+
+            return new[] { archivedDocument };
         }
 
         public async Task<PhysicalDocument> GetPhysicalDocument(string documentId, string instanceId, string departmentId)

@@ -59,7 +59,14 @@ namespace Reflex.Controllers
                         foreach (var agsConfig in config.AgsConfigs)
                         {
                             var proxy = _proxyService.GetProxy(source, agsConfig.Id);
-                            var agsCases = await proxy.GetCasesByEstate(string.IsNullOrWhiteSpace(estateId) ? estateName : estateId);
+
+                            string searchExpressions;
+                            if (agsConfig.EstateNameSearch || string.IsNullOrWhiteSpace(estateId))
+                                searchExpressions = estateName;
+                            else
+                                searchExpressions = estateId;
+
+                            var agsCases = await proxy.GetCasesByEstate(searchExpressions);
                             foreach (var c in agsCases)
                             {
                                 c.CaseSourceId = agsConfig.Id;
