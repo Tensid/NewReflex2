@@ -30,7 +30,7 @@ export const MapClickEvent = ({ fnr, setAlert, contextmenu, setEstateFeatures, i
       source: 'FB' as CaseSource,
       type: 'Fastighet',
       displayName: estateName || '',
-      estateName: ''
+      estateName: estateName || ''
     };
 
     dispatch(setSearchResult(searchResult));
