@@ -49,12 +49,24 @@ function fetchTabData(setTabState: (tabState: TabState<any>) => void, tabData: a
   })();
 }
 
+function formatDnr(dnr: string, diarieprefix: string | undefined, caseSource: string) {
+  const inputString = dnr;
+  const parts = inputString.split(' ');
+
+  if (parts.length > 0 && caseSource === CaseSource.ByggR) {
+    const firstPart = parts[0];
+    if (diarieprefix !== firstPart)
+      return <span title={`Diarie: ${diarieprefix}`}>{dnr}</span>;
+  }
+  return dnr;
+}
+
 const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
   const [previewData, setPreview] = useState<TabState<Preview>>({ ...initTabState, tab: 'Preview' });
   const [occurencesData, setOccurences] = useState<TabState<Occurence[]>>({ ...initTabState, tab: 'Occurences' });
   const [personsData, setPersons] = useState<TabState<CasePerson[]>>({ ...initTabState, tab: 'Persons' });
   const [archivedDocumentsData, setArchivedDocuments] = useState<TabState<ArchivedDocument[]>>({ ...initTabState, tab: 'Archive' });
-  const { caseSource, dnr, caseId, title, caseSourceId, date, tabs } = modalData;
+  const { caseSource, dnr, caseId, title, caseSourceId, date, tabs, diarieprefix } = modalData;
 
   let availableTabs = tabs || availableCaseDetailsTabs.get(caseSource)!;
   if (caseSource === 'ByggR') {
@@ -81,7 +93,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
   return (
     <Modal show={show} onHide={toggleShow} size="xl">
       <Modal.Header closeButton>
-        <Modal.Title>{dnr}: {title}</Modal.Title>
+        <Modal.Title>{formatDnr(dnr, diarieprefix, caseSource)}: {title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="modal-body" title={`${dnr}: ${title}`}>

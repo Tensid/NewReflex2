@@ -1,4 +1,3 @@
-import React from 'react';
 import { Case } from '../../api/api';
 import CaseItem from './CaseItem';
 
@@ -14,6 +13,7 @@ const CaseList = ({ cases, toggleShow, setModalData }: CaseListProps) => {
       {cases.map((case_) => <CaseItem
         key={case_.caseId || (case_.title + case_.dnr)}
         caseId={case_.caseId}
+        diarieprefix={case_?.diarieprefix}
         dnr={case_.dnr}
         title={case_.title}
         caseSource={case_.caseSource}

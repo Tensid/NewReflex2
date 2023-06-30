@@ -12,6 +12,7 @@ export interface ModalData {
   dnr: string;
   caseId: string;
   caseSource: CaseSource;
+  diarieprefix?: string;
   title: string;
   caseSourceId: string;
   date: string | undefined;

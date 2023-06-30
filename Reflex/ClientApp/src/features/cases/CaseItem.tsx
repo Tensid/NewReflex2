@@ -16,9 +16,22 @@ interface CaseItemProps {
   date: string;
   unavailableDueToSecrecy: boolean;
   tabs: CaseTab[];
+  diarieprefix?: string;
 }
 
-const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, caseId, caseSourceId, date, unavailableDueToSecrecy, tabs }: CaseItemProps) => {
+function formatDnr(dnr: string, diarieprefix: string | undefined, caseSource: string) {
+  const inputString = dnr;
+  const parts = inputString.split(' ');
+
+  if (parts.length > 0 && caseSource === CaseSource.ByggR) {
+    const firstPart = parts[0];
+    if (diarieprefix !== firstPart)
+      return <span title={`Diarie: ${diarieprefix}`}>{dnr}</span>;
+  }
+  return dnr;
+}
+
+const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, caseId, caseSourceId, date, unavailableDueToSecrecy, tabs, diarieprefix }: CaseItemProps) => {
   let color = 'secondary';
   let symbol: IconDefinition;
   if (caseSource === CaseSource.Ecos) {
@@ -39,7 +52,7 @@ const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, ca
   }
 
   function handleClick() {
-    setModalData({ dnr, caseId, caseSource, title, caseSourceId, date, tabs });
+    setModalData({ dnr, caseId, caseSource, title, caseSourceId, date, tabs, diarieprefix });
     toggleShow();
   }
 
@@ -48,7 +61,7 @@ const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, ca
       <div className="col-lg-12 d-grid">
         <button disabled={unavailableDueToSecrecy} className={`btn btn-outline-${color} text-start mb-1 ${styles.blackOutline} ${styles.btn}`} onClick={handleClick}>
           <span className={`${unavailableDueToSecrecy ? '' : styles.caseSymbol} pe-2 text-${color}`}><FontAwesomeIcon icon={symbol!} /></span>
-          {dnr}: {title}{status ? ` (${status})` : ''}
+          {formatDnr(dnr, diarieprefix, caseSource)}: {title}{status ? ` (${status})` : ''}
           {unavailableDueToSecrecy && <FontAwesomeIcon title="Sekretess" icon={faLock} />}
         </button>
       </div>
