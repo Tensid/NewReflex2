@@ -132,8 +132,8 @@ export const Measure = ({ typeSelect }: MeasureProps) => {
        * @param {LineString} line The line.
        * @return {string} The formatted length.
        */
-      const formatLength = (line: LineString) => {
-        const length = getLength(line);
+      const formatLength = (line: LineString, projection: string) => {
+        const length = getLength(line, { projection });
         let output;
         if (length > 1000) {
           output = `${Math.round(length / 1000 * 10) / 10} km`;
@@ -149,8 +149,8 @@ export const Measure = ({ typeSelect }: MeasureProps) => {
        * @param {Polygon} polygon The polygon.
        * @return {string} Formatted area.
        */
-      const formatArea = (polygon: Polygon) => {
-        const area = getArea(polygon);
+      const formatArea = (polygon: Polygon, projection: string) => {
+        const area = getArea(polygon, { projection });
         let output;
         if (area > 1000000) {
           output = `${Math.round(area / 1000000 * 10) / 10} km<sup>2</sup>`;
@@ -203,11 +203,12 @@ export const Measure = ({ typeSelect }: MeasureProps) => {
             listener = sketch?.getGeometry()?.on('change', function (evt) {
               const geom = evt.target;
               let output!: string;
+              const projection = map.getView().getProjection().getCode();
               if (geom instanceof Polygon) {
-                output = formatArea(geom);
+                output = formatArea(geom, projection);
                 tooltipCoord = geom.getInteriorPoint().getCoordinates();
               } else if (geom instanceof LineString) {
-                output = formatLength(geom);
+                output = formatLength(geom, projection);
                 tooltipCoord = geom.getLastCoordinate();
               }
               measureTooltipElement!.innerHTML = output;
