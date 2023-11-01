@@ -11,7 +11,7 @@ const CaseList = ({ cases, toggleShow, setModalData }: CaseListProps) => {
   return (
     <>
       {cases.map((case_) => <CaseItem
-        key={case_.caseId || (case_.title + case_.dnr)}
+        key={`${case_?.caseId}_${case_?.title}_${case_?.dnr}`}
         caseId={case_.caseId}
         diarieprefix={case_?.diarieprefix}
         dnr={case_.dnr}
