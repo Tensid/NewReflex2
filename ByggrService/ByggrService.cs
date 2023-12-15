@@ -4,13 +4,15 @@ using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using ArendeExportWS;
+using ByggrDb;
 using CustomExtensions;
 using Reflex.Data;
 using Reflex.Data.Models;
 using VisaRService;
 using VisaRService.Contracts;
+using ArendeExport;
 using Document = VisaRService.Contracts.Document;
+using ArendeExportWS;
 
 namespace ReflexByggrService
 {
@@ -18,17 +20,21 @@ namespace ReflexByggrService
     {
         private readonly ByggrSettings _settings;
         private readonly ApplicationDbContext _context;
+        private readonly Byggr _byggrContext;
+        private readonly ArendeExportService _arendeExportService;
 
-        public ByggrServiceFactory(ApplicationDbContext context)
+        public ByggrServiceFactory(ApplicationDbContext context, Byggr byggrContext, ArendeExportService arendeExportService)
         {
             _settings = context.ByggrSettings.FirstOrDefault();
             _context = context;
-        }
+            _byggrContext = byggrContext;
+            _arendeExportService = arendeExportService;
+    }
 
         public ByggrService Create(Guid id)
         {
             var byggrConfig = _context.ByggrConfigs.FirstOrDefault(x => x.Id == id);
-            return new ByggrService(_settings, byggrConfig);
+            return new ByggrService(_settings, byggrConfig, _byggrContext, _arendeExportService);
         }
     }
 
@@ -36,48 +42,15 @@ namespace ReflexByggrService
     {
         private readonly ByggrSettings _settings;
         private readonly ByggrConfig _config;
+        private readonly Byggr _byggrContext;
+        private readonly ArendeExportService _arendeExportService;
 
-        public ByggrService(ByggrSettings settings, ByggrConfig byggrConfig)
+        public ByggrService(ByggrSettings settings, ByggrConfig byggrConfig, Byggr byggrContext, ArendeExportService arendeExportService)
         {
             _settings = settings;
             _config = byggrConfig;
-        }
-
-        private ExportArendenClient GetExportArendenClient()
-        {
-            var uri = _settings?.ServiceUrl;
-            if (uri == null)
-                return null;
-
-            var binding = new BasicHttpBinding
-            {
-                MaxBufferSize = int.MaxValue,
-                MaxReceivedMessageSize = int.MaxValue
-            };
-
-            if (uri.StartsWith("https:"))
-            {
-                if (!string.IsNullOrEmpty(_settings.Username) && !string.IsNullOrEmpty(_settings.Password))
-                {
-                    binding.Security.Mode = BasicHttpSecurityMode.TransportWithMessageCredential;
-                }
-                else
-                {
-                    binding.Security.Mode = BasicHttpSecurityMode.Transport;
-                }
-            }
-
-            var client = new ExportArendenClient(binding, new EndpointAddress(uri));
-            if (string.IsNullOrEmpty(_settings.Username) || string.IsNullOrEmpty(_settings.Password))
-            {
-                return client;
-            }
-
-            binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;
-            client.ClientCredentials.UserName.UserName = _settings.Username;
-            client.ClientCredentials.UserName.Password = _settings.Password;
-
-            return client;
+            _byggrContext = byggrContext;
+            _arendeExportService = arendeExportService;
         }
 
         public Task<ArchivedDocument[]> GetArchivedDocumentsByCase(string caseId)
@@ -87,7 +60,7 @@ namespace ReflexByggrService
 
         public async Task<Case[]> GetCasesByEstate(string estateId)
         {
-            var client = GetExportArendenClient();
+            var client = _arendeExportService.GetExportArendenClient();
             var arenden = (await client.GetRelateradeArendenByFastighetAsync(Convert.ToInt32(estateId), null, null, null,
                 _config.OnlyActiveCases ? StatusFilter.Aktiv : StatusFilter.None)).GetRelateradeArendenByFastighetResult;
             client.Close();
@@ -121,7 +94,7 @@ namespace ReflexByggrService
 
         public async Task<Case> GetCase(string id)
         {
-            var client = GetExportArendenClient();
+            var client = _arendeExportService.GetExportArendenClient();
             try
             {
                 var arende = await client.GetArendeAsync(id);
@@ -162,7 +135,7 @@ namespace ReflexByggrService
 
         public async Task<Occurence[]> GetOccurencesByCase(string caseId)
         {
-            var client = GetExportArendenClient();
+            var client = _arendeExportService.GetExportArendenClient();
             var arende = await client.GetArendeAsync(caseId);
             var handlingTyper = await client.GetHandlingTyperAsync(StatusFilter.None);
             client.Close();
@@ -199,7 +172,7 @@ namespace ReflexByggrService
 
         public async Task<CasePerson[]> GetPersonsByCase(string caseId)
         {
-            var client = GetExportArendenClient();
+            var client = _arendeExportService.GetExportArendenClient();
             var arende = await client.GetArendeAsync(caseId);
             var roller = await client.GetRollerAsync(RollTyp.Intressent, StatusFilter.None);
             client.Close();
@@ -220,7 +193,7 @@ namespace ReflexByggrService
 
         public async Task<Preview> GetPreviewByCase(string caseId)
         {
-            var client = GetExportArendenClient();
+            var client = _arendeExportService.GetExportArendenClient();
             var arende = await client.GetArendeAsync(caseId);
             var handlingTyper = await client.GetHandlingTyperAsync(StatusFilter.None);
             var roller = await client.GetRollerAsync(RollTyp.Intressent, StatusFilter.None);
@@ -280,7 +253,7 @@ namespace ReflexByggrService
 
         public async Task<PhysicalDocument> GetDocument(string id)
         {
-            var client = GetExportArendenClient();
+            var client = _arendeExportService.GetExportArendenClient();
             var doc = (await client.GetDocumentAsync(id, true, "")).GetDocumentResult.FirstOrDefault();
 
             var rdoc = new PhysicalDocument
@@ -330,7 +303,7 @@ namespace ReflexByggrService
 
         public Task<HandlingTyp[]> GetDocumentTypes()
         {
-            var client = GetExportArendenClient();
+            var client = _arendeExportService.GetExportArendenClient();
             if (client == null)
                 return Task.FromResult(Array.Empty<HandlingTyp>());
             return client.GetHandlingTyperAsync(StatusFilter.None);
@@ -338,10 +311,18 @@ namespace ReflexByggrService
 
         public Task<Roll[]> GetRoles()
         {
-            var client = GetExportArendenClient();
+            var client = _arendeExportService.GetExportArendenClient();
             if (client == null)
                 return Task.FromResult(Array.Empty<Roll>());
             return client.GetRollerAsync(RollTyp.Intressent, StatusFilter.None);
+        }
+
+        public List<ArkDiarie> GetDiarier()
+        {
+            //Göra select på bara det som behövs??
+            //felhantera om inte hittar något??
+            var result = _byggrContext.ArkDiaries.ToList();
+            return result;
         }
     }
 }

@@ -55,6 +55,9 @@ namespace Reflex.Controllers
             {
                 var options = (await _byggrService.Create(Guid.Empty).GetRoles()).OrderByDescending(x => x.ArAktiv).ThenBy((x) => x.Beskrivning)
                     .Select(x => new SelectOption { Value = x.RollKod, Label = x.Beskrivning, Active = x.ArAktiv });
+
+                var result = ( _byggrService.Create(Guid.Empty).GetDiarier());
+                
                 return options;
             }
             catch (Exception)

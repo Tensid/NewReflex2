@@ -22,6 +22,8 @@ using ReflexByggrService;
 using ReflexEcosService;
 using Microsoft.AspNetCore.Authorization;
 using ReflexIipaxService;
+using ByggrDb;
+using ArendeExport;
 
 namespace Reflex
 {
@@ -40,6 +42,9 @@ namespace Reflex
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<Byggr>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("ByggR")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = Configuration.GetValue<bool>("RequireConfirmedAccount"))
                 .AddRoles<IdentityRole>()
@@ -53,6 +58,7 @@ namespace Reflex
             services.AddScoped<ISystemSettingsService, SystemSettingsService>();
             services.AddScoped<IProxyService, ProxyService>();
             services.AddScoped<AgsServiceFactory, AgsServiceFactory>();
+            services.AddScoped<ArendeExportService, ArendeExportService>();
             services.AddScoped<ByggrServiceFactory, ByggrServiceFactory>();
             services.AddScoped<EcosServiceFactory, EcosServiceFactory>();
             services.AddScoped<IipaxServiceFactory, IipaxServiceFactory>();
