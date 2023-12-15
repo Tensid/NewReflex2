@@ -13,8 +13,8 @@ const getColor = () => {
   return chroma("LightSlateGray");
 };
 
-const colourStyles: StylesConfig<SelectOption, true> = {
-  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+const colourStyles: any = {
+  option: (styles: any, { data, isDisabled, isFocused, isSelected }: any) => {
     if (data.active)
       return { ...styles };
 
@@ -46,7 +46,7 @@ const colourStyles: StylesConfig<SelectOption, true> = {
       }
     };
   },
-  multiValue: (styles, { data }) => {
+  multiValue: (styles: any, { data }: any) => {
     if (data.active)
       return { ...styles };
     const color = getColor();
@@ -55,7 +55,7 @@ const colourStyles: StylesConfig<SelectOption, true> = {
       backgroundColor: color.alpha(0.1).css()
     };
   },
-  multiValueLabel: (styles, { data }) => {
+  multiValueLabel: (styles: any, { data }: any) => {
     if (data.active)
       return { ...styles };
     const color = getColor();

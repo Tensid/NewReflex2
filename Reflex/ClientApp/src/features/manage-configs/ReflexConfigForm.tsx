@@ -51,8 +51,8 @@ const Option = (props: OptionProps<CaseSourceOption>) => {
   );
 };
 
-const colourStyles: StylesConfig<CaseSourceOption, true> = {
-  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+const colourStyles: any = {
+  option: (styles: any, { data, isDisabled, isFocused, isSelected }: any) => {
     let color = getColor(data.caseSource);
     return {
       ...styles,
@@ -74,19 +74,19 @@ const colourStyles: StylesConfig<CaseSourceOption, true> = {
       },
     };
   },
-  multiValue: (styles, { data }) => {
+  multiValue: (styles: any, { data }: any) => {
     const color = getColor(data.caseSource);
     return {
       ...styles,
       backgroundColor: color.alpha(0.1).css()
     };
   },
-  multiValueLabel: (styles, { data }) => {
+  multiValueLabel: (styles: any, { data }: any) => {
     return {
       ...styles
     };
   },
-  multiValueRemove: (styles, { data }) => {
+  multiValueRemove: (styles: any, { data }: any) => {
     const color = getColor(data.caseSource);
     return {
       ...styles,
