@@ -1,9 +1,6 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +19,10 @@ using ReflexByggrService;
 using ReflexEcosService;
 using Microsoft.AspNetCore.Authorization;
 using ReflexIipaxService;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using System.Text.Json;
+using Microsoft.AspNetCore.Identity;
 
 namespace Reflex
 {
@@ -41,62 +42,59 @@ namespace Reflex
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = Configuration.GetValue<bool>("RequireConfirmedAccount"))
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = Configuration.GetValue<bool>("RequireConfirmedAccount"))
+            //    .AddRoles<IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
-                .AddProfileService<ProfileService>();
+            //services.AddIdentityServer()
+            //    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
+            //    .AddProfileService<ProfileService>();
 
-            services.AddScoped<IRepository, Repository>();
-            services.AddScoped<ISystemSettingsService, SystemSettingsService>();
-            services.AddScoped<IProxyService, ProxyService>();
-            services.AddScoped<AgsServiceFactory, AgsServiceFactory>();
-            services.AddScoped<ByggrServiceFactory, ByggrServiceFactory>();
-            services.AddScoped<EcosServiceFactory, EcosServiceFactory>();
-            services.AddScoped<IipaxServiceFactory, IipaxServiceFactory>();
-            services.AddScoped<IFbProvider, FbProvider>();
-            services.AddScoped<IFbService, FbService.FbService>();
-            services.AddScoped<IMapProxyService, MapProxyService>();
+            services.AddTransient<IRepository, Repository>();
+            services.AddTransient<ISystemSettingsService, SystemSettingsService>();
+            services.AddTransient<IProxyService, ProxyService>();
+            services.AddTransient<AgsServiceFactory, AgsServiceFactory>();
+            services.AddTransient<ByggrServiceFactory, ByggrServiceFactory>();
+            services.AddTransient<EcosServiceFactory, EcosServiceFactory>();
+            services.AddTransient<IipaxServiceFactory, IipaxServiceFactory>();
+            services.AddTransient<IFbProvider, FbProvider>();
+            services.AddTransient<IFbService, FbService.FbService>();
+            services.AddTransient<IMapProxyService, MapProxyService>();
 
             services.AddHttpClient<IFbProvider, FbProvider>();
 
-            services.AddAuthentication()
-                .AddWsFederation(options =>
-                {
-                    options.MetadataAddress = Configuration["WsFederation:MetadataAddress"];
-                    options.Wtrealm = Configuration["WsFederation:Wtrealm"];
-                })
-                .AddIdentityServerJwt();
+            //services.AddAuthentication()
+            //    .AddWsFederation(options =>
+            //    {
+            //        options.MetadataAddress = Configuration["WsFederation:MetadataAddress"];
+            //        options.Wtrealm = Configuration["WsFederation:Wtrealm"];
+            //    })
+            //    .AddIdentityServerJwt();
 
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            //services.AddControllersWithViews();
+            //services.AddRazorPages();
 
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(Policies.HasConfigPermission, policy =>
                     policy.Requirements.Add(new HasConfigPermissionRequirement()));
             });
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(Policies.HasCaseSourcePermission, policy =>
-                    policy.Requirements.Add(new HasCaseSourcePermissionRequirement()));
-            });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy(Policies.HasCaseSourcePermission, policy =>
+            //        policy.Requirements.Add(new HasCaseSourcePermissionRequirement()));
+            //});
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(Policies.IsAdmin, policy =>
                     policy.Requirements.Add(new IsAdminRequirement()));
             });
-            services.AddScoped<IAuthorizationHandler, HasConfigPermissionHandler>();
-            services.AddScoped<IAuthorizationHandler, HasCaseSourcePermissionHandler>();
-            services.AddScoped<IAuthorizationHandler, IsAdminHandler>();
 
-            // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+            //options.AddPolicy(Policies.IsAdmin,
+            //        policy => policy.RequireClaim(Permissions.IsAdmin, "True"));
+            //services.AddScoped<IAuthorizationHandler, HasConfigPermissionHandler>();
+            //services.AddScoped<IAuthorizationHandler, HasCaseSourcePermissionHandler>();
+            services.AddScoped<IAuthorizationHandler, IsAdminHandler>();
 
             services.AddTransient<IEmailSender, EmailSender>(i =>
                 new EmailSender(
@@ -107,81 +105,57 @@ namespace Reflex
                     Configuration["EmailSender:Password"]
                 )
             );
+
+            services.AddApplication<ReflexApplication>()
+                .AddPermissions(Permissions.IsAdmin)
+                .AddPermissions(Permissions.HasConfigPermission)
+                .AddPermissions(Permissions.HasCaseSourcePermission)
+                .AddSettings();
+
+            //services.Configure<IISServerOptions>(options =>
+            //{
+            //    options.AllowSynchronousIO = true;
+            //});
+
+
+            //services.AddControllers(options =>
+            //{
+            //    // Add the filter globally
+            //    options.Filters.Add<UseSystemTextJsonActionFilter>();
+            //}).AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            //    options.JsonSerializerOptions.WriteIndented = true;
+            //});
+
+            //services.AddControllers(options => options.OutputFormatters.RemoveType<NewtonsoftJsonOutputFormatter>());
+
+            //services.AddControllers().
+            //AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            //    options.JsonSerializerOptions.WriteIndented = true;
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        //public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider services)
         {
-            if (env.IsDevelopment())
+            //using var scope = host.Services.CreateScope();
+            //var services = scope.ServiceProvider;
+
+            try
             {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                var context = services.GetRequiredService<ApplicationDbContext>();
+                context.Database.Migrate();
             }
-            else
+            catch (Exception ex)
             {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseSpaStaticFiles();
-
-            app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseIdentityServer();
-            app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
-            });
-
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
-            });
-            CreateUserRoles(services).Wait();
-        }
-
-        private async Task CreateUserRoles(IServiceProvider serviceProvider)
-        {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            string[] roleNames = { "Admin", "User" };
-
-            foreach (var roleName in roleNames)
-            {
-                var roleExists = await roleManager.RoleExistsAsync(roleName);
-                if (!roleExists)
-                {
-                    await roleManager.CreateAsync(new IdentityRole(roleName));
-                }
+                var logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError(ex, "An error occurred creating the DB.");
             }
 
-            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            var users = userManager.Users;
-            if (!users.Any())
-            {
-                ApplicationUser user = new ApplicationUser()
-                {
-                    UserName = "admin@reflex.com",
-                    Email = "admin@reflex.com",
-                    SecurityStamp = Guid.NewGuid().ToString()
-                };
-                await userManager.CreateAsync(user, "Adm1n!");
-                await userManager.AddToRoleAsync(user, "Admin");
-                var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                await userManager.ConfirmEmailAsync(user, code);
-            }
         }
     }
 }

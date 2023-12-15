@@ -6,13 +6,14 @@ const CreatableSelectInput = ({ name, label, options, isMulti, control }: any) =
     <div className="mb-3">
       <label htmlFor={name}>{label}</label>
       <Controller
-        as={<CreatableSelect />}
-        isMulti={isMulti}
-        placeholder={`Välj ${label.toLowerCase()}...`}
-        formatCreateLabel={(value: string) => <>{`Lägg till "${value}"`}</>}
-        noOptionsMessage={() => null}
-        closeMenuOnSelect={false}
-        options={options}
+        render={({ field }) => <CreatableSelect
+          isMulti={isMulti}
+          placeholder={`Välj ${label.toLowerCase()}...`}
+          formatCreateLabel={(value) => <>{`Lägg till "${value}"`}</>}
+          noOptionsMessage={() => null}
+          closeMenuOnSelect={false}
+          options={options}
+        />}
         defaultValue={[]}
         name={name}
         control={control}

@@ -1,8 +1,9 @@
 import { MouseEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Config, getConfigs, getContact } from './api/api';
 import { useAppSelector } from './app/hooks';
 import ConfigList from './features/configs/ConfigList';
+import { useHasPermissions } from './hooks/useHasPermissions';
 
 interface Contact {
   body: string;
@@ -11,8 +12,10 @@ interface Contact {
 }
 
 const Configs = () => {
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const roles = useAppSelector((state) => state.user?.roles);
+  // const isAdministrator: boolean = hasPermission('IsAdministrator');
+  const isAdmin = useHasPermissions('IsAdministrator');
   const [configs, setConfigs] = useState<Config[]>();
   const [contact, setContact] = useState<Contact>({
     body: '',
@@ -29,16 +32,16 @@ const Configs = () => {
 
   function handleClick(e: MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
-    navigate('/manage-configs');
+    navigate.push('/manage-configs');
   };
 
-  if (!roles || !configs)
+  if (!isAdmin || !configs)
     return null;
 
   return (
     <>
       {(configs.length === 0) ?
-        roles.includes('Admin') ?
+        isAdmin ?
           <h5 className="text-center">
             <a href="/manage-configs" onClick={handleClick}>Skapa</a> en konfiguration för att fortsätta.
           </h5>

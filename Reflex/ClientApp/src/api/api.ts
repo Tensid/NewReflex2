@@ -1,5 +1,5 @@
 import axios from 'axios';
-import authService from '../features/api-authorization/AuthorizeService';
+// import authService from '../features/api-authorization/AuthorizeService';
 
 const instance = axios.create({
   baseURL: 'api'
@@ -7,10 +7,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   async (config) => {
-    const token = await authService.getAccessToken();
-    if (token && config.headers) {
-      config.headers['Authorization']! = `Bearer ${token}`;
-    }
+    // const token = await authService.getAccessToken();
+    // if (token && config.headers) {
+    //   config.headers['Authorization']! = `Bearer ${token}`;
+    // }
     return config;
   },
   (error) => Promise.reject(error)

@@ -1,0 +1,16 @@
+﻿{
+  "toConsole": true,
+  "toFile": true,
+  "logFile": "./logs/sbwebb.log",
+  "minimumLevel": "Debug",
+  "minimumLevelOverrides": [
+    {
+      "source": "Microsoft",
+      "level": "Warning"
+    },
+    {
+      "source": "System",
+      "level": "Warning"
+    }
+  ]
+}

@@ -84,8 +84,8 @@ namespace Reflex.Services
         {
             try
             {
-                var claims = _context.UserClaims.Where(x => x.ClaimValue == id.ToString());
-                _context.UserClaims.RemoveRange(claims);
+                //var claims = _context.UserClaims.Where(x => x.ClaimValue == id.ToString());
+                //_context.UserClaims.RemoveRange(claims);
 
                 var config = _context.Configs.FirstOrDefault(x => x.Id == id);
                 _context.Configs.Remove(config);

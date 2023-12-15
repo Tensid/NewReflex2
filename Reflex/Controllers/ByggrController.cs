@@ -11,7 +11,7 @@ using ReflexByggrService;
 
 namespace Reflex.Controllers
 {
-    [Authorize(Policy = Policies.IsAdmin)]
+    ////[Authorize(Policy = Policies.IsAdmin)]
     [ApiController]
     [Route("api/[controller]")]
     public class ByggrController : ControllerBase

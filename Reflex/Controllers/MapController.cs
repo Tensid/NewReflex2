@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using FbService.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Reflex.Services;
 
 namespace Reflex.Controllers
 {
@@ -26,15 +29,23 @@ namespace Reflex.Controllers
         }
 
         [HttpGet("geometry")]
-        public Task<string> GetGeometryFromFnr(string fnr)
+        //[Produces("application/json")]
+        [UseSystemTextJson]
+        //public async Task<string> GetGeometryFromFnr(string fnr)
+        public async Task<IActionResult> GetGeometryFromFnr(string fnr)
         {
-            return _fbService.GetGeometryFromFnr(fnr);
+            var result = await _fbService.GetGeometryFromFnr(fnr);
+            //return result;
+            return Ok(JsonDocument.Parse((result)));
+            //return Ok(result);
+            //return new JsonResult(result);
         }
 
         [HttpGet("estateName")]
         public async Task<string> GetEstateName(string fnr)
         {
             var result = (await _fbService.GetEstate(fnr))?.EstateName ?? "Kunde inte hämta fastighet";
+            //return Ok(JsonDocument.Parse((result).Replace(Environment.NewLine, "")));
             return result;
         }
 

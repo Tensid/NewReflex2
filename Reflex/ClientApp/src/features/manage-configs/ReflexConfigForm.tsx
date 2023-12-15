@@ -1,4 +1,4 @@
-import { faArchive, faBug, faHammer, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faArchive, faBug, faHammer, IconDefinition } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import chroma from 'chroma-js';
 import { useEffect } from 'react';

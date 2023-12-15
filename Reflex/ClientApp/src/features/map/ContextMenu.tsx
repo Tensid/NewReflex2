@@ -2,7 +2,7 @@ import Geolocation from 'ol/Geolocation';
 import Map from 'ol/Map';
 import { unByKey } from 'ol/Observable';
 import { transform } from 'ol/proj';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import styles from './map.module.css';
 import './ol-contextmenu.css';
@@ -46,7 +46,7 @@ interface ContextMenuProps {
 }
 
 export const ContextMenu = ({ fnr, estateName, estatePosition, setContextMenu }: ContextMenuProps) => {
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const csmUrl = useAppSelector((state) => state.systemSettings.miscSettings?.csmUrl);
   const fbWebbBoendeUrl = useAppSelector((state) => state.systemSettings.fbWebbSettings?.fbWebbBoendeUrl);
   const fbWebbFastighetUrl = useAppSelector((state) => state.systemSettings.fbWebbSettings?.fbWebbFastighetUrl);
@@ -121,7 +121,7 @@ export const ContextMenu = ({ fnr, estateName, estatePosition, setContextMenu }:
               ,
               {
                 text: 'Visa ärenden',
-                callback: () => navigate('/cases')
+                callback: () => navigate.push('/cases')
               },
               '-'
             ];
@@ -177,7 +177,7 @@ export const ContextMenu = ({ fnr, estateName, estatePosition, setContextMenu }:
             ,
             {
               text: 'Visa ärenden',
-              callback: () => navigate('/cases')
+              callback: () => navigate.push('/cases')
             },
             '-'
           ];

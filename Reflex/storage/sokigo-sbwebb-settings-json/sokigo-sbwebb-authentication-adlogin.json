@@ -1,0 +1,30 @@
+﻿{
+  "isActive": true,
+  "domains": [],
+  "defaultDomain": null,
+  "enableLocalUsers": true,
+  "useUserForPrincipalContext": false,
+  "useGetGroups": false,
+  "claimTransformations": [],
+  "claimRoleMappings": [
+    {
+      "id": "366da799-1489-47af-a26a-62a621dc081b",
+      "claimType": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+      "claimValue": "phi",
+      "roleId": "98edab8b-f6d8-4e98-9f5f-c9ca3d3ab2d8"
+    },
+    {
+      "id": "d329394e-9ef1-4633-a734-330e207a6bd8",
+      "claimType": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+      "claimValue": "misv",
+      "roleId": "98edab8b-f6d8-4e98-9f5f-c9ca3d3ab2d8"
+    },
+    {
+      "id": "e4e075ba-2ed8-4f5a-a7f8-06d67d636312",
+      "claimType": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+      "claimValue": "pafl",
+      "roleId": "98edab8b-f6d8-4e98-9f5f-c9ca3d3ab2d8"
+    }
+  ],
+  "customClaimTypes": null
+}

@@ -1,0 +1,24 @@
+﻿@page "{*catchall}"
+@namespace Reflex.Pages
+@model IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="robots" content="noindex" />
+    <meta name="version" content="@Model.Version" />
+    <title>-</title>
+    <base href="~/" />
+    <link rel="shortcut icon" asp-href-include="~/favicon.png">
+    <partial name="_SBWebbStyles" />
+</head>
+<body>
+    <div id="app"></div>
+    <partial name="_SBWebbScripts" />
+</body>
+</html>

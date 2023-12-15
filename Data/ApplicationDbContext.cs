@@ -1,5 +1,4 @@
-﻿using Duende.IdentityServer.EntityFramework.Options;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+﻿using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
@@ -12,17 +11,58 @@ using Reflex.Data.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.EntityFrameworkCore.Design;
+using static IdentityModel.ClaimComparer;
+using Microsoft.Extensions.Configuration;
 
 namespace Reflex.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    //public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    //{
+
+    /// <summary>
+    /// Design time factory, används endast vid designtime EF migreringar
+    /// </summary>
+    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    {
+
+        //public ApplicationDbContextFactory(IConfiguration configuration)
+        //{
+        //    Configuration = configuration;
+        //}
+
+        public ApplicationDbContextFactory()
+        {
+
+        }
+
+        public IConfiguration Configuration { get; }
+
+        public ApplicationDbContext CreateDbContext(string[] args)
+        {
+            //Hårdkodad constr, används enbart vid skapandet av migr
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            //optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Reflex20231110;Trusted_Connection=True;MultipleActiveResultSets=true");
+
+            //optionsBuilder.UseSqlServer("Server=localhost;Database=Skolskjuts7;Trusted_Connection=True;MultipleActiveResultSets=true");
+
+            return new ApplicationDbContext(optionsBuilder.Options);
+        }
+    }
+
+    public class ApplicationDbContext : DbContext
     {
         private readonly string _passwordHash = "UserP@55w0rd";
         private readonly string _saltKey = "S@17Sokigo123!";
         private readonly string _ivKey = "@1B2c3D4e5F6g7H8";
 
-        public ApplicationDbContext(DbContextOptions options,
-           IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+        //public ApplicationDbContext(DbContextOptions options,
+        //   IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+        //{
+        //}
+        //
+        public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -128,6 +168,10 @@ namespace Reflex.Data
         public DbSet<EcosSettings> EcosSettings { get; set; }
         public DbSet<IipaxSettings> IipaxSettings { get; set; }
         public DbSet<FbSettings> FbSettings { get; set; }
+
+        public DbSet<RolesClaim> RolesClaims { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
 
         public string Encrypt(string plainText)
         {

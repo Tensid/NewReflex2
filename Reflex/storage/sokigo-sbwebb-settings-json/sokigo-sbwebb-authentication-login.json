@@ -1,0 +1,35 @@
+﻿{
+  "loginProviders": [
+    {
+      "applicationName": "sokigo-sbwebb-authentication-saml2",
+      "displayName": "",
+      "active": true
+    },
+    {
+      "applicationName": "sokigo-sbwebb-authentication-adlogin",
+      "displayName": "",
+      "active": true
+    },
+    {
+      "applicationName": "sokigo-sbwebb-authentication-wsfederation",
+      "displayName": "",
+      "active": true
+    }
+  ],
+  "enableLogout": true,
+  "logOutFromIdP": false,
+  "loggedOutResultType": 0,
+  "loggedOutApplication": null,
+  "loggedOutUrl": null,
+  "loginTimeout": 0,
+  "menuApplications": [
+    {
+      "name": "sokigo-sbwebb-theme-switcher-app",
+      "notRemovable": false
+    },
+    {
+      "name": "sokigo-sbwebb-reflex-reflexapp",
+      "notRemovable": false
+    }
+  ]
+}

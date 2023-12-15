@@ -1,0 +1,24 @@
+﻿{
+  "roles": [
+    {
+      "id": "8c1a0bad-0282-4f72-a1d5-62b185402691",
+      "name": "Alla",
+      "enabled": false
+    },
+    {
+      "id": "cfdd44ab-c232-4fcd-9ed8-b96de1c6fb22",
+      "name": "Reflex Handläggare",
+      "enabled": true
+    },
+    {
+      "id": "98edab8b-f6d8-4e98-9f5f-c9ca3d3ab2d8",
+      "name": "Sokigo Admin",
+      "enabled": true
+    },
+    {
+      "id": "068d0855-6724-4474-b47d-e9cee04fbee3",
+      "name": "Reflex Admin",
+      "enabled": true
+    }
+  ]
+}

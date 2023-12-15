@@ -4,6 +4,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Reflex.Services;
 
 namespace Reflex.Controllers
 {
@@ -20,6 +21,7 @@ namespace Reflex.Controllers
         }
 
         [HttpGet]
+        [UseSystemTextJson]
         public JsonDocument GetContactSettings()
         {
             var file = Path.Combine(_env.ContentRootPath, "", "miscSettings.json");

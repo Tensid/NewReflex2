@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
-import { AgsConfig, ByggrConfig, CaseSourceOption, Config, EcosConfig, IipaxConfig, SelectOption, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getDocumentTypes, getEcosConfig, getEcosConfigs, getFormData, getIipaxConfig, getIipaxConfigs, getRoles } from './api/api';
+import { CaseSourceOption, Config, SelectOption, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getDocumentTypes, getEcosConfig, getEcosConfigs, getFormData, getIipaxConfig, getIipaxConfigs, getRoles } from './api/api';
 import { getLayersSettings } from './api/mapSettingsApi';
 import AgsConfigForm from './features/manage-configs/AgsConfigForm';
 import ByggrConfigForm from './features/manage-configs/ByggrConfigForm';
@@ -13,10 +13,10 @@ import IipaxConfigForm from './features/manage-configs/IipaxConfigForm';
 import ReflexConfigForm from './features/manage-configs/ReflexConfigForm';
 
 const ManageConfigs = () => {
-  const [agsConfigs, setAgsConfigs] = useState<AgsConfig[]>([]);
-  const [byggrConfigs, setByggrConfigs] = useState<ByggrConfig[]>([]);
-  const [ecosConfigs, setEcosConfigs] = useState<EcosConfig[]>([]);
-  const [iipaxConfigs, setIipaxConfigs] = useState<IipaxConfig[]>([]);
+  const [agsConfigs, setAgsConfigs] = useState<any[]>([]);
+  const [byggrConfigs, setByggrConfigs] = useState<any[]>([]);
+  const [ecosConfigs, setEcosConfigs] = useState<any[]>([]);
+  const [iipaxConfigs, setIipaxConfigs] = useState<any[]>([]);
   const [reflexConfigs, setReflexConfigs] = useState<Config[]>([]);
   const [agsFormData, setAgsFormData] = useState<any>();
   const [byggrFormData, setByggrFormData] = useState<any>();
@@ -59,6 +59,8 @@ const ManageConfigs = () => {
     setActiveForm('');
     setActiveKey('');
   };
+
+  console.log("reflexConfigs", reflexConfigs);
 
   return (
     <div className="row">

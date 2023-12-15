@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { SearchResult } from './api/api';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import Autocomplete from './features/autocomplete/Autocomplete';
@@ -10,14 +10,14 @@ const Search = () => {
   const searchResult = useAppSelector((state) => state.searchResult);
   const tabs = useAppSelector((state) => state.config?.tabs);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const navigate = useHistory();
 
   function onSelectCallback(data: SearchResult) {
     dispatch(fetchCasesAsync(data));
     dispatch(setSearchResult(data));
 
     if (tabs?.includes(defaultTab))
-      navigate('/' + defaultTab.toLowerCase());
+      navigate.push('/' + defaultTab.toLowerCase());
   }
 
   return (

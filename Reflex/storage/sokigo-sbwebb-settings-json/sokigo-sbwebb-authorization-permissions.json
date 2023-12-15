@@ -1,0 +1,303 @@
+﻿{
+  "permissions": {
+    "8c1a0bad-0282-4f72-a1d5-62b185402691": {
+      "sokigo-sbwebb-default-web-app": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-settings-web-app": [],
+      "sokigo-sbwebb-authorization-permissions": [],
+      "sokigo-sbwebb-authentication-adlogin": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-authentication-login": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-logging-logviewer": [],
+      "sokigo-sbwebb-authentication-roles": [],
+      "sokigo-sbwebb-core-app": [],
+      "sokigo-sbwebb-default-language-switcher-app": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-authentication-wsfederation": [],
+      "sokigo-sbwebb-logging": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-logging-traceloggingproxy": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-default-search-app": [
+        "_common_application_start_"
+      ],
+      "settings.appName": [
+        "_common_settings_edit_",
+        "_common_application_start_"
+      ],
+      "settings": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-help-link-app": [],
+      "Kommuninställningar": [
+        "_common_settings_edit_"
+      ],
+      "decision-categories": [
+        "_common_settings_edit_"
+      ],
+      "groups": [
+        "_common_settings_edit_"
+      ],
+      "elevkortsmallar": [
+        "_common_settings_edit_"
+      ],
+      "database-files": [
+        "_common_settings_edit_"
+      ],
+      "loading-indicator": [
+        "_common_application_start_"
+      ],
+      "categories-and-packages": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-settings-app": [],
+      "sokigo-sbwebb-authentication-saml2": [],
+      "sokigo-sbwebb-reflex-reflexapp": []
+    },
+    "cfdd44ab-c232-4fcd-9ed8-b96de1c6fb22": {
+      "sokigo-sbwebb-authentication-adlogin": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-authentication-login": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-settings-web-app": [],
+      "sokigo-sbwebb-logging-logviewer": [],
+      "sokigo-sbwebb-logging": [],
+      "sokigo-sbwebb-authentication-roles": [],
+      "sokigo-sbwebb-authorization-permissions": [],
+      "sokigo-sbwebb-core-app": [],
+      "sokigo-sbwebb-default-language-switcher-app": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-default-web-app": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-logging-traceloggingproxy": [],
+      "sokigo-sbwebb-authentication-wsfederation": [],
+      "sokigo-sbwebb-default-search-app": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-help-link-app": [],
+      "Kommuninställningar": [
+        "_common_settings_edit_"
+      ],
+      "loading-indicator": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-reflex-reflexapp": [
+        "_common_application_start_"
+      ]
+    },
+    "98edab8b-f6d8-4e98-9f5f-c9ca3d3ab2d8": {
+      "sokigo-sbwebb-authentication-adlogin": [
+        "_common_settings_edit_"
+      ],
+      "decision-categories": [
+        "_common_settings_edit_"
+      ],
+      "elevkortsmallar": [
+        "_common_settings_edit_"
+      ],
+      "database-files": [
+        "_common_settings_edit_"
+      ],
+      "groups": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-settings-web-app": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-help-link-app": [
+        "_common_settings_edit_",
+        "_common_application_start_"
+      ],
+      "categories-and-packages": [
+        "_common_settings_edit_"
+      ],
+      "loading-indicator": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-logging-logviewer": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-logging": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-authentication-roles": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-authorization-permissions": [
+        "_common_settings_edit_",
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-core-app": [
+        "shutdown"
+      ],
+      "sokigo-sbwebb-default-search-app": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-logging-traceloggingproxy": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-default-web-app": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-authentication-wsfederation": [
+        "_common_settings_edit_"
+      ],
+      "profile": [
+        "_common_application_start_"
+      ],
+      "help": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-messaging-email-service": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-messaging-sms-service": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-authentication-login": [
+        "activeusers",
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-settings-app": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-reflex-reflexapp": [
+        "HasCaseSourcePermission",
+        "_common_application_start_",
+        "IsAdmin",
+        "HasConfigPermission"
+      ],
+      "sokigo-sbwebb-authentication-saml2": [
+        "_common_settings_edit_"
+      ]
+    },
+    "068d0855-6724-4474-b47d-e9cee04fbee3": {
+      "decision-categories": [
+        "_common_settings_edit_"
+      ],
+      "elevkortsmallar": [
+        "_common_settings_edit_"
+      ],
+      "database-files": [
+        "_common_settings_edit_"
+      ],
+      "groups": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-settings-web-app": [
+        "_common_application_start_"
+      ],
+      "categories-and-packages": [
+        "_common_settings_edit_"
+      ],
+      "loading-indicator": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-logging-logviewer": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-default-search-app": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-authentication-adlogin": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-help-link-app": [
+        "_common_settings_edit_",
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-reflex-reflexapp": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-authentication-login": [
+        "activeusers",
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-settings-app": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-authentication-saml2": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-authorization-permissions": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-core-app": [
+        "shutdown"
+      ],
+      "sokigo-sbwebb-default-web-app": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-authentication-wsfederation": [
+        "_common_settings_edit_"
+      ],
+      "sokigo-sbwebb-authentication-roles": [
+        "_common_settings_edit_"
+      ]
+    },
+    "9f18d241-ef0d-49ef-aadb-af3dd0aa2d8d": {
+      "loading-indicator": [
+        "_common_application_start_"
+      ],
+      "sokigo-sbwebb-skolskjuts-skolskjutsapp": [
+        "_common_application_start_",
+        "IsReadOnlyUser"
+      ],
+      "sokigo-sbwebb-default-search-app": [
+        "_common_application_start_"
+      ]
+    }
+  },
+  "anonymousPermissions": {
+    "sokigo-sbwebb-default-web-app": [
+      "_common_application_start_"
+    ],
+    "sokigo-sbwebb-authentication-adlogin": [
+      "_common_application_start_"
+    ],
+    "sokigo-sbwebb-authentication-login": [
+      "_common_application_start_"
+    ],
+    "sokigo-sbwebb-default-language-switcher-app": [
+      "_common_application_start_"
+    ],
+    "sokigo-sbwebb-skolskjuts-skolskjutsapp": [
+      "_common_settings_edit_",
+      "isAdmin",
+      "isHandlaggare"
+    ],
+    "sokigo-sbwebb-logging-traceloggingproxy": [],
+    "sokigo-sbwebb-authentication-wsfederation": [],
+    "sokigo-sbwebb-core-app": [],
+    "sokigo-sbwebb-authorization-permissions": [],
+    "sokigo-sbwebb-authentication-roles": [],
+    "sokigo-sbwebb-logging": [],
+    "sokigo-sbwebb-logging-logviewer": [],
+    "sokigo-sbwebb-settings-web-app": [],
+    "sokigo-sbwebb-default-search-app": [],
+    "settings.appName": [
+      "_common_settings_edit_"
+    ],
+    "settings": [
+      "_common_settings_edit_"
+    ],
+    "sokigo-sbwebb-help-link-app": [],
+    "Kommuninställningar": [
+      "_common_settings_edit_"
+    ],
+    "sokigo-sbwebb-settings-app": [],
+    "sokigo-sbwebb-reflex-reflexapp": [],
+    "sokigo-sbwebb-authentication-saml2": []
+  }
+}

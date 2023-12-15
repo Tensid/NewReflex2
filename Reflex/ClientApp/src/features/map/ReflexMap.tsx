@@ -3,13 +3,11 @@ import Geometry from 'ol/geom/Geometry';
 import Projection from 'ol/proj/Projection';
 import { Fill, Stroke, Style } from 'ol/style';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { ClearFeaturesControlButton } from './ClearFeaturesControlButton';
 import { ContextMenu } from './ContextMenu';
 import { DrawLineControlButton } from './DrawLineControlButton';
 import { DrawPolygonControlButton } from './DrawPolygonControlButton';
-import { FeatureLayer } from './FeatureLayer';
 import { GoToUserLocationControlButton } from './GoToUserLocationControlButton';
 import { InfoClickControlButton } from './InfoClickControlButton';
 import { LayerSwitcher } from './LayerSwitcher';
@@ -18,9 +16,11 @@ import { MapContainer } from './MapContainer';
 import { MapPostRenderEvent } from './MapPostRenderEvent';
 import { MapProvider } from './MapProvider';
 import { Measure } from './Measure';
+import { FeatureLayer } from './FeatureLayer';
 import { WmsLayer } from './WmsLayer';
 import { WmtsLayer } from './WmtsLayer';
 import styles from './map.module.css';
+import { useHistory } from 'react-router-dom';
 
 interface ReflexMapProps {
   projection?: string | Projection | undefined;
@@ -40,13 +40,13 @@ interface CaseAlertProps {
 }
 
 const CaseAlert = ({ estateName, show, toggleAlert }: CaseAlertProps) => {
-  const navigate = useNavigate();
+  const navigate = useHistory();
   if (show)
     return (
       <div className="mx-auto alert alert-info alert-dismissible alert-overlay">
         {estateName} <a href="cases" onClick={e => {
           e.preventDefault();
-          navigate('/cases');
+          navigate.push('/cases');
         }
         }>Visa ärenden</a>
         <button className="btn-close" onClick={toggleAlert} aria-label="close" />
@@ -88,6 +88,8 @@ const ReflexMap = ({ projection, fnr, estateName: defaultEstateName }: ReflexMap
   const toggleInfoClick = () => setInfoClick(!infoClick);
   const toggleAlert = () => setAlert({ ...alert, show: !alert.show });
 
+  console.log("extent", extent);
+
   if (!extent) return null;
   const baseLayers = layers?.filter((x) => x.baseLayer).filter((x: any) => map?.includes(x?.id));
   const nonbaseLayers = layers?.filter((x) => !x.baseLayer).filter((x: any) => map?.includes(x?.id));
@@ -96,7 +98,9 @@ const ReflexMap = ({ projection, fnr, estateName: defaultEstateName }: ReflexMap
 
   return (
     <MapProvider projection={projection} initialExtent={extent}>
-      <MapContainer className="flex-grow-1" style={{ height: 'inherit' }} />
+      <MapContainer className="flex-grow-1" style={{ height: '700px' }} />
+      {/* <MapContainer className="flex-grow-1" style={{ height: 'inherit' }} /> */}
+      {/* <MapContainer className="flex-grow-1" style={{ height: '100%' }} /> */}
       {baseLayers?.map((x, i) => {
         if (x.type === 'WMS')
           return <WmsLayer visible={i === baseLayers.length - 1} options={x.options} title={x.title} baseLayer={x?.baseLayer} key={x.id} />;

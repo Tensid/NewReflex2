@@ -1,0 +1,15 @@
+﻿{
+  "adminMessage": "Ha en fantastisk dag!",
+  "additionalLinks": [
+    {
+      "id": "04cf6f26-4186-40ac-b7ad-eb02608c139a",
+      "url": "https://skolskjuts.sokigohosting.com/skolskjuts",
+      "description": "Skolskjuts Vega"
+    },
+    {
+      "id": "df415d40-16b7-45f2-8bc6-9807e5b2af72",
+      "url": "https://www.google.com",
+      "description": "Google"
+    }
+  ]
+}

@@ -7,6 +7,11 @@ const Map = () => {
   const estateName = useAppSelector((state) => state.searchResult.estateName);
   const projection = useAppSelector((state) => state.mapSettings?.mapSettings?.projection);
 
+  console.log("type", type);
+  console.log("value", value);
+  console.log("estateName", estateName);
+  console.log("projection", projection);
+
   if (!projection)
     return null;
   const fnr = type === 'Fastighet' ? value : undefined;

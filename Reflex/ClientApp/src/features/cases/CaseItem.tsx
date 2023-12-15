@@ -1,4 +1,4 @@
-import { IconDefinition, faArchive, faBug, faHammer, faLock } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faArchive, faBug, faHammer, faLock } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalData } from '../../Cases';
 import { CaseSource, CaseTab } from '../../api/api';

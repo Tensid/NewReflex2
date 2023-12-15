@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.ServiceModel.Http" Version="4.8.1" />
-  </ItemGroup>
+	<ItemGroup>		
+		<PackageReference Include="System.ServiceModel.Http" Version="4.10.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Data\Reflex.Data.csproj" />
-    <ProjectReference Include="..\VisaRService\VisaRService.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Data\Reflex.Data.csproj" />
+		<ProjectReference Include="..\VisaRService\VisaRService.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services" />
-  </ItemGroup>
+	<ItemGroup>
+		<WCFMetadata Include="Connected Services" />
+	</ItemGroup>
 
 </Project>

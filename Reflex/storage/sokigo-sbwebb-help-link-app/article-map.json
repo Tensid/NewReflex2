@@ -1,0 +1,120 @@
+{
+  "baseUrl": "https://dok.sokigo.com/",
+  "space": "SKOLS0700",
+  "sokigoInformationSection": {
+    "mainArticle": "Meddelande från Sokigo",
+    "articles": {
+      "allUsers": "Alla"
+    }
+  },
+  "sections": {
+    "sokigo-sbwebb-logging-logviewer": {
+      "mainArticle": "Loggvisning"
+    },
+    "sokigo-sbwebb-skolskjuts-skolskjutsapp": {
+      "mainArticle": "Vega Beslut",
+      "articles": {
+        "pupil": "Vyn Elev",
+        "pupils": "Vyn Elever",
+        "map": "Vyn Karta",
+        "home": "Vyn Hem",
+        "cases": "Vyn Ärenden",
+        "transports": "Vyn Transporter",
+        "schools": "Vyn Skolor",
+        "school": "Vyn Skola",
+        "grade": "Vyn Årskurs",
+        "class": "Vyn Klass",
+        "trip": "Vyn Tur",
+        "createAttachment": "Skapa bilaga för elevadress",
+        "createAttachmentMulti": "Skapa bilaga för flera elevadresser",
+        "requestCompletion": "Begär komplettering av en ansökan",
+        "decision": "Ta beslut på en elev",
+        "decisionMulti": "Ta beslut på flera elever",
+        "report": "Skapa Elevkort för en elevadress",
+        "reportMulti": "Skapa elevkort för flera elevadresser",
+        "addPhrases": " Använda beslutsfraser",
+        "publish": "Publicera ett beslut för en elevadress",
+        "publishMulti": "Publicera beslut för flera elevadresser",
+        "registerApplication": "Registrera skolskjutsansökan",
+        "nearestStops": "Hållplatser för adress",
+        "nearestClassStops": "Välj hållplatser för klass",
+        "nearestSchoolStops": "Välj hållplatser för skola",
+        "nearestSchools": "Skolor i närheten",
+        "editSchoolContactInfo": "Redigera skoluppgifter",
+        "editTransportDemands": "Redigera transportkrav på en elev",
+        "editTransportDemandsMulti": "Redigera transportkrav för flera elever",
+        "addExtraAddress": "Skapa en extra adress",
+        "editAddress": "Rätta adress",
+        "sendInformation": "Skicka information",
+        "sendInformationMulti": "Skicka information till flera elevadresser",
+        "sendSms": "Skicka SMS",
+        "schedule": "Redigera ramschema",
+        "scheduleorg": "Redigera ramschema för en klass",
+        "scheduleorgmulti": "Redigera ramschema för flera klasser",
+        "tags": "Använda Taggar",
+        "templates": "Skapa elevkortsmall",
+        "transportSchedule": "Hantera transportschema från ansökan",
+        "editTransportSchedule": "Redigera transportschema",
+        "changeAddressType": "Ändra adresstyp",
+        "editAddressType": "Redigera beslutsuppgifter",
+        "calculateDistance": "Beräkna avstånd",
+        "emailGeneral": "Skicka allmänt mail",
+        "emailDecision": "Skicka beslut för en elevadress via e-post",
+        "emailDecisionMulti": "Skicka beslut för flera elevadresser via e-post",
+        "connectApplication": "Koppla adress till skolskjutsansökan",
+        "rules": "Redigera regelverk för en årskurs",
+        "rulesMulti": "Redigera regelverk för flera årskurser",
+        "closedRoads": "Redigera trafikfarliga vägar för en årskurs",
+        "closedRoadsMulti": "Redigera trafikfarliga vägar för flera årskurser",
+        "areaInfo": "Redigera områden för en årskurs",
+        "areaInfoMulti": "Redigera områden för flera årskurser",
+        "tourImports": "Importera turer",
+        "editBusCard": "Redigera ett busskort",
+        "registerBusCard": "Registrera ett busskort",
+        "connectToTransport": "Anslut till transport",
+        "unconnectTransports": "Ta bort transporter",
+        "updateTour": "Uppdatera tur"
+      }
+    },
+    "sokigo-skolskjuts-administration-app": {
+      "mainArticle": "Vega Beslut",
+      "articles": {
+        "decision-categories": "Beslutskategorier",
+        "elevkortsmallar": "Dokumentpaket",
+        "database-files": "Filer för dokumentpaket",
+        "categories-and-packages": "Koppla beslutskategorier",
+        "phrases": "Beslutsfraser"
+      }
+    },
+    "sokigo-skolskjuts-maintenance-app": {
+      "mainArticle": "Vega Beslut",
+      "articles": {
+        "addPupil": "Lägg till elev",
+        "addSchool": "Lägg till skola",
+        "addGrade": "Lägg till årskurs",
+        "addClass": "Lägg till klass",
+        "deletion": "Gallring",
+        "eventLogs": "Systemloggar"
+      }
+    },
+    "sokigo-skolskjuts-system-settings-app": {
+      "mainArticle": "Vega Beslut",
+      "articles": {
+        "closedRoads": "Trafikfarliga vägar",
+        "manageRoads": "Hantera vägar",
+        "groups": "Grupper och behörigheter",
+        "decisionrules": "Preliminära beslutsregler",
+        "excelExports": "Excelexporter",
+        "otherrules": "Övriga regler",
+        "tagusage": "Taggar och användning",
+        "schoolForms": "Skolformer",
+        "transportCompetencies": "Transportkompetenser",
+        "areas": "Områden",
+        "fileManagement": "Filhantering",
+        "pupilRegister": "Elevregister",
+        "agents": "Tjänster",
+        "users": "Användare"
+      }
+    }
+  }
+}

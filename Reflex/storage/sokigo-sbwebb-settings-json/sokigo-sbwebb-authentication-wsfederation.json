@@ -1,0 +1,15 @@
+﻿{
+  "metadataAddress": "https://adfs-utv.sokigo.com/FederationMetadata/2007-06/FederationMetadata.xml",
+  "wtrealm": "https://localhost:44353/",
+  "claimTransformations": [],
+  "claimRoleMappings": [
+    {
+      "id": "5fc0ca30-e1e5-446a-91f1-eb05b9e2290f",
+      "claimType": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+      "claimValue": null,
+      "roleId": "98edab8b-f6d8-4e98-9f5f-c9ca3d3ab2d8"
+    }
+  ],
+  "isActive": true,
+  "customClaimTypes": null
+}

@@ -6,12 +6,15 @@ const SelectInput = ({ name, label, options, isMulti, control, isSearchable = fa
     <div className="mb-3">
       <label htmlFor={name}>{label}</label>
       <Controller
-        as={<Select />}
-        isMulti={isMulti}
-        placeholder={`Välj ${label.toLowerCase()}...`}
-        noOptionsMessage={() => null}
-        closeMenuOnSelect={false}
-        options={options}
+        render={({ field }) => <Select
+          {...field}
+          isMulti={isMulti}
+          placeholder={`Välj ${label.toLowerCase()}...`}
+          noOptionsMessage={() => null}
+          closeMenuOnSelect={false}
+          options={options}
+          isSearchable={isSearchable}
+        />}
         defaultValue={[]}
         name={name}
         control={control}

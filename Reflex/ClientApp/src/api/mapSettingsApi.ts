@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Extent } from 'ol/extent';
-import authService from '../features/api-authorization/AuthorizeService';
+// import authService from '../features/api-authorization/AuthorizeService';
 
 export interface MapSettings {
   extent: Extent;
@@ -13,10 +13,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   async (config) => {
-    const token = await authService.getAccessToken();
-    if (token && config.headers) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
+    // const token = await authService.getAccessToken();
+    // if (token && config.headers) {
+    //   config.headers['Authorization'] = `Bearer ${token}`;
+    // }
     return config;
   },
   (error) => Promise.reject(error)

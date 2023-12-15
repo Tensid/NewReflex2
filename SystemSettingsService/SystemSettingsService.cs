@@ -29,7 +29,8 @@ namespace Reflex.SettingsService
 
         public FbWebbSettings GetFbWebbSettings()
         {
-            var settings = _context.FbSettings.FirstOrDefault() ?? new FbSettings();
+            //var settings = _context.FbSettings.FirstOrDefault() ?? new FbSettings();
+            var settings = new FbSettings();
             return new FbWebbSettings
             {
                 FbWebbBoendeUrl = settings.FbWebbBoendeUrl,

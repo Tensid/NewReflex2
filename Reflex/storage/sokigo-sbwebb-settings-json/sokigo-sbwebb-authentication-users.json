@@ -1,0 +1,428 @@
+﻿{
+  "users": [
+    {
+      "id": "4db163f5-f480-40d3-943a-baf285c6af6e",
+      "name": "Andreas Imrell",
+      "enabled": true,
+      "lastLogin": "2021-06-10T08:38:16.3881747+02:00",
+      "logins": [
+        {
+          "loginProvider": "WsFederation",
+          "providerKey": "anim"
+        }
+      ],
+      "securityStamp": "HNCB36633UMSQFKE3TX5OCMMAOG36OK6",
+      "claims": []
+    },
+    {
+      "id": "4897749d-6cb5-4484-a657-79a951e523d6",
+      "name": "Peter Heikki",
+      "enabled": true,
+      "lastLogin": "2021-11-17T08:23:31.0917139+01:00",
+      "logins": [
+        {
+          "loginProvider": "WsFederation",
+          "providerKey": "PHI"
+        }
+      ],
+      "securityStamp": "KJLFYSQXFVDHV2X2ODV43DHM34VUTN2T",
+      "claims": [
+        {
+          "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+          "value": "PHI",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn",
+          "value": "peter.heikki@sokigo.com",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccountname",
+          "value": "SOKIGO\\phi",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+          "value": "Peter Heikki",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Domain Users",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Alla Sokigo anställda",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - AO Tekniska System",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Cartesia",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Kund",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Marknad",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Utveckling_cartesia",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Utvecklare_TS",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Lime CRM Users",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Utvecklare_TS",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec-RDP-UTV-REFLEX-Admin",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Utvecklare_Alla",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "CSPAdmin",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec-RDP-UTV-SKO-Admin",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Alla på Sokigo Gävle",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - AO Tekniska System Leverans",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/authenticationmethod",
+          "value": "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/authenticationinstant",
+          "value": "2021-11-17T07:23:29.833Z",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "98edab8b-f6d8-4e98-9f5f-c9ca3d3ab2d8",
+          "issuer": "http://sbwebb.sokigo.com"
+        }
+      ]
+    },
+    {
+      "id": "7a285ab9-8e4e-4180-97d2-609d2cee24a3",
+      "name": "Mischa Svensson",
+      "enabled": true,
+      "lastLogin": "2021-11-04T18:03:29.733461+01:00",
+      "logins": [
+        {
+          "loginProvider": "WsFederation",
+          "providerKey": "misv"
+        }
+      ],
+      "securityStamp": "PZVQOVMA3IIA7NPEHTKHW34Q3V6OHLMY",
+      "claims": [
+        {
+          "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+          "value": "misv",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn",
+          "value": "mischa.svensson@sokigo.com",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccountname",
+          "value": "SOKIGO\\misv",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+          "value": "Mischa Svensson",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Domain Users",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Alla Sokigo anställda",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - AO Tekniska System",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Cartesia",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Kund",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Marknad",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Utveckling_cartesia",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Utvecklare_TS",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Utvecklare_TS",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec-RDP-UTV-REFLEX-Admin",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Utvecklare_Alla",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec-RDP-UTV-SKO-Admin",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Alla på Sokigo Gävle",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/authenticationmethod",
+          "value": "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/authenticationinstant",
+          "value": "2021-11-04T16:51:29.047Z",
+          "issuer": "http://adfs-utv.sokigo.com/adfs/services/trust"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "98edab8b-f6d8-4e98-9f5f-c9ca3d3ab2d8",
+          "issuer": "http://sbwebb.sokigo.com"
+        }
+      ]
+    },
+    {
+      "id": "cd133766-6423-4a87-9417-af1c1f369843",
+      "name": "Mischa Svensson",
+      "enabled": true,
+      "lastLogin": "2023-07-04T10:23:26.1046284+02:00",
+      "logins": [
+        {
+          "loginProvider": "ActiveDirectory",
+          "providerKey": "misv"
+        }
+      ],
+      "securityStamp": "YKQTLQ5NTFP3YACASBVCEURU6VFCV444",
+      "claims": [
+        {
+          "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+          "value": "misv",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn",
+          "value": "mischa.svensson@Sokigo.com",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccountname",
+          "value": "SOKIGO\\misv",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+          "value": "Mischa Svensson",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid",
+          "value": "S-1-5-21-49629334-2353048630-3177385928-2456",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Domain Users",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Everyone",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Administrators",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Performance Log Users",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Users",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Authenticated Users",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "This Organization",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Alla på Sokigo Gävle",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Utvecklare_TS",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Nutanix utv power on",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Utvecklare_TS",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Alla Sokigo anställda",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Marknad",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec-Plandirekt",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec-RDP-UTV-SKO-Admin",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Cartesia",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Utveckling_cartesia",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - AO Tekniska System",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Nutanix",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec - Utvecklare_Alla",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Kund",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Sec-RDP-UTV-REFLEX-Admin",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "Service asserted identity",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "High Mandatory Level",
+          "issuer": "LOCAL AUTHORITY"
+        },
+        {
+          "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+          "value": "98edab8b-f6d8-4e98-9f5f-c9ca3d3ab2d8",
+          "issuer": "http://sbwebb.sokigo.com"
+        }
+      ]
+    }
+  ]
+}

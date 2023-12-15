@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Config } from '../../api/api';
 import { useAppDispatch } from '../../app/hooks';
 import { setConfig } from './configsSlice';
@@ -9,11 +9,11 @@ interface ConfigItemProps {
 
 const ConfigItem = ({ config }: ConfigItemProps) => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const history = useHistory();
 
   function handleClick() {
     dispatch(setConfig(config));
-    navigate('/search');
+    history.push('/search');
   }
 
   return (

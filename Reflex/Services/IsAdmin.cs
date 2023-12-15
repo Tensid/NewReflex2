@@ -21,6 +21,8 @@ namespace Reflex.Services
             if (context.Resource is not HttpContext httpContext)
                 return Task.CompletedTask;
 
+            context.Succeed(requirement);
+
             var isAdmin = context.User.HasClaim(x => x.Value == "Admin");
             if (isAdmin)
             {

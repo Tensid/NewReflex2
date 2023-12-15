@@ -1,0 +1,277 @@
+﻿[
+  {
+    "id": "992e3e7c-0d8c-4b14-809e-5b38a0853f75",
+    "name": "Patrik Flybring",
+    "enabled": true,
+    "lastLogin": "2023-09-29T09:48:14.9672714+02:00",
+    "logins": [
+      {
+        "loginProvider": "ActiveDirectory",
+        "providerKey": "pafl"
+      }
+    ],
+    "securityStamp": "RAFKGS5UUTX6XJZDM5Q2HIWYQ7BWVIUG",
+    "claims": [
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "98edab8b-f6d8-4e98-9f5f-c9ca3d3ab2d8",
+        "issuer": "http://sbwebb.sokigo.com"
+      },
+      {
+        "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+        "value": "pafl",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn",
+        "value": "patrik.flybring@Sokigo.com",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccountname",
+        "value": "SOKIGO\\pafl",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+        "value": "Patrik Flybring",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid",
+        "value": "S-1-5-21-49629334-2353048630-3177385928-6128",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Domain Users",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Everyone",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Administrators",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Users",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Authenticated Users",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "This Organization",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec - Alla på Sokigo Gävle",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec - Alla Sokigo anställda",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Marknad",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec - AO Tekniska System",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Kund",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Service asserted identity",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "High Mandatory Level",
+        "issuer": "LOCAL AUTHORITY"
+      }
+    ]
+  },
+  {
+    "id": "78f43817-2904-4df8-a6ac-301ef6e45764",
+    "name": "Mischa Svensson",
+    "enabled": true,
+    "lastLogin": "2023-12-12T14:54:16.5403072+01:00",
+    "logins": [
+      {
+        "loginProvider": "ActiveDirectory",
+        "providerKey": "misv"
+      }
+    ],
+    "securityStamp": "7RMCQSIQLRSUM5A4JCHVR6IY42UKVATA",
+    "claims": [
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "98edab8b-f6d8-4e98-9f5f-c9ca3d3ab2d8",
+        "issuer": "http://sbwebb.sokigo.com"
+      },
+      {
+        "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+        "value": "misv",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn",
+        "value": "mischa.svensson@Sokigo.com",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccountname",
+        "value": "SOKIGO\\misv",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+        "value": "Mischa Svensson",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid",
+        "value": "S-1-5-21-49629334-2353048630-3177385928-2456",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Domain Users",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Everyone",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Administrators",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Performance Log Users",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Users",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Authenticated Users",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "This Organization",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec - Alla på Sokigo Gävle",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec - Utvecklare_TS",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec - Nutanix utv power on",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Utvecklare_TS",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec - Alla Sokigo anställda",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Marknad",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec-Plandirekt",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec-RDP-UTV-SKO-Admin",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Cartesia",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Utveckling_cartesia",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec - AO Tekniska System",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec - Utvecklare_Alla",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Kund",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec-RDP-UTV-REFLEX-Admin",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Service asserted identity",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "Sec - Nutanix",
+        "issuer": "LOCAL AUTHORITY"
+      },
+      {
+        "type": "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+        "value": "High Mandatory Level",
+        "issuer": "LOCAL AUTHORITY"
+      }
+    ]
+  }
+]
