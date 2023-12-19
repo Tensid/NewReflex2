@@ -1,14 +1,13 @@
-import { faLock } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAccordionButton } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import { CaseSource, Occurence, getDocument } from '../../api/api';
 import { TabState } from './CaseModal';
+import Lock from './Lock';
 
 function occurenceText(occurence: Occurence) {
   let occurenceText = '';
-  if (occurence.isSecret)
+  if (occurence.isConfidential)
     occurenceText = ' (Sekretessmarkerad händelse)';
   else {
     if (occurence.documents != null && occurence.documents.length > 0) {
@@ -60,6 +59,7 @@ const OccurenceContent = ({ occurenceState, caseSource, caseSourceId }: Occurenc
             <Card className={"list-group-flush"} key={i}>
               <CustomToggle eventKey={i.toString()}>
                 {new Date(occurence.arrival).toLocaleDateString('sv-SE')}: {`${occurence.title} ${occurenceText(occurence)}`}
+                <Lock show={occurence.isConfidential} title="Händelsen är sekretessmarkerad" />
               </CustomToggle>
               <Accordion.Collapse eventKey={i.toString()}>
                 <Card.Body>
@@ -71,16 +71,18 @@ const OccurenceContent = ({ occurenceState, caseSource, caseSourceId }: Occurenc
                             {doc?.docLinkId === '-1' ?
                               <>{doc.title}</>
                               :
-                              <span className="btn btn-link px-0" role="button" onClick={() => getDocument(doc.docLinkId, caseSource, caseSourceId)}>
-                                {doc.title}
-                              </span>
+                              <>
+                                <span className="btn btn-link px-0" role="button" onClick={() => getDocument(doc.docLinkId, caseSource, caseSourceId)}>
+                                  {doc.title}
+                                </span>
+                              </>
                             }
-                            {doc.isConfidential && <FontAwesomeIcon title="Handlingen är sekretessmarkerad" icon={faLock} />}
+                            <Lock show={doc.isConfidential} title="Handlingen är sekretessmarkerad" />
                           </li>
                         );
                       })
                       :
-                      occurence.isSecret ? 'Sekretess' : 'Inga handlingar kopplade till händelsen.'
+                      occurence.unavailableDueToSecrecy ? 'Sekretess' : 'Inga handlingar kopplade till händelsen.'
                     }
                   </ul>
                 </Card.Body>

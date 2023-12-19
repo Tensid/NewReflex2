@@ -16,6 +16,7 @@ export interface ModalData {
   title: string;
   caseSourceId: string;
   date: string | undefined;
+  isConfidential: boolean;
   tabs?: CaseTab[];
 }
 

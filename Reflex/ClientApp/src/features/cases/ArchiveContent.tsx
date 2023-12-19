@@ -1,6 +1,6 @@
-import React from 'react';
 import { ArchivedDocument, CaseSource, getDocument } from '../../api/api';
 import { TabState } from './CaseModal';
+import Lock from './Lock';
 
 interface ArchiveContentProps {
   archiveState: TabState<ArchivedDocument[]>;
@@ -9,14 +9,10 @@ interface ArchiveContentProps {
   date: string | undefined;
 }
 
-function getSecrecyText(object: any) {
+function isConfidential(object: any) {
   const { secrecy, otherSecrecy, pulPersonalSecrecy, unavailableDueToSecrecy } = object;
-  if (unavailableDueToSecrecy)
-    return <>Sekretess</>;
-  const result = [secrecy, otherSecrecy, pulPersonalSecrecy].filter(x => !!Number(x)).join(", ");
-  if (result.length > 0)
-    return <span title={result}>Sekretess</span>;
-  return null;
+  const result = [secrecy, otherSecrecy, pulPersonalSecrecy].filter(x => !!Number(x));
+  return result.length > 0;
 }
 
 const formatDate = (date: Date | string | undefined, missingDate: string = '-') => {
@@ -41,34 +37,37 @@ const ArchiveContent = ({ archiveState, caseSource, caseSourceId, date }: Archiv
         <div className="col-12">
           {archivedDocument.unavailableDueToSecrecy === false ? <>
             <div className="py-2">
-              Beslutsdatum: {formatDate(date, 'Datum saknas')}
+              Beslutsdatum: {formatDate(date, 'Datum saknas')}<Lock show={isConfidential(archivedDocument)} title="Skyddat" />
             </div>
             <ul className="list-group">
               {archivedDocument?.docs?.map(doc =>
                 <li className="list-group-item">
                   {doc.unavailableDueToSecrecy === false ?
                     <>
-                      <h5>{doc.title}</h5>
+                      <h5>{doc.title} <Lock show={isConfidential(doc)} title="Skyddat" /></h5>
                       <ul>
                         {doc.files?.map(file =>
                           <li>
                             {file.unavailableDueToSecrecy === false ?
-                              <span className="btn btn-link px-0" role="button" title={file.title} onClick={() => getDocument(file.physicalDocumentId, caseSource, caseSourceId)}>
-                                {file.title}
-                              </span>
+                              <>
+                                <span className="btn btn-link px-0" role="button" title={file.title} onClick={() => getDocument(file.physicalDocumentId, caseSource, caseSourceId)}>
+                                  {file.title}
+                                </span>
+                              </>
                               :
-                              <>{getSecrecyText(file)}</>
+                              <>Sekretess</>
                             }
+                            <Lock show={isConfidential(file)} title="Skyddat" />
                           </li>
                         )}
                       </ul>
                     </>
                     :
-                    <h5>{getSecrecyText(doc)}</h5>}
+                    <h5>Sekretess</h5>}
                 </li>
               )}
             </ul>
-          </> : getSecrecyText(archivedDocument)}
+          </> : <>Sekretess<Lock show={isConfidential(archivedDocument)} title="Skyddat" /></>}
         </div>
       </div>
     </div>

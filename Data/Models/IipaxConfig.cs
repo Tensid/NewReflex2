@@ -19,9 +19,15 @@ namespace Reflex.Data.Models
         public Guid Id { get; set; }
         public virtual ICollection<Config> Configs { get; set; }
         public string Name { get; set; }
-        public Visibility SecrecyVisibility { get; set; }
-        public Visibility PulPersonalSecrecyVisibility { get; set; }
-        public Visibility OtherSecrecyVisibility { get; set; }
+        public Visibility CaseSecrecyVisibility { get; set; }
+        public Visibility CasePulPersonalSecrecyVisibility { get; set; }
+        public Visibility CaseOtherSecrecyVisibility { get; set; }
+        public Visibility DocSecrecyVisibility { get; set; }
+        public Visibility DocPulPersonalSecrecyVisibility { get; set; }
+        public Visibility DocOtherSecrecyVisibility { get; set; }
+        public Visibility FileSecrecyVisibility { get; set; }
+        public Visibility FilePulPersonalSecrecyVisibility { get; set; }
+        public Visibility FileOtherSecrecyVisibility { get; set; }
         public string[] ObjectTypes { get; set; }
     }
 }

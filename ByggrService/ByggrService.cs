@@ -186,7 +186,7 @@ namespace ReflexByggrService
                         .ToArray(),
                     Arrival = handelse.startDatum,
                     Title = handelse.rubrik,
-                    IsSecret = handelse.sekretess,
+                    IsConfidential = handelse.sekretess,
                     IsWorkingMaterial = handelse.arbetsmaterial
                 }).ToArray();
         }
@@ -266,7 +266,7 @@ namespace ReflexByggrService
                                 }).ToArray(),
                             Arrival = handelse.startDatum,
                             Title = handelse.rubrik,
-                            IsSecret = handelse.sekretess,
+                            IsConfidential = handelse.sekretess,
                             Anteckning = _config.HideNotesInPreview ? "" : handelse.anteckning,
                             BeslutNr = handelse.beslut?.beslutNr,
                             BeslutsText = handelse.beslut?.beslutstext,

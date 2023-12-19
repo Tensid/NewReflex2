@@ -11,6 +11,23 @@ const visibilityOptions = [
   { value: Visibility.Show, label: 'Visa sekretess' }
 ];
 
+const pulVisibilityOptions = [
+  { value: Visibility.Hide, label: 'Dölj personuppifter' },
+  { value: Visibility.Restrict, label: 'Visa förekomst' },
+  { value: Visibility.Show, label: 'Visa personuppifter' }
+];
+
+const otherVisibilityOptions = [
+  { value: Visibility.Hide, label: 'Dölj övrigt skydd' },
+  { value: Visibility.Restrict, label: 'Visa förekomst' },
+  { value: Visibility.Show, label: 'Visa övrigt skydd' }
+];
+
+function resetVisibilty(value: Visibility, options: any[]) {
+  return value in visibilityOptions ? { value: value, label: options.find((t: any) => t.value === value)!.label } : [];
+
+}
+
 export interface IipaxConfigFormProps {
   edit: boolean;
   formData: IipaxConfig;
@@ -40,28 +57,46 @@ const IipaxConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: IipaxConf
     useForm({
       defaultValues: {
         ...formData,
-        objectTypes: objectTypes,
-        secrecyVisibility: formData?.secrecyVisibility in visibilityOptions ? { value: formData.secrecyVisibility, label: visibilityOptions.find((t: any) => t.value === formData.secrecyVisibility)!.label } : [],
-        pulPersonalSecrecyVisibility: formData?.pulPersonalSecrecyVisibility in visibilityOptions ? { value: formData.pulPersonalSecrecyVisibility, label: visibilityOptions.find((t: any) => t.value === formData.pulPersonalSecrecyVisibility)!.label } : [],
-        otherSecrecyVisibility: formData?.otherSecrecyVisibility in visibilityOptions ? { value: formData.otherSecrecyVisibility, label: visibilityOptions.find((t: any) => t.value === formData.otherSecrecyVisibility)!.label } : []
+        objectTypes,
+        caseSecrecyVisibility: resetVisibilty(formData?.caseSecrecyVisibility, visibilityOptions),
+        casePulPersonalSecrecyVisibility: resetVisibilty(formData?.casePulPersonalSecrecyVisibility, pulVisibilityOptions),
+        caseOtherSecrecyVisibility: resetVisibilty(formData?.caseOtherSecrecyVisibility, otherVisibilityOptions),
+        docSecrecyVisibility: resetVisibilty(formData?.docSecrecyVisibility, visibilityOptions),
+        docPulPersonalSecrecyVisibility: resetVisibilty(formData?.docPulPersonalSecrecyVisibility, pulVisibilityOptions),
+        docOtherSecrecyVisibility: resetVisibilty(formData?.docOtherSecrecyVisibility, otherVisibilityOptions),
+        fileSecrecyVisibility: resetVisibilty(formData?.fileSecrecyVisibility, visibilityOptions),
+        filePulPersonalSecrecyVisibility: resetVisibilty(formData?.filePulPersonalSecrecyVisibility, pulVisibilityOptions),
+        fileOtherSecrecyVisibility: resetVisibilty(formData?.fileOtherSecrecyVisibility, otherVisibilityOptions)
       }
     });
 
   useEffect(() => {
     reset({
       ...formData,
-      objectTypes: objectTypes,
-      secrecyVisibility: formData?.secrecyVisibility in visibilityOptions ? { value: formData.secrecyVisibility, label: visibilityOptions.find((t: any) => t.value === formData.secrecyVisibility)!.label } : [],
-      pulPersonalSecrecyVisibility: formData?.pulPersonalSecrecyVisibility in visibilityOptions ? { value: formData.pulPersonalSecrecyVisibility, label: visibilityOptions.find((t: any) => t.value === formData.pulPersonalSecrecyVisibility)!.label } : [],
-      otherSecrecyVisibility: formData?.otherSecrecyVisibility in visibilityOptions ? { value: formData.otherSecrecyVisibility, label: visibilityOptions.find((t: any) => t.value === formData.otherSecrecyVisibility)!.label } : []
+      objectTypes,
+      caseSecrecyVisibility: resetVisibilty(formData?.caseSecrecyVisibility, visibilityOptions),
+      casePulPersonalSecrecyVisibility: resetVisibilty(formData?.casePulPersonalSecrecyVisibility, pulVisibilityOptions),
+      caseOtherSecrecyVisibility: resetVisibilty(formData?.caseOtherSecrecyVisibility, otherVisibilityOptions),
+      docSecrecyVisibility: resetVisibilty(formData?.docSecrecyVisibility, visibilityOptions),
+      docPulPersonalSecrecyVisibility: resetVisibilty(formData?.docPulPersonalSecrecyVisibility, pulVisibilityOptions),
+      docOtherSecrecyVisibility: resetVisibilty(formData?.docOtherSecrecyVisibility, otherVisibilityOptions),
+      fileSecrecyVisibility: resetVisibilty(formData?.fileSecrecyVisibility, visibilityOptions),
+      filePulPersonalSecrecyVisibility: resetVisibilty(formData?.filePulPersonalSecrecyVisibility, pulVisibilityOptions),
+      fileOtherSecrecyVisibility: resetVisibilty(formData?.fileOtherSecrecyVisibility, otherVisibilityOptions)
     });
   }, [formData, reset]);
 
   const onSubmit = async (data: any) => {
     data.objectTypes = data?.objectTypes?.map((x: any) => x.value);
-    data.secrecyVisibility = data.secrecyVisibility?.value;
-    data.pulPersonalSecrecyVisibility = data.pulPersonalSecrecyVisibility?.value;
-    data.otherSecrecyVisibility = data.otherSecrecyVisibility?.value;
+    data.caseSecrecyVisibility = data.caseSecrecyVisibility?.value;
+    data.casePulPersonalSecrecyVisibility = data.casePulPersonalSecrecyVisibility?.value;
+    data.caseOtherSecrecyVisibility = data.caseOtherSecrecyVisibility?.value;
+    data.docSecrecyVisibility = data.docSecrecyVisibility?.value;
+    data.docPulPersonalSecrecyVisibility = data.docPulPersonalSecrecyVisibility?.value;
+    data.docOtherSecrecyVisibility = data.docOtherSecrecyVisibility?.value;
+    data.fileSecrecyVisibility = data.fileSecrecyVisibility?.value;
+    data.filePulPersonalSecrecyVisibility = data.filePulPersonalSecrecyVisibility?.value;
+    data.fileOtherSecrecyVisibility = data.fileOtherSecrecyVisibility?.value;
 
     if (edit) {
       data.id = formData.id;
@@ -83,10 +118,16 @@ const IipaxConfigForm = ({ edit, formData, fetchAll, hideActiveForm }: IipaxConf
         <div className="col">
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextInput name="name" label="Namn" required register={register} />
-            <SelectInput control={control} name="secrecyVisibility" label="Sekretess" register={register} options={visibilityOptions} />
-            <SelectInput control={control} name="pulPersonalSecrecyVisibility" label="Personuppgifter" register={register} options={visibilityOptions} />
-            <SelectInput control={control} name="otherSecrecyVisibility" label="Övrigt skydd" register={register} options={visibilityOptions} />
-            <CreatableSelectInput control={control} name="objectTypes" label="Objekttyper" isMulti register={register} options={objectTypesOptions}
+            <SelectInput control={control} name="caseSecrecyVisibility" label="Sekretess på ärende" register={register} options={visibilityOptions} />
+            <SelectInput control={control} name="casePulPersonalSecrecyVisibility" label="Personuppgifter på ärende" register={register} options={pulVisibilityOptions} />
+            <SelectInput control={control} name="caseOtherSecrecyVisibility" label="Övrigt skydd på ärende" register={register} options={otherVisibilityOptions} />
+            <SelectInput control={control} name="docSecrecyVisibility" label="Sekretess på dokument" register={register} options={visibilityOptions} />
+            <SelectInput control={control} name="docPulPersonalSecrecyVisibility" label="Personuppgifter på dokument" register={register} options={pulVisibilityOptions} />
+            <SelectInput control={control} name="docOtherSecrecyVisibility" label="Övrigt skydd på dokument" register={register} options={otherVisibilityOptions} />
+            <SelectInput control={control} name="fileSecrecyVisibility" label="Sekretess på filer" register={register} options={visibilityOptions} />
+            <SelectInput control={control} name="filePulPersonalSecrecyVisibility" label="Personuppgifter på filer" register={register} options={pulVisibilityOptions} />
+            <SelectInput control={control} name="fileOtherSecrecyVisibility" label="Övrigt skydd på filer" register={register} options={otherVisibilityOptions} />
+            <CreatableSelectInput control={control} name="objectTypes" label="Objekttyper" isMulti register={register} options={objectTypesOptions} menuPlacement="top"
               getOptionLabel={(option: any) => {
                 if (option.value === 'environment_case')
                   return 'Miljöärende';

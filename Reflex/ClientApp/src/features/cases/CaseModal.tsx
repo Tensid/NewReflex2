@@ -5,6 +5,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import { ModalData } from '../../Cases';
 import { ArchivedDocument, CasePerson, CaseSource, CaseTab, Occurence, Preview, getArchivedDocuments, getCasePersons, getOccurences, getPreview } from '../../api/api';
 import Archive from './ArchiveContent';
+import Lock from './Lock';
 import OccurenceContent from './OccurenceContent';
 import PersonsContent from './PersonsContent';
 import PreviewContent from './PreviewContent';
@@ -66,7 +67,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
   const [occurencesData, setOccurences] = useState<TabState<Occurence[]>>({ ...initTabState, tab: 'Occurences' });
   const [personsData, setPersons] = useState<TabState<CasePerson[]>>({ ...initTabState, tab: 'Persons' });
   const [archivedDocumentsData, setArchivedDocuments] = useState<TabState<ArchivedDocument[]>>({ ...initTabState, tab: 'Archive' });
-  const { caseSource, dnr, caseId, title, caseSourceId, date, tabs, diarieprefix } = modalData;
+  const { caseSource, dnr, caseId, title, caseSourceId, date, tabs, diarieprefix, isConfidential } = modalData;
 
   let availableTabs = tabs || availableCaseDetailsTabs.get(caseSource)!;
   if (caseSource === 'ByggR') {
@@ -93,7 +94,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
   return (
     <Modal show={show} onHide={toggleShow} size="xl">
       <Modal.Header closeButton>
-        <Modal.Title>{formatDnr(dnr, diarieprefix, caseSource)}: {title}</Modal.Title>
+        <Modal.Title>{formatDnr(dnr, diarieprefix, caseSource)}: {title}<Lock show={isConfidential} title="Ärendet är sekretessmarkerat" /></Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="modal-body" title={`${dnr}: ${title}`}>

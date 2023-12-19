@@ -52,6 +52,7 @@ export interface Case {
   title: string;
   caseSource: CaseSource;
   date: string;
+  isConfidential: boolean;
   unavailableDueToSecrecy: boolean;
   status: ArendeStatus;
   arendegrupp: string;
@@ -74,7 +75,8 @@ export interface Occurence {
   title: string;
   arrival: string;
   documents: Document[];
-  isSecret: boolean;
+  isConfidential: boolean;
+  unavailableDueToSecrecy: boolean;
   isWorkingMaterial: boolean;
 }
 
@@ -104,6 +106,7 @@ export interface Document {
   docLinkId: string;
   title: string;
   isConfidential: boolean;
+  unavailableDueToSecrecy: boolean;
 }
 
 export interface CasePerson {
@@ -258,9 +261,15 @@ export interface EcosConfig {
 export interface IipaxConfig {
   id: string;
   name: string;
-  secrecyVisibility: Visibility;
-  pulPersonalSecrecyVisibility: Visibility;
-  otherSecrecyVisibility: Visibility;
+  caseSecrecyVisibility: Visibility;
+  casePulPersonalSecrecyVisibility: Visibility;
+  caseOtherSecrecyVisibility: Visibility;
+  docSecrecyVisibility: Visibility;
+  docPulPersonalSecrecyVisibility: Visibility;
+  docOtherSecrecyVisibility: Visibility;
+  fileSecrecyVisibility: Visibility;
+  filePulPersonalSecrecyVisibility: Visibility;
+  fileOtherSecrecyVisibility: Visibility;
   objectTypes: string[];
 }
 

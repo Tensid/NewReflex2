@@ -1,7 +1,7 @@
 import { Controller } from 'react-hook-form';
 import CreatableSelect from 'react-select/creatable';
 
-const CreatableSelectInput = ({ name, label, options, isMulti, control }: any) => {
+const CreatableSelectInput = ({ name, label, options, isMulti, control, ...props }: any) => {
   return (
     <div className="mb-3">
       <label htmlFor={name}>{label}</label>
@@ -16,6 +16,7 @@ const CreatableSelectInput = ({ name, label, options, isMulti, control }: any) =
         defaultValue={[]}
         name={name}
         control={control}
+        {...props}
       />
     </div>
   );

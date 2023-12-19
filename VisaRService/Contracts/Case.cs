@@ -10,6 +10,7 @@ namespace VisaRService.Contracts
         public string Title { get; set; }
         public string CaseSource { get; set; }
         public DateTime? Date { get; set; }
+        public bool IsConfidential { get; set; }
         public bool UnavailableDueToSecrecy { get; set; }
         public string Status { get; set; }
         public string Arendegrupp { get; set; }

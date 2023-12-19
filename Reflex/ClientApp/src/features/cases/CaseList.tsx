@@ -22,6 +22,7 @@ const CaseList = ({ cases, toggleShow, setModalData }: CaseListProps) => {
         status={case_.status}
         caseSourceId={case_.caseSourceId}
         date={case_.date}
+        isConfidential={case_.isConfidential}
         unavailableDueToSecrecy={case_.unavailableDueToSecrecy}
         tabs={case_.tabs}
       />)}

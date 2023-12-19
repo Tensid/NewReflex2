@@ -7,7 +7,8 @@ namespace VisaRService.Contracts
         public string Title { get; set; }
         public DateTime Arrival { get; set; }
         public Document[] Documents { get; set; }
-        public bool IsSecret { get; set; }
+        public bool IsConfidential { get; set; }
+        public bool UnavailableDueToSecrecy { get; set; }
         public bool IsWorkingMaterial { get; set; }
     }
 }

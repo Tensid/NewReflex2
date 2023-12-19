@@ -95,6 +95,7 @@ namespace ReflexEcosService
                         Title = Regex.Replace(x.ProcessTypeName, $"{x.CaseNumber}  -", ""),
                         CaseSource = "Ecos",
                         CaseSourceId = _config.Id,
+                        IsConfidential = x.CaseId == null,
                         UnavailableDueToSecrecy = x.CaseId == null
                     }).ToArray();
             }
@@ -118,7 +119,7 @@ namespace ReflexEcosService
                     {
                         Title = o.OccurrenceDescription,
                         Arrival = o.OccurrenceDate,
-                        IsSecret = o.IsConfidential,
+                        IsConfidential = o.IsConfidential,
                         Documents = o.Documents
                         .Where(x => allowedDocumentStatuses.Contains(x.DocumentStatus) && (!x.IsConfidential || _config.HideConfidentialDocuments != Visibility.Hide))
                         .Where(x => _config.DocumentTypes.IsNullOrEmpty() || !_config.DocumentTypes.Contains(x.DocumentTypeId))
@@ -224,6 +225,7 @@ namespace ReflexEcosService
                     Title = Regex.Replace(searchResult.ProcessTypeName, $"{searchResult.CaseNumber}  -", ""),
                     CaseSource = "Ecos",
                     CaseSourceId = _config.Id,
+                    IsConfidential = true,
                     UnavailableDueToSecrecy = true
                 };
             }
@@ -258,6 +260,7 @@ namespace ReflexEcosService
                     Fastighetsbeteckning = searchResult?.EstateDesignation,
                     CaseSource = "Ecos",
                     CaseSourceId = _config.Id,
+                    IsConfidential = searchResult.CaseId == null,
                     UnavailableDueToSecrecy = searchResult.CaseId == null
                 };
             }
