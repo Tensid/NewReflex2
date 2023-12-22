@@ -4,11 +4,10 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Navbar from 'react-bootstrap/Navbar';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './NavMenu.css';
 import { Tab } from './api/api';
 import { useAppSelector } from './app/hooks';
-// import { LoginMenu } from './features/api-authorization/LoginMenu';
 import Spinner from './features/spinner/Spinner';
 import UserSettingsModal from './features/user-settings/UserSettingsModal';
 
@@ -16,7 +15,6 @@ export function NavMenu() {
   const tabs = useAppSelector((state) => state.config?.tabs);
   const [show, setShow] = useState(false);
   const { pathname } = useLocation();
-  // const { authenticated, user } = useAuthService();
   const authenticated = true;
   // const hasPermission = user?.role?.includes("Admin") ?? false;
   const hasPermission = true;
@@ -26,11 +24,18 @@ export function NavMenu() {
       <header>
         <Navbar expand="lg" className={`navbar-expand-sm navbar-toggleable-sm border-bottom ${pathname !== '/map' ? 'box-shadow  mb-3' : ''}`}>
           <Container>
-            <LinkContainer to="configs">
-              <Navbar.Brand>Reflex</Navbar.Brand>
-            </LinkContainer>
+
+            <h4 className='align-self-center pl-2'>
+              <Link to={'/reflex/configs'} className="text-decoration-none" onClick={(e) => e.stopPropagation()}>
+                <h3 className='align-self-center pl-2'>
+                  <span className="text-primary">Reflex</span>
+                </h3>
+                {/* {'Vega Beslut'}<span className='text-muted'> - {currentYear}</span> */}
+              </Link>
+            </h4>
+
             <Spinner />
-            <Navbar.Toggle className="me-2" />
+            <Navbar.Toggle className="mr-2" />
             <Navbar.Collapse className="d-sm-inline-flex flex-sm-row-reverse">
               <ul className="navbar-nav flex-grow">
                 {authenticated &&
@@ -79,8 +84,6 @@ export function NavMenu() {
                   <LinkContainer to="/about">
                     <NavDropdown.Item className="text-dark">Om Reflex</NavDropdown.Item>
                   </LinkContainer>
-                  {/* <NavDropdown.Divider /> */}
-                  {/* <LoginMenu /> */}
                 </NavDropdown>
               </ul>
             </Navbar.Collapse>

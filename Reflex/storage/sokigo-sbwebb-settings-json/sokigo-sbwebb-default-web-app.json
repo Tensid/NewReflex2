@@ -8,19 +8,29 @@
     {
       "name": "sokigo-sbwebb-reflex-reflexapp",
       "notRemovable": false,
-      "hiddenCollapsed": true
+      "hiddenCollapsed": false
+    },
+    {
+      "name": "sokigo-reflex-administration-app",
+      "notRemovable": false,
+      "hiddenCollapsed": false
     }
   ],
   "navBottomApplications": [
     {
+      "name": "user-settings",
+      "notRemovable": false,
+      "hiddenCollapsed": false
+    },
+    {
       "name": "sokigo-sbwebb-logging-logviewer",
       "notRemovable": false,
-      "hiddenCollapsed": true
+      "hiddenCollapsed": false
     },
     {
       "name": "sokigo-sbwebb-settings-web-app",
       "notRemovable": false,
-      "hiddenCollapsed": true
+      "hiddenCollapsed": false
     },
     {
       "name": "sokigo-sbwebb-authentication-login",

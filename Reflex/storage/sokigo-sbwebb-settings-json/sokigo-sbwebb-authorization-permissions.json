@@ -176,10 +176,17 @@
         "HasCaseSourcePermission",
         "_common_application_start_",
         "IsAdmin",
-        "HasConfigPermission"
+        "HasConfigPermission",
+        "_common_settings_edit_"
       ],
       "sokigo-sbwebb-authentication-saml2": [
         "_common_settings_edit_"
+      ],
+      "sokigo-reflex-administration-app": [
+        "_common_application_start_"
+      ],
+      "user-settings": [
+        "_common_application_start_"
       ]
     },
     "068d0855-6724-4474-b47d-e9cee04fbee3": {
@@ -218,7 +225,11 @@
         "_common_application_start_"
       ],
       "sokigo-sbwebb-reflex-reflexapp": [
-        "_common_application_start_"
+        "HasCaseSourcePermission",
+        "_common_application_start_",
+        "HasConfigPermission",
+        "IsAdmin",
+        "_common_settings_edit_"
       ],
       "sokigo-sbwebb-authentication-login": [
         "activeusers",
@@ -244,6 +255,12 @@
       ],
       "sokigo-sbwebb-authentication-roles": [
         "_common_settings_edit_"
+      ],
+      "sokigo-reflex-administration-app": [
+        "_common_application_start_"
+      ],
+      "user-settings": [
+        "_common_application_start_"
       ]
     },
     "9f18d241-ef0d-49ef-aadb-af3dd0aa2d8d": {

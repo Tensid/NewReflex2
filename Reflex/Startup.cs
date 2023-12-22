@@ -111,6 +111,9 @@ namespace Reflex
                 .AddPermissions(Permissions.HasConfigPermission)
                 .AddPermissions(Permissions.HasCaseSourcePermission)
                 .AddSettings();
+            services.AddApplication("user-settings");
+            //services.AddApplication("help");
+            //services.AddApplication("loading-indicator");
 
             //services.Configure<IISServerOptions>(options =>
             //{

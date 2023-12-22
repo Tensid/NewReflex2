@@ -1,0 +1,44 @@
+﻿{
+  "title": "Reflex",
+  "defaultLanguage": "sv-SE",
+  "defaultApplicationNotAllowedToStart": "sokigo-sbwebb-authentication-login",
+  "defaultApplicationNotFound": "sokigo-sbwebb-reflex-reflexapp",
+  "defaultApplicationOffline": null,
+  "navbarMenuApplications": [
+    {
+      "name": "sokigo-sbwebb-reflex-reflexapp",
+      "title": null,
+      "separator": false
+    },
+    {
+      "name": "sokigo-reflex-administration-app",
+      "title": null,
+      "separator": false
+    }
+  ],
+  "navbarTopApplications": [
+    {
+      "name": "user-settings",
+      "title": null,
+      "showTitle": false
+    },
+    {
+      "name": "sokigo-sbwebb-logging-logviewer",
+      "title": null,
+      "showTitle": false
+    },
+    {
+      "name": "sokigo-sbwebb-settings-web-app",
+      "title": null,
+      "showTitle": false
+    },
+    {
+      "name": "sokigo-sbwebb-authentication-login",
+      "title": null,
+      "showTitle": false
+    }
+  ],
+  "applicationSettings": null,
+  "navTopApplications": [],
+  "navBottomApplications": []
+}

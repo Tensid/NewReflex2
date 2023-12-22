@@ -205,7 +205,7 @@ const ByggrConfigForm = ({ edit, formData, documentTypeOptions, roleOptions, fet
             <button className="btn btn-primary" type="submit">Spara</button>
             {edit &&
               <button
-                className="btn btn-primary ms-2"
+                className="btn btn-primary ml-2"
                 onClick={async (e) => {
                   e.preventDefault();
                   await deleteByggrConfig(formData.id);

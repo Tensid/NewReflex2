@@ -4,13 +4,13 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
-import { CaseSourceOption, Config, SelectOption, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getDocumentTypes, getEcosConfig, getEcosConfigs, getFormData, getIipaxConfig, getIipaxConfigs, getRoles } from './api/api';
-import { getLayersSettings } from './api/mapSettingsApi';
-import AgsConfigForm from './features/manage-configs/AgsConfigForm';
-import ByggrConfigForm from './features/manage-configs/ByggrConfigForm';
-import EcosConfigForm from './features/manage-configs/EcosConfigForm';
-import IipaxConfigForm from './features/manage-configs/IipaxConfigForm';
-import ReflexConfigForm from './features/manage-configs/ReflexConfigForm';
+import { CaseSourceOption, Config, SelectOption, getAgsConfig, getAgsConfigs, getByggrConfig, getByggrConfigs, getCaseSourceOptions, getConfigs, getDocumentTypes, getEcosConfig, getEcosConfigs, getFormData, getIipaxConfig, getIipaxConfigs, getRoles } from '../api/api';
+import { getLayersSettings } from '../api/mapSettingsApi';
+import AgsConfigForm from '../features/manage-configs/AgsConfigForm';
+import ByggrConfigForm from '../features/manage-configs/ByggrConfigForm';
+import EcosConfigForm from '../features/manage-configs/EcosConfigForm';
+import IipaxConfigForm from '../features/manage-configs/IipaxConfigForm';
+import ReflexConfigForm from '../features/manage-configs/ReflexConfigForm';
 
 const ManageConfigs = () => {
   const [agsConfigs, setAgsConfigs] = useState<any[]>([]);

@@ -46,7 +46,7 @@ const Option = (props: OptionProps<CaseSourceOption>) => {
 
   return (
     <components.Option {...props}>
-      <FontAwesomeIcon className={`text-${color} pe-2`} icon={icon!} />{' '}{props.data.label}
+      <FontAwesomeIcon className={`text-${color} pr-2`} icon={icon!} />{' '}{props.data.label}
     </components.Option>
   );
 };
@@ -163,7 +163,7 @@ const ConfigForm = ({ edit, formData, caseSourceOptions, layers, fetchAll, hideA
             <button className="btn btn-primary" type="submit">Spara</button>
             {edit &&
               <button
-                className="btn btn-primary ms-2"
+                className="btn btn-primary ml-2"
                 onClick={async (e) => {
                   e.preventDefault();
                   await deleteConfig(formData.id);

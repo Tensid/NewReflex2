@@ -31,6 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Administration\Administration.csproj" />
 		<ProjectReference Include="..\ByggrService\ReflexByggrService.csproj" />
 		<ProjectReference Include="..\Data\Reflex.Data.csproj" />
 		<ProjectReference Include="..\FbService\FbService.csproj" />

@@ -75,7 +75,7 @@ const UserSettingsModal = ({ setShow }: UserSettingsModalProps) => {
         <label className="pt-2">Flik som öppnas vid sökträff</label>
         {settingsTabs?.map((tab) =>
           <div key={tab.value}>
-            <input className="me-2"
+            <input className="mr-2"
               type="radio"
               value={tab.value}
               checked={selectedTab?.value === tab.value}

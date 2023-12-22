@@ -1,6 +1,7 @@
 import Logo from './sokigo';
 
 const About = () => {
+  console.log("about");
   return (
     <>
       <h3 className="py-1 text-brand fw-bold">Om Reflex 3.0</h3>

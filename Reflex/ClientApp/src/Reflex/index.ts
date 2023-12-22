@@ -6,7 +6,8 @@ import { permissions } from '../settings';
 // import { SkolskjutsSettings } from './SkolskjutsSettings';
 
 export const settings = {
-  mainRoute: '/',
+  // mainRoute: '//',
+  mainRoute: '/reflex',
   title: 'Reflex',
   appName: 'sokigo-sbwebb-reflex-reflexapp'
 };
@@ -17,13 +18,8 @@ export default {
   navbar: { title: 'Hem' },
   route: settings.mainRoute,
   icon: faHome,
-  fullscreen: true,
+  // fullscreen: true,
   permissions,
-  // settings: {
-  //   component: SkolskjutsSettings,
-  //   group: 'Reflex Beslut',
-  //   title: settings.title
-  // },
-  // view: lazyComponent(() => import('./SkolskjutsAppView'))
+  settings: settings,
   view: lazyComponent(() => import('../App'))
 };

@@ -7,7 +7,7 @@ function GlobalFilter({
   setGlobalFilter,
 }) {
   return (
-    <span>
+    <>
       <input
         value={globalFilter || ''}
         onChange={e => {
@@ -18,7 +18,7 @@ function GlobalFilter({
           fontSize: '1.1rem'
         }}
       />
-    </span>
+    </>
   );
 }
 
@@ -37,7 +37,7 @@ const IndeterminateCheckbox = forwardRef(
   }
 );
 
-function Table({ onSelectedRows, columns, data }) {
+function Table({ onSelectedRows, columns, data, children }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -82,11 +82,14 @@ function Table({ onSelectedRows, columns, data }) {
 
   return (
     <>
-      <GlobalFilter
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        globalFilter={state.globalFilter}
-        setGlobalFilter={setGlobalFilter}
-      />
+      <div className="d-flex align-items-center justify-content-between">
+        <GlobalFilter
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          globalFilter={state.globalFilter}
+          setGlobalFilter={setGlobalFilter}
+        />
+        {children}
+      </div>
       <table className="table table-striped border-top" {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (

@@ -6,6 +6,7 @@ import { NavMenu } from './NavMenu';
 
 export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   const { pathname } = useLocation();
+  console.log("layout");
   return (
     <>
       <NavMenu />

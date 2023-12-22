@@ -59,11 +59,11 @@ const DataTable = (props) => {
         {
           extend: 'colvis',
           text: 'Välj kolumner',
-          className: 'me-2'
+          className: 'mr-2'
         },
         {
           extend: 'collection',
-          className: 'me-2 rounded',
+          className: 'mr-2 rounded',
           text: 'Exportera',
           buttons: [
             {

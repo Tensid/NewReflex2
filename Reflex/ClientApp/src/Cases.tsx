@@ -122,7 +122,7 @@ const Cases = () => {
               <DropdownButton variant="outline-secondary"
                 autoClose="outside"
                 title={<>Ärendekällor {(caseSourceFilter.length > 0) && <span className="badge text-bg-secondary">{caseSourceFilter.length}</span>}</>}
-                className="pe-2"
+                className="pr-2"
               >
                 <Dropdown.Item disabled={!caseSources.includes(CaseSource.Ecos)} className="d-flex justify-content-between" onClick={() => handleCaseSourceFilter(CaseSource.Ecos)}>Ecos {caseSourceFilter.includes(CaseSource.Ecos) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
                 <Dropdown.Item disabled={!caseSources.includes(CaseSource.ByggR)} className="d-flex justify-content-between" onClick={() => handleCaseSourceFilter(CaseSource.ByggR)}>ByggR {caseSourceFilter.includes(CaseSource.ByggR) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
@@ -132,7 +132,7 @@ const Cases = () => {
               {statuses.length > 0 && <DropdownButton variant="outline-secondary"
                 autoClose="outside"
                 title={<>Status {(statusFilter.length > 0) && <span className="badge text-bg-secondary">{statusFilter.length}</span>}</>}
-                className="pe-2"
+                className="pr-2"
               >
                 <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleStatusFilter('Pågående')}>Pågående {statusFilter.includes('Pågående') && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
                 <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleStatusFilter('Avslutat')}>Avslutat {statusFilter.includes('Avslutat') && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
@@ -140,7 +140,7 @@ const Cases = () => {
               {diarieprefixes.length > 0 && <DropdownButton variant="outline-secondary"
                 autoClose="outside"
                 title={<>Diarier {(diarieprefixFilter.length > 0) && <span className="badge text-bg-secondary">{diarieprefixFilter.length}</span>}</>}
-                className="pe-2"
+                className="pr-2"
               >
                 {diarieprefixes.map(x => <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleDiarieprefixFilter(x)}>{x} {diarieprefixFilter.includes(x) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>)}
               </DropdownButton>}
@@ -148,7 +148,7 @@ const Cases = () => {
                 <DropdownButton variant="outline-secondary"
                   autoClose="outside"
                   title={<>Huvudbeslut {(casesWithoutMainDecisionFilter.length > 0) && <span className="badge text-bg-secondary">{casesWithoutMainDecisionFilter.length}</span>}</>}
-                  className="pe-2"
+                  className="pr-2"
                 >
                   <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleCasesWithoutMainDecisionFilter(true)}>Ärenden med huvudbeslut {casesWithoutMainDecisionFilter.includes(true) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
                   <Dropdown.Item className="d-flex justify-content-between" onClick={() => handleCasesWithoutMainDecisionFilter(false)}>Ärenden utan huvudbeslut {casesWithoutMainDecisionFilter.includes(false) && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
@@ -156,7 +156,7 @@ const Cases = () => {
             </ButtonGroup>
           </Col>
           <Col>
-            <ButtonGroup className="float-end">
+            <ButtonGroup className="float-right">
               <DropdownButton title="Sortera" variant="outline-secondary">
                 <Dropdown.Item className="d-flex justify-content-between" onClick={() => (setSortBy('TITLE_ASC'))} >Titel stigande {sortBy === 'TITLE_ASC' && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>
                 <Dropdown.Item className="d-flex justify-content-between" onClick={() => (setSortBy('TITLE_DESC'))} >Titel fallande {sortBy === 'TITLE_DESC' && <FontAwesomeIcon icon={faCheck} />}</Dropdown.Item>

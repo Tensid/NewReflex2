@@ -4,12 +4,12 @@ import isEqual from 'lodash/isEqual';
 import unionWith from 'lodash/unionWith';
 import Modal from 'react-bootstrap/Modal';
 import { CellValue, Row } from 'react-table';
-import { Config, getConfigs } from './api/api';
-import BadgeCell from './features/manage-roles/BadgeCell';
-import ConfigDialog from './features/manage-roles/ConfigDialog';
-import Table from './features/manage-roles/Table';
-import { Action, options } from './features/manage-roles/constants';
-import { Role, getRoles, updateConfigPermissions } from './api/rolesApi';
+import { Config, getConfigs } from '../api/api';
+import BadgeCell from '../features/manage-roles/BadgeCell';
+import ConfigDialog from '../features/manage-roles/ConfigDialog';
+import Table from '../features/manage-roles/Table';
+import { Action, options } from '../features/manage-roles/constants';
+import { Role, getRoles, updateConfigPermissions } from '../api/rolesApi';
 
 export type OptionType = {
   value: string;
@@ -112,17 +112,18 @@ const ManageRoles = () => {
   return (
     <>
       <h4>Hantera roller</h4>
-      <div className="d-flex align-items-center float-end mb-1">
-        <select value={select} className="mr-1" onChange={(evt: ChangeEvent<HTMLSelectElement>) => setSelect(Number(evt.target.value))}>
-          {options.map((option) => <option key={option.action} value={option.action}>{option.actionText}</option>
-          )}
-        </select>
-        <button className="btn btn-primary" title="Utför handling" onClick={toggleShow}
-          disabled={!(Array.isArray(selectedRows) && selectedRows.length)}>
-          Utför
-        </button>
-      </div>
-      <Table onSelectedRows={onSelectedRows} columns={columns} data={roles} />
+      <Table onSelectedRows={onSelectedRows} columns={columns} data={roles}>
+        <div className="d-flex align-items-center justify-content-right">
+          <select value={select} className="mr-1" onChange={(evt: ChangeEvent<HTMLSelectElement>) => setSelect(Number(evt.target.value))}>
+            {options.map((option) => <option key={option.action} value={option.action}>{option.actionText}</option>
+            )}
+          </select>
+          <button className="btn btn-primary" title="Utför handling" onClick={toggleShow}
+            disabled={!(Array.isArray(selectedRows) && selectedRows.length)}>
+            Utför
+          </button>
+        </div>
+      </Table>
       <Modal show={show} onHide={toggleShow}>
         <Modal.Header closeButton>
           <Modal.Title>{options[select].actionText} ({selectedRows.length} roller)</Modal.Title>

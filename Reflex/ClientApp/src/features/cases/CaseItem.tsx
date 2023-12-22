@@ -60,7 +60,7 @@ const CaseItem = ({ dnr, title, status, caseSource, toggleShow, setModalData, ca
     <div className="row align-items-center">
       <div className="col-lg-12 d-grid">
         <button disabled={unavailableDueToSecrecy} className={`btn btn-outline-${color} text-start mb-1 ${styles.blackOutline} ${styles.btn}`} onClick={handleClick}>
-          <span className={`${unavailableDueToSecrecy ? '' : styles.caseSymbol} pe-2 text-${color}`}><FontAwesomeIcon icon={symbol!} /></span>
+          <span className={`${unavailableDueToSecrecy ? '' : styles.caseSymbol} pr-2 text-${color}`}><FontAwesomeIcon icon={symbol!} /></span>
           {formatDnr(dnr, diarieprefix, caseSource)}: {title}{status ? ` (${status})` : ''}
           {unavailableDueToSecrecy && <FontAwesomeIcon title="Sekretess" icon={faLock} />}
         </button>

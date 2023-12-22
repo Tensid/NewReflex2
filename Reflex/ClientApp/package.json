@@ -72,6 +72,11 @@
     "react-refresh": "^0.14.0",
     "typescript": "^5.2.2"
   },
+  "peerDependencies": {
+    "ajv": "^6.12.6",
+    "ajv-errors": "^1.0.1",
+    "ajv-keywords": "^3.5.2"
+  },
   "scripts": {
     "analyser": "sokigo-scripts analyser",
     "prebuild": "npm run clean",

@@ -9,7 +9,7 @@ interface AuthorizeRouteProps {
   requiredRoles?: string[];
 }
 
-const AuthorizeRoute = ({ element, path, requiredRoles, exact }: AuthorizeRouteProps) => {
+const AuthorizeRoute = ({ element, requiredRoles }: AuthorizeRouteProps) => {
   // const { user, authenticated, ready } = useAuthService();
   const ready = true;
   const authenticated = true;

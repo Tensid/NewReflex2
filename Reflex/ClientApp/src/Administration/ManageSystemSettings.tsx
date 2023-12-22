@@ -3,13 +3,13 @@ import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
-import { AgsSettings, ByggrSettings, EcosSettings, FbSettings, IipaxSettings, MiscSettings, getAgsSettings, getByggrSettings, getEcosSettings, getFbSettings, getIipaxSettings, getMiscSettings } from './api/settings';
-import AgsSettingsForm from './features/system-settings/AgsSettingsForm';
-import ByggrSettingsForm from './features/system-settings/ByggrSettingsForm';
-import EcosSettingsForm from './features/system-settings/EcosSettingsForm';
-import FbSettingsForm from './features/system-settings/FbSettingsForm';
-import IipaxSettingsForm from './features/system-settings/IipaxSettingsForm';
-import MiscSettingsForm from './features/system-settings/MiscSettingsForm';
+import { AgsSettings, ByggrSettings, EcosSettings, FbSettings, IipaxSettings, MiscSettings, getAgsSettings, getByggrSettings, getEcosSettings, getFbSettings, getIipaxSettings, getMiscSettings } from '../api/settings';
+import AgsSettingsForm from '../features/system-settings/AgsSettingsForm';
+import ByggrSettingsForm from '../features/system-settings/ByggrSettingsForm';
+import EcosSettingsForm from '../features/system-settings/EcosSettingsForm';
+import FbSettingsForm from '../features/system-settings/FbSettingsForm';
+import IipaxSettingsForm from '../features/system-settings/IipaxSettingsForm';
+import MiscSettingsForm from '../features/system-settings/MiscSettingsForm';
 
 const ManageSystemSettings = () => {
   const [agsFormData, setAgsFormData] = useState<AgsSettings>();
