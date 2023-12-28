@@ -11,14 +11,15 @@ import TextInput from '../common/forms/TextInput';
 
 const getColor = (caseSource: CaseSource) => {
   const styles = getComputedStyle(document.documentElement);
+  // console.log("styles", styles);
   switch (caseSource) {
     case CaseSource.AGS:
     case CaseSource.iipax:
-      return chroma(styles.getPropertyValue('--bs-warning').trim());
+      return chroma(styles.getPropertyValue('--sds-warning').trim());
     case CaseSource.ByggR:
-      return chroma(styles.getPropertyValue('--bs-info').trim());
+      return chroma(styles.getPropertyValue('--sds-info').trim());
     case CaseSource.Ecos:
-      return chroma(styles.getPropertyValue('--bs-success').trim());
+      return chroma(styles.getPropertyValue('--sds-success').trim());
     default:
       return chroma("Black");
   }
@@ -31,22 +32,23 @@ const Option = (props: OptionProps<CaseSourceOption>) => {
   switch (caseSource) {
     case CaseSource.AGS:
     case CaseSource.iipax:
-      color = 'warning';
+      color = 'text-warning';
       icon = faArchive;
       break;
     case CaseSource.ByggR:
-      color = 'info';
+      color = 'text-info';
       icon = faHammer;
       break;
     case CaseSource.Ecos:
-      color = 'success';
+      color = 'text-success';
       icon = faBug;
       break;
   }
 
+  console.log("Option", caseSource);
   return (
     <components.Option {...props}>
-      <FontAwesomeIcon className={`text-${color} pr-2`} icon={icon!} />{' '}{props.data.label}
+      <FontAwesomeIcon className={`${color} pr-2`} icon={icon!} />{' '}{props.data.label}
     </components.Option>
   );
 };
@@ -54,6 +56,7 @@ const Option = (props: OptionProps<CaseSourceOption>) => {
 const colourStyles: any = {
   option: (styles: any, { data, isDisabled, isFocused, isSelected }: any) => {
     let color = getColor(data.caseSource);
+    console.log("color", color);
     return {
       ...styles,
       backgroundColor: isDisabled

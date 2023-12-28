@@ -112,6 +112,8 @@ namespace Reflex
                 .AddPermissions(Permissions.HasCaseSourcePermission)
                 .AddSettings();
             services.AddApplication("user-settings");
+            services.AddApplication("navbarSchoolYear").IsAlwaysAvailable();
+            services.AddApplication("navs").IsAlwaysAvailable();
             //services.AddApplication("help");
             //services.AddApplication("loading-indicator");
 

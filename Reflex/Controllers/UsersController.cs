@@ -16,7 +16,7 @@ namespace Reflex.Controllers
     //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize(Policy = Policies.IsAdmin)]
+    [Authorize(Policy = Policies.IsAdmin)]
     public class UsersController : ControllerBase
     {
         private readonly ILogger<UsersController> _logger;
@@ -66,7 +66,7 @@ namespace Reflex.Controllers
         //    };
     }
 
-    //[Authorize(Policy = Policies.IsAdmin)]
+    [Authorize(Policy = Policies.IsAdmin)]
     //[HttpGet]
     //public async Task<IEnumerable<ReflexUser>> Get()
     //{
@@ -95,7 +95,7 @@ namespace Reflex.Controllers
     //    return reflexUsers;
     //}
 
-    ////[Authorize(Policy = Policies.IsAdmin)]
+    [Authorize(Policy = Policies.IsAdmin)]
     //[HttpPut("roles")]
     //public async Task<IActionResult> UpdateRoles(IEnumerable<UpdateRolesRequest> requests)
     //{
@@ -121,7 +121,7 @@ namespace Reflex.Controllers
     //    return NoContent();
     //}
 
-    //[Authorize(Policy = Policies.IsAdmin)]
+    [Authorize(Policy = Policies.IsAdmin)]
     //[HttpPut("configPermissions")]
     //public async Task<IActionResult> UpdateConfigPermissions(IEnumerable<UpdateConfigPermissionsRequest> requests)
     //{
@@ -141,7 +141,7 @@ namespace Reflex.Controllers
     //    return NoContent();
     //}
 
-    ////[Authorize(Policy = Policies.IsAdmin)]
+    [Authorize(Policy = Policies.IsAdmin)]
     //[HttpDelete]
     //public async Task<IActionResult> Delete(IEnumerable<string> ids)
     //{

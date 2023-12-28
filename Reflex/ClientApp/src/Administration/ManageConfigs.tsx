@@ -64,11 +64,12 @@ const ManageConfigs = () => {
 
   return (
     <div className="row">
-      <div className="col-6 col-form-label col-form-label-sm">
+      {/* <div className="col-6 col-form-label col-form-label-sm"> */}
+      <div className="col-6">
         <h5>Hantera konfigurationer</h5>
         <Tab.Container activeKey={activeKey}>
           <Row>
-            <Col sm={3}>
+            <Col sm={5}>
               <Nav variant="pills" className="flex-column" activeKey={activeKey}>
                 <NavDropdown key="Reflex" title="Reflex" id="nav-dropdown">
                   {reflexConfigs?.map((cfg) =>

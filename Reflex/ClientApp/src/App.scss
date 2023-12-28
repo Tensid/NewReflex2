@@ -76,8 +76,9 @@ $theme-colors: map-merge($custom-theme-colors, $theme-colors);
 //    background-color: white;
 // }
 
- #mainview {
+ #layout {
   //  display: flex;
   //  flex-direction: column;
+   height: inherit;
    background-color: white !important;
 }

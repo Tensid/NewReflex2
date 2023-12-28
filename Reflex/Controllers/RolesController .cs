@@ -20,7 +20,7 @@ namespace Reflex.Controllers
     //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize(Policy = Policies.IsAdmin)]
+    [Authorize(Policy = Policies.IsAdmin)]
     public class RolesController : ControllerBase
     {
         private readonly IRolesService _rolesService;

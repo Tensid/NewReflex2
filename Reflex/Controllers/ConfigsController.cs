@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -101,7 +102,7 @@ namespace Reflex.Controllers
             }
         }
 
-        //[Authorize(Policy = Policies.IsAdmin)]
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpGet("formData/{id}")]
         [UseSystemTextJson]
         public ConfigFormData GetForm(Guid id)
@@ -126,15 +127,16 @@ namespace Reflex.Controllers
             return formData;
         }
 
-        //[Authorize(Policy = Policies.IsAdmin)]
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpDelete("{id}")]
         public void DeleteConfig(Guid id)
         {
             _repository.DeleteConfig(id);
         }
 
-        //[Authorize(Policy = Policies.IsAdmin)]
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpGet("caseSourceOptions")]
+        [UseSystemTextJson]
         public IEnumerable<CaseSourceOption> GetCaseSourceOptions()
         {
             var caseSourceOptions = _context.AgsConfigs.Select(y => new CaseSourceOption { Value = y.Id, Label = y.Name, CaseSource = CaseSource.AGS }).ToList();
@@ -145,7 +147,7 @@ namespace Reflex.Controllers
             return caseSourceOptions.ToList();
         }
 
-        //[Authorize(Policy = Policies.IsAdmin)]
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpPut]
         public void UpdateConfig(ConfigFormData formData)
         {
@@ -217,7 +219,7 @@ namespace Reflex.Controllers
             _context.SaveChanges();
         }
 
-        //[Authorize(Policy = Policies.IsAdmin)]
+        [Authorize(Policy = Policies.IsAdmin)]
         [HttpPost]
         public void CreateConfig(ConfigFormData formData)
         {
@@ -292,14 +294,14 @@ namespace Reflex.Controllers
         public string Name { get; set; }
         public string Description { get; set; }
         public virtual IEnumerable<string> Map { get; set; }
-        public virtual IEnumerable<Tab> Tabs { get; set; }
+        public virtual IEnumerable<Tab> Tabs { get; set; }        
         public virtual IEnumerable<CaseSourceOption> CaseSources { get; set; }
     }
 
     public class CaseSourceOption
     {
         public Guid Value { get; set; }
-        public string Label { get; set; }
+        public string Label { get; set; }        
         public CaseSource CaseSource { get; set; }
     }
 }

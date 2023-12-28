@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { faUserCog } from '@fortawesome/pro-solid-svg-icons';
 import UserSettingsModal from '../../features/user-settings/UserSettingsModal';
 
-export function UserSettings({ expanded }: { expanded: boolean }) {
+export function UserSettings({ expanded, ...props }: { expanded: boolean }) {
   const [show, setShow] = useState(false);
+
+  console.log("UserSettings", props);
 
   return (
     <>
@@ -12,22 +14,22 @@ export function UserSettings({ expanded }: { expanded: boolean }) {
         <div style={{ height: 40 }}>
           <NavbarTopIcon
             block
-            title="Personliga inställningar"
+            title="Användarinställningar"
             expanded={expanded}
             icon={faUserCog}
             onClick={() => setShow(true)}
-            aria-label="Personliga inställningar"
+            aria-label="Användarinställningar"
           />
           {show && <UserSettingsModal setShow={setShow} />}
         </div>
       ) : (
         <>
           <NavbarTopIcon
-            title="Personliga inställningar"
+            title="Användarinställningar"
             expanded={expanded}
             icon={faUserCog}
             onClick={() => setShow(true)}
-            aria-label="Personliga inställningar"
+            aria-label="Användarinställningar"
           />
           {show && (
             <UserSettingsModal

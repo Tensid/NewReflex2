@@ -14,12 +14,11 @@ const SelectInput = ({ name, label, options, isMulti, control, isSearchable = fa
           closeMenuOnSelect={false}
           options={options}
           isSearchable={isSearchable}
+          {...props}
         />}
         defaultValue={[]}
         name={name}
         control={control}
-        isSearchable={isSearchable}
-        {...props}
       />
     </div>
   );

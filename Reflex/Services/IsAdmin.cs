@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Sokigo.SBWebb.ApplicationServices;
 
 namespace Reflex.Services
 {
@@ -11,9 +12,13 @@ namespace Reflex.Services
 
     public class IsAdminHandler : AuthorizationHandler<IsAdminRequirement>
     {
-        public IsAdminHandler()
-        {
 
+        private readonly IUserUtils _userUtils;
+        private readonly IApplicationPermissions<ReflexApplication> _applicationPermissions;
+        public IsAdminHandler(IUserUtils userUtils, IApplicationPermissions<ReflexApplication> applicationPermissions)
+        {
+            _userUtils = userUtils;
+            _applicationPermissions = applicationPermissions;
         }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, IsAdminRequirement requirement)
@@ -22,6 +27,9 @@ namespace Reflex.Services
                 return Task.CompletedTask;
 
             context.Succeed(requirement);
+
+            var tmp = _userUtils.CurrentUser.Claims;
+            var tmp2 = _applicationPermissions.HasPermission("IsAdmin");            
 
             var isAdmin = context.User.HasClaim(x => x.Value == "Admin");
             if (isAdmin)

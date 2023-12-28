@@ -4,8 +4,34 @@
   "defaultApplicationNotAllowedToStart": "sokigo-sbwebb-authentication-login",
   "defaultApplicationNotFound": "sokigo-sbwebb-reflex-reflexapp",
   "defaultApplicationOffline": null,
-  "navTopApplications": [],
+  "navTopApplications": [
+    {
+      "name": "sokigo-sbwebb-reflex-reflexapp",
+      "notRemovable": false,
+      "hiddenCollapsed": true
+    },
+    {
+      "name": "sokigo-reflex-administration-app",
+      "notRemovable": false,
+      "hiddenCollapsed": true
+    },
+    {
+      "name": "navbarSchoolYear",
+      "notRemovable": false,
+      "hiddenCollapsed": false
+    },
+    {
+      "name": "navs",
+      "notRemovable": false,
+      "hiddenCollapsed": true
+    }
+  ],
   "navBottomApplications": [
+    {
+      "name": "navs",
+      "notRemovable": false,
+      "hiddenCollapsed": true
+    },
     {
       "name": "user-settings",
       "notRemovable": false,
@@ -14,17 +40,17 @@
     {
       "name": "sokigo-sbwebb-logging-logviewer",
       "notRemovable": false,
-      "hiddenCollapsed": false
+      "hiddenCollapsed": true
     },
     {
       "name": "sokigo-sbwebb-settings-web-app",
       "notRemovable": false,
-      "hiddenCollapsed": false
+      "hiddenCollapsed": true
     },
     {
       "name": "sokigo-sbwebb-authentication-login",
       "notRemovable": false,
-      "hiddenCollapsed": false
+      "hiddenCollapsed": true
     }
   ],
   "applicationSettings": null

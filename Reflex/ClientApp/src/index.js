@@ -20,7 +20,8 @@ const root = createRoot(container);
 root.render(
   <Provider store={store}>
     <DndProvider backend={MultiBackend} options={HTML5toTouch}>
-      <App applications={apps} params={{ navbar: { disableSide: true, defaultTheme: "off", disableTheme: true } }} />
+      {/* <App applications={apps} params={{ navbar: { disableSide: true, defaultTheme: "off", disableTheme: true } }} /> */}
+      <App applications={apps} params={{ transformTranslateZ: false, navbar: { defaultSide: "top", disableSide: true, defaultTheme: "off", disableTheme: true } }} />
     </DndProvider>
   </Provider>
 );

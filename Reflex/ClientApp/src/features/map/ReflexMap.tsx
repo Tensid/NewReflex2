@@ -98,9 +98,9 @@ const ReflexMap = ({ projection, fnr, estateName: defaultEstateName }: ReflexMap
 
   return (
     <MapProvider projection={projection} initialExtent={extent}>
-      <MapContainer className="flex-grow-1" style={{ height: '700px' }} />
+      {/* <MapContainer className="flex-grow-1" style={{ height: '700px' }} /> */}
       {/* <MapContainer className="flex-grow-1" style={{ height: 'inherit' }} /> */}
-      {/* <MapContainer className="flex-grow-1" style={{ height: '100%' }} /> */}
+      <MapContainer className="flex-grow-1" style={{ height: '100%' }} />
       {baseLayers?.map((x, i) => {
         if (x.type === 'WMS')
           return <WmsLayer visible={i === baseLayers.length - 1} options={x.options} title={x.title} baseLayer={x?.baseLayer} key={x.id} />;

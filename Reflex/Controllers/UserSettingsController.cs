@@ -12,7 +12,7 @@ using Sokigo.SBWebb.ApplicationServices;
 
 namespace Reflex.Controllers
 {
-    //[Authorize(Policy = Policies.IsAdmin)]
+    [Authorize(Policy = Policies.IsAdmin)]
     //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
