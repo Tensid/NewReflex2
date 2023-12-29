@@ -31,7 +31,7 @@ namespace Reflex.Controllers
             _fbService = fbService;
         }
 
-        //[Authorize(Policy = Policies.HasConfigPermission)]
+        [Authorize(Policy = Policies.HasConfigPermission)]
         public async Task<IEnumerable<SearchResult>> Get(string query, Guid configId)
         {
             var searchResults = new List<SearchResult>();

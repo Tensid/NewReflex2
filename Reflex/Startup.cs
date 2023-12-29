@@ -79,11 +79,11 @@ namespace Reflex
                 options.AddPolicy(Policies.HasConfigPermission, policy =>
                     policy.Requirements.Add(new HasConfigPermissionRequirement()));
             });
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy(Policies.HasCaseSourcePermission, policy =>
-            //        policy.Requirements.Add(new HasCaseSourcePermissionRequirement()));
-            //});
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.HasCaseSourcePermission, policy =>
+                    policy.Requirements.Add(new HasCaseSourcePermissionRequirement()));
+            });
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(Policies.IsAdmin, policy =>
@@ -92,8 +92,8 @@ namespace Reflex
 
             //options.AddPolicy(Policies.IsAdmin,
             //        policy => policy.RequireClaim(Permissions.IsAdmin, "True"));
-            //services.AddScoped<IAuthorizationHandler, HasConfigPermissionHandler>();
-            //services.AddScoped<IAuthorizationHandler, HasCaseSourcePermissionHandler>();
+            services.AddScoped<IAuthorizationHandler, HasConfigPermissionHandler>();
+            services.AddScoped<IAuthorizationHandler, HasCaseSourcePermissionHandler>();
             services.AddScoped<IAuthorizationHandler, IsAdminHandler>();
 
             services.AddTransient<IEmailSender, EmailSender>(i =>

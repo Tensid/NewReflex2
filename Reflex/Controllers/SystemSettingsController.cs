@@ -21,7 +21,9 @@ namespace Reflex.Controllers
             _systemSettingsService = systemSettingsService;
         }
 
-        [Authorize(Policy = Policies.IsAdmin)]
+        //[Authorize(Policy = Policies.IsAdmin)]
+        [Authorize(Policy = Policies.HasConfigPermission)]
+        [Authorize(Policy = Policies.HasCaseSourcePermission)]
         [HttpGet("fb")]
         public FbSettings GetFbSettings()
         {
