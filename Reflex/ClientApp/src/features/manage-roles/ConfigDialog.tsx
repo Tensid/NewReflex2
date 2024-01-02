@@ -13,8 +13,6 @@ interface ConfigDialogProps {
 }
 
 const ConfigDialog = ({ configs, users, setSelectedOptions }: ConfigDialogProps) => {
-  console.log("configs", configs);
-  console.log("users", users);
   const options = configs.map(({ id: value, name: label }) => ({ value, label }));
 
   const userNames = users.map(user => user.name).join('\n');

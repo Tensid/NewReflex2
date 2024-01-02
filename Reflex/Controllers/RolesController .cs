@@ -48,7 +48,7 @@ namespace Reflex.Controllers
             {
                 //var roles = await _userManager.GetRolesAsync(applicationUser);
                 var rolesClaims = _applicationDbContext.RolesClaims.ToList();
-                var configPermissions = rolesClaims.Where(x => x.ClaimType == "config")
+                var configPermissions = rolesClaims.Where(x => x.ClaimType == "config" && x.RoleId == role.Id)
                     .Select(x => new ConfigPermission
                     {
                         Name = _repository.GetConfig(Guid.Parse(x.ClaimValue)).Name,
@@ -82,10 +82,10 @@ namespace Reflex.Controllers
                     //var claims = await _userManager.GetClaimsAsync(user);
                     var claims = _applicationDbContext.RolesClaims;
                     //await _userManager.RemoveClaimsAsync(user, claims.Where(claim => claim.Type == "config"));
-                    _applicationDbContext.RolesClaims.RemoveRange(claims.Where(claim => claim.ClaimType == "config"));
+                    _applicationDbContext.RolesClaims.RemoveRange(claims.Where(claim => claim.ClaimType == "config" && claim.RoleId ==role.Id));
                     _applicationDbContext.RolesClaims.AddRange(
                         request.ConfigPermissions.Select(config =>
-                        new RolesClaim { Id = new Guid(),RoleId = role.Id, ClaimValue = config.Id, ClaimType = "config" })
+                        new RolesClaim { Id = Guid.NewGuid(), RoleId = role.Id, ClaimValue = config.Id, ClaimType = "config" })
                         );
                     //.RemoveRange(x => x.);
                     _applicationDbContext.SaveChanges();

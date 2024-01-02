@@ -42,6 +42,9 @@ namespace Reflex.Services
 
             var hasConfigPermission = context.User.HasClaim(x => x.Value == configId);
 
+            //hämta alla roller som användare har 
+            
+
             if (!hasConfigPermission)
                 return Task.CompletedTask;
 
