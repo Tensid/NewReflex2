@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Reflex.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Sokigo.SBWebb.ApplicationServices;
+using System.Security.Claims;
 
 namespace Reflex.Services
 {
@@ -15,10 +17,14 @@ namespace Reflex.Services
     public class HasCaseSourcePermissionHandler : AuthorizationHandler<HasCaseSourcePermissionRequirement>
     {
         private readonly ApplicationDbContext _context;
+        private readonly IApplicationPermissions<ReflexApplication> _applicationPermissions;
+        private readonly IUserUtils _userUtils;
 
-        public HasCaseSourcePermissionHandler(ApplicationDbContext context)
+        public HasCaseSourcePermissionHandler(ApplicationDbContext context, IApplicationPermissions<ReflexApplication> applicationPermissions, IUserUtils userUtils)
         {
             _context = context;
+            _applicationPermissions = applicationPermissions;
+            _userUtils = userUtils;
         }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, HasCaseSourcePermissionRequirement requirement)
@@ -28,7 +34,8 @@ namespace Reflex.Services
 
             context.Succeed(requirement);
 
-            var isAdmin = context.User.HasClaim(x => x.Value == "Admin");
+            //var isAdmin = context.User.HasClaim(x => x.Value == "Admin");
+            var isAdmin = _applicationPermissions.HasPermission("IsAdmin");
             if (isAdmin)
             {
                 context.Succeed(requirement);
@@ -41,9 +48,10 @@ namespace Reflex.Services
             var caseSourceId = httpContext.Request.Query["caseSourceId"].First().ToString();
 
             var hasConfigPermission = context.User.HasClaim(x => x.Value == configId);
-
-            //hämta alla roller som användare har 
             
+            var currentUserRoleClaims = _userUtils.CurrentUser.Claims.Where(x => x.Type == ClaimTypes.Role);
+            var rolesClaims = _context.RolesClaims.ToList().Where(x => currentUserRoleClaims.Any(y => y.Value == x.RoleId.ToString()));
+            var hasPermission = rolesClaims.Any(x => x.ClaimValue == configId);
 
             if (!hasConfigPermission)
                 return Task.CompletedTask;
