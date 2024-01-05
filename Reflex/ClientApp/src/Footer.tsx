@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <div className="fixed-bottom bg-primary text-white flex-shrink-0">
       {name ? name + description : 'Konfiguration ej vald'}
-      <Link to={'/about'} onClick={(e) => e.stopPropagation()}>
+      <Link to={'/reflex/about'} onClick={(e) => e.stopPropagation()}>
         <span className="float-right text-white">Om Reflex</span>
       </Link>
     </div>

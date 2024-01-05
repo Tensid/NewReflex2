@@ -20,29 +20,28 @@ namespace Reflex.Controllers
 
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
-    //[UseSystemTextJson]
-    //[Produces("application/json")]
+    [Route("api/[controller]")]        
     public class ConfigsController : ControllerBase
     {
         private readonly ILogger<ConfigsController> _logger;
         private readonly IRepository _repository;
         private readonly ApplicationDbContext _context;
         //private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IApplicationPermissions<ReflexApplication> _applicationPermissions;
         private readonly IUserUtils _userUtils;
 
-        public ConfigsController(ILogger<ConfigsController> logger, IRepository repository, ApplicationDbContext context, IUserUtils userUtils)
+        public ConfigsController(ILogger<ConfigsController> logger, IRepository repository, ApplicationDbContext context, IApplicationPermissions<ReflexApplication> applicationPermissions, IUserUtils userUtils)
         {
             _logger = logger;
             _repository = repository;
             _context = context;
+            _applicationPermissions = applicationPermissions;
             //_userManager = userManager;
             _userUtils = userUtils;
         }
 
         [HttpGet]
-        [UseSystemTextJson]
-        //[Produces("application/json")]
+        [UseSystemTextJson]        
         [Authorize(Policy = Policies.IsAdmin)]
         [Authorize(Policy = Policies.HasConfigPermission)]
         public async Task<IEnumerable<Config>> GetConfigs()
@@ -52,32 +51,26 @@ namespace Reflex.Controllers
             //var user = await _userManager.FindByIdAsync(id);
             var user = _userUtils.CurrentUser;
 
-            var configClaims = User.Claims.Where(x => x.Type == "config");
-            //var isAdmin = (await _userManager.GetRolesAsync(user)).Contains("Admin");            
+            //var configClaims = User.Claims.Where(x => x.Type == "config");
+            //var isAdmin = (await _userManager.GetRolesAsync(user)).Contains("Admin");
+            var isAdmin = _applicationPermissions.HasPermission("IsAdmin");
+            var currentUserRoleClaims = _userUtils.CurrentUser.Claims.Where(x => x.Type == ClaimTypes.Role);
+            var rolesClaims = _context.RolesClaims.ToList().Where(x => currentUserRoleClaims.Any(y => y.Value == x.RoleId.ToString()));
+            //var hasPermission = rolesClaims.Any(x => x.ClaimValue == configId);
+            //var currentUserRoleClaims = _userUtils.CurrentUser.Claims.Where(x => x.Type == ClaimTypes.Role);
+            //var rolesClaims = _context.RolesClaims.ToList().Where(x => currentUserRoleClaims.Any(y => y.Value == x.RoleId.ToString()));
 
-            var isAdmin = true;
-
-            var result = _repository.GetConfigs().Where(x => isAdmin || configClaims.Any(y => y.Value == x.Id.ToString())).Select(x => new Config
-            {
-                Description = x.Description,
-                Id = x.Id,
-                Map = x.Map,
-                Name = x.Name,
-                Tabs = x.Tabs
-            });
-            return result;
-            //return Ok(result);
-            //return new JsonResult(result, new JsonSerializerOptions
-            //{
-            //    WriteIndented = true,
-            //    // Other JSON formatting options specific to this action
-            //});
-
-            //return new SystemTextJsonResult(result, new JsonSerializerOptions
-            //{
-            //    WriteIndented = true,
-            //    // Other JSON formatting options specific to this action
-            //});
+            //var result = _repository.GetConfigs().Where(x => isAdmin || configClaims.Any(y => y.Value == x.Id.ToString()))
+            var result = _repository.GetConfigs().Where(cfg => isAdmin || rolesClaims.Any(x => x.ClaimValue == cfg.Id.ToString()))
+                .Select(x => new Config
+                {
+                    Description = x.Description,
+                    Id = x.Id,
+                    Map = x.Map,
+                    Name = x.Name,
+                    Tabs = x.Tabs
+                });
+            return result;            
         }
 
         public class SystemTextJsonResult : IActionResult
@@ -294,14 +287,14 @@ namespace Reflex.Controllers
         public string Name { get; set; }
         public string Description { get; set; }
         public virtual IEnumerable<string> Map { get; set; }
-        public virtual IEnumerable<Tab> Tabs { get; set; }        
+        public virtual IEnumerable<Tab> Tabs { get; set; }
         public virtual IEnumerable<CaseSourceOption> CaseSources { get; set; }
     }
 
     public class CaseSourceOption
     {
         public Guid Value { get; set; }
-        public string Label { get; set; }        
+        public string Label { get; set; }
         public CaseSource CaseSource { get; set; }
     }
 }
