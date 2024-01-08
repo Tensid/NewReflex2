@@ -10,7 +10,6 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
     <>
       {/* <NavMenu /> */}
       {!pathname.includes('map') ?
-
         <div id="layout" className="pt-3">
           <div className="container" style={{ paddingBottom: '24px' }}>
             {children}

@@ -2,6 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Config } from '../../api/api';
 import { useAppDispatch } from '../../app/hooks';
 import { setConfig } from './configsSlice';
+import styles from './configs.module.scss';
 
 interface ConfigItemProps {
   config: Config;
@@ -17,10 +18,10 @@ const ConfigItem = ({ config }: ConfigItemProps) => {
   }
 
   return (
-    <Link to="/search" className="list-group-item list-group-item-action" onClick={handleClick}>
-      <div className="fw-bold text-primary">{config.name}</div>
+    <div className={"list-group-item list-group-item-action " + styles.listGroupItem} onClick={handleClick}>
+      <h5 className="text-primary">{config.name}</h5>
       <div className="font-italic">{config.description}</div>
-    </Link>);
+    </div>);
 };
 
 export default ConfigItem;

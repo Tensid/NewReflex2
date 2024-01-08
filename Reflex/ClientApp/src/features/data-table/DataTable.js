@@ -59,7 +59,7 @@ const DataTable = (props) => {
         {
           extend: 'colvis',
           text: 'Välj kolumner',
-          className: 'mr-2'
+          className: 'mr-2 rounded'
         },
         {
           extend: 'collection',
@@ -153,16 +153,14 @@ const DataTable = (props) => {
 
   return (
     <div>
-      <div className="d-flex justify-content-end">
-        <div className="mb-2">
-          <label type="text" readOnly className="form-control-plaintext" value="Sök" title="Sök närliggande fastigheter inom radie">Sök:</label>
-        </div>
-        <div className="mx-2 mb-2">
+      <div className="d-flex justify-content-end align-items-center mb-2">
+        <label type="text" title="Sök närliggande fastigheter inom radie">Sök:</label>
+        <div className="mx-2">
           <input type="number" className="form-control" min="0" max="1000" defaultValue="0" id="radius_input" placeholder="Meter"></input>
         </div>
-        <button id="get_button" className="btn btn-primary mb-2">Hämta</button>
+        <button id="get_button" className="btn btn-primary">Hämta</button>
       </div>
-      <table id="table" className="table table-hover table-sm table-striped " style={{ 'width': '100%', 'bordeCollapse': 'collapse!important' }}>
+      <table id="table" className="table table-hover table-sm table-striped " style={{ 'width': '100%', 'borderCollapse': 'collapse!important' }}>
         <thead>
           <tr>
             {props.headers.map((td) => <td key={td}>{td}</td>)}

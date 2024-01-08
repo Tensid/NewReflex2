@@ -1,3 +1,4 @@
+import { Alert, Panel } from '@sokigo/components-react-bootstrap';
 import Feature from 'ol/Feature';
 import Geometry from 'ol/geom/Geometry';
 import Projection from 'ol/proj/Projection';
@@ -43,14 +44,23 @@ const CaseAlert = ({ estateName, show, toggleAlert }: CaseAlertProps) => {
   const navigate = useHistory();
   if (show)
     return (
-      <div className="mx-auto alert alert-info alert-dismissible alert-overlay">
-        {estateName} <a href="cases" onClick={e => {
-          e.preventDefault();
-          navigate.push('/cases');
-        }
-        }>Visa ärenden</a>
-        <button className="btn-close" onClick={toggleAlert} aria-label="close" />
-      </div>
+      <Panel glass>
+        <Alert
+          hideIcon
+          kind="info"
+          border
+          inline
+          transparent
+          className="mb-3"
+          onCloseButtonClick={toggleAlert}
+        >
+          {estateName}<a className="ml-1" href="cases" onClick={e => {
+            e.preventDefault();
+            navigate.push('/cases');
+          }
+          }>Visa ärenden</a>
+        </Alert>
+      </Panel>
     );
   return null;
 };

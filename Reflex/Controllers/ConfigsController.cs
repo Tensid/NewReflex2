@@ -41,9 +41,7 @@ namespace Reflex.Controllers
         }
 
         [HttpGet]
-        [UseSystemTextJson]        
-        [Authorize(Policy = Policies.IsAdmin)]
-        [Authorize(Policy = Policies.HasConfigPermission)]
+        [UseSystemTextJson]                
         public async Task<IEnumerable<Config>> GetConfigs()
         //public async Task<IActionResult> GetConfigs()
         {

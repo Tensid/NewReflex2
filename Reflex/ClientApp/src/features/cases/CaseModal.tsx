@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
+import {
+  Modal, ModalHeader, ModalBody, ModalFooter
+} from '@sokigo/components-react-bootstrap';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { ModalData } from '../../Cases';
@@ -91,50 +93,46 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
   }, [dnr, caseSource]);
 
   return (
-    <Modal show={show} onHide={toggleShow} size="xl">
-      <Modal.Header closeButton>
-        <Modal.Title>{formatDnr(dnr, diarieprefix, caseSource)}: {title}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="modal-body" title={`${dnr}: ${title}`}>
-          <div className="container-fluid px-0">
-            {availableTabs!.length === 1 && <>
-              <h3>
-                {mappedCaseTabs.get(availableTabs![0])}
-              </h3>
-              {{
-                'Preview': <PreviewContent previewState={previewData} tabs={tabs!} />,
-                'Occurences': <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} caseSourceId={caseSourceId} />,
-                'Persons': <PersonsContent personsState={personsData} />,
-                'Archive': <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} date={date} />
-              }[availableTabs![0]]}
-            </>}
-            {availableTabs!.length > 1 &&
-              <Tabs defaultActiveKey={availableTabs![0]} variant="pills">
-                {availableTabs.includes('Preview') &&
-                  <Tab eventKey={'Preview'} title="Förhandsgranskning" >
-                    <PreviewContent previewState={previewData} tabs={tabs!} />
-                  </Tab>}
-                {availableTabs.includes('Occurences') &&
-                  <Tab eventKey={'Occurences'} title="Händelser">
-                    <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} caseSourceId={caseSourceId} />
-                  </Tab>}
-                {availableTabs.includes('Persons') &&
-                  <Tab eventKey={'Persons'} title="Intressenter">
-                    <PersonsContent personsState={personsData} />
-                  </Tab>}
-                {availableTabs.includes('Archive') &&
-                  <Tab eventKey={'Archive'} title="Arkiv">
-                    <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} date={date} />
-                  </Tab>}
-              </Tabs>
-            }
-          </div>
+    <Modal show={show} onClose={toggleShow} size="xl">
+      <ModalHeader border>{`${formatDnr(dnr, diarieprefix, caseSource)}: ${title}`}</ModalHeader>
+      <ModalBody title={`${dnr}: ${title}`}>
+        <div className="container-fluid px-0">
+          {availableTabs!.length === 1 && <>
+            <h3>
+              {mappedCaseTabs.get(availableTabs![0])}
+            </h3>
+            {{
+              'Preview': <PreviewContent previewState={previewData} tabs={tabs!} />,
+              'Occurences': <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} caseSourceId={caseSourceId} />,
+              'Persons': <PersonsContent personsState={personsData} />,
+              'Archive': <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} date={date} />
+            }[availableTabs![0]]}
+          </>}
+          {availableTabs!.length > 1 &&
+            <Tabs defaultActiveKey={availableTabs![0]} variant="pills">
+              {availableTabs.includes('Preview') &&
+                <Tab eventKey={'Preview'} title="Förhandsgranskning" >
+                  <PreviewContent previewState={previewData} tabs={tabs!} />
+                </Tab>}
+              {availableTabs.includes('Occurences') &&
+                <Tab eventKey={'Occurences'} title="Händelser">
+                  <OccurenceContent occurenceState={occurencesData} caseSource={caseSource} caseSourceId={caseSourceId} />
+                </Tab>}
+              {availableTabs.includes('Persons') &&
+                <Tab eventKey={'Persons'} title="Intressenter">
+                  <PersonsContent personsState={personsData} />
+                </Tab>}
+              {availableTabs.includes('Archive') &&
+                <Tab eventKey={'Archive'} title="Arkiv">
+                  <Archive archiveState={archivedDocumentsData} caseSource={caseSource} caseSourceId={caseSourceId} date={date} />
+                </Tab>}
+            </Tabs>
+          }
         </div>
-      </Modal.Body>
-      <Modal.Footer>
+      </ModalBody>
+      <ModalFooter>
         <button type="button" className="btn btn-primary" onClick={toggleShow}>Stäng</button>
-      </Modal.Footer>
+      </ModalFooter>
     </Modal>
   );
 };

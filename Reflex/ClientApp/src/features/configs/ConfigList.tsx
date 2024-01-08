@@ -8,7 +8,7 @@ interface ConfigListProps {
 
 const ConfigList = ({ configs }: ConfigListProps) => {
   return (
-    <div className="list-group">
+    <div className="list-group" style={{ border: "0", padding: "0" }}>
       {configs.map((cfg: Config) => <ConfigItem key={cfg.id} config={cfg}></ConfigItem>)}
     </div>
   );

@@ -11,6 +11,8 @@ import ByggrConfigForm from '../features/manage-configs/ByggrConfigForm';
 import EcosConfigForm from '../features/manage-configs/EcosConfigForm';
 import IipaxConfigForm from '../features/manage-configs/IipaxConfigForm';
 import ReflexConfigForm from '../features/manage-configs/ReflexConfigForm';
+import { faCopy, faTrashAlt } from '@fortawesome/pro-solid-svg-icons';
+import { ActionsDropdown, ActionsDropdownHeader, ActionsDropdownItem, ActionsDropdownDivider } from '@sokigo/components-react-bootstrap';
 
 const ManageConfigs = () => {
   const [agsConfigs, setAgsConfigs] = useState<any[]>([]);
@@ -60,6 +62,39 @@ const ManageConfigs = () => {
     setActiveKey('');
   };
 
+  // function DropDown({configs: any[], setFormData: any,getFormData:any, form: string}) {
+  interface DropDownProps {
+    configs: any[];
+    form: string;
+    getFormData: (data: any) => Promise<any>;
+    setFormData: (data: any) => void;
+
+  }
+  function DropDown({ configs, setFormData, getFormData, form }: any) {
+    //: (data: any) => void
+
+
+    return (<ActionsDropdown dropdownText={form} kind="ghost" menuFill block>
+      {configs?.map((cfg) =>
+        <ActionsDropdownItem key={cfg.id} selected={activeKey === cfg.id} onClick={async () => {
+          setActiveKey(cfg.id);
+          setEdit(true);
+          setFormData(await getFormData(cfg.id));
+          setActiveForm(form);
+        }}>
+          {cfg?.name}
+        </ActionsDropdownItem>)}
+      {configs.length > 0 && <ActionsDropdownDivider />}
+      <ActionsDropdownItem key={form + "_new"} selected={activeKey === form + "_new"} onClick={() => {
+        setActiveKey(form + '_new');
+        setEdit(false);
+        setFormData({});
+        setActiveForm(form);
+      }}>Skapa konfiguration</ActionsDropdownItem>
+    </ActionsDropdown>
+    );
+  }
+
   console.log("reflexConfigs", reflexConfigs);
 
   return (
@@ -70,7 +105,30 @@ const ManageConfigs = () => {
         <Tab.Container activeKey={activeKey}>
           <Row>
             <Col sm={5}>
-              <Nav variant="pills" className="flex-column" activeKey={activeKey}>
+              {/* <ActionsDropdown dropdownText="Reflex" kind="ghost" menuFill >
+                {reflexConfigs?.map((cfg) =>
+                  <ActionsDropdownItem key={cfg.id} onClick={async () => {
+                    setActiveKey(cfg.id);
+                    setEdit(true);
+                    setReflexFormData(await getFormData(cfg.id));
+                    setActiveForm('Reflex');
+                  }}>
+                    {cfg?.name}
+                  </ActionsDropdownItem>)}
+                {reflexConfigs.length > 0 && <ActionsDropdownDivider />}
+                <ActionsDropdownItem key="Reflex_new" onClick={() => {
+                  setActiveKey('Reflex_new');
+                  setEdit(false);
+                  setReflexFormData({});
+                  setActiveForm('Reflex');
+                }}>Skapa konfiguration</ActionsDropdownItem>
+              </ActionsDropdown> */}
+              <DropDown configs={reflexConfigs} setFormData={setReflexFormData} getFormData={(getFormData)} form="Reflex" />
+              <DropDown configs={byggrConfigs} setFormData={setByggrFormData} getFormData={(getByggrConfig)} form="ByggR" />
+              <DropDown configs={agsConfigs} setFormData={setAgsFormData} getFormData={(getAgsConfig)} form="AGS" />
+              <DropDown configs={ecosConfigs} setFormData={setEcosFormData} getFormData={(getEcosConfig)} form="Ecos" />
+              <DropDown configs={iipaxConfigs} setFormData={setIipaxFormData} getFormData={(getIipaxConfig)} form="iipax" />
+              {/* <Nav variant="pills" className="flex-column" activeKey={activeKey}>
                 <NavDropdown key="Reflex" title="Reflex" id="nav-dropdown">
                   {reflexConfigs?.map((cfg) =>
                     <NavDropdown.Item key={cfg.id} eventKey={cfg.id} onClick={async () => {
@@ -161,7 +219,7 @@ const ManageConfigs = () => {
                     setActiveForm('iipax');
                   }}>Skapa konfiguration</NavDropdown.Item>
                 </NavDropdown>
-              </Nav>
+              </Nav> */}
             </Col>
           </Row>
         </Tab.Container>
