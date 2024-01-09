@@ -58,7 +58,7 @@ function formatDnr(dnr: string, diarieprefix: string | undefined, caseSource: st
   if (parts.length > 0 && caseSource === CaseSource.ByggR) {
     const firstPart = parts[0];
     if (diarieprefix !== firstPart)
-      return <span title={`Diarie: ${diarieprefix}`}>{dnr}</span>;
+      return <h4 title={`Diarie: ${diarieprefix}`}>{dnr}</h4>;
   }
   return dnr;
 }
@@ -94,7 +94,7 @@ const CaseModal = ({ show, toggleShow, modalData }: CaseProps) => {
 
   return (
     <Modal show={show} onClose={toggleShow} size="xl">
-      <ModalHeader border>{`${formatDnr(dnr, diarieprefix, caseSource)}: ${title}`}</ModalHeader>
+      <ModalHeader border className="d-flex justify-content-start align-items-center">{formatDnr(dnr, diarieprefix, caseSource)}{`: ${title}`}</ModalHeader>
       <ModalBody title={`${dnr}: ${title}`}>
         <div className="container-fluid px-0">
           {availableTabs!.length === 1 && <>

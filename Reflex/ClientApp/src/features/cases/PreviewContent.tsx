@@ -53,9 +53,11 @@ const PreviewContent = ({ previewState, tabs }: PreviewContentProps) => {
         </div>
       </div>
       {(persons?.length > 0 && tabs.includes('Persons')) && (
-        <div className="row">
-          <div className="col-12">
-            <b>Intressenter</b>
+        <>
+          <div className="row">
+            <div className="col-12">
+              <b>Intressenter</b>
+            </div>
           </div>
           {persons.map((person) =>
             <div className="row" key={person.adress + person.fullName}>
@@ -72,7 +74,7 @@ const PreviewContent = ({ previewState, tabs }: PreviewContentProps) => {
               </div>
             </div>
           )}
-        </div>
+        </>
       )}
       <div className="row" id="händelser">
         <div className="col-12">
