@@ -10,14 +10,14 @@ const Search = () => {
   const searchResult = useAppSelector((state) => state.searchResult);
   const tabs = useAppSelector((state) => state.config?.tabs);
   const dispatch = useAppDispatch();
-  const navigate = useHistory();
+  const { push } = useHistory();
 
   function onSelectCallback(data: SearchResult) {
     dispatch(fetchCasesAsync(data));
     dispatch(setSearchResult(data));
 
     if (tabs?.includes(defaultTab))
-      navigate.push('/' + defaultTab.toLowerCase());
+      push('/reflex/' + defaultTab.toLowerCase());
   }
 
   return (

@@ -1,30 +1,25 @@
-// import { Navigate } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
-// import { ApplicationPaths, QueryParameterNames } from './ApiAuthorizationConstants';
-// import useAuthService from './useAuthService';
+import { useHasPermissions } from '../../hooks/useHasPermissions';
+import { Permissions } from '../../settings/permissions';
+// import Permissions from ''
 
 interface AuthorizeRouteProps {
   element: JSX.Element;
   path: string;
-  requiredRoles?: string[];
+  requiredPermissions?: Permissions[];
 }
 
-const AuthorizeRoute = ({ element, requiredRoles }: AuthorizeRouteProps) => {
-  // const { user, authenticated, ready } = useAuthService();
-  const ready = true;
-  const authenticated = true;
+const AuthorizeRoute = ({ element, requiredPermissions }: AuthorizeRouteProps) => {
+  const hasPermission = useHasPermissions(...(requiredPermissions || []));
 
-  if (!ready) {
-    return <div />;
-  } else {
-    // const hasRolepermission = !requiredRoles || requiredRoles.every((x: string) => user?.role?.includes(x));
-    const hasRolepermission = !requiredRoles || true;
+  // const hasRolepermission = !requiredRoles || requiredRoles.every((x: string) => user?.role?.includes(x));
+  //const hasRolepermission = !requiredPermissions || hasPermission;
+  console.log("requiredPermissions", requiredPermissions);
+  console.log("hasPermission", hasPermission);
 
-    if (hasRolepermission) {
-      return element;
-    } else if (!hasRolepermission) {
-      return <h5>Behörighet saknas</h5>;
-    }
+  if (hasPermission) {
+    return element;
+  } else if (!hasPermission) {
+    return <h5>Behörighet saknas</h5>;
   }
 };
 

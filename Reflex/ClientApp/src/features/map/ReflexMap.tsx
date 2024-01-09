@@ -41,7 +41,7 @@ interface CaseAlertProps {
 }
 
 const CaseAlert = ({ estateName, show, toggleAlert }: CaseAlertProps) => {
-  const navigate = useHistory();
+  const { push } = useHistory();
   if (show)
     return (
       <Panel glass>
@@ -56,7 +56,7 @@ const CaseAlert = ({ estateName, show, toggleAlert }: CaseAlertProps) => {
         >
           {estateName}<a className="ml-1" href="cases" onClick={e => {
             e.preventDefault();
-            navigate.push('/cases');
+            push('/reflex/cases');
           }
           }>Visa ärenden</a>
         </Alert>

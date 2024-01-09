@@ -12,7 +12,7 @@ interface Contact {
 }
 
 const Configs = () => {
-  const navigate = useHistory();
+  const { push } = useHistory();
   const roles = useAppSelector((state) => state.user?.roles);
   // const isAdministrator: boolean = hasPermission('IsAdministrator');
   const isAdmin = useHasPermissions('IsAdministrator');
@@ -32,10 +32,10 @@ const Configs = () => {
 
   function handleClick(e: MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
-    navigate.push('/manage-configs');
+    push('/reflex/manage-configs');
   };
 
-  if (!isAdmin || !configs)
+  if (!configs)
     return null;
 
   return (

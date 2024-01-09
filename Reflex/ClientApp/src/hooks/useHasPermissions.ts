@@ -3,7 +3,7 @@ import { Permissions } from '../settings';
 
 export const useHasPermissions = (
   ...permissions: Permissions[]
-): boolean[] => {
+): boolean => {
   const { hasPermission } = useApplicationPermissions();
-  return permissions.map((permission) => hasPermission(permission));
+  return permissions.map((permission) => hasPermission(permission)).every(x => x);
 };

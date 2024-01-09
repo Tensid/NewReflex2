@@ -46,7 +46,7 @@ interface ContextMenuProps {
 }
 
 export const ContextMenu = ({ fnr, estateName, estatePosition, setContextMenu }: ContextMenuProps) => {
-  const navigate = useHistory();
+  const { push } = useHistory();
   const csmUrl = useAppSelector((state) => state.systemSettings.miscSettings?.csmUrl);
   const fbWebbBoendeUrl = useAppSelector((state) => state.systemSettings.fbWebbSettings?.fbWebbBoendeUrl);
   const fbWebbFastighetUrl = useAppSelector((state) => state.systemSettings.fbWebbSettings?.fbWebbFastighetUrl);
@@ -121,7 +121,7 @@ export const ContextMenu = ({ fnr, estateName, estatePosition, setContextMenu }:
               ,
               {
                 text: 'Visa ärenden',
-                callback: () => navigate.push('/cases')
+                callback: () => push('/reflex/cases')
               },
               '-'
             ];
@@ -171,13 +171,12 @@ export const ContextMenu = ({ fnr, estateName, estatePosition, setContextMenu }:
             {
               text: estateName,
               classname: styles.menuTitle // add some CSS rules
-              //icon: 'img/marker.png',  // this can be relative or absolute
             },
             '-' // separator,
             ,
             {
               text: 'Visa ärenden',
-              callback: () => navigate.push('/cases')
+              callback: () => push('/reflex/cases')
             },
             '-'
           ];

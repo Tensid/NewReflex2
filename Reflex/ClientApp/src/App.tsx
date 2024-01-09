@@ -74,10 +74,10 @@ function App() {
         <Route path='/reflex/cases' exact component={() => <AuthorizeRoute path='/cases' element={(hasReceived && config) ? <Cases /> : <Redirect to="/reflex/configs" />} />} />
         <Route path='/reflex/population' exact component={() => <AuthorizeRoute path='/population' element={(hasReceived && config) ? <Population /> : <Redirect to="/reflex/configs" />} />} />
         <Route path='/reflex/property' exact component={() => <AuthorizeRoute path='/property' element={(hasReceived && config) ? <Property /> : <Redirect to="/reflex/configs" />} />} />
-        <Route path='/reflex/manage-users' exact component={() => <AuthorizeRoute requiredRoles={["Admin"]} path='/manage-users' element={<ManageUsers />} />} />
-        <Route path='/reflex/manage-configs' exact component={() => <AuthorizeRoute requiredRoles={["Admin"]} path='/manage-configs' element={<ManageConfigs />} />} />
-        <Route path='/reflex/manage-roles' exact component={() => <AuthorizeRoute requiredRoles={["Admin"]} path='/manage-roles' element={<ManageRoles />} />} />
-        <Route path='/reflex/system-settings' exact component={() => <AuthorizeRoute requiredRoles={["Admin"]} path='/system-settings' element={<ManageSystemSettings />} />} />
+        <Route path='/reflex/manage-users' exact component={() => <AuthorizeRoute requiredPermissions={["Admin"]} path='/manage-users' element={<ManageUsers />} />} />
+        <Route path='/reflex/manage-configs' exact component={() => <AuthorizeRoute requiredPermissions={["Admin"]} path='/manage-configs' element={<ManageConfigs />} />} />
+        <Route path='/reflex/manage-roles' exact component={() => <AuthorizeRoute requiredPermissions={["Admin"]} path='/manage-roles' element={<ManageRoles />} />} />
+        <Route path='/reflex/system-settings' exact component={() => <AuthorizeRoute requiredPermissions={["Admin"]} path='/system-settings' element={<ManageSystemSettings />} />} />
         <Route path='/reflex/about' exact component={() => <About />} />
       </Switch>
     </Layout>
