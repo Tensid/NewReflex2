@@ -28,6 +28,7 @@ namespace Reflex.Controllers
         }
 
         [HttpGet]
+        [UseSystemTextJson]
         public IEnumerable<ByggrConfig> Get()
         {
             return _applicationDbContext.ByggrConfigs;
@@ -63,6 +64,7 @@ namespace Reflex.Controllers
             }
         }
 
+        [UseSystemTextJson]
         [HttpGet("{id}")]
         public ByggrConfig Get(Guid id)
         {
